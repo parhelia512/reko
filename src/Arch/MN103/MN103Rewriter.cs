@@ -660,7 +660,8 @@ namespace Reko.Arch.MN103
         {
             if (instr.Operands.Length != 0)
             {
-                m.SideEffect(m.Fn(CommonOps.Syscall_1));
+                var op = this.Op(0, PrimitiveType.Word32);
+                m.SideEffect(m.Fn(CommonOps.Syscall_1, op));
             }
             else
             {

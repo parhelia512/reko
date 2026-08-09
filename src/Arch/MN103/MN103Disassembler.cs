@@ -410,9 +410,9 @@ namespace Reko.Arch.MN103
                 invalid,
                 invalid,
                 // https://sourceware.org/git/?p=binutils-gdb.git;a=blob;f=sim/mn10300/am33-2.igen;h=40761b2a19d9c9bdaf06cf45fbb3b92a3dc1d035;hb=HEAD
-                Instr(Mnemonic.syscall),
+                Instr(Mnemonic.syscall, InstrClass.Call),
                 invalid,
-                Instr(Mnemonic.syscall, imm4),
+                Instr(Mnemonic.syscall, InstrClass.Call, imm4),
                 Mask(0, 4, "  F0 F?",
                     calls_indan,
                     calls_indan,

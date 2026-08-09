@@ -548,6 +548,15 @@ namespace Reko.UnitTests.Arch.MN103
         }
 
         [Test]
+        public void Mn103Rw_syscall_one_arg()
+        {
+            Given_HexString("F0E4");
+            AssertCode(     // syscall   4
+                "0|T--|00100000(2): 1 instructions",
+                "1|L--|__syscall<word32>(4<32>)");
+        }
+
+        [Test]
         public void Mn103Rw_xor()
         {
             Given_HexString("FAE867C1");

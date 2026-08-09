@@ -569,7 +569,7 @@ namespace Reko.Core
         bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr);
 
         /// <summary>
-        /// Given a <see cref="Constant"/>, returns an Address of the correct size for this architecture.
+        /// Given a <see cref="Constant"/>, returns an <see cref="Address"/> of the correct size for this architecture.
         /// </summary>
         /// <param name="c">Constant to be converted to address.</param>
         /// <param name="codeAlign">If true, aligns the address to a valid code address.</param>
@@ -661,7 +661,7 @@ namespace Reko.Core
             this.PointerType = default!;
             this.WordWidth = default!;
 
-            this.ProcedurePrologs = Array.Empty<MaskedPattern>();
+            this.ProcedurePrologs = [];
             this.Services = services;
             this.Name = archId;
             this.Options = options;
