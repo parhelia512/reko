@@ -70,16 +70,16 @@ namespace Reko.Arch.MN103
             msp = factory.Reg32("msp");
 
             C = new FlagGroupStorage(psw, (ulong) FlagM.CF, "C");
-            CNZ = new FlagGroupStorage(psw, (uint) (FlagM.CF | FlagM.NF | FlagM.ZF), "CNZ");
-            CZ = new FlagGroupStorage(psw, (uint) (FlagM.CF | FlagM.ZF), "CZ");
+            CNZ = new FlagGroupStorage(psw, (ulong) (FlagM.CF | FlagM.NF | FlagM.ZF), "CNZ");
+            CZ = new FlagGroupStorage(psw, (ulong) (FlagM.CF | FlagM.ZF), "CZ");
             N = new FlagGroupStorage(psw, (ulong) FlagM.NF, "N");
-            NZ = new FlagGroupStorage(psw, (uint) (FlagM.NF | FlagM.VF), "NZ");
+            NZ = new FlagGroupStorage(psw, (ulong) (FlagM.NF | FlagM.ZF), "NZ");
             V = new FlagGroupStorage(psw, (ulong) FlagM.VF, "V");
-            VC = new FlagGroupStorage(psw, (uint) (FlagM.CF | FlagM.VF), "VC");
-            VCN = new FlagGroupStorage(psw, (uint) (FlagM.NF | FlagM.CF | FlagM.VF), "VCN");
-            VCNZ = new FlagGroupStorage(psw, (uint) (FlagM.ZF | FlagM.NF | FlagM.CF | FlagM.VF), "VCNZ");
-            VN = new FlagGroupStorage(psw, (uint) (FlagM.NF | FlagM.VF), "VN");
-            VNZ = new FlagGroupStorage(psw, (uint) (FlagM.NF | FlagM.VF| FlagM.ZF), "VNZ");
+            VC = new FlagGroupStorage(psw, (ulong) (FlagM.CF | FlagM.VF), "VC");
+            VCN = new FlagGroupStorage(psw, (ulong) (FlagM.NF | FlagM.CF | FlagM.VF), "VCN");
+            VCNZ = new FlagGroupStorage(psw, (ulong) (FlagM.ZF | FlagM.NF | FlagM.CF | FlagM.VF), "VCNZ");
+            VN = new FlagGroupStorage(psw, (ulong) (FlagM.NF | FlagM.VF), "VN");
+            VNZ = new FlagGroupStorage(psw, (ulong) (FlagM.NF | FlagM.VF| FlagM.ZF), "VNZ");
             Z = new FlagGroupStorage(psw, (ulong) FlagM.ZF, "Z");
 
             RegistersByName = factory.NamesToRegisters;

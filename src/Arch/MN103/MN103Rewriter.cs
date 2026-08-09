@@ -275,7 +275,7 @@ namespace Reko.Arch.MN103
                 var ea = EffectiveAddress(mem);
                 return m.Mem(dtMem, ea);
             default:
-                throw new NotImplementedException($"OPerand type {op.GetType().Name}.");
+                throw new NotImplementedException($"Operand type {op.GetType().Name}.");
             }
         }
 
