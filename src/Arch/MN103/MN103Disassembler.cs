@@ -180,7 +180,7 @@ namespace Reko.Arch.MN103
         {
             if (!dasm.rdr.TryReadLeUInt32(out uint uAbs))
                 return false;
-            var addr = Address.Ptr32(uAbs);
+            var addr = MemoryOperand.Absolute(uAbs);
             dasm.ops.Add(addr);
             return true;
         }

@@ -55,13 +55,12 @@ namespace Reko.Arch.MN103
             this.host = host;
             this.dasm = new MN103Disassembler(arch, rdr).GetEnumerator();
             this.instr = default!;
-            this.rtls = new List<RtlInstruction>();
+            this.rtls = [];
             this.m = new RtlEmitter(rtls);
         }
 
         public IEnumerator<RtlInstructionCluster> GetEnumerator()
         {
-
             while (dasm.MoveNext())
             {
                 this.instr = dasm.Current;
@@ -381,7 +380,7 @@ namespace Reko.Arch.MN103
         {
             var mask = Op(0, PrimitiveType.Word32);
             var e = Op(1, PrimitiveType.Byte);
-            Emit_00NZ(m.And(e, mask));
+            Emit_00NZ(m.Cond(Registers.psw.DataType, m.And(e, mask)));
         }
 
         private void RewriteCall()
@@ -414,6 +413,7 @@ namespace Reko.Arch.MN103
                 m.Assign(sp, m.IAddS(sp, 4));
             }
         }
+
         private void SaveRegisters(MultipleRegistersOperand regs, int disp8)
         {
             var sp = binder.EnsureRegister(Registers.sp);
@@ -425,7 +425,7 @@ namespace Reko.Arch.MN103
                 Expression e = binder.EnsureRegister(reg);
                 if (e.DataType.BitSize < 32)
                 {
-                    e = m.Convert(e, e.DataType, PrimitiveType.UInt32);
+                    e = m.ExtendZ(e, PrimitiveType.UInt32);
                 }
                 m.Assign(m.Mem32(tmp), e);
             }
@@ -528,11 +528,19 @@ namespace Reko.Arch.MN103
         {
             var right = Op(0, PrimitiveType.Word32);
             var left = Op(1, PrimitiveType.Word32);
-            m.Assign(left, right);
             if (left is Identifier id && id.Storage is RegisterStorage reg &&
                 reg == Registers.psw)
             {
+                m.Assign(left, m.Slice(right, left.DataType));
                 Emit_VCNZ(id);
+            }
+            else if (right is Identifier idRight && idRight.Storage == Registers.psw)
+            {
+                m.Assign(left, m.ExtendZ(idRight, left.DataType));
+            }
+            else
+            {
+                m.Assign(left, right);
             }
         }
 
@@ -574,7 +582,7 @@ namespace Reko.Arch.MN103
                 Registers.mdr,
                 left.Storage);
             m.Assign(product, m.IMul(dtResult, left, right));
-            Emit_VCNZ(product);
+            Emit_VCNZ(m.Cond(Registers.psw.DataType, product));
         }
 
         private void RewriteNot()
@@ -686,7 +694,7 @@ namespace Reko.Arch.MN103
             var right = Op(0, PrimitiveType.Word32);
             var left = Op(1, PrimitiveType.Word32);
             m.Assign(left, m.Xor(left, right));
-            Emit_00NZ(left);
+            Emit_00NZ(m.Cond(Registers.psw.DataType, left));
         }
 
         private static readonly IntrinsicProcedure movm_intrinsic = IntrinsicBuilder.SideEffect("** MOVM instruction decoding is not clear from documentation")

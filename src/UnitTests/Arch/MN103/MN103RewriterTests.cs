@@ -165,7 +165,7 @@ namespace Reko.UnitTests.Arch.MN103
             Given_HexString("F8EECA");
             AssertCode(     // btst	-36,d2
                 "0|L--|00100000(3): 2 instructions",
-                "1|L--|NZ = d2 & 0xFFFFFFCA<32>",
+                "1|L--|NZ = cond(d2 & 0xFFFFFFCA<32>)",
                 "2|L--|VC = 0<16>");
         }
 
@@ -373,6 +373,16 @@ namespace Reko.UnitTests.Arch.MN103
         }
 
         [Test]
+        public void Mn103Rw_movhu_abs32()
+        {
+            Given_HexString("FC83DEE70380");
+            AssertCode(     // movhu d0,8003E7DE
+                "0|L--|00100000(6): 2 instructions",
+                "1|L--|v4 = SLICE(d0, word16, 0)",
+                "2|L--|Mem0[0x8003E7DE<p32>:word16] = v4");
+        }
+
+        [Test]
         public void Mn103Rw_movhu_reg_abs16()
         {
             Given_HexString("037C3F");
@@ -420,7 +430,7 @@ namespace Reko.UnitTests.Arch.MN103
             AssertCode(     // mul	d2,d3
                 "0|L--|00100000(2): 2 instructions",
                 "1|L--|mdr_d3 = d3 *64 d2",
-                "2|L--|VCNZ = mdr_d3");
+                "2|L--|VCNZ = cond(mdr_d3)");
         }
 
         [Test]
@@ -430,7 +440,7 @@ namespace Reko.UnitTests.Arch.MN103
             AssertCode(     // mulu	d3,d2
                 "0|L--|00100000(2): 2 instructions",
                 "1|L--|mdr_d2 = d2 *64 d3",
-                "2|L--|VCNZ = mdr_d2");
+                "2|L--|VCNZ = cond(mdr_d2)");
         }
 
         [Test]
@@ -563,7 +573,7 @@ namespace Reko.UnitTests.Arch.MN103
             AssertCode(     // xor	-3E99,a0
                 "0|L--|00100000(4): 3 instructions",
                 "1|L--|a0 = a0 ^ 0xFFFFC167<32>",
-                "2|L--|NZ = a0",
+                "2|L--|NZ = cond(a0)",
                 "3|L--|VC = 0<16>");
         }
 
