@@ -19,9 +19,8 @@
 #endregion
 
 using NUnit.Framework;
-using Reko.Arch.Renesas.Rl78;
+using Reko.Arch.Renesas;
 using Reko.Core;
-using System.Collections.Generic;
 
 namespace Reko.UnitTests.Arch.Rl78
 {
@@ -33,7 +32,7 @@ namespace Reko.UnitTests.Arch.Rl78
 
         public Rl78RewriterTests()
         {
-            this.arch = new Rl78Architecture(CreateServiceContainer(), "rl78", new Dictionary<string, object>());
+            this.arch = new Rl78Architecture(CreateServiceContainer(), "rl78", []);
             this.addr = Address.Ptr32(0x01000);
         }
 
@@ -506,7 +505,7 @@ namespace Reko.UnitTests.Arch.Rl78
             Given_HexString("D6");	// mulu	x
             AssertCode(
                 "0|L--|00001000(1): 1 instructions",
-                "1|L--|ax = a *u x");
+                "1|L--|ax = a *u16 x");
         }
 
         [Test]
@@ -535,7 +534,7 @@ namespace Reko.UnitTests.Arch.Rl78
             Given_HexString("71 8C");	// mov1	cy,a.0
             AssertCode(
                 "0|L--|00001000(2): 1 instructions",
-                "1|L--|cy = __bit<byte,byte>(a, 0<8>)");
+                "1|L--|cy = cond(__bit<byte,byte>(a, 0<8>))");
         }
 
         [Test]

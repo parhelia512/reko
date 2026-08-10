@@ -432,7 +432,17 @@ namespace Reko.Arch.Renesas.Rl78
         private void RewriteMov1()
         {
             var src = RewriteSrc(instr.Operands[1]);
-            var dst = RewriteDst(instr.Operands[0], src, (a, b) => b);
+            if (instr.Operands[0] is FlagGroupStorage cy)
+            {
+                src = m.Cond(cy.FlagRegister.DataType, src);
+                m.Assign(binder.EnsureFlagGroup(cy), src);
+            }
+            else
+            {
+                cy = (FlagGroupStorage) instr.Operands[1];
+                src = m.Test(ConditionCode.NE, binder.EnsureFlagGroup(cy));
+                var dst = RewriteDst(instr.Operands[0], src, (a, b) => b);
+            }
         }
 
         private void RewriteMulu()
@@ -440,7 +450,7 @@ namespace Reko.Arch.Renesas.Rl78
             var src = RewriteSrc(instr.Operands[0]);
             var a = binder.EnsureRegister(Registers.a);
             var dst = binder.EnsureRegister(Registers.ax);
-            m.Assign(dst, m.UMul(a, src));
+            m.Assign(dst, m.UMul(dst.DataType, a, src));
         }
 
         private void RewriteNot1()
