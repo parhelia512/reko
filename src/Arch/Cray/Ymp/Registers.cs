@@ -20,6 +20,8 @@
 
 using Reko.Core;
 using Reko.Core.Types;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Reko.Arch.Cray.Ymp
 {
@@ -39,6 +41,9 @@ namespace Reko.Arch.Cray.Ymp
         public static readonly RegisterStorage rt;  // Real time clock
         public static readonly RegisterStorage sm;  // Semaphore register
         public static readonly RegisterStorage vl;  // Vector length
+
+        public static IReadOnlyDictionary<string, RegisterStorage> ByName { get; }
+        public static IReadOnlyDictionary<StorageDomain, RegisterStorage> ByDomain { get; }
 
         static Registers()
         {
@@ -63,6 +68,12 @@ namespace Reko.Arch.Cray.Ymp
             rt = sysfactory.Reg64("RT");
             sm = sysfactory.Reg64("SM");
             vl = sysfactory.Reg64("VL");
+
+            var allregs = factory.DomainsToRegisters.Values.Concat(
+                sysfactory.DomainsToRegisters.Values)
+                .ToArray();
+            ByName = allregs.ToDictionary(r => r.Name);
+            ByDomain = allregs.ToDictionary(r => r.Domain);
         }
     }
 }

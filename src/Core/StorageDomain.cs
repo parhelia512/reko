@@ -51,7 +51,7 @@ public enum StorageDomain
     /// <summary>
     /// Refers to a memory space.
     /// </summary>
-    Memory = 4096,          
+    Memory = 4096,
 
     /// <summary>
     /// Refers to a register in an FPU stack.

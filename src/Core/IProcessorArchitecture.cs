@@ -651,8 +651,8 @@ namespace Reko.Core
             IServiceProvider services,
             string archId, 
             Dictionary<string, object> options,
-            Dictionary<string, RegisterStorage>? regsByName,
-            Dictionary<StorageDomain, RegisterStorage>? regsByDomain)
+            IReadOnlyDictionary<string, RegisterStorage>? regsByName,
+            IReadOnlyDictionary<StorageDomain, RegisterStorage>? regsByDomain)
         {
             //$REVIEW: consider exposing these 4 properties in the constructor,
             // as nothing can work without these values.

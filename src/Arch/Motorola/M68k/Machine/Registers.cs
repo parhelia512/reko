@@ -96,7 +96,8 @@ namespace Reko.Arch.Motorola.M68k.Machine
         internal static RegisterStorage[] regs;
         internal static FlagGroupStorage[] flags;
         internal static readonly RegisterStorage[] mmuregs;
-        internal static readonly Dictionary<string, RegisterStorage> regsByName;
+        internal static readonly Dictionary<string, RegisterStorage> ByName;
+        internal static readonly Dictionary<StorageDomain, RegisterStorage> ByDomain;
         internal static readonly Dictionary<uint, RegisterStorage> sregsByCode;
 
         static Registers()
@@ -187,7 +188,8 @@ namespace Reko.Arch.Motorola.M68k.Machine
                 fpsr,
             };
 
-            regsByName = regs.ToDictionary(r => r.Name, StringComparer.InvariantCultureIgnoreCase);
+            ByName = regs.ToDictionary(r => r.Name, StringComparer.InvariantCultureIgnoreCase);
+            ByDomain = regs.ToDictionary(r => r.Domain);
             flags = new[] { C, V, Z, N, X };
 
             var sregFactory = new StorageFactory(StorageDomain.SystemRegister);
@@ -261,7 +263,7 @@ namespace Reko.Arch.Motorola.M68k.Machine
 
         public static RegisterStorage GetRegister(string name)
         {
-            if (!regsByName.TryGetValue(name, out RegisterStorage? reg))
+            if (!ByName.TryGetValue(name, out RegisterStorage? reg))
             {
                 reg = RegisterStorage.None;
             }

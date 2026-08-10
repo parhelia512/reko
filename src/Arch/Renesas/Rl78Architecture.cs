@@ -18,6 +18,7 @@
  */
 #endregion
 
+using Reko.Arch.Renesas.Rl78;
 using Reko.Core;
 using Reko.Core.Expressions;
 using Reko.Core.Lib;
@@ -30,12 +31,12 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace Reko.Arch.Renesas.Rl78
+namespace Reko.Arch.Renesas
 {
     public class Rl78Architecture : ProcessorArchitecture
     {
         public Rl78Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.GpRegsByName, Registers.GpRegsByDomain)
         {
             this.Ptr20 = PrimitiveType.Create(Domain.Pointer, 20);
             InstructionBitSize = 8;

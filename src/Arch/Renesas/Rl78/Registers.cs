@@ -58,7 +58,8 @@ namespace Reko.Arch.Renesas.Rl78
         public static readonly FlagGroupStorage CZ;
         public static readonly FlagGroupStorage Z;
 
-        public static readonly ReadOnlyDictionary<string, RegisterStorage> GpRegsByName;
+        public static ReadOnlyDictionary<string, RegisterStorage> GpRegsByName { get; }
+        public static ReadOnlyDictionary<StorageDomain, RegisterStorage> GpRegsByDomain { get; }
 
         static Registers()
         {
@@ -86,10 +87,12 @@ namespace Reko.Arch.Renesas.Rl78
 
             GpRegsByName = new ReadOnlyDictionary<string, RegisterStorage>(WordRegs.Concat(ByteRegs)
                 .ToDictionary(r => r.Name));
+            GpRegsByDomain = new ReadOnlyDictionary<StorageDomain, RegisterStorage>(
+                WordRegs.ToDictionary(r => r.Domain));
 
             C = new FlagGroupStorage(psw, (ulong) FlagM.CF, nameof(C));
             cy = new FlagGroupStorage(psw, (ulong) FlagM.CF, nameof(cy));
-            CZ = new FlagGroupStorage(psw, (uint) (FlagM.CF | FlagM.ZF), nameof(CZ));
+            CZ = new FlagGroupStorage(psw, (ulong) (FlagM.CF | FlagM.ZF), nameof(CZ));
             Z = new FlagGroupStorage(psw, (ulong) FlagM.ZF, nameof(Z));
         }
     }

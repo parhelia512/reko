@@ -34,7 +34,7 @@ namespace Reko.Arch.OpenRISC;
 public class BeyondArchitecture : ProcessorArchitecture
 {
     public BeyondArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-        : base(services, archId, options, [], [])
+        : base(services, archId, options, Registers.ByName, Registers.ByDomain)
     {
         this.Endianness = EndianServices.Big;
         this.FramePointerType = PrimitiveType.Ptr32;

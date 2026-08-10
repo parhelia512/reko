@@ -20,11 +20,8 @@
 
 using Reko.Core;
 using Reko.Core.Hll.C;
-using Reko.Core.Emulation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Reko.Core.Memory;
+using System;
 
 namespace Reko.Arch.Cray
 {

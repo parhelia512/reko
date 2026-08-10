@@ -20,7 +20,9 @@
 
 using Reko.Core;
 using Reko.Core.Types;
+using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace Reko.Arch.Etrax
 {
@@ -62,6 +64,8 @@ namespace Reko.Arch.Etrax
 
         public static FlagGroupStorage NZ { get; }
         public static FlagGroupStorage NZVC { get; }
+        public static IReadOnlyDictionary<string, RegisterStorage> ByName { get; }
+        public static IReadOnlyDictionary<StorageDomain, RegisterStorage> ByDomain { get; }
 
         static Registers()
         {
@@ -130,6 +134,11 @@ namespace Reko.Arch.Etrax
 
             NZ = new FlagGroupStorage(dccr, (uint) (FlagM.NF|FlagM.ZF), nameof(NZ));
             NZVC = new FlagGroupStorage(dccr, (uint) (FlagM.NF|FlagM.ZF|FlagM.VF|FlagM.CF), nameof(NZVC));
+
+            ByName = GpRegisters.Concat(SystemRegisters)
+                    .ToDictionary(r => r.Name);
+            ByDomain = GpRegisters.Concat(SystemRegisters)
+                .ToDictionary(r => r.Domain);
         }
     }
 

@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using Reko.Core;
 using Reko.Core.Emulation;
@@ -42,7 +43,12 @@ namespace Reko.ImageLoaders.LLVM
     {
         private readonly DataLayout layout;
 
-        public LLVMArchitecture(IServiceProvider services, DataLayout layout) : base(services, "llvm", [], [], [])
+        public LLVMArchitecture(IServiceProvider services, DataLayout layout) : base(
+            services,
+            "llvm",
+            [],
+            ReadOnlyDictionary<string, RegisterStorage>.Empty,
+            ReadOnlyDictionary<StorageDomain, RegisterStorage>.Empty)
         {
             this.layout = layout;
             this.Endianness = layout.Endianness;
