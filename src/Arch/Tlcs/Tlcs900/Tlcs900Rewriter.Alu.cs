@@ -53,12 +53,12 @@ namespace Reko.Arch.Tlcs.Tlcs900
 
         private void RewriteBit()
         {
-            var Z = binder.EnsureFlagGroup(Tlcs900Registers.Z);
+            var Z = binder.EnsureFlagGroup(Registers.Z);
             var bit = RewriteSrc(this.instr.Operands[0]);
             var dst = RewriteSrc(this.instr.Operands[1]);
             m.Assign(Z, m.Eq0(m.And(dst, m.Shl(m.Int8(1), bit))));
-            m.Assign(binder.EnsureFlagGroup(Registers.H), m.True());
-            m.Assign(binder.EnsureFlagGroup(Registers.N), m.False());
+            m.Assign(binder.EnsureFlagGroup(Registers.H), Registers.H.FlagGroupBits);
+            m.Assign(binder.EnsureFlagGroup(Registers.N), 0);
         }
 
         private void RewriteBs1b()
@@ -98,14 +98,14 @@ namespace Reko.Arch.Tlcs.Tlcs900
         }
 
         private void RewriteDiv(
-            Func<Expression, Expression, Expression> divFn,
-            Func<Expression, Expression, Expression> modFn,
+            BinaryOperator divFn,
+            BinaryOperator modFn,
             string flags)
         {
             var reg = (RegisterStorage)this.instr.Operands[0];
             var op2 = RewriteSrc(this.instr.Operands[1]);
             var div = binder.EnsureRegister(arch.GetRegister(reg.Domain, new BitRange(0, (int)reg.BitSize * 2))!);
-            var tmp = binder.CreateTemporary(reg.DataType);
+            var tmp = binder.CreateTemporary(div.DataType);
             var q = arch.GetRegister(reg.Domain, new BitRange(0, 8));
             var r = arch.GetRegister(reg.Domain, new BitRange(8, 16));
             if (q is null || r is null)
@@ -117,8 +117,8 @@ namespace Reko.Arch.Tlcs.Tlcs900
             var quo = binder.EnsureRegister(q);
             var rem = binder.EnsureRegister(r);
             m.Assign(tmp, div);
-            m.Assign(quo, divFn(tmp, op2));
-            m.Assign(rem, modFn(tmp, op2));
+            m.Assign(quo, m.Bin(divFn, quo.DataType, tmp, op2));
+            m.Assign(rem, m.Bin(modFn, rem.DataType, tmp, op2));
             EmitCc(quo, flags);
         }
 
@@ -198,7 +198,7 @@ namespace Reko.Arch.Tlcs.Tlcs900
 
         private void RewriteRcf()
         {
-            m.Assign(binder.EnsureFlagGroup(Tlcs900Registers.C), m.False());
+            m.Assign(binder.EnsureFlagGroup(Tlcs900Registers.C), 0);
         }
 
         private void RewriteRes()
@@ -231,7 +231,9 @@ namespace Reko.Arch.Tlcs.Tlcs900
 
         private void RewriteScf()
         {
-            m.Assign(binder.EnsureFlagGroup(Tlcs900Registers.C), m.True());
+            m.Assign(
+                binder.EnsureFlagGroup(Tlcs900Registers.C),
+                Tlcs900Registers.C.FlagGroupBits);
         }
 
         private void RewriteSet()
@@ -269,7 +271,7 @@ namespace Reko.Arch.Tlcs.Tlcs900
             var c = binder.EnsureFlagGroup(Registers.C);
             var n = binder.EnsureFlagGroup(Registers.N);
             m.Assign(c, m.Not(z));
-            m.Assign(n, m.False());
+            m.Assign(n, 0);
         }
     }
 }

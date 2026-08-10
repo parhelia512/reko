@@ -50,7 +50,7 @@ namespace Reko.Arch.Tlcs.Tlcs900
         {
             this.arch = arch;
             this.rdr = rdr;
-            this.ops = new List<MachineOperand>();
+            this.ops = [];
         }
 
         public override Tlcs900Instruction? DisassembleInstruction()
@@ -87,7 +87,7 @@ namespace Reko.Arch.Tlcs.Tlcs900
                 Address = this.addr,
                 InstructionClass = InstrClass.Invalid,
                 Mnemonic = Mnemonic.invalid,
-                Operands = Array.Empty<MachineOperand>()
+                Operands = []
             };
         }
 
@@ -605,8 +605,11 @@ namespace Reko.Arch.Tlcs.Tlcs900
                 }
                 if (instr.Operands.Length >= 2 && instr.Operands[1].DataType is null)
                 {
-                    //$HACK to get conditional calls/jumps to work
-                    instr.Operands[1].DataType = PrimitiveType.Word32;
+                    if (instr.Operands[0] is RegisterStorage)
+                        instr.Operands[1].DataType = instr.Operands[0].DataType;
+                    else
+                        //$HACK to get conditional calls/jumps to work
+                        instr.Operands[1].DataType = PrimitiveType.Word32;
                 }
                 return instr;
             }

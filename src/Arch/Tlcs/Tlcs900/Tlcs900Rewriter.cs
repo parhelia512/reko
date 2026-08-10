@@ -93,8 +93,8 @@ namespace Reko.Arch.Tlcs.Tlcs900
                 case Mnemonic.daa: RewriteDaa("****-*"); break;
                 case Mnemonic.dec: RewriteIncDec(m.ISub, "****1-"); break;
                 case Mnemonic.decf: RewriteDecf(); break;
-                case Mnemonic.div: RewriteDiv(m.UDiv, m.UMod, "---V--");break;
-                case Mnemonic.divs: RewriteDiv(m.SDiv, m.SMod, "---V--");break;
+                case Mnemonic.div: RewriteDiv(Operator.UDiv, Operator.UMod, "---V--");break;
+                case Mnemonic.divs: RewriteDiv(Operator.SDiv, Operator.SMod, "---V--");break;
                 case Mnemonic.djnz: RewriteDjnz(); break;
                 case Mnemonic.ei: RewriteEi(); break;
                 case Mnemonic.ex: RewriteEx(); break;
@@ -225,7 +225,7 @@ namespace Reko.Arch.Tlcs.Tlcs900
                     m.Assign(ea, m.ISub(ea, mem.DataType.Size));
                 }
                 var load = m.Mem(mem.DataType, ea);
-                var tmp = binder.CreateTemporary(ea.DataType);
+                var tmp = binder.CreateTemporary(mem.DataType);
                 m.Assign(tmp, fn(load, src));
                 m.Assign(m.Mem(mem.DataType, ea), tmp);
                 if (mem.Increment > 0)
@@ -258,12 +258,12 @@ namespace Reko.Arch.Tlcs.Tlcs900
                 case '0':
                     m.Assign(
                         binder.EnsureFlagGroup(arch.GetFlagGroup(Tlcs900Registers.f,  mask)),
-                        m.False());
+                        0);
                     break;
                 case '1':
                     m.Assign(
                         binder.EnsureFlagGroup(arch.GetFlagGroup(Tlcs900Registers.f, mask)),
-                        m.True());
+                        mask);
                     break;
                 }
                 mask >>= 1;

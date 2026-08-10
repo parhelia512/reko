@@ -50,13 +50,23 @@ namespace Reko.UnitTests.Arch.Tlcs
         }
 
         [Test]
+        public void Tlcs900_rw_ld_abs()
+        {
+            Given_HexString("F1 19 44 41");
+            AssertCode(
+                "0|L--|00010000(4): 2 instructions",
+                "1|L--|v3 = Mem0[0x00004419<p32>:byte]",
+                "2|L--|a = v3");
+        }
+
+        [Test]
         public void Tlcs900_rw_add()
         {
             Given_HexString("E9C8FFFFFFFF");
             AssertCode(
                 "0|L--|00010000(6): 3 instructions",
                 "1|L--|xbc = xbc + 0xFFFFFFFF<32>",
-                "2|L--|N = false",
+                "2|L--|N = 0<16>",
                 "3|L--|SZHVC = cond(xbc)");
         }
 
@@ -69,7 +79,7 @@ namespace Reko.UnitTests.Arch.Tlcs
                 "1|L--|xde = xde - 4<32>",
                 "2|L--|v4 = Mem0[xde:word32] + 1<32>",
                 "3|L--|Mem0[xde:word32] = v4",
-                "4|L--|N = false",
+                "4|L--|N = 0<16>",
                 "5|L--|SZHV = cond(v4)");
         }
 
@@ -82,7 +92,7 @@ namespace Reko.UnitTests.Arch.Tlcs
                 "1|L--|v5 = Mem0[xde:word32] - xwa",
                 "2|L--|Mem0[xde:word32] = v5",
                 "3|L--|xde = xde + 4<32>",
-                "4|L--|N = true",
+                "4|L--|N = 2<16>",
                 "5|L--|SZHVC = cond(v5)");
         }
 
@@ -144,7 +154,7 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(5): 3 instructions",
                 "1|L--|v3 = Mem0[0x00006F91<p32>:byte]",
-                "2|L--|N = true",
+                "2|L--|N = 2<16>",
                 "3|L--|SZHVC = cond(v3 - 0<8>)");
         }
 
@@ -156,7 +166,7 @@ namespace Reko.UnitTests.Arch.Tlcs
             "0|L--|00010000(3): 4 instructions",
             "1|L--|xwa = xwa - 2<i32>",
             "2|L--|v5 = Mem0[xwa:word16]",
-            "3|L--|N = true",
+            "3|L--|N = 2<16>",
             "4|L--|SZHVC = cond(de - v5)");
         }
 
@@ -219,9 +229,9 @@ namespace Reko.UnitTests.Arch.Tlcs
                 "4|L--|xde = xde + 1<i32>",
                 "5|L--|bc = bc - 1<16>",
                 "6|T--|if (bc != 0<16>) branch 00010000",
-                "7|L--|H = false",
-                "8|L--|V = false",
-                "9|L--|N = false");
+                "7|L--|H = 0<16>",
+                "8|L--|V = 0<16>",
+                "9|L--|N = 0<16>");
         }
 
         [Test]
@@ -236,9 +246,9 @@ namespace Reko.UnitTests.Arch.Tlcs
                 "4|L--|xde = xde + 2<i32>",
                 "5|L--|bc = bc - 1<16>",
                 "6|T--|if (bc != 0<16>) branch 00010000",
-                "7|L--|H = false",
-                "8|L--|V = false",
-                "9|L--|N = false");
+                "7|L--|H = 0<16>",
+                "8|L--|V = 0<16>",
+                "9|L--|N = 0<16>");
         }
 
         [Test]
@@ -267,8 +277,8 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(3): 4 instructions",
                 "1|L--|d = d << 1<8>",
-                "2|L--|H = false",
-                "3|L--|N = false",
+                "2|L--|H = 0<16>",
+                "3|L--|N = 0<16>",
                 "4|L--|SZVC = cond(d)");
         }
 
@@ -289,9 +299,9 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(3): 5 instructions",
                 "1|L--|a = a & 0xF0<8>",
-                "2|L--|H = true",
-                "3|L--|N = false",
-                "4|L--|C = false",
+                "2|L--|H = 8<16>",
+                "3|L--|N = 0<16>",
+                "4|L--|C = 0<16>",
                 "5|L--|SZV = cond(a)");
         }
 
@@ -311,8 +321,8 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(3): 4 instructions",
                 "1|L--|a = a >>u 4<8>",
-                "2|L--|H = false",
-                "3|L--|N = false",
+                "2|L--|H = 0<16>",
+                "3|L--|N = 0<16>",
                 "4|L--|SZVC = cond(a)");
         }
 
@@ -323,7 +333,7 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(2): 3 instructions",
                 "1|L--|w = w - 1<8>",
-                "2|L--|N = true",
+                "2|L--|N = 2<16>",
                 "3|L--|SZHV = cond(w)");
         }
 
@@ -334,8 +344,8 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(3): 3 instructions",
                 "1|L--|Z = (a & 1<i8> << 2<8>) == 0<8>", //$BIT: should be 1<8>
-                "2|L--|H = true",
-                "3|L--|N = false");
+                "2|L--|H = 8<16>",
+                "3|L--|N = 0<16>");
         }
 
         [Test]
@@ -371,7 +381,7 @@ namespace Reko.UnitTests.Arch.Tlcs
             Given_HexString("10");	// rcf
             AssertCode(
                 "0|L--|00010000(1): 1 instructions",
-                "1|L--|C = false");
+                "1|L--|C = 0<16>");
         }
 
         [Test]
@@ -398,7 +408,7 @@ namespace Reko.UnitTests.Arch.Tlcs
             Given_HexString("11");	// scf
             AssertCode(
                 "0|L--|00010000(1): 1 instructions",
-                "1|L--|C = true");
+                "1|L--|C = 1<16>");
         }
 
         [Test]
@@ -408,9 +418,9 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(2): 5 instructions",
                 "1|L--|w = w | b",
-                "2|L--|H = false",
-                "3|L--|N = false",
-                "4|L--|C = false",
+                "2|L--|H = 0<16>",
+                "3|L--|N = 0<16>",
+                "4|L--|C = 0<16>",
                 "5|L--|SZV = cond(w)");
         }
 
@@ -537,7 +547,7 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(1): 2 instructions",
                 "1|L--|C = !Z",
-                "2|L--|N = false");
+                "2|L--|N = 0<16>");
         }
 
         [Test]
@@ -547,7 +557,7 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(2): 4 instructions",
                 "1|L--|v5 = xhl",
-                "2|L--|l = v5 / wa",
+                "2|L--|l = v5 /8 wa",
                 "3|L--|h = v5 %s wa",
                 "4|L--|V = cond(l)");
         }
@@ -577,9 +587,9 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(6): 5 instructions",
                 "1|L--|xiz = xiz ^ 0x78563412<32>",
-                "2|L--|H = false",
-                "3|L--|N = false",
-                "4|L--|C = false",
+                "2|L--|H = 0<16>",
+                "3|L--|N = 0<16>",
+                "4|L--|C = 0<16>",
                 "5|L--|SZV = cond(xiz)");
         }
 
@@ -601,8 +611,8 @@ namespace Reko.UnitTests.Arch.Tlcs
                 "0|L--|00010000(2): 5 instructions",
                 "1|L--|v4 = Mem0[xbc:byte] << 1<i8>",
                 "2|L--|Mem0[xbc:byte] = v4",
-                "3|L--|H = false",
-                "4|L--|N = false",
+                "3|L--|H = 0<16>",
+                "4|L--|N = 0<16>",
                 "5|L--|SZVC = cond(v4)");
         }
 
@@ -614,7 +624,7 @@ namespace Reko.UnitTests.Arch.Tlcs
                 "0|L--|00010000(2): 4 instructions",
                 "1|L--|v4 = Mem0[xde:byte]",
                 "2|L--|b = __subc<byte,word16>(b, v4, C)",
-                "3|L--|N = true",
+                "3|L--|N = 2<16>",
                 "4|L--|SZHVC = cond(b)");
         }
 
@@ -626,7 +636,7 @@ namespace Reko.UnitTests.Arch.Tlcs
                 "0|L--|00010000(3): 4 instructions",
                 "1|L--|v3 = Mem0[0x00000004<p32>:byte]",
                 "2|L--|a = __subc<byte,word16>(a, v3, C)",
-                "3|L--|N = true",
+                "3|L--|N = 2<16>",
                 "4|L--|SZHVC = cond(a)");
         }
 
@@ -655,8 +665,8 @@ namespace Reko.UnitTests.Arch.Tlcs
             AssertCode(
                 "0|L--|00010000(2): 4 instructions",
                 "1|L--|d = d << a",
-                "2|L--|H = false",
-                "3|L--|N = false",
+                "2|L--|H = 0<16>",
+                "3|L--|N = 0<16>",
                 "4|L--|SZVC = cond(d)");
         }
     }
