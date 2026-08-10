@@ -218,7 +218,20 @@ namespace Reko.Arch.Arm
 
         public override FlagGroupStorage GetFlagGroup(string name)
         {
-            throw new NotImplementedException();
+            uint grf = 0;
+            foreach (var c in name)
+            {
+                grf |= c switch
+                {
+                    'Q' => (uint) FlagM.QF,
+                    'N' => (uint) FlagM.NF,
+                    'Z' => (uint) FlagM.ZF,
+                    'C' => (uint) FlagM.CF,
+                    'V' => (uint) FlagM.VF,
+                    _ => 0
+                };
+            }
+            return GetFlagGroup(Registers.cpsr, grf);
         }
 
         public override string GrfToString(RegisterStorage flagregister, string prefix, ulong grf)

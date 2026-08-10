@@ -246,6 +246,7 @@
       <File Source="$(var.Pdp10Env.TargetPath)" nuget_target="f:" />
       <File Source="$(var.Ps3.TargetPath)" nuget_target="f:" />
       <File Source="$(var.RiscOS.TargetPath)" nuget_target="f:" />
+      <File Source="$(var.RiscOS.ProjectDir)riscos_swi_calls.inc" nuget_target="c:" />
       <File Source="$(var.RT11.TargetPath)" nuget_target="f:" />
       <File Source="$(var.RT11.ProjectDir)rt11_services.xml" nuget_target="c:" />
       <File Source="$(var.SegaGenesis.TargetPath)" nuget_target="f:" />

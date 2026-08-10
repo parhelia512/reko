@@ -23,6 +23,7 @@ using Reko.Core.Expressions;
 using Reko.Core.Hll.C;
 using Reko.Core.Memory;
 using Reko.Core.Serialization;
+using Reko.Core.Services;
 using Reko.Core.Types;
 using System;
 
@@ -37,26 +38,26 @@ namespace Reko.Environments.RiscOS
 
         public override string DefaultCallingConvention => "";
 
-        public override SystemService FindService(int vector, ProcessorState? state, IMemory? memory)
+        public override SystemService? FindService(int vector, ProcessorState? state, IMemory? memory)
         {
-            switch (vector)
+            var metadata = EnsureTypeLibraries(this.Name);
+            foreach (var module in metadata.Modules.Values)
             {
-            // http://www.riscos.com/support/developers/prm/errors.html#89849
-            case 0x2B:
-                return new SystemService
+                if (module.ServicesByVector.TryGetValue(vector, out var svc))
                 {
-                    Name = "OS_GenerateError",
-                    Characteristics = new ProcedureCharacteristics {
-                        Terminates = true,
-                    },
-                    Signature = FunctionType.Action(
-                        new Identifier[] {
-                            new Identifier("r0", PrimitiveType.Ptr32, Architecture.GetRegister("r0")!)
-                        })
-                };
+                    foreach (var service in svc)
+                    {
+                        if (service.SyscallInfo is not null && service.SyscallInfo.Matches(vector, state))
+                            return service;
+                    }
+                }
             }
-            throw new NotSupportedException(string.Format("Unknown RiscOS vector &{0:X}.", vector)); 
+            Services.RequireService<IEventListener>().Warn("Unknown RiscOS system call &{0:X}", vector);
+            return null;
         }
+
+        /*
+        */
 
         public override int GetBitSizeFromCBasicType(CBasicType cb)
         {

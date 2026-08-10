@@ -343,6 +343,10 @@ namespace Reko.Core.Hll.C
                                 throw new FormatException("[[reko::arg(out)]] attribute expectes a comma.");
                             ++iTok;
                         }
+                        else
+                        {
+                            throw new FormatException($"[[reko::arg]] attribute has an unexpected token {str}.");
+                        }
                     }
                     else
                         throw new FormatException($"[[reko::arg(...)]] attribute has an unexpected token {attr.Tokens[iTok].Type}.");
