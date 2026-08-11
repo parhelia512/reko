@@ -22,15 +22,15 @@ void fn00200089()
 		++xix_n;
 		++xiy_n;
 	}
-	((union Eq_n *) 0x8002)->u0 = 0<32>;
-	((union Eq_n *) 0x8003)->u0 = 0<32>;
-	((union Eq_n *) 0x8004)->u0 = 0xA0<32>;
-	((union Eq_n *) 0x8005)->u0 = 0x98<32>;
+	*(byte *) 0x8002 = 0x00;
+	*(byte *) 0x8003 = 0x00;
+	*(byte *) 0x8004 = 0xA0;
+	*(byte *) 0x8005 = 0x98;
 	word16 * xhl_n = (word16 *) 0xA000;
 	word16 bc_n;
 	for (bc_n = 0x0200; bc_n != 0x00; --bc_n)
 	{
-		*xhl_n = 0<32>;
+		*xhl_n = 0x00;
 		++xhl_n;
 	}
 	word16 bc_n;
@@ -53,9 +53,9 @@ void fn00200089()
 		++xhl_n;
 		++xde_n;
 	}
-	((union Eq_n *) 0x83E0)->u0 = 0x33<32>;
-	((union Eq_n *) 33761)->u0 = 7<32>;
-	((union Eq_n *) 0x8118)->u0 = 0x80<32>;
+	*(byte *) 0x83E0 = 0x33;
+	*(byte *) 33761 = 0x07;
+	*(byte *) 0x8118 = 0x80;
 	fn00200557(0x01, 0x00, &g_b2000FD);
 	fn00200557(0x01, 0x01, &g_b200122);
 	fn00200557(0x02, 0x04, &g_b200147);
@@ -153,11 +153,10 @@ byte g_a2004B5[] = // 002004B5
 //      fn00200089
 void fn002004F2(byte w)
 {
-	Eq_n w_n;
 	word32 xwa;
-	w_n.u0 = SLICE(xwa, byte, 8);
-	((union Eq_n *) 0x4004)->u0 = 0<32>;
-	while (*(union Eq_n *) 0x4004 != w_n)
+	byte w_n = SLICE(xwa, byte, 8);
+	*(byte *) 0x4004 = 0x00;
+	while (*(byte *) 0x4004 != w_n)
 		;
 }
 
@@ -190,7 +189,7 @@ bool fn00200532(word32 xhl)
 word32 fn00200557(bui8 c, uint8 b, byte * xhl)
 {
 	word24 xwa_24_8_n = 0x00;
-	struct Eq_n * xde_n = (uint32) (c * 0x02) + 0x9800 + (uint16) b *32 0x40;
+	byte * xde_n = (uint32) (c * 0x02) + 0x9800 + (uint16) b *32 0x40;
 	byte b_n;
 	word32 xwa_n;
 	for (b_n = 0x13; b_n != 0x00; --b_n)
@@ -201,11 +200,11 @@ word32 fn00200557(bui8 c, uint8 b, byte * xhl)
 		if (v18_n == 0x00)
 			return xwa_n;
 		++xhl;
-		word32 * xde_n = (word32 *) (xde_n + 1);
-		word32 v25_n = *xde_n;
-		xde_n = (struct Eq_n *) ((char *) xde_n + 1);
+		byte * xde_n = xde_n + 1;
+		byte v25_n = *xde_n;
+		xde_n = xde_n + 1;
 		xwa_24_8_n = SEQ(xwa_16_16_n, v25_n);
-		xwa_n = SEQ(xwa_16_16_n, v25_n, xde_n->dw0000);
+		xwa_n = SEQ(xwa_16_16_n, v25_n, *xde_n);
 	}
 	return xwa_n;
 }
@@ -219,14 +218,14 @@ void fn002005B8()
 	word16 hl_n;
 	for (hl_n = 0x04C0; hl_n != 0x00; --hl_n)
 	{
-		*xbc_n = 0<32>;
+		*xbc_n = 0x00;
 		++xbc_n;
 	}
 	byte * xbc_n = (byte *) 0x9800;
 	word16 hl_n;
 	for (hl_n = 0x04C0; hl_n != 0x00; --hl_n)
 	{
-		*xbc_n = 0<32>;
+		*xbc_n = 0x00;
 		++xbc_n;
 	}
 }
@@ -248,7 +247,7 @@ void fn0020060C()
 	if (*(byte *) 0x6F91 == 0x00)
 	{
 		*(byte *) 0x6F83 &= ~0x08;
-		((union Eq_n *) 0x6DA0)->u0 = 0<32>;
+		*(byte *) 0x6DA0 = 0x00;
 	}
 }
 
