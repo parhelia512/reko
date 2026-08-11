@@ -55,7 +55,7 @@ namespace Reko.UnitTests.Arch.X86.Disassembler
             ByteMemoryArea mem = new ByteMemoryArea(Address.SegPtr(0xC00, 0), bytes);
             EndianImageReader rdr = mem.CreateLeReader(mem.BaseAddress);
             var decoders = ProcessorMode.Real.CreateRootDecoders(options);
-            var dasm = ProcessorMode.Real.CreateDisassembler(new RegisterBank(), sc, decoders, rdr, options);
+            var dasm = ProcessorMode.Real.CreateDisassembler(new Reko.Arch.X86.RegisterBank(), sc, decoders, rdr, options);
             if (options.ContainsKey("Emulate8087"))
             {
                 dasm.Emulate8087 = true;
@@ -70,7 +70,7 @@ namespace Reko.UnitTests.Arch.X86.Disassembler
             var decoders = ProcessorMode.Protected64.CreateRootDecoders(options);
             var dasm = new X86Disassembler(
                 sc,
-                new RegisterBank(),
+                new Reko.Arch.X86.RegisterBank(),
                 decoders,
                 ProcessorMode.Protected64,
                 rdr,
@@ -90,7 +90,7 @@ namespace Reko.UnitTests.Arch.X86.Disassembler
             var decoders = ProcessorMode.Real.CreateRootDecoders(options);
             dasm = new X86Disassembler(
                 sc,
-                new RegisterBank(),
+                new Reko.Arch.X86.RegisterBank(),
                 decoders,
                 ProcessorMode.Real,
                 mem.CreateLeReader(mem.BaseAddress),
@@ -107,7 +107,7 @@ namespace Reko.UnitTests.Arch.X86.Disassembler
             var decoders = ProcessorMode.Real.CreateRootDecoders(options);
             dasm = new X86Disassembler(
                 sc,
-                new RegisterBank(),
+                new Reko.Arch.X86.RegisterBank(),
                 decoders,
                 ProcessorMode.Real,
                 rdr,
@@ -314,7 +314,7 @@ movzx	ax,byte ptr [bp+4h]
         [Test]
         public void SegFromBits()
         {
-            var registers = new RegisterBank();
+            var registers = new Reko.Arch.X86.RegisterBank();
             Assert.AreSame(Registers.es, registers.SegmentRegisters[0]);
             Assert.AreSame(Registers.cs, registers.SegmentRegisters[1]);
             Assert.AreSame(Registers.ss, registers.SegmentRegisters[2]);
@@ -345,7 +345,7 @@ movzx	ax,byte ptr [bp+4h]
             var decoders = ProcessorMode.Protected32.CreateRootDecoders(new Dictionary<string, object>());
             X86Disassembler dasm = new X86Disassembler(
                 sc,
-                new RegisterBank(),
+                new Reko.Arch.X86.RegisterBank(),
                 decoders,
                 ProcessorMode.Protected32,
                 rdr,
