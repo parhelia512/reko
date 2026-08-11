@@ -112,6 +112,7 @@
       <var id="var.RT11.ProjectDir">$SolutionDir$/Environments/RT11/</var>
       <var id="var.RT11.TargetPath">$SolutionDir$/Environments/RT11/$TargetDir$/Reko.Environments.RT11.dll</var>
       <var id="var.RiscOS.TargetPath">$SolutionDir$/Environments/RiscOS/$TargetDir$/Reko.Environments.RiscOS.dll</var>
+      <var id="var.RiscOS.ProjectDir">$SolutionDir$/Environments/RiscOS/</var>
       <var id="var.SegaGenesis.ProjectDir">$SolutionDir$/Environments/SegaGenesis/</var>
       <var id="var.SegaGenesis.TargetPath">$SolutionDir$/Environments/SegaGenesis/$TargetDir$/Reko.Environments.SegaGenesis.dll</var>
       <var id="var.Snes.TargetPath">$SolutionDir$/Environments/Snes/$TargetDir$/Reko.Environments.Snes.dll</var>
