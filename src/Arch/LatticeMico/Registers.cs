@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace Reko.Arch.LatticeMico
     public static class Registers
     {
         public static RegisterStorage[] GpRegs { get; }
-
+        public static RegisterBank All { get; }
         public static RegisterStorage gp { get; }
         public static RegisterStorage fp { get; }
         public static RegisterStorage sp { get; }
@@ -49,6 +50,7 @@ namespace Reko.Arch.LatticeMico
             ba = factory.Reg32("ba");
 
             GpRegs = regs.Concat(new[] { gp, fp, sp, ra, ea, ba }).ToArray();
+            All = new RegisterBank(GpRegs);
         }
     }
 }

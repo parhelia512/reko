@@ -54,9 +54,9 @@ namespace Reko.Environments.Msdos
             var archx = (IntelArchitecture) Architecture;
             implicitRegs = new HashSet<RegisterStorage>
             {
-                archx.Registers.cs,
-                archx.Registers.ss,
-                archx.Registers.sp,
+                archx.RegisterAliases.cs,
+                archx.RegisterAliases.ss,
+                archx.RegisterAliases.sp,
                 Registers.esp,
                 Registers.Top,
             };
@@ -89,11 +89,11 @@ namespace Reko.Environments.Msdos
             var arch = (IntelArchitecture) Architecture;
             return new HashSet<RegisterStorage>
             {
-                arch.Registers.ax,
-                arch.Registers.cx,
-                arch.Registers.dx,
-                arch.Registers.bx,
-                arch.Registers.sp,
+                arch.RegisterAliases.ax,
+                arch.RegisterAliases.cx,
+                arch.RegisterAliases.dx,
+                arch.RegisterAliases.bx,
+                arch.RegisterAliases.sp,
                 Registers.Top,
             };
         }
@@ -138,12 +138,12 @@ namespace Reko.Environments.Msdos
             {
                 if (signature.Outputs[0].Storage is RegisterStorage reg)
                 {
-                    if (reg != Registers.al && reg != x86arch.Registers.ax)
+                    if (reg != Registers.al && reg != x86arch.RegisterAliases.ax)
                         return null;
                 }
                 if (signature.Outputs[0].Storage is SequenceStorage seq && seq.Elements.Length == 2)
                 {
-                    if (seq.Elements[0] != x86arch.Registers.dx || seq.Elements[1] != x86arch.Registers.ax)
+                    if (seq.Elements[0] != x86arch.RegisterAliases.dx || seq.Elements[1] != x86arch.RegisterAliases.ax)
                         return null;
                 }
             }

@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -30,12 +31,14 @@ namespace Reko.Arch.Zilog.eZ8
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
+
         public static RegisterStorage Flags { get; }
         public static RegisterStorage RP { get; }   // Register pointer
         public static RegisterStorage SP { get; }   // Stack pointer
         public static RegisterStorage SPL { get; }   // Stack pointer low part
         public static RegisterStorage SPH { get; }   // Stack pointer high part
-
 
         public static FlagGroupStorage C { get; }   // Carry flag
 
@@ -47,6 +50,8 @@ namespace Reko.Arch.Zilog.eZ8
             SP = new RegisterStorage("sp", 0xFFE, 0, PrimitiveType.Word16);
             SPL = new RegisterStorage("spl", 0xFFE, 0, PrimitiveType.Byte);
             SPH = new RegisterStorage("spl", 0xFFE, 8, PrimitiveType.Byte);
+
+            All = new RegisterBank(new[] { Flags, RP, SP, SPL, SPH });
 
             C = new FlagGroupStorage(Flags, (ulong) FlagM.CF, nameof(C));
         }

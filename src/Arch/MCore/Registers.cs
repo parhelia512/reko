@@ -19,12 +19,15 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
+using System.Linq;
 
 namespace Reko.Arch.MCore
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
         public static RegisterStorage [] GpRegisters { get; }
         public static RegisterStorage [] CrRegisters { get; }
 
@@ -52,8 +55,9 @@ namespace Reko.Arch.MCore
             Replace(CrRegisters, 11, "gcr");
             Replace(CrRegisters, 12, "gsr");
             R0 = GpRegisters[0];
+            PSR = CrRegisters[0];
+            All = new RegisterBank(GpRegisters.Concat(CrRegisters));
 
-            PSR = factory.Reg32("psr");
             C = new FlagGroupStorage(PSR, (ulong) FlagM.CF, nameof(C));
         }
 

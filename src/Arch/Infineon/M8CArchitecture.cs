@@ -37,7 +37,7 @@ public class M8CArchitecture : ProcessorArchitecture
         IServiceProvider services,
         string archId,
         Dictionary<string, object> options)
-        : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+        : base(services, archId, options, Registers.All)
     {
         Endianness = EndianServices.Big;
         CodeMemoryGranularity = 8;
@@ -89,11 +89,6 @@ public class M8CArchitecture : ProcessorArchitecture
     }
 
     public override int? GetMnemonicNumber(string name)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override RegisterStorage[] GetRegisters()
     {
         throw new NotImplementedException();
     }

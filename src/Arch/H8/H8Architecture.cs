@@ -39,7 +39,7 @@ namespace Reko.Arch.H8
         private readonly H8CallingConvention cc;
 
         public H8Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             this.CarryFlag = Registers.C;
             this.Endianness = EndianServices.Big;
@@ -114,34 +114,6 @@ namespace Reko.Arch.H8
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            RegisterStorage[] regs;
-            if (range.Msb <= 8)
-                regs = Registers.RlRegisters;
-            else if (range.Msb <= 16)
-            {
-                if (8 <= range.Lsb)
-                    regs = Registers.RhRegisters;
-                else
-                    regs = Registers.RRegisters;
-            }
-            else
-            {
-                regs = Registers.GpRegisters;
-            }
-            var i = domain - regs[0].Domain;
-            if (0 <= i && i < regs.Length)
-                return regs[i];
-            else
-                return null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
@@ -171,11 +143,6 @@ namespace Reko.Arch.H8
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.ByName.TryGetValue(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

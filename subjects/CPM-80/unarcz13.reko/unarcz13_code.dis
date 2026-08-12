@@ -4,7 +4,7 @@ void CpmCom_Start()
 //      fn01BF
 // MayUse: 
 // LiveOut:
-// Trashed: SZPC af b bc' d de de' f hl hl' ix
+// Trashed: SZPC af bc bc' de de' hl hl' ix
 // Preserved: sp
 CpmCom_Start_entry:
 l0100:
@@ -105,7 +105,7 @@ void fn01BF()
 //      fn0A8F
 // MayUse: 
 // LiveOut:
-// Trashed: SZC a f sp
+// Trashed: SZC a sp
 // Preserved:
 fn01BF_entry:
 	goto l01BF
@@ -200,12 +200,12 @@ fn021B_entry:
 l021B:
 	fn0D12(de)
 l021B_thunk_fn021E:
-	fn021E(out af_4)
+	fn021E(out a_4)
 	return
 fn021B_exit:
 
 
-byte fn021E(byte & afOut)
+byte fn021E(byte & aOut)
 // stackDelta: 2; fpuStackDelta: 0; fpuMaxParam: -1
 // Called from:
 //      fn01FB
@@ -213,13 +213,13 @@ byte fn021E(byte & afOut)
 //      fn04F3
 // MayUse: 
 // LiveOut: SZPC-fn04F3 a:[8..15]-fn04F3
-// Trashed: d
+// Trashed: de
 // Preserved: sp
 fn021E_entry:
 l021E:
 l021E_thunk_fn0221:
 	fn0221(de)
-	afOut = <invalid>
+	aOut = <invalid>
 	return <invalid>
 fn021E_exit:
 
@@ -231,7 +231,7 @@ void fn0221(word16 de)
 //      fn0226
 // MayUse:  de:[0..15]
 // LiveOut:
-// Trashed: SZC a d f
+// Trashed: SZC a de
 // Preserved: sp
 fn0221_entry:
 l0221:
@@ -248,7 +248,7 @@ void fn0226(byte f)
 //      CpmCom_Start
 // MayUse:  f:[0..7]
 // LiveOut:
-// Trashed: SZPC af b bc bc' d de de' f h hl hl' sp
+// Trashed: SZPC af bc bc' de de' hl hl' sp
 // Preserved:
 fn0226_entry:
 l0226:
@@ -736,7 +736,7 @@ byte fn04EE(word16 de, byte & bOut, word16 & hlOut, word16 & hl'Out)
 //      fn0B4F
 // MayUse:  de:[0..15]
 // LiveOut: af:[0..7]-fn06B0 bc:[8..15]-fn0B4F hl:[0..15]-fn0B4F hl':[0..15]-fn06B0
-// Trashed: c d
+// Trashed: c de
 // Preserved: sp
 fn04EE_entry:
 l04EE:
@@ -786,7 +786,7 @@ l0510_1:
 	return SZPC_19 & 0x40<8> | SZPC_19 & 0x80<8> | SZPC_19 & 4<8> | SZPC_19 & 1<8>
 l0511:
 l0511_thunk_fn021E:
-	SZPC_29 = fn021E(out af_50)
+	SZPC_29 = fn021E(out a_28)
 	afOut = <invalid>
 	return SZPC_29 & 0x40<8> | SZPC_29 & 0x80<8> | SZPC_29 & 4<8> | SZPC_29 & 1<8>
 fn04F3_exit:
@@ -873,7 +873,7 @@ word16 fn052E(byte & bOut, word16 & deOut, word16 & hlOut)
 //      fn05A3
 // MayUse: 
 // LiveOut: af:[0..15]-CpmCom_Start bc:[8..15]-CpmCom_Start de:[0..15]-fn05A3 hl:[0..15]-CpmCom_Start
-// Trashed: SZP a b bc d de f h hl
+// Trashed: SZP a bc de hl
 // Preserved: sp
 fn052E_entry:
 l052E:
@@ -905,17 +905,17 @@ l0535_1:
 	hl_36 = fn0540()
 	goto l0535_thunk_fn0538
 l0535_thunk_fn0538:
-	fn0538(hl_29, out bc_31, out de_32, out hl_33)
+	a_30 = fn0538(hl_29, out bc_31, out de_32, out hl_33)
 	bcOut = bc_31
 	deOut = de_32
 	hlOut = hl_33
-	return <invalid>
+	return a_30
 l0535_thunk_fn0538:
-	fn0538(hl_36, out bc_42, out de_43, out hl_44)
+	a_41 = fn0538(hl_36, out bc_42, out de_43, out hl_44)
 	bcOut = bc_42
 	deOut = de_43
 	hlOut = hl_44
-	return <invalid>
+	return a_41
 fn0531_exit:
 
 
@@ -931,11 +931,12 @@ byte fn0538(word16 hl, word16 & bcOut, word16 & deOut, word16 & hlOut)
 fn0538_entry:
 l0538:
 	Mem4[0x1767<16>:word16] = hl
+	a_5 = Mem4[hl:byte]
 l053C:
 	bcOut = wArg04
 	deOut = wArg02
 	hlOut = wArg00
-	return <invalid>
+	return a_5
 fn0538_exit:
 
 
@@ -967,7 +968,7 @@ void fn0542(word16 bc)
 //      fn0563
 // MayUse:  bc:[0..15]
 // LiveOut:
-// Trashed: SZC a b de hl
+// Trashed: SZC a bc de hl
 // Preserved: sp
 fn0542_entry:
 l0542:
@@ -1030,8 +1031,8 @@ void fn0563(word16 c_d, byte b, byte e)
 //      CpmCom_Start
 // MayUse:  b:[0..7] e:[0..7] Sequence c:d:[0..15]
 // LiveOut:
-// Trashed: SZPC a b de hl
-// Preserved: c sp
+// Trashed: SZPC a de hl
+// Preserved: b c sp
 fn0563_entry:
 l0563:
 	branch b != 0<8> l0565_thunk_fn0557
@@ -1761,7 +1762,7 @@ byte fn0A3D(byte a, byte b, word16 & deOut, word16 & hlOut)
 //      fn06B0
 // MayUse:  a:[0..7] b:[0..7]
 // LiveOut: bc:[8..15]-fn06B0 de:[0..15]-fn06B0 hl:[0..15]-fn06B0
-// Trashed: SZPC a b
+// Trashed: SZPC a b c
 // Preserved: c sp
 fn0A3D_entry:
 l0A3D:
@@ -1799,7 +1800,7 @@ l0A55_thunk_fn0A56:
 fn0A3D_exit:
 
 
-word16 fn0A56(byte a, word16 de, byte l, byte h, word16 & deOut, word16 & hlOut)
+byte fn0A56(byte a, word16 de, byte l, byte h, word16 & deOut, word16 & hlOut)
 // stackDelta: 2; fpuStackDelta: 0; fpuMaxParam: -1
 // Called from:
 //      fn06B0
@@ -1866,7 +1867,7 @@ void fn0A8F(word16 bc, word16 de)
 //      fn0A56
 // MayUse:  bc:[0..15] de:[0..15]
 // LiveOut:
-// Trashed: SZPC a b bc d de f h hl
+// Trashed: SZPC a bc de hl
 // Preserved: sp
 fn0A8F_entry:
 l0A8F:
@@ -1965,7 +1966,7 @@ byte fn0AB3(word16 de, word16 & deOut)
 //      fn0A8F
 // MayUse:  de:[0..15]
 // LiveOut: a:[0..7]-fn0A8F de:[0..15]-fn0A8F
-// Trashed: SZPC a c de h
+// Trashed: SZPC a c de hl
 // Preserved: sp
 fn0AB3_entry:
 l0AB3:
@@ -2358,7 +2359,7 @@ void fn0CDE(word16 de)
 //      fn0D1E
 // MayUse:  de:[0..15]
 // LiveOut:
-// Trashed: SZC f
+// Trashed: SZC a
 // Preserved: de sp
 fn0CDE_entry:
 l0CDE:
@@ -2428,7 +2429,7 @@ void fn0D12(word16 de)
 // MayUse:  de:[0..15]
 // LiveOut:
 // Trashed: SZC a
-// Preserved: d sp
+// Preserved: de sp
 fn0D12_entry:
 l0D12:
 	fn0CE1(f, out de_16, out hl'_17)
@@ -2468,7 +2469,7 @@ void fn0D1E()
 //      fn06B0
 // MayUse: 
 // LiveOut:
-// Trashed: SZC f
+// Trashed: SZC a
 // Preserved: de sp
 fn0D1E_entry:
 l0D1E:
@@ -2485,7 +2486,7 @@ void fn0D28()
 //      fn0BFD
 // MayUse: 
 // LiveOut:
-// Trashed: SZPC c de f hl
+// Trashed: SZPC a c de hl
 // Preserved: sp
 fn0D28_entry:
 l0D28:

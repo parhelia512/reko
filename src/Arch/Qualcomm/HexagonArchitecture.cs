@@ -33,7 +33,7 @@ namespace Reko.Arch.Qualcomm
     public class HexagonArchitecture : ProcessorArchitecture
     {
         public HexagonArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Little;
             this.FramePointerType = PrimitiveType.Ptr32;
@@ -88,11 +88,6 @@ namespace Reko.Arch.Qualcomm
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -106,11 +101,6 @@ namespace Reko.Arch.Qualcomm
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.ByName.TryGetValue(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

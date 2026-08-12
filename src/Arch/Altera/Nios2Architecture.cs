@@ -33,7 +33,7 @@ namespace Reko.Arch.Altera
     public class Nios2Architecture : ProcessorArchitecture
     {
         public Nios2Architecture(IServiceProvider services, string archId, Dictionary<string, object> options) 
-            : base(services, archId, options, Nios2.Registers.ByName, null!)
+            : base(services, archId, options, Nios2.Registers.All)
         {
             base.Endianness = EndianServices.Little;
             base.CarryFlag = null;
@@ -89,11 +89,6 @@ namespace Reko.Arch.Altera
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -105,11 +100,6 @@ namespace Reko.Arch.Altera
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

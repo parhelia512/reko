@@ -67,8 +67,7 @@ namespace Reko.Arch.CompactRisc
         public static RegisterStorage DBG { get; }
         public static RegisterStorage ISE { get; }
 
-        public static Dictionary<string, RegisterStorage> ByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
 
         static Registers()
         {
@@ -170,10 +169,9 @@ namespace Reko.Arch.CompactRisc
             LZ = new FlagGroupStorage(PSR, (uint) (FlagM.LF | FlagM.ZF), nameof(LZ));
             NZ = new FlagGroupStorage(PSR, (uint) (FlagM.NF | FlagM.ZF), nameof(NZ));
 
-            ByName = GpRegisters
-                    .Concat(ProcessorRegisters)
-                    .ToDictionary(r => r.Name);
-            ByDomain = factory.DomainsToRegisters;
+            All = new RegisterBank(
+                GpRegisters
+                    .Concat(ProcessorRegisters));
         }
     }
 

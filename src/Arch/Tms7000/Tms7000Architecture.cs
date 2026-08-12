@@ -16,7 +16,7 @@ namespace Reko.Arch.Tms7000
     public class Tms7000Architecture : ProcessorArchitecture
     {
         public Tms7000Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, new([]))
         {
             this.Endianness = EndianServices.Big;
             this.InstructionBitSize = 8;
@@ -36,6 +36,8 @@ namespace Reko.Arch.Tms7000
             this.StackRegister = sp;
             this.FramePointerType = (PrimitiveType) sp.DataType;
             this.PointerType = PrimitiveType.Ptr16;
+            this.RegisterBank = new RegisterBank(GpRegs.Concat(Ports)
+                .Concat([st, sp]));
         }
 
         public RegisterStorage a;
@@ -97,11 +99,6 @@ namespace Reko.Arch.Tms7000
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage st, string str, ulong grf)
         {
             StringBuilder s = new StringBuilder();
@@ -119,11 +116,6 @@ namespace Reko.Arch.Tms7000
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

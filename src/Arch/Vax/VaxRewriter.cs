@@ -500,7 +500,13 @@ namespace Reko.Arch.Vax
                 }
                 else if (width.Size == 8)
                 {
-                    var rHi = arch.GetRegister(1 + (int) reg.Storage.Domain);
+                    //$TODO: these nulls should never happen.
+                    // The disassembler should have already filtered
+                    // out instructions that use registers that don't exist in the architecture.
+                    int iHi = 1 + (int) reg.Storage.Domain;
+                    if (iHi >= Registers.GpRegisters.Length)
+                        return null!;
+                    var rHi = Registers.GpRegisters[iHi];
                     if (rHi is null)
                         return null!;
                     var regHi = binder.EnsureRegister(rHi);
@@ -508,9 +514,9 @@ namespace Reko.Arch.Vax
                 }
                 else if (width.Size == 16)
                 {
-                    var regHi1 = binder.EnsureRegister(arch.GetRegister(1 + (int) reg.Storage.Domain)!);
-                    var regHi2 = binder.EnsureRegister(arch.GetRegister(2 + (int) reg.Storage.Domain)!);
-                    var regHi3 = binder.EnsureRegister(arch.GetRegister(3 + (int) reg.Storage.Domain)!);
+                    var regHi1 = binder.EnsureRegister(Registers.GpRegisters[1 + (int) reg.Storage.Domain]);
+                    var regHi2 = binder.EnsureRegister(Registers.GpRegisters[2 + (int) reg.Storage.Domain]);
+                    var regHi3 = binder.EnsureRegister(Registers.GpRegisters[3 + (int) reg.Storage.Domain]);
 
                     var regLo = binder.EnsureSequence(PrimitiveType.Word64, regHi1.Storage, reg.Storage);
                     var regHi = binder.EnsureSequence(PrimitiveType.Word64, regHi3.Storage, regHi2.Storage);
@@ -637,7 +643,7 @@ namespace Reko.Arch.Vax
                 }
                 else if (width.BitSize == 64)
                 {
-                    var rHi = arch.GetRegister(1 + (int)reg.Storage.Domain);
+                    var rHi = Registers.GpRegisters[1 + (int)reg.Storage.Domain];
                     if (rHi is null)
                         return null!;
                     var regHi = binder.EnsureRegister(rHi);
@@ -645,9 +651,9 @@ namespace Reko.Arch.Vax
                 }
                 else if (width.BitSize == 128)
                 {
-                    var regHi1 = binder.EnsureRegister(arch.GetRegister(1 + (int)reg.Storage.Domain)!);
-                    var regHi2 = binder.EnsureRegister(arch.GetRegister(2 + (int)reg.Storage.Domain)!);
-                    var regHi3 = binder.EnsureRegister(arch.GetRegister(3 + (int)reg.Storage.Domain)!);
+                    var regHi1 = binder.EnsureRegister(Registers.GpRegisters[1 + (int)reg.Storage.Domain]);
+                    var regHi2 = binder.EnsureRegister(Registers.GpRegisters[2 + (int)reg.Storage.Domain]);
+                    var regHi3 = binder.EnsureRegister(Registers.GpRegisters[3 + (int)reg.Storage.Domain]);
 
                     var regLo = binder.EnsureSequence(PrimitiveType.Word64, regHi1.Storage, reg.Storage);
                     var regHi = binder.EnsureSequence(PrimitiveType.Word64, regHi3.Storage, regHi2.Storage);

@@ -23,33 +23,19 @@ using Reko.Arch.Arm;
 using Reko.Arch.Arm.AArch64;
 using Reko.Core;
 using Reko.Core.Lib;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reko.UnitTests.Arch.Arm
 {
     [TestFixture]
     public class Arm64ArchitectureTests
     {
-        [Test]
-        public void Arm64Arch_Registers()
-        {
-            for (int i = 0; i < Registers.SubRegisters.Length; ++i)
-            {
-                Assert.AreEqual(i, Registers.SubRegisters[i][0].Number);
-                Assert.AreEqual(i, (int) Registers.SubRegisters[i][0].Domain);
-            }
-        }
 
         [Test]
         public void Arm64Arch_GetRegister()
         {
             var sc = new ServiceContainer();
-            var arch = new Arm64Architecture(sc, "aarch64", new Dictionary<string, object>());
+            var arch = new Arm64Architecture(sc, "aarch64", []);
             Assert.AreSame(Registers.GpRegs32[3], arch.GetRegister((StorageDomain) 3, new BitRange(16, 32)));
         }
     }

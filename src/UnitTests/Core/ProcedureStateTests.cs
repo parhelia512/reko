@@ -102,7 +102,7 @@ namespace Reko.UnitTests.Core
         public class FakeArchitecture : ProcessorArchitecture
         {
             public FakeArchitecture(IServiceProvider services) : 
-                base(services, "fake", new Dictionary<string, object>(), null, null)
+                base(services, "fake", new Dictionary<string, object>(), new([]))
             {
                 this.Endianness = EndianServices.Little;
                 this.InstructionBitSize = 32;
@@ -134,12 +134,6 @@ namespace Reko.UnitTests.Core
             {
                 throw new NotImplementedException();
             }
-
-            public override RegisterStorage[] GetRegisters()
-            {
-                throw new NotImplementedException();
-            }
-
 
             public override FlagGroupStorage GetFlagGroup(RegisterStorage flagRegister, ulong grf)
             {

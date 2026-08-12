@@ -19,15 +19,12 @@
 #endregion
 
 using Reko.Core;
-using Reko.Core.Expressions;
-using Reko.Core.Lib;
 using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 
 namespace Reko.Arch.Sparc
 {
@@ -75,8 +72,7 @@ namespace Reko.Arch.Sparc
         public readonly RegisterStorage[] DFloatRegisters;
         public readonly RegisterStorage[] FFloatRegisters;
 
-        private readonly Dictionary<string, RegisterStorage> mpNameToReg;
-        private readonly Dictionary<StorageDomain, RegisterStorage> mpDomainToReg;
+        public RegisterBank All { get; }
 
         public Registers(PrimitiveType wordSize)
         {
@@ -130,6 +126,7 @@ namespace Reko.Arch.Sparc
 
             psr = stg.Reg32("psr");
 
+
             N = new FlagGroupStorage(psr, (ulong) FlagM.NF, nameof(N));
             Z = new FlagGroupStorage(psr, (ulong) FlagM.ZF, nameof(Z));
             V = new FlagGroupStorage(psr, (ulong) FlagM.VF, nameof(V));
@@ -158,30 +155,13 @@ namespace Reko.Arch.Sparc
 
             fsr = stg.Reg32("fsr");
 
-            mpNameToReg = stg.NamesToRegisters;
-            foreach (var fpreg in DFloatRegisters.Concat(FFloatRegisters))
-            {
-                mpNameToReg.Add(fpreg.Name, fpreg);
-            }
-            mpDomainToReg = stg.DomainsToRegisters;
+            All = new RegisterBank(stg.NamesToRegisters.Values
+                .Concat(DFloatRegisters).Concat(FFloatRegisters));
         }
 
         public RegisterStorage GetRegister(uint r)
         {
             return IntegerRegisters[r & 0x1F];
-        }
-
-        public bool TryGetRegister(string regName, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return mpNameToReg.TryGetValue(regName, out reg);
-        }
-
-        public RegisterStorage? GetRegister(StorageDomain domain)
-        {
-            if (mpDomainToReg.TryGetValue(domain, out var reg))
-                return reg;
-            else
-                return null;
         }
 
         public bool IsGpRegister(RegisterStorage reg)

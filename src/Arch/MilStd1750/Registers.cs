@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -42,8 +43,7 @@ namespace Reko.Arch.MilStd1750
         public static RegisterStorage go { get; }     /* not a real register but handled like TA/TB */
         public static RegisterStorage sys { get; }    /* system configuration register */
 
-        public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
-        public static Dictionary<string, RegisterStorage> ByName { get; }
+        public static RegisterBank All { get; }
 
         public static FlagGroupStorage C { get; }
         public static FlagGroupStorage P { get; }
@@ -64,8 +64,7 @@ namespace Reko.Arch.MilStd1750
             tb = factory.Reg16("tb");
             go = factory.Reg16("go");
             sys = factory.Reg16("sys");
-            ByName = factory.NamesToRegisters;
-            ByDomain = factory.DomainsToRegisters;
+            All = new RegisterBank(factory.NamesToRegisters.Values);
 
             C = new FlagGroupStorage(Registers.sw, (ulong) FlagM.CF, nameof(C));
             P = new FlagGroupStorage(Registers.sw, (ulong) FlagM.PF, nameof(P));

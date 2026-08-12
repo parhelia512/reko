@@ -19,16 +19,14 @@
 #endregion
 
 using Reko.Core;
-using Reko.Core.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Reko.Core.Machine;
 
 namespace Reko.Arch.Tlcs.Tlcs900
 {
     public static class Tlcs900Registers
     {
+        public static RegisterBank All { get; }
+
         public static readonly RegisterStorage xwa = RegisterStorage.Reg32("xwa", 0);
         public static readonly RegisterStorage xbc = RegisterStorage.Reg32("xbc", 1);
         public static readonly RegisterStorage xde = RegisterStorage.Reg32("xde", 2);
@@ -60,7 +58,6 @@ namespace Reko.Arch.Tlcs.Tlcs900
         public static readonly RegisterStorage f = RegisterStorage.Reg8("f", 8);
 
         internal static RegisterStorage[] regs;
-        internal static Dictionary<StorageDomain, Dictionary<int, RegisterStorage>> Subregisters;
 
         public static readonly FlagGroupStorage S = new FlagGroupStorage(sr, 32, nameof(S));
         public static readonly FlagGroupStorage Z = new FlagGroupStorage(sr, 16, nameof(Z));
@@ -105,74 +102,7 @@ namespace Reko.Arch.Tlcs.Tlcs900
                     h,
                     l,
             };
-
-            Subregisters = new Dictionary<StorageDomain, Dictionary<int, RegisterStorage>>()
-            {
-                {
-                    xwa.Domain, new Dictionary<int, RegisterStorage>
-                    {
-                        { 0x200, xwa },
-                        { 0x100, wa },
-                        { 0x080, a },
-                        { 0x088, w }
-                    }
-                },
-                {
-                    xbc.Domain, new Dictionary<int, RegisterStorage>
-                    {
-                        { 0x200, xbc },
-                        { 0x100, bc },
-                        { 0x080, c },
-                        { 0x088, b }
-                    }
-                },
-                {
-                    xde.Domain, new Dictionary<int, RegisterStorage>
-                    {
-                        { 0x200, xde },
-                        { 0x100, de },
-                        { 0x080, e },
-                        { 0x088, d }
-                    }
-                },
-                {
-                    xhl.Domain, new Dictionary<int, RegisterStorage>
-                    {
-                        { 0x200, xhl },
-                        { 0x100, hl },
-                        { 0x080, l },
-                        { 0x088, h }
-                    }
-                },
-                {
-                    xix.Domain, new Dictionary<int, RegisterStorage>
-                    {
-                        { 0x200, xix },
-                        { 0x100, ix },
-                    }
-                },
-                {
-                    xiy.Domain, new Dictionary<int, RegisterStorage>
-                    {
-                        { 0x200, xiy },
-                        { 0x100, iy },
-                    }
-                },
-                {
-                    xiz.Domain, new Dictionary<int, RegisterStorage>
-                    {
-                        { 0x200, xiz },
-                        { 0x100, iz },
-                    }
-                },
-                {
-                    xsp.Domain, new Dictionary<int, RegisterStorage>
-                    {
-                        { 0x200, xsp },
-                        { 0x100, sp },
-                    }
-                },
-            };
+            All = new RegisterBank(regs);
         }
     }
 }

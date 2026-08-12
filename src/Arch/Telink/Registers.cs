@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -30,8 +31,8 @@ namespace Reko.Arch.Telink
 {
     public static class Registers
     {
-        public static Dictionary<string, RegisterStorage>? ByName { get; internal set; }
-        public static Dictionary<StorageDomain, RegisterStorage>? ByDomain { get; internal set; }
+        public static RegisterBank All { get; }
+
         public static RegisterStorage sp { get; }
         public static RegisterStorage lr { get; }
         public static RegisterStorage pc { get; }
@@ -47,6 +48,7 @@ namespace Reko.Arch.Telink
             gpRegs.Add(lr = factory.Reg32("lr"));
             gpRegs.Add(pc = factory.Reg32("pc"));
             GpRegisters = gpRegs.ToArray();
+            All = new RegisterBank(GpRegisters);
         }
     }
 }

@@ -26,6 +26,7 @@ using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Transactions;
 using Reko.Core;
+using Reko.Core.Machine;
 
 public static class Registers
 {
@@ -81,8 +82,7 @@ public static class Registers
         LZ = new FlagGroupStorage(PSR, (uint) (FlagM.LF | FlagM.ZF), "LZ");
         NZ = new FlagGroupStorage(PSR, (uint) (FlagM.NF | FlagM.ZF), "NZ");
 
-        RegistersByName = factory.NamesToRegisters;
-        RegistersByDomain = factory.DomainsToRegisters;
+        All = new RegisterBank(factory.NamesToRegisters.Values);
     }
 
     public static RegisterStorage PC { get; }   //  Program Counter
@@ -136,8 +136,7 @@ public static class Registers
     public static FlagGroupStorage NZ { get; }
 
 
-    public static Dictionary<string, RegisterStorage> RegistersByName { get; }
-    public static Dictionary<StorageDomain, RegisterStorage> RegistersByDomain { get; }
+    public static RegisterBank All { get; }
 }
 
 [Flags]

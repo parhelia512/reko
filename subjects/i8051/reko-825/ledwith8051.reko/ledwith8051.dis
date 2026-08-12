@@ -29,7 +29,7 @@ void fn0003()
 //      fn0000
 // MayUse: 
 // LiveOut:
-// Trashed: CP A R4 R5 R6 R7
+// Trashed: CP AB R4 R5 R6 R7
 // Preserved: SP
 fn0003_entry:
 l0003:

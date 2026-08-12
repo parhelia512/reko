@@ -58,7 +58,7 @@ namespace Reko.Arch.Mips
         private Decoder<MipsDisassembler, Mnemonic, MipsInstruction>? rootDecoder;
 
         public MipsArchitecture(IServiceProvider services, string archId, EndianServices endianness, PrimitiveType wordSize, PrimitiveType ptrSize, Dictionary<string, object> options) 
-            : base(services, archId, options, null!, null!)
+            : base(services, archId, options, new([]))
         {
             this.Endianness = endianness;
             this.WordWidth = wordSize;
@@ -81,12 +81,11 @@ namespace Reko.Arch.Mips
                 { 0x1F, FCSR }
             };
 
-            this.regsByName = GeneralRegs
+            this.RegisterBank = new RegisterBank(GeneralRegs
                 .Concat(fpuRegs)
                 .Concat(fpuCtrlRegs.Values)
                 .Concat(ccRegs)
-                .Concat(new[] { hi, lo })
-                .ToDictionary(k => k.Name);
+                .Concat(new[] { hi, lo }));
             uCodeAddressMask = ~3ul;
 
             LoadUserOptions(options);
@@ -183,22 +182,12 @@ namespace Reko.Arch.Mips
             return (int)result;
         }
 
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            var i = domain - StorageDomain.Register;
-            return GetRegister(i);
-        }
 
         public RegisterStorage? GetRegister(int i)
         {
             if (i >= GeneralRegs.Length)
                 return null;
             return GeneralRegs[i];
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return GeneralRegs;
         }
 
         public override FlagGroupStorage GetFlagGroup(RegisterStorage flagRegister, ulong grf)

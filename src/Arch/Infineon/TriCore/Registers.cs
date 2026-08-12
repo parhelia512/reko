@@ -20,6 +20,7 @@
 
 using Reko.Core;
 using Reko.Core.Lib;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,6 @@ namespace Reko.Arch.Infineon.TriCore
         public static readonly RegisterStorage[] ExtendedARegisters;
         public static readonly RegisterStorage[] ExtendedDRegisters;
         public static readonly FlagGroupStorage[] PswFlags;
-        public static readonly Dictionary<StorageDomain, RegisterStorage[]> Subregisters;
 
         public static readonly Dictionary<uint, RegisterStorage> CoreRegisters;
 
@@ -50,8 +50,7 @@ namespace Reko.Arch.Infineon.TriCore
         public static readonly FlagGroupStorage V_SV_AV_SAV;
         public static readonly FlagGroupStorage C_V_SV_AV_SAV;
 
-        public static Dictionary<string, RegisterStorage> ByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
 
 
         static Registers()
@@ -383,20 +382,10 @@ namespace Reko.Arch.Infineon.TriCore
             V_SV_AV_SAV = new FlagGroupStorage(psw, (uint) (FlagM.VF | FlagM.SVF | FlagM.AVF | FlagM.SAVF), nameof(V_SV_AV_SAV));
             C_V_SV_AV_SAV = new FlagGroupStorage(psw, (uint) (FlagM.CF | FlagM.VF | FlagM.SVF | FlagM.AVF | FlagM.SAVF), nameof(C_V_SV_AV_SAV));
 
-            ByName = ExtendedARegisters
+            All = new RegisterBank(ExtendedARegisters
                 .Concat(ExtendedDRegisters)
                 .Concat(AddrRegisters)
-                .Concat(DataRegisters)
-                .ToDictionary(r => r.Name);
-            ByDomain = ExtendedARegisters
-                .Concat(ExtendedDRegisters)
-                .ToDictionary(r => r.Domain);
-            Subregisters = new(from sub in DataRegisters.Concat(AddrRegisters)
-                               group sub by sub.Domain into g
-                               select KeyValuePair.Create(
-                                   g.Key,
-                                   g.OrderBy(s => s.BitAddress)
-                                    .ToArray()));
+                .Concat(DataRegisters));
         }
 
         private static RegisterStorage[] MakeSubregs(RegisterStorage p)
@@ -405,21 +394,6 @@ namespace Reko.Arch.Infineon.TriCore
                     AddrRegisters[p.Number - ExtendedARegisters[0].Number*2],
                     AddrRegisters[p.Number*2 + 1]
                 };
-        }
-
-        public static RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            if (!ByDomain.TryGetValue(domain, out var reg))
-                return null;
-            if (!Subregisters.TryGetValue(domain, out var subregs))
-                return reg;
-            RegisterStorage best = reg;
-            foreach (RegisterStorage subreg in subregs)
-            {
-                if (subreg.Covers(range))
-                    best = subreg;
-            }
-            return best;
         }
     }
 

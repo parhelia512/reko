@@ -41,7 +41,7 @@ namespace Reko.Arch.Sparc
         private readonly Dictionary<ulong, FlagGroupStorage> flagGroups;
 
         public SparcArchitecture(IServiceProvider services, string archId, Registers registers, Decoder rootDecoder, PrimitiveType wordWidth, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, registers.All)
         {
             this.Registers = registers;
             this.Decoder = rootDecoder;
@@ -106,34 +106,6 @@ namespace Reko.Arch.Sparc
             if (!Enum.TryParse(name, true, out Mnemonic result))
                 return null;
             return (int)result;
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            return Registers.GetRegister(domain);
-        }
-
-        public override RegisterStorage? GetRegister(string name)
-        {
-            if (Registers.TryGetRegister(name, out var reg))
-                return reg;
-            else
-                return null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return
-                Registers.IntegerRegisters
-                .Concat(Registers.QFloatRegisters)
-                .Concat(Registers.DFloatRegisters)
-                .Concat(Registers.FFloatRegisters)
-                .ToArray();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.TryGetRegister(name, out reg);
         }
 
         public override FlagGroupStorage GetFlagGroup(RegisterStorage flagRegister, ulong grf)

@@ -41,7 +41,7 @@ namespace Reko.Tools.C2Xml.UnitTests
         public class FakeArchitecture : ProcessorArchitecture
         {
             public FakeArchitecture(IServiceProvider services) :
-                base(services, "fake", new Dictionary<string, object>(), null, null)
+                base(services, "fake", new Dictionary<string, object>(), new([]))
             {
                 base.PointerType = PrimitiveType.Ptr32;
             }
@@ -83,11 +83,6 @@ namespace Reko.Tools.C2Xml.UnitTests
             }
 
             public override FlagGroupStorage GetFlagGroup(RegisterStorage flagRegister, ulong grf)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override RegisterStorage[] GetRegisters()
             {
                 throw new NotImplementedException();
             }

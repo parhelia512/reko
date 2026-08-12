@@ -34,7 +34,7 @@ namespace Reko.Arch.Arc
     public class ARCompactArchitecture : ProcessorArchitecture
     {
         public ARCompactArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             base.Endianness = EndianServices.Little;
             base.FramePointerType = PrimitiveType.Ptr32;
@@ -94,11 +94,6 @@ namespace Reko.Arch.Arc
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
@@ -152,11 +147,6 @@ namespace Reko.Arch.Arc
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.ByName.TryGetValue(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

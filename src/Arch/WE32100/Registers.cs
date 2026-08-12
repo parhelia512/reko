@@ -18,6 +18,7 @@
  */
 #endregion
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -40,8 +41,7 @@ namespace Reko.Arch.WE32100
         public static FlagGroupStorage NZVC { get; }
         public static FlagGroupStorage[] Flags { get; }
 
-        public static Dictionary<string, RegisterStorage> ByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
 
 
         private static readonly string[] regNames = new[] {
@@ -65,8 +65,7 @@ namespace Reko.Arch.WE32100
             NZV = new FlagGroupStorage(psw, (uint) (FlagM.N | FlagM.Z | FlagM.V), nameof(NZV));
             NZVC = new FlagGroupStorage(psw, (uint) (FlagM.N | FlagM.Z | FlagM.V | FlagM.C), nameof(NZVC));
 
-            ByName = factory.NamesToRegisters;
-            ByDomain = factory.DomainsToRegisters;
+            All = new RegisterBank(factory.NamesToRegisters.Values);
         }
     }
 

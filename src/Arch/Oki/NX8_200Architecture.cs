@@ -32,7 +32,7 @@ namespace Reko.Arch.Oki;
 public class NX8_200Architecture : ProcessorArchitecture
 {
     public NX8_200Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-        : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+        : base(services, archId, options, Registers.All)
     {
         this.CarryFlag = null!;
         this.CodeMemoryGranularity = 8;
@@ -86,11 +86,6 @@ public class NX8_200Architecture : ProcessorArchitecture
     }
 
     public override int? GetMnemonicNumber(string name)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override RegisterStorage[] GetRegisters()
     {
         throw new NotImplementedException();
     }

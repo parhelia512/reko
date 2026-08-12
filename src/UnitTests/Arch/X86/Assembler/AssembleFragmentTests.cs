@@ -88,7 +88,7 @@ namespace Reko.UnitTests.Arch.X86.Assembler
             var decoders = ProcessorMode.Real.CreateRootDecoders(new Dictionary<string, object>());
             X86Disassembler dasm = new X86Disassembler(
                 sc,
-                arch.Registers,
+                arch.RegisterAliases,
                 decoders,
                 ProcessorMode.Real,
                 mem.CreateLeReader(mem.BaseAddress),

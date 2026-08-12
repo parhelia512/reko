@@ -32,7 +32,7 @@ namespace Reko.Arch.NatSemi;
 public class Ns32kArchitecture : ProcessorArchitecture
 {
     public Ns32kArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-        : base(services, archId, options, Registers.RegistersByName, Registers.RegistersByDomain)
+        : base(services, archId, options, Registers.All)
     {
         this.CarryFlag = Registers.C;
         this.Endianness = EndianServices.Little;
@@ -86,11 +86,6 @@ public class Ns32kArchitecture : ProcessorArchitecture
     }
 
     public override int? GetMnemonicNumber(string name)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override RegisterStorage[] GetRegisters()
     {
         throw new NotImplementedException();
     }

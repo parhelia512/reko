@@ -35,7 +35,7 @@ namespace Reko.Arch.IA64
     public class IA64Architecture : ProcessorArchitecture
     {
         public IA64Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.RegistersByName, Registers.RegistersByDomain)
+            : base(services, archId, options, Registers.All)
         {
             Endianness = EndianServices.Little;
             this.FramePointerType = PrimitiveType.Ptr64;
@@ -108,11 +108,6 @@ namespace Reko.Arch.IA64
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -124,11 +119,6 @@ namespace Reko.Arch.IA64
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

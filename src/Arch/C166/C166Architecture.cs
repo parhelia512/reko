@@ -35,7 +35,7 @@ namespace Reko.Arch.C166
     public class C166Architecture : ProcessorArchitecture
     {
         public C166Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             Endianness = EndianServices.Little;
             FramePointerType = PrimitiveType.Ptr16;
@@ -97,25 +97,6 @@ DPP3	If DPP3 is modified in the assembler subroutine, it must be reset to 3 (SYS
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            var nDomain = (int) domain;
-            if (0 <= nDomain && nDomain < Registers.GpRegs.Length)
-            {
-                if (range.Lsb < 8 && range.Msb <= 8)
-                    return Registers.LoByteRegs[nDomain / 2];
-                if (range.Lsb >= 8 && range.Msb < 16)
-                    return Registers.HiByteRegs[nDomain / 2];
-                return Registers.GpRegs[nDomain];
-            }
-            return Registers.ByDomain[domain];
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
@@ -143,11 +124,6 @@ DPP3	If DPP3 is modified in the assembler subroutine, it must be reset to 3 (SYS
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

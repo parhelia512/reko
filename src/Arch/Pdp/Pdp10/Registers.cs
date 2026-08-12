@@ -1,12 +1,14 @@
 using Reko.Arch.Pdp.Memory;
 using Reko.Core;
-using Reko.Core.Types;
+using Reko.Core.Machine;
 using System;
 
 namespace Reko.Arch.Pdp.Pdp10
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
         public static RegisterStorage[] Accumulators { get; }
 
         // "Virtual" processor status word. It appears the PDP-10 didn't have any,
@@ -24,6 +26,7 @@ namespace Reko.Arch.Pdp.Pdp10
             var factory = new StorageFactory();
             Accumulators = factory.RangeOfReg(16, u => $"r{u}", PdpTypes.Word36);
             Psw = factory.Reg("Psw", PdpTypes.Word36);
+            All = new RegisterBank(factory.NamesToRegisters.Values);
 
             C0 = new FlagGroupStorage(Psw, (ulong) FlagM.C0, nameof(C0));
             C1 = new FlagGroupStorage(Psw, (ulong) FlagM.C1, nameof(C1));

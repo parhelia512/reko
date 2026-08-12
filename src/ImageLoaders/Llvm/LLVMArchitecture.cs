@@ -47,8 +47,7 @@ namespace Reko.ImageLoaders.LLVM
             services,
             "llvm",
             [],
-            ReadOnlyDictionary<string, RegisterStorage>.Empty,
-            ReadOnlyDictionary<StorageDomain, RegisterStorage>.Empty)
+            new RegisterBank([]))
         {
             this.layout = layout;
             this.Endianness = layout.Endianness;
@@ -105,21 +104,6 @@ namespace Reko.ImageLoaders.LLVM
             throw new NotSupportedException();
         }
 
-        public override RegisterStorage GetRegister(string name)
-        {
-            throw new NotSupportedException();
-        }
-
-        public override RegisterStorage GetRegister(StorageDomain domain, BitRange range)
-        {
-            throw new NotSupportedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotSupportedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotSupportedException();
@@ -133,11 +117,6 @@ namespace Reko.ImageLoaders.LLVM
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
-        {
-            throw new NotSupportedException();
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

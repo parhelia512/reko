@@ -571,9 +571,9 @@ namespace Reko.Arch.H8
         {
             var right = OpSrc(instr.Operands[0]);
             var left = (Identifier) OpSrc(instr.Operands[1]);
-            var dst = binder.EnsureRegister(arch.GetRegister(
-                left.Storage.Domain,
-                new BitRange(0, left.DataType.BitSize * 2))!);
+            var dst = binder.EnsureRegister(
+                arch.GetRegister(left.Storage.Domain, new BitRange(0, left.DataType.BitSize * 2)) ??
+                arch.GetRegister(left.Storage.Domain, new BitRange(0, left.DataType.BitSize))!);
             var product = mul(left, right);
             product.DataType = dst.DataType;
             m.Assign(dst, product);

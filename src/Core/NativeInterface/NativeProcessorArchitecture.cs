@@ -1,3 +1,23 @@
+#region License
+/* 
+ * Copyright (C) 1999-2026 John Källén.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; see the file COPYING.  If not, write to
+ * the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+#endregion
+
 using Reko.Core.Expressions;
 using Reko.Core.Machine;
 using Reko.Core.Memory;
@@ -29,8 +49,9 @@ namespace Reko.Core.NativeInterface
         /// <param name="libPath">Path to the native implementation of the architecture.</param>
         /// <param name="ldr"><see cref="ILibraryLoader"/> implementation to load native code.</param>
         /// <param name="options">Processor options.</param>
-		public NativeProcessorArchitecture(IServiceProvider services, string archID, string libPath, ILibraryLoader ldr, Dictionary<string, object> options)
-            : base(services, archID, options, null!, null!)
+        /// <param name="bank">Register bank.</param>
+		public NativeProcessorArchitecture(IServiceProvider services, string archID, string libPath, ILibraryLoader ldr, Dictionary<string, object> options, RegisterBank bank)
+            : base(services, archID, options, bank)
 		{
 			loader = ldr;
 			handle = ldr.LoadLibrary(libPath);
@@ -116,12 +137,6 @@ namespace Reko.Core.NativeInterface
 		}
 
         /// <inheritdoc/>
-		public override RegisterStorage[] GetRegisters()
-		{
-			throw new NotImplementedException();
-		}
-
-        /// <inheritdoc/>
         public override FlagGroupStorage[] GetFlags()
         {
             throw new NotImplementedException();
@@ -141,12 +156,6 @@ namespace Reko.Core.NativeInterface
 
         /// <inheritdoc/>
 		public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-		{
-			throw new NotImplementedException();
-		}
-
-        /// <inheritdoc/>
-		public override bool TryGetRegister(string name, out RegisterStorage reg)
 		{
 			throw new NotImplementedException();
 		}

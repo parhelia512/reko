@@ -19,15 +19,19 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Reko.Arch.Tms320C28
 {
     public static class Registers
     {
+        public static RegisterBank All { get; set; }
+
         public static RegisterStorage  xt { get; } 
         public static RegisterStorage  p { get; } 
         public static RegisterStorage  acc { get; } 
@@ -122,7 +126,32 @@ namespace Reko.Arch.Tms320C28
             ar7l = RegisterStorage.Reg16("ar7l", acc.Number);
 
 
+            All = new RegisterBank(factory.NamesToRegisters.Values.Concat(new[]
+            {
+                t ,
+                tl,
+                ph,
+                pl,
+                ah,
+                al,
 
+                ar0h,
+                ar0l,
+                ar1h,
+                ar1l,
+                ar2h,
+                ar2l,
+                ar3h,
+                ar3l,
+                ar4h,
+                ar4l,
+                ar5h,
+                ar5l,
+                ar6h,
+                ar6l,
+                ar7h,
+                ar7l,
+            }));
 
 
 

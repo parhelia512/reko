@@ -38,7 +38,7 @@ namespace Reko.Arch.Avr
         private Dictionary<ulong, FlagGroupStorage> flagGroups;
 
         public Avr32Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.CarryFlag = Registers.C;
             this.Endianness = EndianServices.Big;
@@ -96,11 +96,6 @@ namespace Reko.Arch.Avr
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

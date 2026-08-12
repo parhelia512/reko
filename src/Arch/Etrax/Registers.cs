@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,8 +65,7 @@ namespace Reko.Arch.Etrax
 
         public static FlagGroupStorage NZ { get; }
         public static FlagGroupStorage NZVC { get; }
-        public static IReadOnlyDictionary<string, RegisterStorage> ByName { get; }
-        public static IReadOnlyDictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
 
         static Registers()
         {
@@ -135,10 +135,7 @@ namespace Reko.Arch.Etrax
             NZ = new FlagGroupStorage(dccr, (uint) (FlagM.NF|FlagM.ZF), nameof(NZ));
             NZVC = new FlagGroupStorage(dccr, (uint) (FlagM.NF|FlagM.ZF|FlagM.VF|FlagM.CF), nameof(NZVC));
 
-            ByName = GpRegisters.Concat(SystemRegisters)
-                    .ToDictionary(r => r.Name);
-            ByDomain = GpRegisters.Concat(SystemRegisters)
-                .ToDictionary(r => r.Domain);
+            All = new RegisterBank(GpRegisters.Concat(SystemRegisters));
         }
     }
 

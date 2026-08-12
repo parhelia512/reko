@@ -72,11 +72,11 @@ namespace Reko.Arch.X86.Rewriter
                 return false;
             var size = binder.CreateTemporary("size", PrimitiveType.Create(Domain.UnsignedInt, RegCx.DataType.BitSize));
             var di = RegDi;
-            m.Assign(size, m.IAddS(m.Fn(Strlen(), MemIndexPtr(1, arch.Registers.es, di)), 1));
+            m.Assign(size, m.IAddS(m.Fn(Strlen(), MemIndexPtr(1, arch.RegisterAliases.es, di)), 1));
             var cx = RegCx;
             m.Assign(cx, m.ISub(cx, MaybeSlice(cx.DataType, size)));
             m.Assign(di, m.IAdd(di, MaybeSlice(cx.DataType, size)));
-            var grf = binder.EnsureFlagGroup(X86Instruction.DefCc(Mnemonic.cmp, arch.Registers)!);
+            var grf = binder.EnsureFlagGroup(X86Instruction.DefCc(Mnemonic.cmp, arch.RegisterAliases)!);
             m.Assign(
                 grf,
                 m.Cond(grf.DataType, m.Const(instrCur.DataWidth, 0)));
@@ -93,8 +93,8 @@ namespace Reko.Arch.X86.Rewriter
             var di = RegDi;
             m.SideEffect(m.Fn(
                 Memcpy(),
-                MemIndexPtr(0, arch.Registers.es, di),
-                MemIndexPtr(1, arch.Registers.ds, si), size));
+                MemIndexPtr(0, arch.RegisterAliases.es, di),
+                MemIndexPtr(1, arch.RegisterAliases.ds, si), size));
             m.Assign(regCx, m.Const(regCx.DataType, 0));
             m.Assign(si, m.IAdd(si, MaybeSlice(regCx.DataType, size)));
             m.Assign(di, m.IAdd(di, MaybeSlice(regCx.DataType, size)));
@@ -124,16 +124,16 @@ namespace Reko.Arch.X86.Rewriter
             var cx = RegCx;
             m.Assign(result, m.Fn(
                 Memcmp(),
-                MemIndexPtr(0, arch.Registers.ds, si),
-                MemIndexPtr(1, arch.Registers.es, di), size));
+                MemIndexPtr(0, arch.RegisterAliases.ds, si),
+                MemIndexPtr(1, arch.RegisterAliases.es, di), size));
             m.Assign(firstDifference, m.Fn(
                 FindFirstDifference(),
-                MemIndexPtr(0, arch.Registers.ds, si),
-                MemIndexPtr(1, arch.Registers.es, di)));
+                MemIndexPtr(0, arch.RegisterAliases.ds, si),
+                MemIndexPtr(1, arch.RegisterAliases.es, di)));
             m.Assign(cx, m.ISub(cx, firstDifference));
             m.Assign(si, m.IAdd(si, firstDifference));
             m.Assign(di, m.IAdd(di, firstDifference));
-            var grf = binder.EnsureFlagGroup(X86Instruction.DefCc(Mnemonic.cmp, arch.Registers)!);
+            var grf = binder.EnsureFlagGroup(X86Instruction.DefCc(Mnemonic.cmp, arch.RegisterAliases)!);
             m.Assign(
                 grf,
                 m.Cond(grf.DataType, result));

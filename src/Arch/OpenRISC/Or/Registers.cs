@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -28,13 +29,13 @@ namespace Reko.Arch.OpenRISC.Or
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
         public static readonly RegisterStorage[] GpRegs;
         public static readonly RegisterStorage sr;
         public static readonly RegisterStorage machi;
         public static readonly RegisterStorage maclo;
         public static readonly Dictionary<int, RegisterStorage> SpecialRegisters;
-        public static readonly Dictionary<string, RegisterStorage> ByName;
-        public static readonly Dictionary<StorageDomain, RegisterStorage> ByDomain;
 
         public static readonly FlagGroupStorage F;
         public static readonly FlagGroupStorage C;
@@ -75,12 +76,8 @@ namespace Reko.Arch.OpenRISC.Or
             sr = SpecialRegisters[17];
             maclo = SpecialRegisters[(5 << 11) + 1];
             machi = SpecialRegisters[(5 << 11) + 2];
-            ByName = GpRegs
-                .Concat(SpecialRegisters.Values)
-                .ToDictionary(r => r.Name);
-            ByDomain = GpRegs
-                .Concat(SpecialRegisters.Values)
-                .ToDictionary(r => r.Domain);
+            All = new RegisterBank(GpRegs
+                .Concat(SpecialRegisters.Values));
 
             F = new FlagGroupStorage(sr, (ulong) FlagM.F, nameof(F));
             C = new FlagGroupStorage(sr, (ulong) FlagM.CY, nameof(C));

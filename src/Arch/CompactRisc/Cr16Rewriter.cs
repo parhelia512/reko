@@ -21,6 +21,7 @@
 using Reko.Core;
 using Reko.Core.Expressions;
 using Reko.Core.Intrinsics;
+using Reko.Core.Lib;
 using Reko.Core.Machine;
 using Reko.Core.Memory;
 using Reko.Core.Rtl;
@@ -613,9 +614,10 @@ namespace Reko.Arch.CompactRisc
             var sp = binder.EnsureRegister(arch.StackRegister);
             var ireg = (int) ((RegisterStorage) instr.Operands[1]).Domain;
             var count = ((Constant) instr.Operands[0]).ToInt32();
+            var range = new BitRange(0, 16);
             for (int i = count-1; i >= 0; --i)
             {
-                var reg = arch.GetRegister((StorageDomain) ((ireg + i) & 0xF), default)!;
+                var reg = arch.RegisterBank.GetRegisterByDomain((StorageDomain) ((ireg + i) & 0xF));
                 var id = binder.EnsureRegister(reg);
                 m.Assign(id, m.Mem(reg.DataType, sp));
                 m.Assign(sp, m.IAddS(sp, id.DataType.Size));
@@ -635,7 +637,7 @@ namespace Reko.Arch.CompactRisc
             var count = ((Constant) instr.Operands[0]).ToInt32();
             for (int i = 0; i < count; ++i)
             {
-                var reg = arch.GetRegister((StorageDomain) ((ireg + i) & 0xF), default)!;
+                var reg = arch.RegisterBank.GetRegisterByDomain((StorageDomain) ((ireg + i) & 0xF));
                 var id = binder.EnsureRegister(reg);
                 m.Assign(sp, m.ISubS(sp, reg.DataType.Size));
                 m.Assign(m.Mem(reg.DataType, sp), id);

@@ -19,14 +19,14 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 
 namespace Reko.Arch.Kalimba;
 
 public static class Registers
 {
-    public static Dictionary<string, RegisterStorage>? ByName { get; }
-    public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+    public static RegisterBank All { get; }
     public static RegisterStorage Null { get; }
     public static RegisterStorage rMAC { get; }
     public static RegisterStorage[] GpRegisters { get; }
@@ -66,14 +66,12 @@ public static class Registers
         rMAC2 = new RegisterStorage("rMAC2", rMAC.Number, 48, PrimitiveType.Byte);
         rMAC12 = new RegisterStorage("rMAC12", rMAC.Number, 24, PrimitiveType.Word32);
 
-        ByDomain = factory.DomainsToRegisters;
-        ByName = factory.NamesToRegisters.Values.Concat([
+        All = new RegisterBank(factory.NamesToRegisters.Values.Concat([
             rMAC0,
-                        rMAC1,
-                        rMAC2,
-                        rMAC12
-            ])
-            .ToDictionary(r => r.Name);
+            rMAC1,
+            rMAC2,
+            rMAC12
+            ]));
     }
 }
 

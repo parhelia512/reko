@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -38,8 +39,7 @@ namespace Reko.Arch.Qualcomm
         public static RegisterStorage[] ControlRegisters { get; }
         public static Dictionary<uint, RegisterStorage> SystemRegisters { get; }
         public static RegisterStorage[]  GuestControlRegisters { get; }
-        public static Dictionary<string, RegisterStorage> ByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
 
         public static RegisterStorage sp { get; }
         public static RegisterStorage fp { get; }
@@ -77,13 +77,10 @@ namespace Reko.Arch.Qualcomm
             pc = ControlRegisters[9];
             gp = Rename(ControlRegisters, 11, "gp");
 
-            ByName = GpRegs
+            All = new RegisterBank(GpRegs
                 .Concat(PredicateRegisters)
                 .Concat(ControlRegisters)
-                .Concat(SystemRegisters.Values)
-                .ToDictionary(k => k.Name);
-            ByDomain = ByName.Values
-                .ToDictionary(k => k.Domain);
+                .Concat(SystemRegisters.Values));
         }
 
         private static RegisterStorage[] GenerateControlRegisters(StorageFactory sysfactory)

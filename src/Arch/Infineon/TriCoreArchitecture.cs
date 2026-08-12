@@ -36,7 +36,7 @@ namespace Reko.Arch.Infineon
     public class TriCoreArchitecture : ProcessorArchitecture
     {
         public TriCoreArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options) 
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Little;
             this.FramePointerType = PrimitiveType.Ptr32;
@@ -91,16 +91,6 @@ namespace Reko.Arch.Infineon
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            return Registers.GetRegister(domain, range);
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

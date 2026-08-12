@@ -34,7 +34,7 @@ namespace Reko.Arch.WE32100
     public class WE32100Architecture : ProcessorArchitecture
     {
         public WE32100Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             Endianness = EndianServices.Little;
             this.FramePointerType = PrimitiveType.Word32;
@@ -85,11 +85,6 @@ namespace Reko.Arch.WE32100
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

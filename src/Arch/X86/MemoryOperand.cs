@@ -190,8 +190,8 @@ namespace Reko.Arch.X86
             if (SegOverride != RegisterStorage.None)
                 return SegOverride!;
             if (Base.Domain == Registers.rbp.Domain || Base.Domain == Registers.rsp.Domain)
-                return arch.Registers.ss;
-            return arch.Registers.ds;
+                return arch.RegisterAliases.ss;
+            return arch.RegisterAliases.ds;
         }
 	}
 }

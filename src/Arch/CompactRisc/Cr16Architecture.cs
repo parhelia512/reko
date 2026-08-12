@@ -38,7 +38,7 @@ namespace Reko.Arch.CompactRisc
         public static PrimitiveType Ptr24 = PrimitiveType.Create(Domain.Pointer, 24);
 
         public Cr16Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.CarryFlag = Registers.C;
             this.Endianness = EndianServices.Little;
@@ -97,17 +97,6 @@ namespace Reko.Arch.CompactRisc
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(string name)
-        {
-            return Registers.ByName.TryGetValue(name, out var reg) ? reg : null;
-        }
-
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.GpRegisters;
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
@@ -147,11 +136,6 @@ namespace Reko.Arch.CompactRisc
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.ByName.TryGetValue(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

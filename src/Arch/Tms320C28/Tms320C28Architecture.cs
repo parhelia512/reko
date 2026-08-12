@@ -32,7 +32,7 @@ namespace Reko.Arch.Tms320C28
     public class Tms320C28Architecture : ProcessorArchitecture
     {
         public Tms320C28Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             Endianness = EndianServices.Big;
             this.FramePointerType = PrimitiveType.Ptr32;
@@ -84,11 +84,6 @@ namespace Reko.Arch.Tms320C28
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

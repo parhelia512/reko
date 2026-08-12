@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -48,7 +49,7 @@ namespace Reko.Arch.H8
             Mac = factory.Reg64("mac");
             Mach = new RegisterStorage("mach", Mac.Number, 32, PrimitiveType.Word32);
             Macl = new RegisterStorage("macl", Mac.Number, 0, PrimitiveType.Word32);
-            ByName = GpRegisters
+            All = new RegisterBank(GpRegisters
                 .Concat(Gp16Registers)
                 .Concat(Gp8Registers)
                 .Concat(new[]
@@ -59,8 +60,7 @@ namespace Reko.Arch.H8
                     Mac,
                     Mach,
                     Macl,
-                })
-                .ToDictionary(r => r.Name);
+                }));
             C = new FlagGroupStorage(CcRegister, (ulong) FlagM.CF, nameof(C));
         }
 
@@ -82,7 +82,7 @@ namespace Reko.Arch.H8
 
         public static FlagGroupStorage C { get; }
 
-        public static Dictionary<string, RegisterStorage> ByName { get; }
+        public static RegisterBank All { get; }
     }
 
     [Flags]

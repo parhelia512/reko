@@ -35,7 +35,7 @@ namespace Reko.Arch.PaRisc
     public class PaRiscArchitecture : ProcessorArchitecture
     {
         public PaRiscArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null!, null!)
+            : base(services, archId, options, new([]))
         {
             LoadUserOptions(options);
             InstructionBitSize = 32;
@@ -95,10 +95,6 @@ namespace Reko.Arch.PaRisc
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.GpRegs;
-        }
 
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
@@ -183,15 +179,9 @@ namespace Reko.Arch.PaRisc
                 FramePointerType = PrimitiveType.Ptr32;
             }
             this.Registers = new Registers(WordWidth);
-            base.regsByName = Registers.ByName;
-            base.regsByDomain = Registers.ByDomain;
+            this.RegisterBank = this.Registers.All;
         }
 
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.ByName.TryGetValue(name, out reg);
-        }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)
         {

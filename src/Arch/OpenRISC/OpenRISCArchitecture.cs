@@ -36,7 +36,7 @@ namespace Reko.Arch.OpenRISC
     public class OpenRISCArchitecture : ProcessorArchitecture
     {
         public OpenRISCArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Big;
             this.FramePointerType = PrimitiveType.Word32;
@@ -96,11 +96,6 @@ namespace Reko.Arch.OpenRISC
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.GpRegs;
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             var grf = (FlagM) flags.FlagGroupBits;
@@ -150,11 +145,6 @@ namespace Reko.Arch.OpenRISC
                         : "be"
                 }
             };
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.ByName.TryGetValue(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

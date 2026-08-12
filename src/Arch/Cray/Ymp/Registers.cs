@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,8 +43,7 @@ namespace Reko.Arch.Cray.Ymp
         public static readonly RegisterStorage sm;  // Semaphore register
         public static readonly RegisterStorage vl;  // Vector length
 
-        public static IReadOnlyDictionary<string, RegisterStorage> ByName { get; }
-        public static IReadOnlyDictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All{ get; }
 
         static Registers()
         {
@@ -72,8 +72,7 @@ namespace Reko.Arch.Cray.Ymp
             var allregs = factory.DomainsToRegisters.Values.Concat(
                 sysfactory.DomainsToRegisters.Values)
                 .ToArray();
-            ByName = allregs.ToDictionary(r => r.Name);
-            ByDomain = allregs.ToDictionary(r => r.Domain);
+            All = new RegisterBank(allregs);
         }
     }
 }

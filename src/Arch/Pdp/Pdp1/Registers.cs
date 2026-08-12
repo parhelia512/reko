@@ -20,6 +20,7 @@
 
 using Reko.Arch.Pdp.Memory;
 using Reko.Core;
+using Reko.Core.Machine;
 
 namespace Reko.Arch.Pdp.Pdp1;
 
@@ -29,6 +30,7 @@ public static class Registers
     public static RegisterStorage IO { get; }
     public static RegisterStorage Psw { get; }
     public static FlagGroupStorage V { get; }
+    public static RegisterBank All { get; }
 
     static Registers()
     {
@@ -36,6 +38,7 @@ public static class Registers
         Acc = factory.Reg("acc", PdpTypes.Word18);
         IO = factory.Reg("io", PdpTypes.Word18);
         Psw = factory.Reg("psw", PdpTypes.Word18);
+        All = new RegisterBank(factory.NamesToRegisters.Values);
 
         V = new FlagGroupStorage(Psw, 1, "V");
     }

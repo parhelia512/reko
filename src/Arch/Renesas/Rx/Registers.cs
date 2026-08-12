@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 
@@ -26,6 +27,8 @@ namespace Reko.Arch.Renesas.Rx
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
         public static RegisterStorage[] GpRegisters { get; }
         public static RegisterStorage sp { get; }
 
@@ -42,7 +45,6 @@ namespace Reko.Arch.Renesas.Rx
         public static RegisterStorage FINTV { get; }
         public static RegisterStorage FPSW { get; }
         public static RegisterStorage EXTB { get; }
-
         public static FlagGroupStorage C { get; }
         public static FlagGroupStorage Z { get; }
         public static FlagGroupStorage S { get; }
@@ -75,6 +77,8 @@ namespace Reko.Arch.Renesas.Rx
             FINTV = factory.Reg32("FINTV"); // Fast interrupt vector register
             FPSW = factory.Reg32("FPSW");   // Floating-point status word
             EXTB = factory.Reg32("EXTB");   // Exception table register
+
+            All = new RegisterBank(factory.NamesToRegisters.Values);
 
             C = new FlagGroupStorage(PSW, (ulong) FlagM.CF, "C");
             Z = new FlagGroupStorage(PSW, (ulong) FlagM.ZF, "Z");

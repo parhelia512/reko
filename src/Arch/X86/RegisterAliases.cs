@@ -23,9 +23,9 @@ using System.Collections.Generic;
 
 namespace Reko.Arch.X86;
 
-public class RegisterBank
+public class RegisterAliases
 {
-    public static RegisterBank IntelInstance = new RegisterBank
+    public static RegisterAliases IntelInstance = new RegisterAliases
     {
      ax = Registers.ax,
      cx = Registers.cx,
@@ -85,7 +85,7 @@ public class RegisterBank
         C2 = Registers.C2
     };
 
-    public static RegisterBank V20Instance = new RegisterBank
+    public static RegisterAliases V20Instance = new RegisterAliases
     {
         ax = V20Registers.aw,
         cx = V20Registers.cw,
@@ -197,10 +197,4 @@ public class RegisterBank
     public FlagGroupStorage SO { get; internal set; } = Registers.SO;
     public int Max { get; internal set; } = Registers.Max;
     public FlagGroupStorage C2 { get; internal set; } = Registers.C2;
-
-    public RegisterStorage GetRegister(string s)
-    {
-        return Registers.GetRegister(s);
-    }
-
 }

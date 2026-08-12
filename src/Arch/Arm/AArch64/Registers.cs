@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -50,9 +51,7 @@ namespace Reko.Arch.Arm.AArch64
 
         public static readonly Dictionary<uint, RegisterStorage> SystemRegisters;
 
-        public static readonly Dictionary<string, RegisterStorage> ByName;
-        public static readonly Dictionary<StorageDomain, RegisterStorage> ByDomain;
-        public static readonly RegisterStorage[][] SubRegisters;
+        public static RegisterBank All { get; }
 
         public static readonly FlagGroupStorage C;
         public static readonly FlagGroupStorage N;
@@ -154,46 +153,21 @@ namespace Reko.Arch.Arm.AArch64
                 (0b11_011_0100_0100_001u, fpsr)
             }.ToDictionary(sr => sr.Item1, sr => sr.Item2);
 
-            ByName = GpRegs64
+            All = new RegisterBank(GpRegs64
                 .Concat(GpRegs32)
                 .Concat(SimdRegs128)
                 .Concat(SimdRegs64)
                 .Concat(SimdRegs32)
                 .Concat(SimdRegs16)
                 .Concat(SimdRegs8)
-                .Concat(new[]
-                {
+                .Concat(
+                [
                     sp,
                     wsp,
                     pstate,
                     fpcr,
                     fpsr,
-                })
-                .ToDictionary(r => r.Name, StringComparer.OrdinalIgnoreCase);
-
-            ByDomain = GpRegs64
-                .Concat(SimdRegs128)
-                .Concat(new[]
-                {
-                    sp,
-                    pstate,
-                    fpcr,
-                    fpsr
-                })
-                .ToDictionary(r => r.Domain);
-
-            SubRegisters = 
-                Enumerable.Range(0, 32)
-                    .Select(i => new[] { GpRegs64[i], GpRegs32[i] })
-                .Concat(Enumerable.Range(0, 32)
-                    .Select(i => new[] { SimdRegs128[i], SimdRegs64[i], SimdRegs32[i], SimdRegs16[i], SimdRegs8[i] }))
-                .Concat(new RegisterStorage[][]
-                {
-                    new [] { sp, wsp },
-                    new [] { pstate },
-                    new [] { fpcr },
-                    new [] { fpsr },
-                }).ToArray();
+                ]));
 
             C = new FlagGroupStorage(pstate, (ulong) FlagM.CF, nameof(C));
             N = new FlagGroupStorage(pstate, (ulong) FlagM.NF, nameof(N));

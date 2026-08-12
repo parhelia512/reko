@@ -121,6 +121,11 @@ namespace Reko.Core
         MaskedPattern[] ProcedurePrologs { get; }
 
         /// <summary>
+        /// The registers used by this architecture.
+        /// </summary>
+        RegisterBank RegisterBank { get; }
+
+        /// <summary>
         /// The size of the return address (in bytes) if pushed on stack.
         /// </summary>
         int ReturnAddressOnStack { get; }
@@ -627,14 +632,6 @@ namespace Reko.Core
     public abstract class ProcessorArchitecture : IProcessorArchitecture
     {
         private RegisterStorage? regStack;
-        /// <summary>
-        /// Registers indexed by name.
-        /// </summary>
-        protected IReadOnlyDictionary<string, RegisterStorage>? regsByName;
-        /// <summary>
-        /// Registers indexed by storage domain.
-        /// </summary>
-        protected IReadOnlyDictionary<StorageDomain, RegisterStorage>? regsByDomain;
 
         /// <summary>
         /// Create an instance of the class.
@@ -643,16 +640,12 @@ namespace Reko.Core
         /// <param name="archId">Short string identifier for the processor architecture.</param>
         /// <param name="options">A dictionary of architecture options to apply (e.g. processor endianness,
         /// word size, or processor features.)</param>
-        /// <param name="regsByName">An optional dictionary of all the CPU's registers,
-        /// by their names.</param>
-        /// <param name="regsByDomain">An optional dictionary of all the CPU's registers,
-        /// ordered by their <see cref="StorageDomain"/>.</param>
+        /// <param name="registerBank">A <see cref="RegisterBank"/> containing all the CPU's registers.</param>
         public ProcessorArchitecture(
             IServiceProvider services,
             string archId, 
             Dictionary<string, object> options,
-            IReadOnlyDictionary<string, RegisterStorage>? regsByName,
-            IReadOnlyDictionary<StorageDomain, RegisterStorage>? regsByDomain)
+            RegisterBank registerBank)
         {
             //$REVIEW: consider exposing these 4 properties in the constructor,
             // as nothing can work without these values.
@@ -665,11 +658,10 @@ namespace Reko.Core
             this.Services = services;
             this.Name = archId;
             this.Options = options;
+            this.RegisterBank = registerBank;
             this.MemoryGranularity = 8; // Most architectures are byte-addressable.
             this.CodeMemoryGranularity = 8; // Most architectures are byte-addressable.
             this.DefaultBase = 16;      // Most architectures display hexadecimal.
-            this.regsByName = regsByName;
-            this.regsByDomain = regsByDomain;
         }
 
         /// <inheritdoc/>
@@ -704,6 +696,9 @@ namespace Reko.Core
 
         /// <inheritdoc/>
         public MaskedPattern[] ProcedurePrologs { get; internal set; }
+
+        /// <inheritdoc/>
+        public RegisterBank RegisterBank { get; protected set; }
 
         /// <inheritdoc/>
         public PrimitiveType WordWidth { get; protected set; }
@@ -826,29 +821,19 @@ namespace Reko.Core
         }
 
         /// <inheritdoc/>
-        public virtual RegisterStorage? GetRegister(string name)
+        public RegisterStorage? GetRegister(string name)
         {
-            if (regsByName is null)
-                throw new NotImplementedException("Need to provide regsByName.");
-            if (regsByName.TryGetValue(name, out var reg))
-                return reg;
-            else
-                return null;
+            return RegisterBank.TryGetRegister(name, out var reg) ? reg : null;
         }
 
         /// <inheritdoc/>
-        public virtual RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
+        public RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
         {
-            if (regsByDomain is null)
-                throw new NotImplementedException("Need to provide regsByDomain.");
-            if (regsByDomain.TryGetValue(domain, out var reg) && reg.Covers(range))
-                return reg;
-            else
-                return null;
+            return RegisterBank.GetRegister(domain, range);
         }
 
         /// <inheritdoc/>
-        public abstract RegisterStorage[] GetRegisters();
+        public RegisterStorage[] GetRegisters() => RegisterBank.GetRegisters();
 
         /// <inheritdoc/>
         public virtual FlagGroupStorage[] GetFlags() => throw new NotImplementedException("GetFlags not implemented this architecture.");
@@ -957,11 +942,9 @@ namespace Reko.Core
         }
             
         /// <inheritdoc/>
-        public virtual bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
+        public bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
         {
-            if (this.regsByName is null)
-                throw new NotImplementedException($"Need a value for {nameof(regsByName)}.");
-            return regsByName.TryGetValue(name, out reg);
+            return RegisterBank.TryGetRegister(name, out reg);
         }
 
         /// <inheritdoc/>

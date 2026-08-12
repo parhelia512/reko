@@ -42,7 +42,7 @@ namespace Reko.Arch.Msp430
         private Decoder[] decoders = default!;
 
         public Msp430Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null!, null!)
+            : base(services, archId, options, new([]))
         {
             this.InstructionBitSize = 16;
             this.WordWidth = PrimitiveType.Word16;
@@ -108,27 +108,6 @@ namespace Reko.Arch.Msp430
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(string name)
-        {
-            return Registers.ByName.TryGetValue(name, out var reg)
-                ? reg
-                : null;
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            var reg = Registers.GpRegisters[(int) domain];
-            if (reg is { } && reg.Covers(range))
-                return reg;
-            else
-                return null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.GpRegisters;
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
@@ -187,13 +166,9 @@ namespace Reko.Arch.Msp430
             var isa = new Msp430Disassembler.InstructionSet(useExtensions);
             decoders = isa.CreateRootDecoders();
             this.Registers = new Registers(this.RegisterType);
+            this.RegisterBank = this.Registers.All;
             this.StackRegister = Registers.sp;
             this.CarryFlag = Registers.C;
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.ByName.TryGetValue(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

@@ -45,7 +45,7 @@ namespace Reko.Arch.Motorola
     public class M68kArchitecture : ProcessorArchitecture
     {
         public M68kArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             InstructionBitSize = 16;
             Endianness = EndianServices.Big;
@@ -103,28 +103,6 @@ namespace Reko.Arch.Motorola
             return (int)result;
         }
 
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            var reg = Registers.GetRegister(domain - StorageDomain.Register);
-            if (reg is { } && reg.Covers(range))
-                return reg;
-            else
-                return null;
-        }
-
-        public override RegisterStorage? GetRegister(string name)
-        {
-            var r = Registers.GetRegister(name);
-            if (r == RegisterStorage.None)
-                return null;
-            return r;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.regs;
-        }
-
         public override FlagGroupStorage[] GetFlags()
         {
             return Registers.flags;
@@ -138,11 +116,6 @@ namespace Reko.Arch.Motorola
                 if ((grf & cc.FlagGroupBits) != 0)
                     yield return cc;
             }
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.ByName.TryGetValue(name, out reg);
         }
 
         public override FlagGroupStorage GetFlagGroup(RegisterStorage flagRegister, ulong grf)

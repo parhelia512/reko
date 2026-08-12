@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace Reko.Arch.Altera.Nios2
 
         public static RegisterStorage[] GpRegisters { get; }
         public static RegisterStorage?[] ControlRegisters { get; }
-        public static Dictionary<string, RegisterStorage> ByName { get; }
+        public static RegisterBank All { get; }
 
         static Registers()
         {
@@ -67,7 +68,7 @@ namespace Reko.Arch.Altera.Nios2
                 ctrlFactory.Reg32("mpuacc"),    // 15 - Refer to The mpuacc Register for MASK variations table
             };
 
-            ByName = GpRegisters.ToDictionary(r => r.Name);
+            All = new RegisterBank(GpRegisters);
         }
 
         public static bool TryGetControlRegister(uint iregS, out RegisterStorage regS)

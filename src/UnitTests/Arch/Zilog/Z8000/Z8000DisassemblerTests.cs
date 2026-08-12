@@ -34,7 +34,7 @@ namespace Reko.UnitTests.Arch.Zilog.Z8000
 
         public Z8000DisassemblerTests()
         {
-            arch = new Z8000Architecture(CreateServiceContainer(), "z8000", new(), new(), new());
+            arch = new Z8000Architecture(CreateServiceContainer(), "z8000", new(), new([]));
             LoadAddress = Address.Ptr16(0x100);
         }
 

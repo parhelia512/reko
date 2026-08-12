@@ -20,6 +20,7 @@
 
 using Reko.Arch.Pdp.Memory;
 using Reko.Core;
+using Reko.Core.Machine;
 using System.Collections.Generic;
 
 namespace Reko.Arch.Pdp.Pdp7
@@ -29,26 +30,19 @@ namespace Reko.Arch.Pdp.Pdp7
         public static RegisterStorage ac { get; }
         public static FlagGroupStorage link { get; }
 
-        private static RegisterStorage status;
+        private static RegisterStorage status { get; }
 
-        public static Dictionary<string, RegisterStorage> RegistersByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> RegistersByDomain { get; }
+        public static RegisterBank All { get; }
 
         static Registers()
         {
-            ac = new RegisterStorage("ac", 0, 0, PdpTypes.Word18);
-            status = new RegisterStorage("status", 1, 0, PdpTypes.Word18);
+            var factory = new StorageFactory();
+            ac = factory.Reg("ac", PdpTypes.Word18);
+            status = factory.Reg("status", PdpTypes.Word18);
 
             link = new FlagGroupStorage(status, 1, "l");
 
-            RegistersByName = new Dictionary<string, RegisterStorage>()
-            {
-                { "ac", ac },
-            };
-            RegistersByDomain = new Dictionary<StorageDomain, RegisterStorage>
-            {
-                { ac.Domain, ac },
-            };
+            All = new RegisterBank(factory.NamesToRegisters.Values);
         }
     }
 }

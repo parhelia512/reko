@@ -18,6 +18,7 @@
  */
 #endregion
 
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -146,5 +147,15 @@ namespace Reko.Core
         /// </summary>
         public RegisterStorage[] RangeOfReg64(int count, string format)
             => RangeOfReg(count, n => string.Format(format, n), PrimitiveType.Word64);
+
+
+        /// <summary>
+        /// Creates a <see cref="RegisterBank"/> containing all the registers created so far.
+        /// </summary>
+        /// <returns>A newly created <see cref="RegisterBank"/>.</returns>
+        public RegisterBank MakeRegisterBank()
+        {
+            return new RegisterBank(NamesToRegisters.Values);
+        }
     }
 }

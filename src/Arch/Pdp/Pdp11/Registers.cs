@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Reko.Core.Machine;
 
 namespace Reko.Arch.Pdp.Pdp11
 {
@@ -47,6 +48,13 @@ namespace Reko.Arch.Pdp.Pdp11
         public static readonly RegisterStorage ac3 = new RegisterStorage("ac3", 19, 0, PrimitiveType.Real64);
         public static readonly RegisterStorage ac4 = new RegisterStorage("ac4", 20, 0, PrimitiveType.Real64);
         public static readonly RegisterStorage ac5 = new RegisterStorage("ac5", 21, 0, PrimitiveType.Real64);
+
+        public static readonly RegisterBank All = new RegisterBank(new[]
+        {
+            r0, r1, r2, r3, r4, r5, sp, pc,
+            psw,
+            ac0, ac1, ac2, ac3, ac4, ac5
+        });
 
         public static readonly FlagGroupStorage N = new FlagGroupStorage(psw, 8, nameof(N));
         public static readonly FlagGroupStorage Z = new FlagGroupStorage(psw, 4, nameof(Z));

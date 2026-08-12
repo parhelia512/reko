@@ -37,7 +37,7 @@ namespace Reko.Arch.MicroBlaze
         private readonly Dictionary<ulong, FlagGroupStorage> flagGroups = [];
 
         public MicroBlazeArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.RegistersByName, Registers.RegistersByDomain )
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Big;
             this.FramePointerType = PrimitiveType.Ptr32;
@@ -100,11 +100,6 @@ namespace Reko.Arch.MicroBlaze
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.GpRegs;
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             if ((flags.FlagGroupBits & (ulong) FlagM.CY) != 0) yield return Registers.C;
@@ -128,11 +123,6 @@ namespace Reko.Arch.MicroBlaze
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.RegistersByName.TryGetValue(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

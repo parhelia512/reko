@@ -110,7 +110,7 @@ namespace Reko.Arch.X86
         /// <summary>
         /// Returns the condition codes that an instruction modifies.
         /// </summary>
-        public static FlagGroupStorage? DefCc(Mnemonic mnemonic, RegisterBank registers)
+        public static FlagGroupStorage? DefCc(Mnemonic mnemonic, RegisterAliases registers)
 		{
 			switch (mnemonic)
 			{
@@ -188,7 +188,7 @@ namespace Reko.Arch.X86
         /// <summary>
         /// Returns the condition codes an instruction uses.
         /// </summary>
-        public static FlagGroupStorage? UseCc(Mnemonic mnemonic, RegisterBank registers)
+        public static FlagGroupStorage? UseCc(Mnemonic mnemonic, RegisterAliases registers)
 		{
 			switch (mnemonic)
 			{

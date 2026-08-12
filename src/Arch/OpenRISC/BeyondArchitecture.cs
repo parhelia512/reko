@@ -34,7 +34,7 @@ namespace Reko.Arch.OpenRISC;
 public class BeyondArchitecture : ProcessorArchitecture
 {
     public BeyondArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-        : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+        : base(services, archId, options, Registers.All)
     {
         this.Endianness = EndianServices.Big;
         this.FramePointerType = PrimitiveType.Ptr32;
@@ -84,11 +84,6 @@ public class BeyondArchitecture : ProcessorArchitecture
     }
 
     public override int? GetMnemonicNumber(string name)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override RegisterStorage[] GetRegisters()
     {
         throw new NotImplementedException();
     }

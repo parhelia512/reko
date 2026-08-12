@@ -19,11 +19,10 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reko.Arch.Epson;
 
@@ -38,8 +37,7 @@ public static class Registers
     public static RegisterStorage IDIR { get; }
     public static RegisterStorage DBBR { get; }
     public static RegisterStorage PC { get; }
-    public static Dictionary<string, RegisterStorage>? ByName { get; }
-    public static Dictionary<StorageDomain, RegisterStorage>? ByDomain { get; }
+    public static RegisterBank All { get; }
 
 
     public static FlagGroupStorage C { get; }
@@ -73,12 +71,9 @@ public static class Registers
         NZ = new FlagGroupStorage(PSR, (uint) (FlagM.NF|FlagM.ZF), "NZ");
         Z = new FlagGroupStorage(PSR, (ulong) FlagM.ZF, "Z");
 
-        ByName = factory.NamesToRegisters
-            .Concat(sysFactory.NamesToRegisters)
-            .ToDictionary(kv => kv.Key, kv => kv.Value);
-        ByDomain = factory.DomainsToRegisters
-            .Concat(sysFactory.DomainsToRegisters)
-            .ToDictionary(kv => kv.Key, kv => kv.Value);
+        All = new RegisterBank(factory.NamesToRegisters.Values
+            .Concat(sysFactory.NamesToRegisters.Values)
+            .ToArray());
     }
 
     internal static bool IsGpRegister(RegisterStorage reg)

@@ -44,7 +44,7 @@ namespace Reko.Arch.Arm
 #endif
 
         public Arm64Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers64.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers64.All)
         {
             this.Endianness = EndianServices.Little;
             this.InstructionBitSize = 32;
@@ -167,35 +167,6 @@ namespace Reko.Arch.Arm
             return null;
         }
 
-        public override RegisterStorage? GetRegister(StorageDomain dom, BitRange range)
-        {
-            var i = (int) dom;
-            if (0 <= i && i < Registers.SubRegisters.Length)
-            {
-                var subregs = Registers.SubRegisters[i];
-                var reg = subregs[0];
-                for (int j = 0; j < subregs.Length; ++j)
-                {
-                    var subreg = subregs[j];
-                    if ((short) subreg.BitSize < range.Msb)
-                        break;
-                    reg = subreg;
-                }
-                return reg;
-            }
-            return null;
-        }
-
-
-        public override RegisterStorage[] GetRegisters()
-        {
-#if NATIVE
-            return regsByNumber.ToArray();
-#else
-            return Registers.GpRegs64;
-#endif
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
@@ -213,11 +184,6 @@ namespace Reko.Arch.Arm
             if ((grf & (ulong) FlagM.CF) != 0) s.Append('C');
             if ((grf & (ulong) FlagM.VF) != 0) s.Append('V');
             return s.ToString();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.ByName.TryGetValue(name, out reg);
         }
 
         public override FlagGroupStorage GetFlagGroup(RegisterStorage flagRegister, ulong grf)

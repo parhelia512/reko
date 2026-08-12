@@ -41,7 +41,7 @@ namespace Reko.Arch.Mos6502
         private readonly Dictionary<ulong, FlagGroupStorage> flagGroups;
 
         public Mos6502Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.RegistersByName, null!)
+            : base(services, archId, options, Registers.All)
         {
             CarryFlag = Registers.C;
             Endianness = EndianServices.Little;
@@ -101,21 +101,6 @@ namespace Reko.Arch.Mos6502
             if (!Enum.TryParse(name, true, out Mnemonic result))
                 return null;
             return (int)result;
-        }
-
-        public override RegisterStorage GetRegister(StorageDomain domain, BitRange range)
-        {
-            return Registers.All[(int) domain];
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.All;
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.RegistersByName.TryGetValue(name, out reg);
         }
 
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
@@ -196,6 +181,7 @@ namespace Reko.Arch.Mos6502
 
     public static class Registers
     {
+
         public static readonly RegisterStorage a = RegisterStorage.Reg8("a", 0);
         public static readonly RegisterStorage x = RegisterStorage.Reg8("x", 1);
         public static readonly RegisterStorage y = RegisterStorage.Reg8("y", 2);
@@ -214,26 +200,25 @@ namespace Reko.Arch.Mos6502
         public static readonly FlagGroupStorage NVZC = new(p, (uint) (FlagM.NF | FlagM.VF | FlagM.ZF | FlagM.CF), nameof(NVZC));
         public static readonly FlagGroupStorage NZ = new(p, (uint) (FlagM.NF | FlagM.ZF), nameof(NZ));
 
-        internal static RegisterStorage[] All;
+        public static RegisterBank All = new RegisterBank(new[]
+        {
+            a, x, y, s, p, pc
+        });
 
-        public static Dictionary<string, RegisterStorage> RegistersByName { get; }
 
         internal static FlagGroupStorage[] Flags;
 
-        public static RegisterStorage GetRegister(int reg)
-        {
-            return All[reg];
-        }
-
         static Registers()
         {
-            All = new RegisterStorage[]
+            All = new RegisterBank(new[]
             {
                 a,
                 x,
                 y,
                 s,
-            };
+                pc,
+                p
+            });
             Flags = new FlagGroupStorage[]
             {
                 N,
@@ -243,9 +228,6 @@ namespace Reko.Arch.Mos6502
                 Z,
                 C,
             };
-            RegistersByName = new[] {
-                a, x, y, s, pc, p,
-                }.ToDictionary(a => a.Name);
         }
     }
 }

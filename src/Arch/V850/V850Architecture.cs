@@ -33,7 +33,7 @@ namespace Reko.Arch.V850
     public class V850Architecture : ProcessorArchitecture
     {
         public V850Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             Endianness = EndianServices.Little;
             InstructionBitSize = 16;
@@ -90,11 +90,6 @@ namespace Reko.Arch.V850
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -106,11 +101,6 @@ namespace Reko.Arch.V850
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

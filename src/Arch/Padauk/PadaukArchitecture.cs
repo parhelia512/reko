@@ -39,7 +39,7 @@ namespace Reko.Arch.Padauk
             IServiceProvider services, 
             string archId,
             Dictionary<string, object> options)
-            : base(services, archId, options, Registers.RegistersByName, Registers.RegistersByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Little;
             this.CodeMemoryGranularity = 16;
@@ -100,11 +100,6 @@ namespace Reko.Arch.Padauk
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

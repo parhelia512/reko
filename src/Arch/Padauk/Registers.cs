@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,8 @@ namespace Reko.Arch.Padauk
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
         static Registers()
         {
             var factory = new StorageFactory();
@@ -40,8 +43,7 @@ namespace Reko.Arch.Padauk
             Z = new FlagGroupStorage(f, (ulong) FlagM.ZF, nameof(Z));
             ZCAV = new FlagGroupStorage(f , (uint) (FlagM.ZF | FlagM.CF | FlagM.AC | FlagM.OV), nameof(ZCAV));
             FlagBits = new[] { AC, C, V, Z };
-            RegistersByName = factory.NamesToRegisters;
-            RegistersByDomain = factory.DomainsToRegisters;
+            All = new RegisterBank(factory.NamesToRegisters.Values);
         }
 
         public static RegisterStorage a { get; }
@@ -52,8 +54,6 @@ namespace Reko.Arch.Padauk
         public static FlagGroupStorage V { get; }
         public static FlagGroupStorage Z { get; }
         public static FlagGroupStorage ZCAV { get; }
-        public static Dictionary<string, RegisterStorage> RegistersByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> RegistersByDomain { get; }
         public static FlagGroupStorage [] FlagBits { get; }
     }
 

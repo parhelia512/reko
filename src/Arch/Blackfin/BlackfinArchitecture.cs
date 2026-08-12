@@ -34,7 +34,7 @@ namespace Reko.Arch.Blackfin
     public class BlackfinArchitecture : ProcessorArchitecture
     {
         public BlackfinArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             Endianness = EndianServices.Little;
             PointerType = PrimitiveType.Ptr32;
@@ -93,14 +93,6 @@ namespace Reko.Arch.Blackfin
         public override int? GetMnemonicNumber(string name)
         {
             throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.Data
-                .Concat(Registers.Pointers)
-                .Concat(new[] { Registers.A0, Registers.A1 })
-                .ToArray();
         }
 
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)

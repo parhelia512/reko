@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -56,8 +57,7 @@ namespace Reko.Arch.Fujitsu.F2MC16FX
         public static RegisterStorage[] r { get; }
 
         public static FlagGroupStorage C { get; }
-        public static IReadOnlyDictionary<string, RegisterStorage> ByName { get; }
-        public static IReadOnlyDictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
 
         static Registers()
         {
@@ -212,12 +212,8 @@ namespace Reko.Arch.Fujitsu.F2MC16FX
             };
             C = new FlagGroupStorage(ccr, (ulong) FlagM.C, nameof(C));
 
-            ByName = factory.DomainsToRegisters.Values
-                .Concat(ioPortFactory.DomainsToRegisters.Values)
-                .ToDictionary(r => r.Name);
-            ByDomain = factory.DomainsToRegisters.Values
-                .Concat(ioPortFactory.DomainsToRegisters.Values)
-                .ToDictionary(r => r.Domain);
+            All = new RegisterBank(factory.DomainsToRegisters.Values
+                .Concat(ioPortFactory.DomainsToRegisters.Values));
         }
     }
 

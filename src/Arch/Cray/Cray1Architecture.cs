@@ -32,7 +32,7 @@ namespace Reko.Arch.Cray
     public class Cray1Architecture : ProcessorArchitecture
     {
         public Cray1Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null!, null!)
+            : base(services, archId, options, new RegisterBank([]))
         {
             this.DefaultBase = 8;
             this.Endianness = EndianServices.Big;
@@ -88,11 +88,6 @@ namespace Reko.Arch.Cray
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagregister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -104,11 +99,6 @@ namespace Reko.Arch.Cray
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

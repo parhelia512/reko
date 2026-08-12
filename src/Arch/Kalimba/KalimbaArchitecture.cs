@@ -36,7 +36,7 @@ public class KalimbaArchitecture : ProcessorArchitecture
     public static PrimitiveType Int24 { get; } = PrimitiveType.Create(Domain.SignedInt, 24);
 
     public KalimbaArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options) :
-        base(services, archId, options, Registers.ByName, Registers.ByDomain)
+        base(services, archId, options, Registers.All)
     {
         this.CodeMemoryGranularity = 32;
         this.Endianness = EndianServices.Big;
@@ -88,11 +88,6 @@ public class KalimbaArchitecture : ProcessorArchitecture
     }
 
     public override int? GetMnemonicNumber(string name)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override RegisterStorage[] GetRegisters()
     {
         throw new NotImplementedException();
     }

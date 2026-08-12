@@ -42,7 +42,7 @@ namespace Reko.Arch.Pdp
         private readonly FlagGroupStorage[] flagRegs;
 
         public Pdp11Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             regs = new RegisterStorage[] { 
                 Registers.r0, Registers.r1, Registers.r2, Registers.r3, 
@@ -89,14 +89,6 @@ namespace Reko.Arch.Pdp
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            int i = domain - StorageDomain.Register;
-            return (0 <= i && i < regs.Length)
-                ? regs[i]
-                : null;
-        }
-
         public RegisterStorage? GetRegister(int i)
         {
             return (0 <= i && i < regs.Length)
@@ -125,35 +117,6 @@ namespace Reko.Arch.Pdp
             if (!Enum.TryParse(name, true, out Mnemonic result))
                 return null;
             return (int)result;
-        }
-
-        public override RegisterStorage? GetRegister(string name)
-        {
-            foreach (RegisterStorage reg in regs)
-            {
-                if (string.Compare(reg.Name, name, StringComparison.InvariantCultureIgnoreCase) == 0)
-                    return reg;
-            }
-            return null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return regs;
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage result)
-        {
-            result = null;
-            foreach (RegisterStorage reg in regs)
-            {
-                if (string.Compare(reg.Name, name, StringComparison.InvariantCultureIgnoreCase) == 0)
-                {
-                    result = reg;
-                    return true;
-                }
-            }
-            return false;
         }
 
         public override FlagGroupStorage GetFlagGroup(RegisterStorage flagRegister, ulong grf)

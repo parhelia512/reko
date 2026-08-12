@@ -38,7 +38,7 @@ namespace Reko.Arch.Motorola;
 public class M88kArchitecture : ProcessorArchitecture
 {
     public M88kArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-        : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+        : base(services, archId, options, Registers.All)
     {
         this.CodeMemoryGranularity = 8;
         this.Endianness = EndianServices.Big;
@@ -102,11 +102,6 @@ public class M88kArchitecture : ProcessorArchitecture
         if (!Enum.TryParse<Mnemonic>(name, true, out var m))
             return null;
         return (int) m;
-    }
-
-    public override RegisterStorage[] GetRegisters()
-    {
-        return Registers.GpRegisters;
     }
 
     public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)

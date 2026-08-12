@@ -35,7 +35,7 @@ namespace Reko.Arch.i8051
     public class i8051Architecture : ProcessorArchitecture
     {
         public i8051Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             this.CarryFlag = Registers.CFlag;
             this.Endianness = EndianServices.Big;
@@ -101,26 +101,6 @@ namespace Reko.Arch.i8051
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            if (!Registers.ByDomain.TryGetValue(domain, out var reg))
-                return null;
-            if (Registers.Subregisters.TryGetValue(domain, out var subregs))
-            {
-                foreach (var subreg in subregs)
-                {
-                    if (subreg.Covers(range))
-                        reg = subreg;
-                }
-            }
-            return reg;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.GetRegisters();
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
@@ -154,11 +134,6 @@ namespace Reko.Arch.i8051
             if (!rdr.TryReadBeUInt16(out ushort uAddr))
                 return null;
             return Address.Ptr16(uAddr);
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.TryGetRegister(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

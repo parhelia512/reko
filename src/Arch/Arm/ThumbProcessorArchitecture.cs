@@ -41,11 +41,10 @@ namespace Reko.Arch.Arm
 #if NATIVE
         private INativeArchitecture native;
 #endif
-        private readonly Dictionary<int, RegisterStorage> regsByNumber;
         private readonly Dictionary<ulong, FlagGroupStorage> flagGroups;
 
         public ThumbArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Little;
             this.FramePointerType = PrimitiveType.Ptr32;
@@ -58,10 +57,8 @@ namespace Reko.Arch.Arm
             var unk = CreateNativeArchitecture("arm-thumb");
             this.native = (INativeArchitecture)Marshal.GetObjectForIUnknown(unk);
             GetRegistersFromNative();
-#else
-            this.regsByNumber = Registers.GpRegs.ToDictionary(r => r.Number);
 #endif
-            StackRegister = Registers.ByName["sp"];
+            StackRegister = Registers.All.GetRegister("sp");
         }
 
 #if NATIVE
@@ -158,20 +155,6 @@ namespace Reko.Arch.Arm
         public override int? GetMnemonicNumber(string name)
         {
                 return null;
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            int i = domain - StorageDomain.Register;
-            if (regsByNumber.TryGetValue(i, out RegisterStorage? reg))
-                return reg;
-            else
-                return null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return regsByNumber.Values.OrderBy(r => r.Number).ToArray();
         }
 
         public override FlagGroupStorage GetFlagGroup(RegisterStorage flagRegister, ulong grf)

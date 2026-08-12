@@ -32,7 +32,7 @@ namespace Reko.Arch.Nec;
 
 public class SxAuroraArchitecture : ProcessorArchitecture
 {
-    public SxAuroraArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options, Dictionary<string, RegisterStorage>? regsByName, Dictionary<StorageDomain, RegisterStorage>? regsByDomain) : base(services, archId, options, regsByName, regsByDomain)
+    public SxAuroraArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options, RegisterBank registerBank) : base(services, archId, options, registerBank)
     {
         this.Endianness = EndianServices.Little;
         this.FramePointerType = PrimitiveType.Ptr64;
@@ -84,11 +84,6 @@ public class SxAuroraArchitecture : ProcessorArchitecture
     }
 
     public override int? GetMnemonicNumber(string name)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override RegisterStorage[] GetRegisters()
     {
         throw new NotImplementedException();
     }

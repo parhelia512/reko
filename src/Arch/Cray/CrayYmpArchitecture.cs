@@ -48,7 +48,7 @@ namespace Reko.Arch.Cray
         private Decoder<YmpDisassembler, Mnemonic, CrayInstruction> rootDecoder;
 
         public CrayYmpArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.DefaultBase = 8;
             this.Endianness = EndianServices.Big;
@@ -130,16 +130,6 @@ namespace Reko.Arch.Cray
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage GetRegister(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -179,11 +169,6 @@ namespace Reko.Arch.Cray
                 }
             }
             return sb.ToString();
-        }
-
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
-        {
-            throw new NotImplementedException();
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

@@ -62,13 +62,13 @@ namespace Reko.UnitTests.Mocks
         }
 
         public FakeArchitecture(IServiceProvider services)
-            : this(services, "fake", new Dictionary<string, object>())
+            : this(services, "fake", [])
         {
         }
 
 
         public FakeArchitecture(IServiceProvider services, string archId, Dictionary<string,object> options) 
-            : base(services, archId, options, null!, null!)
+            : base(services, archId, options, new RegisterBank(registers))
         {
             this.CarryFlag = new FlagGroupStorage(FlagRegister, (uint) StatusFlags.C, "C");
             this.Description = "Fake Architecture for testing";
@@ -197,21 +197,6 @@ namespace Reko.UnitTests.Mocks
             return null;
         }
 
-		public override RegisterStorage GetRegister(string s)
-		{
-            if (s[0] == 'r')
-            {
-                if (int.TryParse(s[1..], out int reg))
-                    return GetRegister(reg);
-            }
-            return null;
-		}
-
-        public override RegisterStorage GetRegister(StorageDomain domain, BitRange range)
-        {
-            return GetRegister(domain - StorageDomain.Register);
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             for (uint bitMask = 1; bitMask <= flags.FlagGroupBits; bitMask <<= 1)
@@ -221,17 +206,6 @@ namespace Reko.UnitTests.Mocks
                     yield return GetFlagGroup(FakeArchitecture.FlagRegister, bitMask);
                 }
             }
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return registers;
-        }
-
-        public override bool TryGetRegister(string name, out RegisterStorage result)
-        {
-            result = null;
-            return false;
         }
 
 		public override IEnumerable<MachineInstruction> CreateDisassembler(EndianImageReader rdr)
@@ -383,7 +357,7 @@ namespace Reko.UnitTests.Mocks
     public class FakeArchitecture64 : ProcessorArchitecture
     {
         public FakeArchitecture64(IServiceProvider services) : 
-            base(services, "fakeArch64", new Dictionary<string, object>(), null, null)
+            base(services, "fakeArch64", [], new([]))
         {
             Endianness = EndianServices.Little;
             FramePointerType = PrimitiveType.Ptr64;
@@ -436,11 +410,6 @@ namespace Reko.UnitTests.Mocks
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -452,11 +421,6 @@ namespace Reko.UnitTests.Mocks
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

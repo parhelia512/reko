@@ -102,7 +102,7 @@ namespace Reko.Arch.Vax
             {
                 return false;
             }
-            var reg = arch.GetRegister(bSpecifier & 0xF)!;
+            var reg = Registers.GpRegisters[bSpecifier & 0xF];
             switch (bSpecifier >> 4)
             {
             case 0: // Literal mode

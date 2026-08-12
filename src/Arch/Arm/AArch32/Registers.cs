@@ -1,4 +1,5 @@
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -102,8 +103,7 @@ namespace Reko.Arch.Arm.AArch32
             .Select(n => RegisterStorage.Reg32($"s{n}", QRegs[n / 4].Number, (uint)(n & 3) * 32))
             .ToArray();
 
-        public static readonly Dictionary<string, RegisterStorage> ByName;
-        public static readonly Dictionary<StorageDomain, RegisterStorage> ByDomain;
+        public static RegisterBank All { get; }
 
         public static readonly HashSet<RegisterStorage> SIMDRegisters;
 
@@ -120,20 +120,14 @@ namespace Reko.Arch.Arm.AArch32
 
         static Registers()
         {
-            ByName = GpRegs
+            All = new RegisterBank(GpRegs
                 .Concat(new[] { cpsr, fpscr, spsr })
                 .Concat(CoprocessorRegisters)
                 .Concat(QRegs)
                 .Concat(DRegs)
-                .Concat(SRegs)
-                .ToDictionary(r => r.Name);
+                .Concat(SRegs));
 
             SIMDRegisters = QRegs.Concat(DRegs).Concat(SRegs).ToHashSet();
-            ByDomain = GpRegs
-                .Concat(new[] { cpsr, fpscr, spsr })
-                .Concat(CoprocessorRegisters)
-                .Concat(QRegs)
-                .ToDictionary(r => r.Domain);
         }
 
         private static FlagGroupStorage FlagGroup(FlagM grf, string name)

@@ -19,9 +19,11 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Reko.Arch.CSky
 {
@@ -34,8 +36,7 @@ namespace Reko.Arch.CSky
         public static RegisterStorage Hi { get; }
         public static RegisterStorage Pc { get; }
 
-        public static Dictionary<string, RegisterStorage> ByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
 
         public static Dictionary<StorageDomain, RegisterStorage> ControlRegisters { get; }
 
@@ -55,9 +56,6 @@ namespace Reko.Arch.CSky
             Hi = RegisterStorage.Reg32("hi", Macc.Number, 32);
             Pc = factory.Reg32("pc");
             VrRegs = factory.RangeOfReg64(16, "vr{0}");
-
-            ByName = factory.NamesToRegisters;
-            ByDomain = factory.DomainsToRegisters;
 
             var crFactory = new StorageFactory(StorageDomain.SystemRegister);
             CodesToControlRegisters = new Dictionary<int, RegisterStorage>
@@ -79,6 +77,9 @@ namespace Reko.Arch.CSky
                 { 21,  crFactory.Reg32("rid") },
             };
             ControlRegisters = crFactory.DomainsToRegisters;
+            All = new RegisterBank(factory.NamesToRegisters.Values.Concat(
+                crFactory.NamesToRegisters.Values));
+
 
             Psr = CodesToControlRegisters[0];
             Vbr = CodesToControlRegisters[1];

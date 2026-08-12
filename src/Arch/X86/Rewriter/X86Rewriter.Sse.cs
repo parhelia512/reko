@@ -50,14 +50,14 @@ namespace Reko.Arch.X86.Rewriter
 
         private void RewriteComis(PrimitiveType size)
         {
-            var grf = binder.EnsureFlagGroup(arch.Registers.CZP);
+            var grf = binder.EnsureFlagGroup(arch.RegisterAliases.CZP);
             m.Assign(grf, m.Cond(
                 grf.DataType,
                 m.FSub(
                     MaybeSlice(size, SrcOp(0)),
                     MaybeSlice(size, SrcOp(1)))));
-            var o = binder.EnsureFlagGroup(arch.Registers.O);
-            var s = binder.EnsureFlagGroup(arch.Registers.S);
+            var o = binder.EnsureFlagGroup(arch.RegisterAliases.O);
+            var s = binder.EnsureFlagGroup(arch.RegisterAliases.S);
             m.Assign(o, m.False());
             m.Assign(s, m.False());
         }
@@ -757,7 +757,7 @@ namespace Reko.Arch.X86.Rewriter
         {
             var src = SrcOp(1);
             var dst = SrcOp(0);
-            var grf = binder.EnsureFlagGroup(arch.Registers.CZ);
+            var grf = binder.EnsureFlagGroup(arch.RegisterAliases.CZ);
             var at = CreatePackedArrayType(dtElem, dst.DataType);
             m.Assign(grf, m.Fn(vtest_intrinsic.MakeInstance(at), dst, src));
         }

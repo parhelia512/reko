@@ -21,12 +21,8 @@
 using NUnit.Framework;
 using Reko.Arch.i8051;
 using Reko.Core;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reko.UnitTests.Arch.i8051
 {

@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,8 +39,7 @@ public static class Registers
     public static readonly RegisterStorage?[] CrRegisters;
     public static readonly RegisterStorage?[] FcrRegisters;
 
-    public static Dictionary<string, RegisterStorage> ByName { get; }
-    public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+    public static RegisterBank All { get; }
     public static RegisterStorage PID { get; }
     public static RegisterStorage PSR { get; }
     public static RegisterStorage EPSR { get; }
@@ -136,10 +136,8 @@ public static class Registers
 
         C = new FlagGroupStorage(PSR, (ulong) FlagM.CF, "C");
 
-        ByName = factory.NamesToRegisters.Concat(crFactory.NamesToRegisters)
-            .ToDictionary(kv => kv.Key, kv => kv.Value);
-        ByDomain = factory.DomainsToRegisters.Concat(crFactory.DomainsToRegisters)
-            .ToDictionary(kv => kv.Key, kv => kv.Value);
+        All = new RegisterBank(factory.NamesToRegisters.Values
+            .Concat(crFactory.NamesToRegisters.Values));
     }
 }
 

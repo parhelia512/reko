@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,8 @@ namespace Reko.Arch.Motorola.M68k.Machine
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
         public static readonly RegisterStorage d0;
         public static readonly RegisterStorage d1;
         public static readonly RegisterStorage d2;
@@ -96,8 +99,6 @@ namespace Reko.Arch.Motorola.M68k.Machine
         internal static RegisterStorage[] regs;
         internal static FlagGroupStorage[] flags;
         internal static readonly RegisterStorage[] mmuregs;
-        internal static readonly Dictionary<string, RegisterStorage> ByName;
-        internal static readonly Dictionary<StorageDomain, RegisterStorage> ByDomain;
         internal static readonly Dictionary<uint, RegisterStorage> sregsByCode;
 
         static Registers()
@@ -188,8 +189,7 @@ namespace Reko.Arch.Motorola.M68k.Machine
                 fpsr,
             };
 
-            ByName = regs.ToDictionary(r => r.Name, StringComparer.InvariantCultureIgnoreCase);
-            ByDomain = regs.ToDictionary(r => r.Domain);
+            All = new RegisterBank(regs);
             flags = new[] { C, V, Z, N, X };
 
             var sregFactory = new StorageFactory(StorageDomain.SystemRegister);
@@ -259,15 +259,6 @@ namespace Reko.Arch.Motorola.M68k.Machine
         public static RegisterStorage FpRegister(int reg)
         {
             return regs[reg + 16];
-        }
-
-        public static RegisterStorage GetRegister(string name)
-        {
-            if (!ByName.TryGetValue(name, out RegisterStorage? reg))
-            {
-                reg = RegisterStorage.None;
-            }
-            return reg;
         }
 
         public static bool IsAddressRegister(RegisterStorage rop)

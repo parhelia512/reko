@@ -39,13 +39,22 @@ public class RegisterBank
     /// Constructs a <see cref="RegisterBank"/> from the given collection of registers.
     /// </summary>
     /// <param name="registers"></param>
-    public RegisterBank(IEnumerable<RegisterStorage> registers)
+    public RegisterBank(IEnumerable<RegisterStorage?> registers)
     {
-        this.byName = registers.ToDictionary(r => r.Name, StringComparer.OrdinalIgnoreCase);
+        var dups = registers
+            .Where(r => r is not null)
+            .GroupBy(r => r!.Name)
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key)
+            .ToArray();
+        if (dups.Length > 0)
+            throw new ArgumentException($"Duplicate register names: {string.Join(", ", dups)}");
+
+        this.byName = registers.Where(r => r is not null).ToDictionary(r => r!.Name, r => r!, StringComparer.OrdinalIgnoreCase);
         this.byDomain = GroupByDomain(registers);
     }
 
-    private Dictionary<StorageDomain, List<RegisterStorage>> GroupByDomain(IEnumerable<RegisterStorage> registers)
+    private static Dictionary<StorageDomain, List<RegisterStorage>> GroupByDomain(IEnumerable<RegisterStorage?> registers)
     {
         // Group the registers by their storage domain,
         // and within each domain maintain a list of registers within that domain,
@@ -74,12 +83,16 @@ public class RegisterBank
     /// or null if no such register exists.</returns>
     public RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
     {
+        if (range.IsEmpty)
+            return null;
         if (!this.byDomain.TryGetValue(domain, out var regs))
             return null;
         foreach (var reg in regs)
         {
             if (reg.Covers(range))
+            {
                 return reg;
+            }
         }
         return null;
     }
@@ -96,6 +109,7 @@ public class RegisterBank
     /// </returns>
     public RegisterStorage GetRegister(string name)
     {
+        ArgumentException.ThrowIfNullOrEmpty(name);
         return this.byName.TryGetValue(name, out var reg)
             ? reg
             : throw new KeyNotFoundException($"Register {name} not found.");
@@ -119,6 +133,41 @@ public class RegisterBank
     /// <returns>True if the register was found; otherwise false.</returns>
     public bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
     {
+        ArgumentException.ThrowIfNullOrEmpty(name);
         return this.byName.TryGetValue(name, out reg);
+    }
+
+    /// <summary>
+    /// Retrieves the registers whose domains span the half-open interval
+    /// <paramref name="startDomain"/> to <paramref name="endDomain"/>.
+    /// </summary>
+    /// <param name="startDomain">The domain of the first register to retrieve.</param>
+    /// <param name="endDomain">The domain of the first register to not retrieve.</param>
+    /// <returns>An enumerable of <see cref="RegisterStorage"/>, sorted by storage domain.
+    /// </returns>
+    public IEnumerable<RegisterStorage> GetRegistersByDomain(int startDomain, int endDomain)
+    {
+        return this.byDomain
+            .Where(r => r.Value.Count > 0 &&
+                        startDomain <= (int) r.Key &&
+                        (int) r.Key < endDomain)
+            .OrderBy(r => r.Key)
+            .Select(r => r.Value[0]);
+    }
+
+    /// <summary>
+    /// Retrieves the widest register whose domain is <paramref name="storageDomain"/>.
+    /// </summary>
+    /// <remarks>
+    /// Assumes the domain exists and contains at least one register. If not,
+    /// an exception is thrown.
+    /// </remarks>
+    /// <param name="storageDomain">The storage domain of the register.</param>
+    /// <returns>The widest register in the specified domain.</returns>
+    public RegisterStorage GetRegisterByDomain(StorageDomain storageDomain)
+    {
+        if (!this.byDomain.TryGetValue(storageDomain, out var regs) || regs.Count == 0)
+            throw new KeyNotFoundException($"No registers found for domain {storageDomain}.");
+        return regs[^1];
     }
 }

@@ -48,7 +48,7 @@ namespace Reko.Arch.X86.Rewriter
             var src0 = SrcOp(0);
             var src1 = SrcOp(1);
             m.Assign(
-                binder.EnsureFlagGroup(arch.Registers.C),
+                binder.EnsureFlagGroup(arch.RegisterAliases.C),
                 m.Fn(test1_intrinsic.MakeInstance(src0.DataType), src0, src1));
         }
 
@@ -57,7 +57,7 @@ namespace Reko.Arch.X86.Rewriter
             var dst = SrcOp(0);
             var bitIdx = SrcOp(1);
             m.Assign(
-                binder.EnsureFlagGroup(arch.Registers.C),
+                binder.EnsureFlagGroup(arch.RegisterAliases.C),
                 m.Fn(intrinsic.MakeInstance(dst.DataType), dst, bitIdx,
                     m.Out(dst.DataType, SrcOp(0))));
         }

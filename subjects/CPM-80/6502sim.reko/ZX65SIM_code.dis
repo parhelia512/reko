@@ -144,7 +144,7 @@ l01DB:
 	b_434 = 5<8>
 l01E1:
 	fn093B()
-	fn09A2(SEQ(Mem447[ix_328:byte], fn027A(f_438, d_437, iy_433, out d_878, out iy_433)), out af_451, out c_879)
+	fn09A2(SEQ(Mem447[ix_328:byte], fn027A(f_438, d_437, iy_433, out d_876, out iy_433)), out af_451, out c_877)
 	fn0945()
 	f_438 = SLICE(af_451, byte, 0) (alias)
 	e_467 = SLICE(de_461, byte, 0) (alias)
@@ -201,22 +201,22 @@ l0873:
 	branch SLICE(de_89 >>u 1<8>, byte, 0) >=u 0<8> l0895
 	goto l0894
 l088E:
-	bc_839 = bc_881 >>u 1<8> (alias)
-	bc_846 = bc_881 >>u 1<8> (alias)
-	bc_881 = bc_839
-	branch SLICE(bc_881 >>u 1<8>, byte, 0) >=u 0<8> l0895
+	bc_839 = bc_878 >>u 1<8> (alias)
+	bc_846 = bc_878 >>u 1<8> (alias)
+	bc_878 = bc_839
+	branch SLICE(bc_878 >>u 1<8>, byte, 0) >=u 0<8> l0895
 l0894:
 	a_100 = a_100 + 1<8>
 	bc_839 = bc_846 (alias)
 l0895:
 	f_147 = f_661 (alias)
 	e_111 = e_111 - 1<8>
-	bc_127 = bc_881 (alias)
+	bc_127 = bc_878 (alias)
 	branch e_111 != 0<8> l088E
 l0898:
 	branch a_100 == 0<8> l089C
 l089B:
-	bc_127 = bc_881 + 1<16>
+	bc_127 = bc_878 + 1<16>
 l089C:
 	hl_136 = de_68
 	bc_139 = bc_127 - 1<16>
@@ -227,8 +227,7 @@ l089E:
 	e_156 = 0x10<8>
 	hl_157 = hl_136
 l08AB:
-	fn0E24(hl_157, out af_876, out hl_159)
-	a_158 = <invalid>
+	fn0E24(hl_157, out a_158, out hl_159)
 	f_147 = SLICE(fn0929(SEQ(a_158, f_147)), byte, 0) (alias)
 	fn0933()
 	hl_157 = hl_159 + 1<16>
@@ -238,8 +237,7 @@ l08B8:
 	fn0930()
 	e_181 = 0x10<8>
 l08BE:
-	fn0E24(hl_136, out af_877, out hl_184)
-	a_183 = <invalid>
+	fn0E24(hl_136, out a_183, out hl_184)
 	branch a_183 <u 0x20<8> l08C9
 l08C5:
 	branch a_183 <u 0x80<8> l08CB
@@ -265,8 +263,7 @@ l08E3:
 	fn093B()
 	f_257 = fn0923(f_244, hl_241) (alias)
 	fn0930()
-	fn0E24(hl_241, out af_880, out hl_252)
-	a_251 = <invalid>
+	fn0E24(hl_241, out a_251, out hl_252)
 	af_259 = fn0929(SEQ(a_251, f_257))
 	fn0930()
 	f_244 = SLICE(af_259, byte, 0) (alias)
@@ -431,10 +428,9 @@ l02C5:
 	hl_4 = Mem0[0xABA<16>:word16]
 	c_338 = fn0284(hl_4, out d_572) (alias)
 	Mem10[0xAB8<16>:word16] = hl_4
-	fn0E24(hl_4, out af_573, out hl_12)
+	fn0E24(hl_4, out a_11, out hl_12)
 	de_6 = <invalid>
 	d_70 = SLICE(de_6, byte, 8) (alias)
-	a_11 = <invalid>
 	branch a_11 == 0<8> l032E
 l02D9:
 	branch __bit(a_11, 0<8>) l0560
@@ -481,7 +477,7 @@ l032E:
 	branch hl_25 != 0<8> l0340
 l0339:
 l033D_thunk_fn01FF:
-	Z_77 = fn01FF(f, 0x29<8>, d_70, ix, out f_581, out bc_73, out d_582)
+	Z_77 = fn01FF(f, 0x29<8>, d_70, ix, out f_577, out bc_73, out d_578)
 	fOut = <invalid>
 	bcOut = bc_73
 	dOut = <invalid>
@@ -491,14 +487,13 @@ l033D_thunk_fn01FF:
 l0340:
 	de_35 = fn0755(ix, out hl_36)
 	hl_56 = fn0E2C(Mem24[ix + 1<i16>:byte], fn0E2C(SLICE(de_35, byte, 0), fn0E2C(SLICE(de_35, byte, 8), hl_36) - 1<16>) - 1<16>)
-	fn075C(SLICE(hl_56, byte, 0) - 1<8>, ix, out hl_580)
+	fn075C(SLICE(hl_56, byte, 0) - 1<8>, ix, out hl_576)
 	Z_125 = cond(hl_56 - 1<16>) & 0x40<8> (alias)
 	hl_159 = Mem24[0xAAA<16>:word16]
 	bc_171 = 0x429<16>
 	goto l0728
 l0361:
-	fn0E24(hl_12, out af_576, out hl_240)
-	a_239 = <invalid>
+	fn0E24(hl_12, out a_239, out hl_240)
 	c_251 = (a_239 >>u 4<8>) - 1<8>
 	bc_252 = CONVERT(c_251, uint8, uint16) (alias)
 	hl_12 = hl_240 + 1<16>
@@ -515,8 +510,7 @@ l0389:
 l038C:
 	goto l039A
 l038E:
-	fn0E24(hl_240 + 1<16>, out af_584, out hl_272)
-	a_271 = <invalid>
+	fn0E24(hl_240 + 1<16>, out a_271, out hl_272)
 	de_282 = CONVERT(a_271, uint8, uint16) (alias)
 	branch !__bit(a_271, 7<8>) l0399
 l0398:
@@ -530,7 +524,7 @@ l039F:
 	e_302 = SLICE(de_565, byte, 0) (alias)
 	branch fn03E9(hl_12 + 1<16>, out de_565, out hl_159) l03AA
 l03A5:
-	Z_125 = fn03FD(bc_339, e_302, ix, out d_583, out ix)
+	Z_125 = fn03FD(bc_339, e_302, ix, out d_579, out ix)
 	goto l03BD
 l03AA:
 	de_311 = fn0755(ix, out hl_312)
@@ -546,10 +540,8 @@ l03C3:
 	bc_118 = 0x26F<16>
 	goto l03D7
 l03C9:
-	fn0E24(hl_12 + 1<16>, out af_585, out hl_99)
-	fn0E24(hl_99 + 1<16>, out af_586, out hl_587)
-	a_98 = <invalid>
-	a_107 = <invalid>
+	fn0E24(hl_12 + 1<16>, out a_98, out hl_99)
+	fn0E24(hl_99 + 1<16>, out a_107, out hl_580)
 	hl_117 = SEQ(a_107, a_98)
 	bc_118 = 0xC6F<16>
 l03D7:
@@ -558,8 +550,8 @@ l03D7:
 	de_152 = de_566 (alias)
 	branch Z_125 l03E5
 l03DC:
-	fn03FD(bc_118, e_122, ix, out d_588, out ix)
-	Z_125 = fn0440(ix, out d_589, out hl_144)
+	fn03FD(bc_118, e_122, ix, out d_581, out ix)
+	Z_125 = fn0440(ix, out d_582, out hl_144)
 	de_152 = hl_144
 l03E5:
 	bc_171 = bc_118
@@ -567,14 +559,13 @@ l03E5:
 	goto l0728
 l0424:
 	fn0755(ix, out hl_353)
-	fn0E24(hl_353 + 1<16>, out af_577, out hl_357)
-	a_356 = <invalid>
+	fn0E24(hl_353 + 1<16>, out a_356, out hl_357)
 	Mem362[ix + 1<i16>:byte] = a_356
-	Z_125 = fn0443(hl_357, ix, out d_578, out hl_159)
+	Z_125 = fn0443(hl_357, ix, out d_574, out hl_159)
 	bc_171 = 0x4A5<16>
 	goto l0728
 l0437:
-	Z_125 = fn0440(ix, out d_579, out hl_159)
+	Z_125 = fn0440(ix, out d_575, out hl_159)
 	bc_171 = 0x4A9<16>
 	goto l0728
 l0450:
@@ -626,8 +617,7 @@ l055B:
 	bc_171 = SEQ(4<8>, c_168) (alias)
 	goto l0727
 l0560:
-	fn0E24(hl_12, out af_574, out hl_575)
-	a_389 = <invalid>
+	fn0E24(hl_12, out a_389, out hl_573)
 	c_181 = __res(a_389 >>u 4<8>, 0<8>)
 	sp_2 = fp - 2<16>
 	iy_184 = 0xBE2<16>
@@ -674,10 +664,8 @@ bool fn03E9(word16 hl, word16 & deOut, word16 & hlOut)
 // Preserved: sp
 fn03E9_entry:
 l03E9:
-	fn0E24(hl, out af_51, out hl_5)
-	fn0E24(hl_5 + 1<16>, out af_52, out hl_14)
-	a_13 = <invalid>
-	a_4 = <invalid>
+	fn0E24(hl, out a_4, out hl_5)
+	fn0E24(hl_5 + 1<16>, out a_13, out hl_14)
 	SZ_24 = cond(a_13)
 	branch a_13 == 0<8> l03F7
 l03F6_1:
@@ -729,8 +717,8 @@ bool fn0440(word16 ix, byte & dOut, word16 & hlOut)
 fn0440_entry:
 l0440:
 	fn0755(ix, out hl_5)
-	fn0E24(hl_5 + 1<16>, out af_28, out hl_9)
-	Z_20 = fn0E24(hl_9 + 1<16>, out af_29, out hl_18)
+	fn0E24(hl_5 + 1<16>, out a_28, out hl_9)
+	Z_20 = fn0E24(hl_9 + 1<16>, out a_29, out hl_18)
 l044D_thunk_fn075C:
 	fn075C(SLICE(hl_18, byte, 0), ix, out hl_25)
 	dOut = <invalid>
@@ -749,8 +737,8 @@ bool fn0443(word16 hl, word16 ix, byte & dOut, word16 & hlOut)
 // Preserved: sp
 fn0443_entry:
 l0443:
-	fn0E24(hl + 1<16>, out af_27, out hl_7)
-	Z_18 = fn0E24(hl_7 + 1<16>, out af_28, out hl_16)
+	fn0E24(hl + 1<16>, out a_27, out hl_7)
+	Z_18 = fn0E24(hl_7 + 1<16>, out a_28, out hl_16)
 l044D_thunk_fn075C:
 	fn075C(SLICE(hl_16, byte, 0), ix, out hl_24)
 	dOut = <invalid>
@@ -1027,7 +1015,7 @@ bool fn099E(word16 d_f, byte e, word16 & afOut, byte & cOut)
 // MayUse:  e:[0..7] Sequence d:f:[0..15]
 // LiveOut: Z-fn01FF af:[0..15]-CpmCom_Start c:[0..7]-fn01FF
 // Trashed: SZPC af c
-// Preserved: d sp
+// Preserved: e sp
 fn099E_entry:
 l099E:
 	f_14 = fn09A3(SLICE(d_f, byte, 0)) (alias)
@@ -1167,16 +1155,14 @@ l09D1:
 	hl_14 = Mem13[0xAB8<16>:word16]
 	branch a_5 != 0x32<8> l09E4
 l09DA:
-	fn0E24(hl_14 + 2<16>, out af_121, out hl_122)
-	a_38 = <invalid>
-	fn09A2(SEQ(a_38, f), out af_117, out c_123)
+	fn0E24(hl_14 + 2<16>, out a_38, out hl_121)
+	fn09A2(SEQ(a_38, f), out af_117, out c_122)
 	goto l09F5
 l09E4:
 	branch a_5 != 0x31<8> l09F1
 l09E8:
-	fn0E24(hl_14 + 1<16>, out af_124, out hl_125)
-	a_21 = <invalid>
-	fn09A2(SEQ(a_21, f), out af_117, out c_126)
+	fn0E24(hl_14 + 1<16>, out a_21, out hl_123)
+	fn09A2(SEQ(a_21, f), out af_117, out c_124)
 	goto l09F5
 l09F1:
 	fn0A2A()
@@ -1356,7 +1342,7 @@ l0E1B:
 fn0DA2_exit:
 
 
-bool fn0E24(word16 hl, word16 & afOut, word16 & hlOut)
+bool fn0E24(word16 hl, byte & aOut, word16 & hlOut)
 // stackDelta: 2; fpuStackDelta: 0; fpuMaxParam: -1
 // Called from:
 //      CpmCom_Start
@@ -1373,7 +1359,7 @@ fn0E24_entry:
 l0E24:
 	Z_6 = fn0E35(hl, out hl_4)
 	hl_11 = Mem0[0xE76<16>:word16]
-	afOut = <invalid>
+	aOut = Mem0[hl_4:byte]
 	hlOut = hl_11
 	return Z_6 != 0<8>
 fn0E24_exit:

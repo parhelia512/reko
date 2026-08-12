@@ -35,12 +35,12 @@ namespace Reko.Arch.MN103
     public class MN103Architecture : ProcessorArchitecture
     {
         public MN103Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : this(services, archId, options, Registers.RegistersByName, Registers.RegistersByDomain)
+            : this(services, archId, options, Registers.All)
         {
         }
 
-        public MN103Architecture(IServiceProvider services, string archId, Dictionary<string, object> options, Dictionary<string, RegisterStorage>? regsByName, Dictionary<StorageDomain, RegisterStorage>? regsByDomain) 
-            : base(services, archId, options, regsByName, regsByDomain)
+        public MN103Architecture(IServiceProvider services, string archId, Dictionary<string, object> options, RegisterBank allRegisters) 
+            : base(services, archId, options, allRegisters)
         {   
             this.CarryFlag = Registers.C;
             this.CodeMemoryGranularity = 8;
@@ -70,7 +70,7 @@ namespace Reko.Arch.MN103
 
         public override ProcessorState CreateProcessorState()
         {
-            return new MN103State(this);
+            return new DefaultProcessorState(this);
         }
 
         public override IEnumerable<RtlInstructionCluster> CreateRewriter(EndianImageReader rdr, ProcessorState state, IStorageBinder binder, IRewriterHost host)
@@ -98,11 +98,6 @@ namespace Reko.Arch.MN103
         public override int? GetMnemonicNumber(string name)
         {
             throw new System.NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.RegistersByDomain.Values.ToArray();
         }
 
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)

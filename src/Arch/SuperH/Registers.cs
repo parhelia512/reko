@@ -19,14 +19,16 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Reko.Arch.SuperH
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
         public static readonly RegisterStorage r0 = RegisterStorage.Reg32("r0", 0);
         public static readonly RegisterStorage r1 = RegisterStorage.Reg32("r1", 1);
         public static readonly RegisterStorage r2 = RegisterStorage.Reg32("r2", 2);
@@ -214,8 +216,6 @@ namespace Reko.Arch.SuperH
         public static readonly RegisterStorage y1;
         public static readonly RegisterStorage re;
 
-        public static readonly Dictionary<StorageDomain, RegisterStorage> RegistersByDomain;
-
         public static RegisterStorage[] XdRegisters { get; }
         public static RegisterStorage[] XfRegisters { get; }
         public static RegisterStorage[] DspRegisters { get; }
@@ -250,7 +250,10 @@ namespace Reko.Arch.SuperH
                 re,
             };
 
-            RegistersByDomain = gpregs.ToDictionary(r => r.Domain);
+            All = new RegisterBank(
+                gpregs.Concat(fpregs)
+                .Concat(dfpregs).Concat(vfpregs).Concat(rbank)
+                .Concat(XdRegisters).Concat(XfRegisters).Concat(DspRegisters));
         }
     }
 }

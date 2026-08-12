@@ -33,7 +33,7 @@ namespace Reko.Arch.Telink
     public class TC32Architecture : ProcessorArchitecture
     {
         public TC32Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.CarryFlag = null; //$TODO
             this.CodeMemoryGranularity = 8;
@@ -45,11 +45,6 @@ namespace Reko.Arch.Telink
             this.PointerType = PrimitiveType.Ptr32;
             this.StackRegister = Registers.sp;
             this.WordWidth = PrimitiveType.Word32;
-        }
-
-
-        public TC32Architecture(IServiceProvider services, string archId, Dictionary<string, object> options, Dictionary<string, RegisterStorage>? regsByName, Dictionary<StorageDomain, RegisterStorage>? regsByDomain) : base(services, archId, options, regsByName, regsByDomain)
-        {
         }
 
         public override IEnumerable<MachineInstruction> CreateDisassembler(EndianImageReader imageReader)
@@ -93,11 +88,6 @@ namespace Reko.Arch.Telink
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

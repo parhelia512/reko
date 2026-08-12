@@ -47,7 +47,7 @@ namespace Reko.Environments.C64
         private readonly BTreeDictionary<Address, C64BasicInstruction> mpAddrToInstr;
 
         public C64Basic(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, new RegisterBank([]))
         {
             this.Description = "Commodore 64 Basic";
             this.Endianness = EndianServices.Little;
@@ -98,26 +98,6 @@ namespace Reko.Environments.C64
         }
 
         public override IEnumerable<Address> CreatePointerScanner(SegmentMap map, EndianImageReader rdr, IEnumerable<Address> knownAddresses, PointerScannerFlags flags)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage GetRegister(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Array.Empty<RegisterStorage>();
-        }
-
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

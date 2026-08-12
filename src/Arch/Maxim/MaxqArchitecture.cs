@@ -34,7 +34,7 @@ namespace Reko.Arch.Maxim;
 public class MaxqArchitecture : ProcessorArchitecture
 {
     public MaxqArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-        : base(services, archId, options, Registers.ByName, Registers.ByDomain) 
+        : base(services, archId, options, Registers.All) 
     {
         this.CarryFlag = Registers.C;
         this.Endianness = EndianServices.Little;
@@ -95,11 +95,6 @@ public class MaxqArchitecture : ProcessorArchitecture
     }
 
     public override int? GetMnemonicNumber(string name)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override RegisterStorage[] GetRegisters()
     {
         throw new System.NotImplementedException();
     }

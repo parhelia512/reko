@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,7 @@ namespace Reko.Arch.Avr.Avr8
                     rampx, rampy, rampz, 
                     sreg
                 }).ToArray();
+            All = new RegisterBank(regs);
 
             I = new FlagGroupStorage(sreg, (ulong) FlagM.IF, nameof(I));
             T = new FlagGroupStorage(sreg, (ulong) FlagM.TF, nameof(T));
@@ -83,6 +85,7 @@ namespace Reko.Arch.Avr.Avr8
             };
         }
 
+        public static RegisterBank All { get; }
         public static RegisterStorage sreg { get; private set; }
         public static RegisterStorage x { get; }
         public static RegisterStorage y { get; }

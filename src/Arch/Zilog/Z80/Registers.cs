@@ -19,10 +19,8 @@
 #endregion
 
 using Reko.Core;
-using Reko.Core.Types;
+using Reko.Core.Machine;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Reko.Arch.Zilog.Z80
 {
@@ -64,10 +62,8 @@ namespace Reko.Arch.Zilog.Z80
         public static readonly FlagGroupStorage SZPC = new FlagGroupStorage(f, (uint) (FlagM.CF | FlagM.ZF | FlagM.SF | FlagM.PF), nameof(SZPC));
 
         internal static RegisterStorage?[] All;
+        public static RegisterBank RegisterBank { get; }
         internal static FlagGroupStorage[] Flags = new[] { S, Z, P, N, C };
-        internal static Dictionary<StorageDomain, RegisterStorage[]> SubRegisters;
-        internal static Dictionary<string, RegisterStorage> regsByName;
-        private readonly static RegisterStorage?[] regsByStorage;
 
         static Registers()
         {
@@ -101,60 +97,12 @@ namespace Reko.Arch.Zilog.Z80
                 hl_,
                 null,
             };
-
-            Registers.regsByName = All.Where(reg => reg is not null).ToDictionary(reg => reg!.Name, reg => reg!);
-            regsByStorage = new[]
-            {
-                af, bc,  de, hl, sp, ix, iy, null,
-                i,  r,   null, null, bc_, de_, hl_, af_,
-            };
-
-            SubRegisters = new Dictionary<StorageDomain, RegisterStorage[]>
-            {
-                {
-                    af.Domain, new [] { Registers.a, Registers.f }
-                },
-                {
-                    bc.Domain, new [] { Registers.c, Registers.b }
-                },
-                {
-                    de.Domain, new []  { Registers.e, Registers.d }
-                },
-                {
-                    hl.Domain, new[] { Registers.l, Registers.h }
-                },
-            };
+            RegisterBank = new RegisterBank(All);
         }
 
         internal static RegisterStorage? GetRegister(int r)
         {
             return All[r];
-        }
-
-        internal static RegisterStorage? GetRegister(string name)
-        {
-            return regsByName.TryGetValue(name, out var reg) ? reg : null;
-        }
-
-        internal static RegisterStorage? GetRegister(StorageDomain domain, ulong mask)
-        {
-            var iReg = domain - StorageDomain.Register;
-            if (iReg < 0 || iReg >= regsByStorage.Length)
-                return null;
-            RegisterStorage? regBest = regsByStorage[iReg];
-            if (regBest is null)
-                return null;
-            if (SubRegisters.TryGetValue(domain, out var subregs))
-            {
-                for (int i = 0; i < subregs.Length; ++i)
-                {
-                    var reg = subregs[i];
-                    var regMask = reg.BitMask;
-                    if ((mask & (~regMask)) == 0)
-                        regBest = reg;
-                }
-            }
-            return regBest;
         }
     }
 

@@ -41,7 +41,7 @@ namespace Reko.Arch.OpenRISC
             IServiceProvider services,
             string archId,
             Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.LoadUserOptions(options);
             this.CarryFlag = Registers.CY;
@@ -113,11 +113,6 @@ namespace Reko.Arch.OpenRISC
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

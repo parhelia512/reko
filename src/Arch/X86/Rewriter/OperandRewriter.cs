@@ -108,14 +108,14 @@ namespace Reko.Arch.X86.Rewriter
             }
             var defaultSegment = mem.DefaultSegment(arch);
             if (IsSegmentedAccessRequired ||
-                (defaultSegment != arch.Registers.cs &&
-                 defaultSegment != arch.Registers.ds && 
-                 defaultSegment != arch.Registers.ss))
+                (defaultSegment != arch.RegisterAliases.cs &&
+                 defaultSegment != arch.RegisterAliases.ds && 
+                 defaultSegment != arch.RegisterAliases.ss))
             {
                 Expression seg;
-                if (defaultSegment == arch.Registers.cs)
+                if (defaultSegment == arch.RegisterAliases.cs)
                 {
-                    var cs = state.GetRegister(arch.Registers.cs);
+                    var cs = state.GetRegister(arch.RegisterAliases.cs);
                     if (cs is not InvalidConstant)
                     {
                         seg = cs;
@@ -279,7 +279,7 @@ namespace Reko.Arch.X86.Rewriter
                 dt,
                 m.SegPtr(
                     arch.ProcessorMode.PointerType,
-                    AluRegister(arch.Registers.ss), expr));
+                    AluRegister(arch.RegisterAliases.ss), expr));
         }
     }
 

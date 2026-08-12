@@ -34,7 +34,7 @@ namespace Reko.Arch.MCore
     public class MCoreArchitecture : ProcessorArchitecture
     {
         public MCoreArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null!, null!)
+            : base(services, archId, options, Registers.All)
         {
             //this.CarryFlagMask = ???
             this.Endianness = EndianServices.Big;
@@ -90,12 +90,6 @@ namespace Reko.Arch.MCore
             throw new NotImplementedException();
         }
 
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -107,11 +101,6 @@ namespace Reko.Arch.MCore
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

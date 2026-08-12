@@ -70,14 +70,14 @@ namespace Reko.Arch.X86
         private Decoder[]? rootDecoders;
 
         public IntelArchitecture(IServiceProvider services, string archId, ProcessorMode mode, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, SelectRegisterBank(options))
         {
             this.isV20Mode = IsV20Mode(options);
-            this.Registers = SelectRegisterBank(isV20Mode);
+            this.RegisterAliases = SelectRegisterAliases(isV20Mode);
             this.mode = mode;
             this.Endianness = EndianServices.Little;
             this.InstructionBitSize = 8;
-            this.CarryFlag = Registers.C;
+            this.CarryFlag = RegisterAliases.C;
             this.PointerType = mode.PointerType;
             this.WordWidth = mode.WordWidth;
             this.FramePointerType = mode.FramePointerType;
@@ -87,7 +87,7 @@ namespace Reko.Arch.X86
             this.LoadUserOptions(options);
         }
 
-        public RegisterBank Registers { get; }
+        public RegisterAliases RegisterAliases { get; }
 
         internal static bool IsV20Mode(Dictionary<string, object>? options)
         {
@@ -107,7 +107,7 @@ namespace Reko.Arch.X86
 
         public X86Disassembler CreateDisassemblerImpl(EndianImageReader imageReader)
         {
-            return mode.CreateDisassembler(this.Registers, this.Services, EnsureRootDecoders(), imageReader, Options);
+            return mode.CreateDisassembler(this.RegisterAliases, this.Services, EnsureRootDecoders(), imageReader, Options);
         }
 
         public override IProcessorEmulator CreateEmulator(IMemory memory, IPlatformEmulator envEmulator)
@@ -132,12 +132,22 @@ namespace Reko.Arch.X86
             return new X86FrameApplicationBuilder(this, binder, site);
         }
 
-        private RegisterBank SelectRegisterBank(bool isV20)
+        private static RegisterAliases SelectRegisterAliases(bool isV20)
         {
             return isV20
-                ? RegisterBank.V20Instance
-                : RegisterBank.IntelInstance;
+                ? RegisterAliases.V20Instance
+                : RegisterAliases.IntelInstance;
         }
+
+
+        private static RegisterBank SelectRegisterBank(Dictionary<string, object> options)
+        {
+            var aliases = IsV20Mode(options)
+                ? RegisterAliases.V20Instance
+                : RegisterAliases.IntelInstance;
+            return new RegisterBank(Registers.All);
+        }
+
 
         public override SortedList<string, int> GetMnemonicNames()
         {
@@ -234,7 +244,7 @@ namespace Reko.Arch.X86
 
         public override FlagGroupStorage GetFlagGroup(RegisterStorage flagRegister, ulong grf)
 		{
-            var f = new FlagGroupStorage(Registers.Eflags, grf, GrfToString(flagRegister, "", grf));
+            var f = new FlagGroupStorage(RegisterAliases.Eflags, grf, GrfToString(flagRegister, "", grf));
 			return f;
 		}
 
@@ -254,65 +264,29 @@ namespace Reko.Arch.X86
                 default: throw new ArgumentException($"Unknown x86 flag bit '{name[i]}'.");
 				}
 			}
-			return GetFlagGroup(Registers.Eflags, (uint) grf);
+			return GetFlagGroup(RegisterAliases.Eflags, (uint) grf);
 		}
-
-        public override RegisterStorage? GetRegister(string name)
-		{
-			var r = this.Registers.GetRegister(name);
-            if (r == RegisterStorage.None)
-                return null;
-			return r;
-		}
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            return GetSubregister(domain, range);
-        }
 
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
-            if ((grf & Registers.S.FlagGroupBits) != 0) yield return Registers.S;
-            if ((grf & Registers.C.FlagGroupBits) != 0) yield return Registers.C;
-            if ((grf & Registers.Z.FlagGroupBits) != 0) yield return Registers.Z;
-            if ((grf & Registers.D.FlagGroupBits) != 0) yield return Registers.D;
-            if ((grf & Registers.O.FlagGroupBits) != 0) yield return Registers.O;
-            if ((grf & Registers.P.FlagGroupBits) != 0) yield return Registers.P;
-        }
-
-        internal RegisterStorage? GetSubregister(StorageDomain domain, BitRange range)
-        {
-            if (range.IsEmpty)
-                return null;
-            RegisterStorage? reg = null;
-            if (this.Registers.SubRegisters.TryGetValue(domain, out RegisterStorage[]? subregs))
-            {
-                for (int i = 0; i < subregs.Length; ++i)
-                {
-                    var subreg = subregs[i];
-                    var subRange = new BitRange((int) subreg.BitAddress, (int) (subreg.BitAddress + subreg.BitSize));
-                    if (subRange.Covers(range))
-                        reg = subreg;
-                }
-            }
-            return reg;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.All.Where(a => a is not null).ToArray();
+            if ((grf & RegisterAliases.S.FlagGroupBits) != 0) yield return RegisterAliases.S;
+            if ((grf & RegisterAliases.C.FlagGroupBits) != 0) yield return RegisterAliases.C;
+            if ((grf & RegisterAliases.Z.FlagGroupBits) != 0) yield return RegisterAliases.Z;
+            if ((grf & RegisterAliases.D.FlagGroupBits) != 0) yield return RegisterAliases.D;
+            if ((grf & RegisterAliases.O.FlagGroupBits) != 0) yield return RegisterAliases.O;
+            if ((grf & RegisterAliases.P.FlagGroupBits) != 0) yield return RegisterAliases.P;
         }
 
         /// <inheritdoc/>
         public override FlagGroupStorage[] GetFlags()
         {
-            return Registers.EflagsBits;
+            return RegisterAliases.EflagsBits;
         }
 
         public override List<RtlInstruction>? InlineCall(Address addrCallee, Address addrContinuation, EndianImageReader rdr, IStorageBinder binder)
         {
-            var dasm = mode.CreateDisassembler(this.Registers, Services, EnsureRootDecoders(), rdr, this.Options);
+            var dasm = mode.CreateDisassembler(this.RegisterAliases, Services, EnsureRootDecoders(), rdr, this.Options);
             return this.mode.InlineCall(this.Services, dasm, addrCallee, addrContinuation, binder);
         }
 
@@ -333,25 +307,19 @@ namespace Reko.Arch.X86
             return dict;
         }
 
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
-        {
-            reg = Registers.GetRegister(name);
-            return (reg != RegisterStorage.None);
-        }
-
 		public override string GrfToString(RegisterStorage flagregister, string prefix, ulong grf)
 		{
 			StringBuilder s = new StringBuilder();
-            if (flagregister == Registers.Eflags)
+            if (flagregister == RegisterAliases.Eflags)
             {
-                foreach (var fr in Registers.EflagsBits)
+                foreach (var fr in RegisterAliases.EflagsBits)
                 {
                     if ((fr.FlagGroupBits & grf) != 0) s.Append(fr.Name);
                 }
             }
-            else if (flagregister == Registers.FPUF)
+            else if (flagregister == RegisterAliases.FPUF)
             {
-                foreach (var fr in Registers.FpuFlagsBits)
+                foreach (var fr in RegisterAliases.FpuFlagsBits)
                 {
                     if ((fr.FlagGroupBits & grf) != 0) s.Append(fr.Name);
                 }

@@ -34,7 +34,7 @@ namespace Reko.Arch.X86.Emulator
     public class X86RealModeEmulator : X86Emulator
     {
         public X86RealModeEmulator(IntelArchitecture arch, ByteProgramMemory memory, IPlatformEmulator envEmulator)
-            : base(arch, memory, envEmulator, arch.Registers.ip, arch.Registers.cx)
+            : base(arch, memory, envEmulator, arch.RegisterAliases.ip, arch.RegisterAliases.cx)
         {
         }
 
@@ -72,8 +72,8 @@ namespace Reko.Arch.X86.Emulator
 
         protected override void Lods(X86Instruction instr)
         {
-            var ds = ReadSegmentRegister(instr.Operands[1], arch.Registers.ds);
-            var si = (uint) ReadRegister(arch.Registers.si);
+            var ds = ReadSegmentRegister(instr.Operands[1], arch.RegisterAliases.ds);
+            var si = (uint) ReadRegister(arch.RegisterAliases.si);
             var dt = instr.DataWidth;
             var value = ReadMemory(ToLinear(ds, si), dt);
             var mask = masks[dt.Size];
@@ -82,23 +82,23 @@ namespace Reko.Arch.X86.Emulator
             WriteRegister(X86.Registers.eax, aNew);
             var delta = (uint) dt.Size * ((Flags & Dmask) != 0 ? 0xFFFFu : 0x0001u);
             si += delta;
-            WriteRegister(arch.Registers.si, si);
+            WriteRegister(arch.RegisterAliases.si, si);
         }
 
         protected override void Movs(X86Instruction instr)
         {
-            var ds = ReadSegmentRegister(instr.Operands[1], arch.Registers.ds);
-            var es = ReadSegmentRegister(instr.Operands[0], arch.Registers.es);
-            var si = (uint) ReadRegister(arch.Registers.si);
-            var di = (uint) ReadRegister(arch.Registers.di);
+            var ds = ReadSegmentRegister(instr.Operands[1], arch.RegisterAliases.ds);
+            var es = ReadSegmentRegister(instr.Operands[0], arch.RegisterAliases.es);
+            var si = (uint) ReadRegister(arch.RegisterAliases.si);
+            var di = (uint) ReadRegister(arch.RegisterAliases.di);
             var dt = instr.DataWidth;
             var value = ReadMemory(ToLinear(ds, si), dt);
             WriteMemory(value, ToLinear(es, di), dt);
             var delta = (uint) dt.Size * ((Flags & Dmask) != 0 ? 0xFFFFu : 0x0001u);
             si += delta;
             di += delta;
-            WriteRegister(arch.Registers.si, si);
-            WriteRegister(arch.Registers.di, di);
+            WriteRegister(arch.RegisterAliases.si, si);
+            WriteRegister(arch.RegisterAliases.di, di);
         }
 
         private ushort ReadSegmentRegister(MachineOperand op, RegisterStorage defaultRegister)
@@ -115,12 +115,12 @@ namespace Reko.Arch.X86.Emulator
             var dt = instr.DataWidth;
             var mask = masks[dt.Size];
             var a = ReadRegister(X86.Registers.eax) & mask.value;
-            var es = ReadSegmentRegister(instr.Operands[1], arch.Registers.es);
-            var di = (uint) ReadRegister(arch.Registers.di);
+            var es = ReadSegmentRegister(instr.Operands[1], arch.RegisterAliases.es);
+            var di = (uint) ReadRegister(arch.RegisterAliases.di);
             var value = ReadMemory(ToLinear(es, di), dt) & mask.value;
             var delta = dt.Size * ((Flags & Dmask) != 0 ? -1 : 1);
             di += (uint) delta;
-            WriteRegister(arch.Registers.di, di);
+            WriteRegister(arch.RegisterAliases.di, di);
             Flags &= ~Zmask;
             Flags |= a == value ? Zmask : 0u;
         }
@@ -128,20 +128,20 @@ namespace Reko.Arch.X86.Emulator
         protected override void Stos(X86Instruction instr)
         {
             var dt = instr.DataWidth;
-            var es = ReadSegmentRegister(instr.Operands[0], arch.Registers.es);
-            var di = (uint) ReadRegister(arch.Registers.di);
+            var es = ReadSegmentRegister(instr.Operands[0], arch.RegisterAliases.es);
+            var di = (uint) ReadRegister(arch.RegisterAliases.di);
             var value = (uint) (Registers[X86.Registers.rax.Number] & Bits.Mask(0, dt.BitSize));
             WriteMemory(value, ToLinear(es, di), dt);
             var delta = (uint) dt.Size * ((Flags & Dmask) != 0 ? 0xFFFFu : 0x0001u);
             di += delta;
-            WriteRegister(arch.Registers.di, di);
+            WriteRegister(arch.RegisterAliases.di, di);
         }
 
 
         protected override uint Pop(DataType dt)
         {
-            var spReg = arch.Registers.sp;
-            var ss = (ushort) ReadRegister(arch.Registers.ss);
+            var spReg = arch.RegisterAliases.sp;
+            var ss = (ushort) ReadRegister(arch.RegisterAliases.ss);
             var sp = (ushort) ReadRegister(spReg);
             var value = ReadLeUInt16(ToLinear(ss, sp));
             WriteRegister(spReg, sp + (uint) dt.Size);
@@ -150,8 +150,8 @@ namespace Reko.Arch.X86.Emulator
 
         protected override void Push(ulong value, DataType dt)
         {
-            var spReg = arch.Registers.sp;
-            var ss = (ushort) ReadRegister(arch.Registers.ss);
+            var spReg = arch.RegisterAliases.sp;
+            var ss = (ushort) ReadRegister(arch.RegisterAliases.ss);
             var sp = (ushort) ReadRegister(spReg) - (uint) dt.Size;
             WriteLeUInt16(ToLinear(ss, sp), (ushort) value);
             WriteRegister(spReg, sp);
@@ -218,16 +218,16 @@ namespace Reko.Arch.X86.Emulator
             string sValue = "???";
             if (instr.Mnemonic == Mnemonic.lodsb || instr.Mnemonic == Mnemonic.movsb)
             {
-                var ds = (uint) ReadRegister(arch.Registers.ds);
-                var si = (uint) ReadRegister(arch.Registers.si);
+                var ds = (uint) ReadRegister(arch.RegisterAliases.ds);
+                var si = (uint) ReadRegister(arch.RegisterAliases.si);
                 if (TryReadByte(ToLinear(ds, si), out var b))
                     sValue = b.ToString("X2");
                 return $"DS:[{si:X4}]={sValue}";
             }
             if (instr.Mnemonic == Mnemonic.lods || instr.Mnemonic == Mnemonic.movs)
             {
-                var ds = (uint) ReadRegister(arch.Registers.ds);
-                var si = (uint) ReadRegister(arch.Registers.si);
+                var ds = (uint) ReadRegister(arch.RegisterAliases.ds);
+                var si = (uint) ReadRegister(arch.RegisterAliases.si);
                 var w = ReadLeUInt16(ToLinear(ds, si));
                 sValue = w.ToString("X4");
                 return $"DS:[{si:X4}]={sValue}";

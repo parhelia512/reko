@@ -388,13 +388,13 @@ namespace Reko.Arch.RiscV
 
         private RegisterStorage GetRegister(uint wInstr, int bitPos)
         {
-            var reg = arch.GetRegister((int)(wInstr >> bitPos) & 0x1F)!;
+            var reg = arch.GpRegs[(wInstr >> bitPos) & 0x1F];
             return reg;
         }
 
         private RegisterStorage GetFpuRegister(uint wInstr, int bitPos)
         {
-            var reg = arch.GetRegister(32 + ((int)(wInstr >> bitPos) & 0x1F))!;
+            var reg = arch.FpRegs[(wInstr >> bitPos) & 0x1F];
             return reg;
         }
 
@@ -552,7 +552,7 @@ namespace Reko.Arch.RiscV
             return (u, d) =>
             {
                 var iReg = (int) regMask.Read(u);
-                var reg = d.arch.GetRegister(iReg)!;
+                var reg = d.arch.GpRegs[iReg];
                 d.state.ops.Add(reg);
                 return true;
             };
@@ -592,7 +592,7 @@ namespace Reko.Arch.RiscV
                 var iReg = (int) regMask.Read(u);
                 if (iReg == 0)
                     return false;
-                var reg = d.arch.GetRegister(iReg)!;
+                var reg = d.arch.GpRegs[iReg];
                 d.state.ops.Add(reg);
                 return true;
             };
@@ -624,7 +624,7 @@ namespace Reko.Arch.RiscV
             return (u, d) =>
             {
                 var iReg = compressedRegs[regMask.Read(u)];
-                var reg = d.arch.GetRegister(iReg)!;
+                var reg = d.arch.GpRegs[iReg];
                 d.state.ops.Add(reg);
                 return true;
             };
@@ -838,7 +838,7 @@ namespace Reko.Arch.RiscV
 
                 d.state.ops.Add(new MemoryOperand(
                     dt,
-                    d.arch.GetRegister(iBase)!,
+                    d.arch.GpRegs[iBase],
                     Constant.Int32(uOffset)));
                 return true;
             };
@@ -866,7 +866,7 @@ namespace Reko.Arch.RiscV
 
                 d.state.ops.Add(new MemoryOperand(
                     dt,
-                    d.arch.GetRegister(iBase)!,
+                    d.arch.GpRegs[iBase],
                     Constant.Int32(uOffset)));
                 return true;
             };
@@ -892,7 +892,7 @@ namespace Reko.Arch.RiscV
 
                 d.state.ops.Add(new MemoryOperand(
                     dt,
-                    d.arch.GetRegister(iBase)!,
+                    d.arch.GpRegs[iBase],
                     Constant.Int32(uOffset)));
                 return true;
             };
@@ -918,7 +918,7 @@ namespace Reko.Arch.RiscV
 
                 d.state.ops.Add(new MemoryOperand(
                     dt,
-                    d.arch.GetRegister(iBase)!,
+                    d.arch.GpRegs[iBase],
                     Constant.Int32(uOffset)));
                 return true;
             };

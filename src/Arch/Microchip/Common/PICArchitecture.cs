@@ -51,7 +51,7 @@ namespace Reko.Arch.MicrochipPIC.Common
         /// Instantiates a new PIC architecture for the specified PIC generic family.
         /// </summary>
         public PICArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, new([]))
         {
             flagGroups = [];
             Endianness = EndianServices.Little;
@@ -188,7 +188,8 @@ namespace Reko.Arch.MicrochipPIC.Common
         /// <returns>
         /// The register instance or null.
         /// </returns>
-        public override RegisterStorage GetRegister(StorageDomain domain, BitRange range)
+        //$TODO: delete this, and expose the PicRegisters via a register bank
+        public new RegisterStorage GetRegister(StorageDomain domain, BitRange range)
             => PICRegisters.GetSubregister(
                     PICRegisters.PeekRegisterByIdx(domain - StorageDomain.Register),
                     range.Lsb,
@@ -201,7 +202,8 @@ namespace Reko.Arch.MicrochipPIC.Common
         /// <returns>
         /// The register or null if there is no such register.
         /// </returns>
-        public override RegisterStorage? GetRegister(string regName)
+        //$TODO: delete this, and expose the PicRegisters via a register bank
+        public new RegisterStorage? GetRegister(string regName)
             => PICRegisters.GetRegister(regName);
 
         /// <summary>
@@ -220,7 +222,8 @@ namespace Reko.Arch.MicrochipPIC.Common
         /// <returns>
         /// An array of register storage.
         /// </returns>
-        public override RegisterStorage[] GetRegisters()
+        //$TODO: delete this, and expose the PicRegisters via a register bank
+        public new RegisterStorage[] GetRegisters()
             => PICRegisters.GetRegisters;
 
         /// <summary>
@@ -231,7 +234,8 @@ namespace Reko.Arch.MicrochipPIC.Common
         /// <returns>
         /// True if it succeeds, false if it fails.
         /// </returns>
-        public override bool TryGetRegister(string regName, [MaybeNullWhen(false)] out RegisterStorage reg)
+        //$TODO: delete this, and expose the PicRegisters via a register bank
+        public new bool TryGetRegister(string regName, [MaybeNullWhen(false)] out RegisterStorage reg)
         {
             var res = PICRegisters.TryGetRegister(regName, out var preg);
             reg = preg;

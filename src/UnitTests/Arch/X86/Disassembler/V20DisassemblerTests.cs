@@ -45,7 +45,7 @@ namespace Reko.UnitTests.Arch.X86.Disassembler
             x86Arch = new X86ArchitectureReal(
                 CreateServiceContainer(),
                 "x86-real-16",
-                new Dictionary<string, object>());
+                []);
             LoadAddress = Address.SegPtr(0x0800, 0x0000);
         }
 

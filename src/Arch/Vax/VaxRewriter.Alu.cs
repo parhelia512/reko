@@ -442,7 +442,7 @@ namespace Reko.Arch.Vax
                     {
                         m.Assign(sp, m.ISubS(sp, 4));
                         m.Assign(m.Mem32(sp), binder.EnsureRegister(
-                            arch.GetRegister(i)!));
+                            Registers.GpRegisters[i]));
                     }
                 }
                 return;

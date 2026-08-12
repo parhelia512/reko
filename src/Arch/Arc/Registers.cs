@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -52,11 +53,10 @@ namespace Reko.Arch.Arc
         public static readonly FlagGroupStorage ZNCV;
         public static readonly FlagGroupStorage ZNC;
         public static readonly FlagGroupStorage ZNV;
-        public static readonly FlagGroupStorage ZN; 
+        public static readonly FlagGroupStorage ZN;
 
 
-        public static readonly Dictionary<StorageDomain, RegisterStorage> ByDomain;
-        public static readonly Dictionary<string, RegisterStorage> ByName;
+        public static RegisterBank All { get; }
 
         static Registers()
         {
@@ -90,12 +90,8 @@ namespace Reko.Arch.Arc
             ZN = new FlagGroupStorage(Status32, (uint) (FlagM.ZF | FlagM.NF), "ZN");
 
 
-            ByDomain = factory.DomainsToRegisters
-                .Concat(sysFactory.DomainsToRegisters)
-                .ToDictionary(k => k.Key, v => v.Value);
-            ByName = factory.NamesToRegisters
-                .Concat(sysFactory.NamesToRegisters)
-                .ToDictionary(k => k.Key, v => v.Value);
+            All = new RegisterBank(factory.NamesToRegisters.Values
+                .Concat(sysFactory.NamesToRegisters.Values));
         }
 
         private static RegisterStorage RenameRegister(int iGpReg, string regName)

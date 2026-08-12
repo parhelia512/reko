@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -38,10 +39,9 @@ namespace Reko.Arch.Avr.Avr32
             regs[14] = RegisterStorage.Reg32("lr", regs[14].Number);
             regs[15] = RegisterStorage.Reg32("pc", regs[15].Number);
             GpRegisters = regs;
-            ByName = regs.ToDictionary(r => r.Name);
+            All = new RegisterBank(regs);
             sp = regs[13];
             pc = regs[15];
-            ByDomain = regs.ToDictionary(r => r.Domain);
 
             factory = new StorageFactory(StorageDomain.Register + 0x100);
             sr = factory.Reg32(nameof(sr));
@@ -156,8 +156,7 @@ namespace Reko.Arch.Avr.Avr32
             C = new FlagGroupStorage(sr, (ulong) FlagM.CF, nameof(C));
         }
 
-        public static Dictionary<string, RegisterStorage> ByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
         public static RegisterStorage[] GpRegisters { get; }
         public static RegisterStorage sp { get; }
         public static RegisterStorage pc { get; }

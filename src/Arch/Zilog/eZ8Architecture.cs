@@ -33,7 +33,7 @@ namespace Reko.Arch.Zilog
     public class eZ8Architecture : ProcessorArchitecture
     {
         public eZ8Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-                    : base(services, archId, options, null, null)
+                    : base(services, archId, options, Registers.All)
         {
             this.CarryFlag = Registers.C;
         }
@@ -79,11 +79,6 @@ namespace Reko.Arch.Zilog
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

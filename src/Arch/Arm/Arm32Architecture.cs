@@ -48,7 +48,7 @@ namespace Reko.Arch.Arm
         private ConcurrentDictionary<ulong, FlagGroupStorage> flagGroups;
 
         public Arm32Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             Endianness = EndianServices.Little;
             InstructionBitSize = 32;
@@ -170,16 +170,6 @@ namespace Reko.Arch.Arm
             return new Arm32CallingConvention();
         }
 
-
-        public override RegisterStorage[] GetRegisters()
-        {
-#if NATIVE
-            // First element is "Invalid".
-            return regsByNumber.Values.OrderBy(r => r.Number).ToArray();
-#else
-            return Registers.GpRegs;
-#endif
-        }
 
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {

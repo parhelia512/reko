@@ -65,11 +65,11 @@ namespace Reko.Arch.RiscV
 
 #nullable disable
         public RiscVArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, new([]))
         {
             this.Endianness = EndianServices.Little;
             this.InstructionBitSize = 16;
-            Csrs = new Dictionary<uint, RegisterStorage>();
+            Csrs = [];
             SetOptionDependentProperties();
         }
 #nullable enable
@@ -137,20 +137,6 @@ namespace Reko.Arch.RiscV
         public override int? GetMnemonicNumber(string name)
         {
             throw new NotImplementedException();
-        }
-
-        public RegisterStorage? GetRegister(int i)
-        {
-            if (regsByDomain is null)
-                return null;
-            return regsByDomain.TryGetValue((StorageDomain) i, out var reg)
-                ? reg
-                : null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return GpRegs;
         }
 
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
@@ -243,13 +229,11 @@ namespace Reko.Arch.RiscV
                 this.FpRegs = [];
             }
 
-            this.regsByDomain = 
+            this.RegisterBank = new RegisterBank(
                 GpRegs
-                .Concat(FpRegs)
-                .ToDictionary(r => r.Domain);
-            this.regsByName = regsByDomain.Values.ToDictionary(r => r.Name);
-            this.LinkRegister = regsByDomain[(StorageDomain) 1];        // ra
-            this.StackRegister = regsByDomain[(StorageDomain) 2];       // sp
+                .Concat(FpRegs));
+            this.LinkRegister = this.RegisterBank.GetRegisterByDomain((StorageDomain) 1);        // ra
+            this.StackRegister = this.RegisterBank.GetRegisterByDomain((StorageDomain) 2);       // sp
 
             DefineCsrs();
             DefinePseudoRegisters();
@@ -823,16 +807,6 @@ namespace Reko.Arch.RiscV
                     0,
                     fpType))
                 .ToArray();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            if (regsByName is null)
-            {
-                reg = null!;
-                return false;
-            }
-            return regsByName.TryGetValue(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

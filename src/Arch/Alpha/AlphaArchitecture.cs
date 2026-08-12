@@ -34,7 +34,7 @@ namespace Reko.Arch.Alpha
     public class AlphaArchitecture : ProcessorArchitecture
     {
         public AlphaArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.AllRegisters)
         {
             this.Endianness = EndianServices.Little;
             this.WordWidth = PrimitiveType.Word64;
@@ -92,18 +92,6 @@ namespace Reko.Arch.Alpha
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(string name)
-        {
-            return Registers.AllRegisters.TryGetValue(name, out var reg)
-                ? reg
-                : null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.AllRegisters.Values.ToArray();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             // Alpha has no traditional condition codes.
@@ -122,11 +110,6 @@ namespace Reko.Arch.Alpha
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.AllRegisters.TryGetValue(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

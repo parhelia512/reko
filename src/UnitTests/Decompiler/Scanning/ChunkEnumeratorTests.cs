@@ -44,8 +44,7 @@ public class FragmentFinderTests
         new ServiceContainer(),
         "fake",
         [],
-        [],
-        []);
+        new RegisterBank([]));
 
     [SetUp]
     public void Setup()
@@ -247,8 +246,8 @@ public class FragmentFinderTests
 
     public class FakeArchitecture : Reko.Core.ProcessorArchitecture
     {
-        public FakeArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options, Dictionary<string, RegisterStorage>? regsByName, Dictionary<StorageDomain, RegisterStorage>? regsByDomain) :
-         base(services, archId, options, regsByName, regsByDomain)
+        public FakeArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options, RegisterBank bank) :
+            base(services, archId, options, bank)
         {
             this.CodeMemoryGranularity = 8;
             this.InstructionBitSize = 32;
@@ -295,11 +294,6 @@ public class FragmentFinderTests
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

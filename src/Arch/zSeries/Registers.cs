@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -30,12 +31,12 @@ namespace Reko.Arch.zSeries
 {
     public class Registers
     {
+        public static RegisterBank All { get; }
+
         public static RegisterStorage[] GpRegisters;
         public static RegisterStorage[] FpRegisters;
         public static RegisterStorage[] VecRegisters;
 
-        public static readonly Dictionary<StorageDomain, RegisterStorage> ByDomain;
-        public static readonly Dictionary<string, RegisterStorage> ByName;
         public static readonly FlagGroupStorage CC;
 
         static Registers()
@@ -48,13 +49,10 @@ namespace Reko.Arch.zSeries
                 .Select((vr, i) => RegisterStorage.Reg64($"f{i}", vr.Number, 64))
                 .ToArray();
 
-            ByDomain = GpRegisters
-                .Concat(VecRegisters)
-                .ToDictionary(r => r.Domain);
-            ByName = GpRegisters
+            All = new RegisterBank(
+                GpRegisters
                 .Concat(FpRegisters)
-                .Concat(VecRegisters)
-                .ToDictionary(r => r.Name);
+                .Concat(VecRegisters));
 
             //$REVIEW: this should be a PSW.
             var ccReg = factory.Reg("ccReg", PrimitiveType.Byte);

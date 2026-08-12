@@ -215,7 +215,7 @@ namespace Reko.Arch.X86
         private const int MaxInstructionLength = 15;
 
         private readonly IServiceProvider services;
-        private readonly RegisterBank registers;
+        private readonly RegisterAliases registers;
         private readonly Decoder[] rootDecoders;
         private readonly ProcessorMode mode;
 		private readonly PrimitiveType defaultDataWidth;
@@ -237,7 +237,7 @@ namespace Reko.Arch.X86
         /// 16-bit operation, PrimitiveType.Word32 for 32-bit operation.</param>
 		public X86Disassembler(
             IServiceProvider services,
-            RegisterBank registers,
+            RegisterAliases registers,
             Decoder[] rootDecoders,
             ProcessorMode mode,
             EndianImageReader rdr,

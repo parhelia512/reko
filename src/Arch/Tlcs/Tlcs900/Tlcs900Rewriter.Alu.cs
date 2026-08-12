@@ -104,7 +104,9 @@ namespace Reko.Arch.Tlcs.Tlcs900
         {
             var reg = (RegisterStorage)this.instr.Operands[0];
             var op2 = RewriteSrc(this.instr.Operands[1]);
-            var div = binder.EnsureRegister(arch.GetRegister(reg.Domain, new BitRange(0, (int)reg.BitSize * 2))!);
+            var div = binder.EnsureRegister(
+                arch.GetRegister(reg.Domain, new BitRange(0, (int)reg.BitSize * 2)) ??
+                arch.GetRegister(reg.Domain, new BitRange(0, (int)reg.BitSize))!);
             var tmp = binder.CreateTemporary(div.DataType);
             var q = arch.GetRegister(reg.Domain, new BitRange(0, 8));
             var r = arch.GetRegister(reg.Domain, new BitRange(8, 16));

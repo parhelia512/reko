@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -44,8 +45,7 @@ namespace Reko.Arch.PaRisc
         public static readonly Dictionary<int, RegisterStorage> ControlRegisters;
 
         public static readonly FlagGroupStorage CF;
-        public Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
-        public Dictionary<string, RegisterStorage> ByName { get; }
+        public RegisterBank All { get; }
 
         public Registers(PrimitiveType gpRegSize)
         {
@@ -61,12 +61,10 @@ namespace Reko.Arch.PaRisc
             //$BUG: triple-check the formatting of 6-bit floating point
             // register identifiers.
             FpRegs32 = FpLefts.Concat(FpRights).ToArray();
-            ByDomain =
-                GpRegs.ToDictionary(r => r.Domain);
-            ByName = GpRegs.Concat(FpRegs)
+            All = new RegisterBank(GpRegs
+                .Concat(FpRegs)
                 .Concat(FpLefts)
-                .Concat(FpRights)
-                .ToDictionary(r => r.Name);
+                .Concat(FpRights));
         }
 
         static Registers()

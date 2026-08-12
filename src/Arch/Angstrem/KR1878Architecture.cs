@@ -31,7 +31,7 @@ namespace Reko.Arch.Angstrem
     public class KR1878Architecture : ProcessorArchitecture
     {
         public KR1878Architecture(IServiceProvider services, string archId, Dictionary<string, object> options) 
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Little;
             this.CarryFlag = null; //$TODO
@@ -82,11 +82,6 @@ namespace Reko.Arch.Angstrem
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

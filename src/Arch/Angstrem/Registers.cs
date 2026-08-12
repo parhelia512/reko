@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 
 namespace Reko.Arch.Angstrem
@@ -27,8 +28,7 @@ namespace Reko.Arch.Angstrem
     {
         public static RegisterStorage [] GpRegisters { get; }
         public static RegisterStorage [] ServiceRegisters { get; }
-        public static IReadOnlyDictionary<string, RegisterStorage> ByName { get; }
-        public static IReadOnlyDictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
 
         /// <summary>
         /// Status register.
@@ -52,8 +52,7 @@ namespace Reko.Arch.Angstrem
             H = new FlagGroupStorage(rs, (ulong) FlagM.H, "H");
             factory = new StorageFactory(StorageDomain.SystemRegister);
             ServiceRegisters = factory.RangeOfReg(8, n => $"sr{n}", PrimitiveType.Byte);
-            ByName = GpRegisters.Concat(ServiceRegisters).ToDictionary(r => r.Name);
-            ByDomain = GpRegisters.Concat(ServiceRegisters).ToDictionary(r => r.Domain);
+            All = new RegisterBank(GpRegisters.Concat(ServiceRegisters));
         }
     }
 

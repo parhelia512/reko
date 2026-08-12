@@ -33,7 +33,7 @@ namespace Reko.Arch.Sanyo
     public class LC8670Architecture : ProcessorArchitecture
     {
         public LC8670Architecture(IServiceProvider services, string archId, Dictionary<string, object> options) 
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             Endianness = EndianServices.Little;
             this.FramePointerType = PrimitiveType.Byte;
@@ -85,11 +85,6 @@ namespace Reko.Arch.Sanyo
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new System.NotImplementedException();
         }

@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,7 @@ namespace Reko.Environments.Gameboy
     public static class Registers
     {
         public static RegisterStorage[] GpRegisters { get; }
-        public static IReadOnlyDictionary<string, RegisterStorage> ByName { get; }
-        public static IReadOnlyDictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
         public static RegisterStorage af { get; }
         public static RegisterStorage bc { get; }
         public static RegisterStorage de { get; }
@@ -93,15 +93,7 @@ namespace Reko.Environments.Gameboy
                 h,
                 l,
             };
-            ByDomain = new[]
-            {
-                af,
-                bc,
-                de,
-                hl,
-                sp,
-            }.ToDictionary(r => r.Domain);
-            ByName = GpRegisters.ToDictionary(r => r.Name);
+            All = new RegisterBank(GpRegisters);
 
             C = new FlagGroupStorage(f, (ulong) FlagM.CF, nameof(C));
             H = new FlagGroupStorage(f, (ulong) FlagM.HF, nameof(H));

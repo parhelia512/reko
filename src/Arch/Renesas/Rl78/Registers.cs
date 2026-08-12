@@ -19,13 +19,11 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reko.Arch.Renesas.Rl78
 {
@@ -58,8 +56,7 @@ namespace Reko.Arch.Renesas.Rl78
         public static readonly FlagGroupStorage CZ;
         public static readonly FlagGroupStorage Z;
 
-        public static ReadOnlyDictionary<string, RegisterStorage> GpRegsByName { get; }
-        public static ReadOnlyDictionary<StorageDomain, RegisterStorage> GpRegsByDomain { get; }
+        public static RegisterBank All { get; }
 
         static Registers()
         {
@@ -85,10 +82,7 @@ namespace Reko.Arch.Renesas.Rl78
             WordRegs = new RegisterStorage[5] { ax, bc, de, hl, sp};
             ByteRegs = new RegisterStorage[8] { x, a, c, b, e, d, l, h };
 
-            GpRegsByName = new ReadOnlyDictionary<string, RegisterStorage>(WordRegs.Concat(ByteRegs)
-                .ToDictionary(r => r.Name));
-            GpRegsByDomain = new ReadOnlyDictionary<StorageDomain, RegisterStorage>(
-                WordRegs.ToDictionary(r => r.Domain));
+            All = new RegisterBank(WordRegs.Concat(ByteRegs));
 
             C = new FlagGroupStorage(psw, (ulong) FlagM.CF, nameof(C));
             cy = new FlagGroupStorage(psw, (ulong) FlagM.CF, nameof(cy));

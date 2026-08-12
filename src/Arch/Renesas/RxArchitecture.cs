@@ -39,7 +39,7 @@ namespace Reko.Arch.Renesas
         public static readonly PrimitiveType Int96 = PrimitiveType.Create(Domain.SignedInt, 96);
 
         public RxArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options) : 
-            base(services, archId, options, null, null)
+            base(services, archId, options, Registers.All)
         {
             InstructionBitSize = 8;
             FramePointerType = PrimitiveType.Ptr32;
@@ -97,21 +97,6 @@ namespace Reko.Arch.Renesas
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -138,14 +123,9 @@ namespace Reko.Arch.Renesas
             throw new NotImplementedException();
         }
 
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
-        {
-            throw new NotImplementedException();
-        }
-
         public override bool TryParseAddress(string? txtAddr, out Address addr)
         {
-            throw new NotImplementedException();
+            return Address.TryParse32(txtAddr, out addr);
         }
     }
 }

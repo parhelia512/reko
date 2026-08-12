@@ -37,17 +37,16 @@ namespace Reko.Arch.Loongson
     public class LoongArch : ProcessorArchitecture
     {
         public LoongArch(IServiceProvider services, string name, Dictionary<string, object> options)
-            : base(services, name, options, null!, null!)
+            : base(services, name, options, MakeRegisterBank(options))
         {
             this.Endianness = EndianServices.Little;
             this.InstructionBitSize = 32;
             this.MemoryGranularity = 8;
             this.SignedWord = null!;        // Will be set by LoadUserOptions.
             LoadUserOptions(options);
-            var factory = new StorageFactory();
-            this.GpRegisters = factory.RangeOfReg(32, n => $"r{n}", this.WordWidth);
-            this.FpRegisters = factory.RangeOfReg(32, n => $"f{n}", PrimitiveType.Word64);
-            this.CfRegisters = factory.RangeOfReg(32, n => $"c{n}", PrimitiveType.Word32);
+            this.GpRegisters = base.RegisterBank.GetRegistersByDomain(0, 32).ToArray();
+            this.FpRegisters = base.RegisterBank.GetRegistersByDomain(32, 64).ToArray();
+            this.CfRegisters = base.RegisterBank.GetRegistersByDomain(64, 96).ToArray();
             this.StackRegister = GpRegisters[3];
         }
 
@@ -56,6 +55,16 @@ namespace Reko.Arch.Loongson
         public RegisterStorage[] CfRegisters { get; }
 
         public PrimitiveType SignedWord { get; private set; }
+
+        private static RegisterBank MakeRegisterBank(Dictionary<string, object> options)
+        {
+            var w = GetWordWidthFromOptions(options);
+            var factory = new StorageFactory();
+            factory.RangeOfReg(32, n => $"r{n}", w);
+            factory.RangeOfReg(32, n => $"f{n}", PrimitiveType.Word64);
+            factory.RangeOfReg(32, n => $"c{n}", PrimitiveType.Word32);
+            return new RegisterBank(factory.NamesToRegisters.Values);
+        }
 
         public override IEnumerable<MachineInstruction> CreateDisassembler(EndianImageReader imageReader)
         {
@@ -102,17 +111,22 @@ namespace Reko.Arch.Loongson
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
         }
 
         public override void LoadUserOptions(Dictionary<string, object>? options)
+        {
+            PrimitiveType w = GetWordWidthFromOptions(options);
+            this.WordWidth = w;
+            int bitsize = w.BitSize;
+            this.FramePointerType = PrimitiveType.Create(Domain.Pointer, bitsize);
+            this.PointerType = this.FramePointerType;
+            this.SignedWord = PrimitiveType.Create(Domain.SignedInt, bitsize);
+        }
+
+        private static PrimitiveType GetWordWidthFromOptions(Dictionary<string, object>? options)
         {
             int bitsize;
             if (options is not null && options.TryGetValue(ProcessorOption.WordSize, out var oSize))
@@ -129,11 +143,7 @@ namespace Reko.Arch.Loongson
             {
                 bitsize = 32;
             }
-
-            this.WordWidth = PrimitiveType.CreateWord(bitsize);
-            this.FramePointerType = PrimitiveType.Create(Domain.Pointer, bitsize);
-            this.PointerType = this.FramePointerType;
-            this.SignedWord = PrimitiveType.Create(Domain.SignedInt, bitsize);
+            return PrimitiveType.CreateWord(bitsize);
         }
 
         public override Address MakeAddressFromConstant(Constant c, bool codeAlign)
@@ -142,11 +152,6 @@ namespace Reko.Arch.Loongson
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

@@ -19,14 +19,14 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 
 namespace Reko.Arch.Oki.NX8_500;
 
 public static class Registers
 {
-    public static Dictionary<string, RegisterStorage>? ByName { get; internal set; }
-    public static Dictionary<StorageDomain, RegisterStorage>? ByDomain { get; internal set; }
+    public static RegisterBank All { get; }
     public static RegisterStorage Acc { get; }
     public static RegisterStorage Psw { get; }
     public static RegisterStorage Pswl { get; }
@@ -78,6 +78,8 @@ public static class Registers
             })
             .ToArray();
         Pswl = new RegisterStorage("pswl", Psw.Number, 0, PrimitiveType.Byte);
+
+        All = new RegisterBank(factory.NamesToRegisters.Values.Concat(BRegisters));
     }
 
     [Flags]

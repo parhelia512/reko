@@ -75,10 +75,10 @@ namespace Reko.Arch.X86
 
         public virtual RegisterStorage StackRegister(IntelArchitecture arch)
         {
-            return arch.Registers.sp;
+            return arch.RegisterAliases.sp;
         }
 
-        public abstract X86Disassembler CreateDisassembler(RegisterBank registers, IServiceProvider services, Decoder[] rootDecoders, EndianImageReader rdr, Dictionary<string, object> options);
+        public abstract X86Disassembler CreateDisassembler(RegisterAliases registers, IServiceProvider services, Decoder[] rootDecoders, EndianImageReader rdr, Dictionary<string, object> options);
 
         public abstract IProcessorEmulator CreateEmulator(IntelArchitecture arch, ByteProgramMemory memory, IPlatformEmulator envEmulator);
 
@@ -92,8 +92,8 @@ namespace Reko.Arch.X86
 
         public virtual Expression CreateStackAccess(IntelArchitecture arch, IStorageBinder binder, int offset, DataType dataType)
         {
-            var sp = binder.EnsureRegister(arch.Registers.sp);
-            var ss = binder.EnsureRegister(arch.Registers.ss);
+            var sp = binder.EnsureRegister(arch.RegisterAliases.sp);
+            var ss = binder.EnsureRegister(arch.RegisterAliases.ss);
             var spOffset = MemoryAccess.CreateEffectiveAddress(sp, offset);
             var ea = new SegmentedPointer(this.PointerType, ss, spOffset);
             return new MemoryAccess(MemoryStorage.GlobalMemory, ea, dataType);
@@ -131,7 +131,7 @@ namespace Reko.Arch.X86
                 if (state is not null && rdr.TryReadLeUInt16(out ushort uOffset))
                 {
                     var arch = (IntelArchitecture) state.Architecture;
-                    addr = CreateSegmentedAddress(state.GetRegister(arch.Registers.cs).ToUInt16(), uOffset)!.Value;
+                    addr = CreateSegmentedAddress(state.GetRegister(arch.RegisterAliases.cs).ToUInt16(), uOffset)!.Value;
                     return true;
                 }
             }
@@ -203,7 +203,7 @@ namespace Reko.Arch.X86
             return new X86RealModePointerScanner(rdr, knownLinAddresses, flags).Select(li => map.MapLinearAddressToAddress(li));
         }
 
-        public override X86Disassembler CreateDisassembler(RegisterBank registers, IServiceProvider services, Decoder[] rootDecoders, EndianImageReader rdr, Dictionary<string, object> options)
+        public override X86Disassembler CreateDisassembler(RegisterAliases registers, IServiceProvider services, Decoder[] rootDecoders, EndianImageReader rdr, Dictionary<string, object> options)
         {
             var preferredSyntax = IntelArchitecture.IsV20Mode(options)
                 ? 'v'
@@ -265,7 +265,7 @@ namespace Reko.Arch.X86
         {
         }
 
-        public override X86Disassembler CreateDisassembler(RegisterBank registers, IServiceProvider services, Decoder[] rootDecoders, EndianImageReader rdr, Dictionary<string,object> options)
+        public override X86Disassembler CreateDisassembler(RegisterAliases registers, IServiceProvider services, Decoder[] rootDecoders, EndianImageReader rdr, Dictionary<string,object> options)
         {
             return new X86Disassembler(services, registers, rootDecoders, this, rdr, PrimitiveType.Word16, PrimitiveType.Word16);
         }
@@ -384,7 +384,7 @@ namespace Reko.Arch.X86
             return new X86PointerScanner32(rdr, knownLinaddresses, flags).Select(li => map.MapLinearAddressToAddress(li));
         }
 
-        public override X86Disassembler CreateDisassembler(RegisterBank registers, IServiceProvider services, Decoder[] rootDecoders, EndianImageReader rdr, Dictionary<string, object> options)
+        public override X86Disassembler CreateDisassembler(RegisterAliases registers, IServiceProvider services, Decoder[] rootDecoders, EndianImageReader rdr, Dictionary<string, object> options)
         {
             return new X86Disassembler(services, registers, rootDecoders, this, rdr, PrimitiveType.Word32, PrimitiveType.Word32);
         }
@@ -464,7 +464,7 @@ namespace Reko.Arch.X86
             return Address.Ptr64(offset);
         }
 
-        public override X86Disassembler CreateDisassembler(RegisterBank registers, IServiceProvider services, Decoder[] rootDecoders, EndianImageReader rdr, Dictionary<string, object> options)
+        public override X86Disassembler CreateDisassembler(RegisterAliases registers, IServiceProvider services, Decoder[] rootDecoders, EndianImageReader rdr, Dictionary<string, object> options)
         {
             return new X86Disassembler(services, registers, rootDecoders, this, rdr, PrimitiveType.Word32, PrimitiveType.Word64);
         }

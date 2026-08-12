@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using System;
 using System.Collections.Generic;
 
@@ -50,8 +51,7 @@ namespace Reko.Arch.MN103
         public static FlagGroupStorage VN { get; }
         public static FlagGroupStorage VNZ { get; }
         public static FlagGroupStorage Z { get; }
-        public static Dictionary<string, RegisterStorage> RegistersByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> RegistersByDomain { get; }
+        public static RegisterBank All { get; }
 
         static Registers()
         {
@@ -82,8 +82,7 @@ namespace Reko.Arch.MN103
             VNZ = new FlagGroupStorage(psw, (ulong) (FlagM.NF | FlagM.VF| FlagM.ZF), "VNZ");
             Z = new FlagGroupStorage(psw, (ulong) FlagM.ZF, "Z");
 
-            RegistersByName = factory.NamesToRegisters;
-            RegistersByDomain = factory.DomainsToRegisters;
+            All = new RegisterBank(factory.NamesToRegisters.Values);
         }
     }
 

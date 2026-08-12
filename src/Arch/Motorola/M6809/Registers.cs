@@ -19,13 +19,17 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
+using System.Linq;
 
 namespace Reko.Arch.Motorola.M6809
 {
     public class Registers
     {
+        public static RegisterBank All { get; }
+
         public static RegisterStorage X { get; }
         public static RegisterStorage Y { get; }
         public static RegisterStorage U { get; }
@@ -67,6 +71,9 @@ namespace Reko.Arch.Motorola.M6809
             B = RegisterStorage.Reg8("b", D.Number);
 
             AddrRegs = new RegisterStorage[] { X, Y, U, S };
+
+            All = new RegisterBank(factory.NamesToRegisters.Values.Concat(
+                [A, B]));
             
             N = new FlagGroupStorage(CC, (ulong) FlagM.N, nameof(N)); 
             Z = new FlagGroupStorage(CC, (ulong) FlagM.Z, nameof(Z)); 

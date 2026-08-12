@@ -41,7 +41,7 @@ namespace Reko.Arch.SuperH
         private Decoder<SuperHDisassembler, Mnemonic, SuperHInstruction> rootDecoder;
 
         public SuperHArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Big;   // Pick one at random.
             this.FramePointerType = PrimitiveType.Ptr32;
@@ -113,37 +113,6 @@ namespace Reko.Arch.SuperH
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(string name)
-        {
-            var regField = typeof(Registers).GetField(name, BindingFlags.IgnoreCase | BindingFlags.Static | BindingFlags.Public)!;
-            return (RegisterStorage?)regField.GetValue(null);
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            if (domain == Registers.fr0.Domain)
-            {
-                // Special case the floating point numbers.
-                if (range.Extent == 32)
-                {
-                    return Registers.fpregs[range.Lsb / 32];
-                }
-                if (range.Extent == 64)
-                {
-                    return Registers.dfpregs[range.Lsb / 64];
-                }
-                throw new NotImplementedException("GetRegister: FP registers not done yet.");
-            }
-            return Registers.RegistersByDomain.TryGetValue(domain, out var reg)
-                ? reg 
-                : null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.gpregs;
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
@@ -188,11 +157,6 @@ namespace Reko.Arch.SuperH
         public override Dictionary<string, object>? SaveUserOptions()
         {
             return Options;
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            throw new NotImplementedException();
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

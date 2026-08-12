@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,8 @@ namespace Reko.Arch.C166
         public static readonly Dictionary<int, RegisterStorage> SpecialFunctionRegs;
         public static readonly RegisterStorage PSW;
         public static readonly RegisterStorage SP;
-        public static readonly Dictionary<StorageDomain, RegisterStorage> ByDomain;
+
+        public static RegisterBank All { get; }
 
         public static readonly FlagGroupStorage E;
         public static readonly FlagGroupStorage Z;
@@ -185,8 +187,11 @@ namespace Reko.Arch.C166
                 { 0xFFAE, Sfr("WDTCON", 0xFFAE, "Watchdog Timer Control Register 0000") },
                 { 0xFF1C, Sfr("ZEROS", 0xFF1C, "Constant Value 0’s Register (read only) 0000") },
             };
-            ByDomain = GpRegs.Concat(SpecialFunctionRegs.Values)
-                .ToDictionary(r => r.Domain);
+            All = new RegisterBank(
+                GpRegs
+                .Concat(LoByteRegs)
+                .Concat(HiByteRegs)
+                .Concat(SpecialFunctionRegs.Values));
 
             E = new FlagGroupStorage(PSW, (ulong) FlagM.EF, nameof(E));
             Z = new FlagGroupStorage(PSW, (ulong) FlagM.ZF, nameof(Z));

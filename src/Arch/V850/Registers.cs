@@ -19,12 +19,15 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 
 namespace Reko.Arch.V850
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
         public static RegisterStorage[] GpRegs { get; }
         public static RegisterStorage ElementPtr { get; }
 
@@ -35,6 +38,7 @@ namespace Reko.Arch.V850
             gpRegs[30] = RegisterStorage.Reg32("ep", 30);
             GpRegs = gpRegs;
             ElementPtr = gpRegs[30];
+            All = new RegisterBank(GpRegs);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Reko.Arch.Vax
     public class VaxArchitecture : ProcessorArchitecture
     {
         public VaxArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Little;
             this.InstructionBitSize = 8;
@@ -95,19 +95,6 @@ namespace Reko.Arch.Vax
             if (!Enum.TryParse(name, out Mnemonic result))
                 return null;
             return (int)result;
-        }
-
-        public RegisterStorage? GetRegister(int i)
-        {
-            if (Registers.ByDomain.TryGetValue(StorageDomain.Register + i, out var reg))
-                return reg;
-            else
-                return null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.ByDomain.Values.ToArray();
         }
 
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)

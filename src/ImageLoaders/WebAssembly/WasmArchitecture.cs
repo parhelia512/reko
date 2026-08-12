@@ -34,7 +34,7 @@ namespace Reko.ImageLoaders.WebAssembly
     public class WasmArchitecture : ProcessorArchitecture
     {
         public WasmArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, new([]))
         {
             this.Endianness = EndianServices.Little;
             this.PointerType = PrimitiveType.Ptr32;
@@ -104,11 +104,6 @@ namespace Reko.ImageLoaders.WebAssembly
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -120,11 +115,6 @@ namespace Reko.ImageLoaders.WebAssembly
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader? rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

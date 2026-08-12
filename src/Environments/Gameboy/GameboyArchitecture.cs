@@ -37,7 +37,7 @@ namespace Reko.Environments.Gameboy
         /// Implements support for the LR35902 processor in the Nintendo Gameboy.
         /// </summary>
         public GameboyArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options) 
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.CarryFlag = Registers.C;
             this.Endianness = EndianServices.Little;
@@ -94,30 +94,6 @@ namespace Reko.Environments.Gameboy
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage GetRegister(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            bool hi = 8 <= range.Lsb && range.Msb < 16;
-            bool lo = 0 <= range.Lsb && range.Msb < 8;
-            switch ((int)domain)
-            {
-            case 0: return lo ? Registers.f : hi ? Registers.a : Registers.af;
-            case 1: return lo ? Registers.c : hi ? Registers.b : Registers.bc;
-            case 2: return lo ? Registers.e : hi ? Registers.d : Registers.de;
-            case 3: return lo ? Registers.l : hi ? Registers.h : Registers.hl;
-            }
-            return Registers.ByDomain[domain];
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
         {
             throw new NotImplementedException();
@@ -129,11 +105,6 @@ namespace Reko.Environments.Gameboy
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

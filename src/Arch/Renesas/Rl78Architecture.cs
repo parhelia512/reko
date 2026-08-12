@@ -36,7 +36,7 @@ namespace Reko.Arch.Renesas
     public class Rl78Architecture : ProcessorArchitecture
     {
         public Rl78Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.GpRegsByName, Registers.GpRegsByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.Ptr20 = PrimitiveType.Create(Domain.Pointer, 20);
             InstructionBitSize = 8;
@@ -92,27 +92,6 @@ namespace Reko.Arch.Renesas
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            uint iReg = (uint) domain;
-            if (iReg < Registers.WordRegs.Length)
-            {
-                if (range.Extent != 8)
-                    return Registers.WordRegs[iReg];
-                iReg *= 2;
-                if (range.Lsb == 8)
-                    ++iReg;
-                if (iReg < Registers.ByteRegs.Length)
-                    return Registers.ByteRegs[iReg];
-            }
-            return null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

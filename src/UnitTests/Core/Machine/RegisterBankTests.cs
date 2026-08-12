@@ -73,7 +73,7 @@ public class RegisterBankTests
             RegisterStorage.Reg8("bh", 3, 8),
         ];
 
-        this.bank = RegisterBank.Create(
+        this.bank = new RegisterBank(
             regs.Concat(regs32).Concat(reg16).Concat(reg8).ToArray());
     }
 

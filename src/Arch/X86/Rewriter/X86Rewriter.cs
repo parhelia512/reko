@@ -99,7 +99,7 @@ namespace Reko.Arch.X86.Rewriter
                 case Mnemonic.aam: RewriteAam(); break;
                 case Mnemonic.aas: RewriteAas(); break;
                 case Mnemonic.adc: RewriteAdcSbb(CommonOps.IAddC); break;
-                case Mnemonic.adcx: RewriteAdcx(arch.Registers.C); break;
+                case Mnemonic.adcx: RewriteAdcx(arch.RegisterAliases.C); break;
                 case Mnemonic.add: RewriteAddSub(Operator.IAdd); break;
                 case Mnemonic.addss: RewriteScalarBinop(Operator.FAdd, PrimitiveType.Real32, false); break;
                 case Mnemonic.vaddss: RewriteScalarBinop(Operator.FAdd, PrimitiveType.Real32, true); break;
@@ -111,7 +111,7 @@ namespace Reko.Arch.X86.Rewriter
                 case Mnemonic.vaddpd: RewritePackedBinop(true, Simd.FAdd, PrimitiveType.Real64); break;
                 case Mnemonic.addsubpd: RewritePackedBinop(false, addsub_intrinsic, PrimitiveType.Real64); break;
                 case Mnemonic.vaddsubpd: RewritePackedBinop(true, addsub_intrinsic, PrimitiveType.Real64); break;
-                case Mnemonic.adox: RewriteAdcx(arch.Registers.O); break;
+                case Mnemonic.adox: RewriteAdcx(arch.RegisterAliases.O); break;
                 case Mnemonic.aesenc: RewriteAesenc(false, aesenc_intrinsic); break;
                 case Mnemonic.vaesenc: RewriteAesenc(true, aesenc_intrinsic); break;
                 case Mnemonic.aesenclast: RewriteAesenc(false, aesenclast_intrinsic); break;
@@ -148,13 +148,13 @@ namespace Reko.Arch.X86.Rewriter
                 case Mnemonic.cdq: RewriteCdq(); break;
                 case Mnemonic.cdqe: RewriteCdqe(); break;
                 case Mnemonic.cqo: RewriteCqo(); break;
-                case Mnemonic.clc: RewriteSetFlag(arch.Registers.C, 0); break;
-                case Mnemonic.cld: RewriteSetFlag(arch.Registers.D, 0); break;
+                case Mnemonic.clc: RewriteSetFlag(arch.RegisterAliases.C, 0); break;
+                case Mnemonic.cld: RewriteSetFlag(arch.RegisterAliases.D, 0); break;
                 case Mnemonic.cli: RewriteCli(); break;
                 case Mnemonic.clts: RewriteClts(); break;
                 case Mnemonic.cldemote: RewriteCacheLine(cldemote_intrinsic); break;
                 case Mnemonic.clflush: RewriteCacheLine(clflush_intrinsic); break;
-                case Mnemonic.cmc: m.Assign(binder.EnsureFlagGroup(arch.Registers.C), m.Not(binder.EnsureFlagGroup(arch.Registers.C))); break;
+                case Mnemonic.cmc: m.Assign(binder.EnsureFlagGroup(arch.RegisterAliases.C), m.Not(binder.EnsureFlagGroup(arch.RegisterAliases.C))); break;
                 case Mnemonic.cmova: RewriteConditionalMove(ConditionCode.UGT, instrCur.Operands[0], instrCur.Operands[1]); break;
                 case Mnemonic.cmovbe: RewriteConditionalMove(ConditionCode.ULE, instrCur.Operands[0], instrCur.Operands[1]); break;
                 case Mnemonic.cmovc: RewriteConditionalMove(ConditionCode.ULT, instrCur.Operands[0], instrCur.Operands[1]); break;
@@ -268,14 +268,14 @@ namespace Reko.Arch.X86.Rewriter
                 case Mnemonic.fbstp: RewriteFbstp(); break;
                 case Mnemonic.fchs: EmitFchs(); break;
                 case Mnemonic.fclex: RewriteFclex(); break;
-                case Mnemonic.fcmovb: RewriteFcmov(arch.Registers.C, ConditionCode.GE); break;
-                case Mnemonic.fcmovbe: RewriteFcmov(arch.Registers.CZ, ConditionCode.GT); break;
-                case Mnemonic.fcmove: RewriteFcmov(arch.Registers.Z, ConditionCode.NE); break;
-                case Mnemonic.fcmovnb: RewriteFcmov(arch.Registers.CZ, ConditionCode.GE); break;
-                case Mnemonic.fcmovnbe: RewriteFcmov(arch.Registers.CZ, ConditionCode.LE); break;
-                case Mnemonic.fcmovne: RewriteFcmov(arch.Registers.Z, ConditionCode.EQ); break;
-                case Mnemonic.fcmovnu: RewriteFcmov(arch.Registers.P, ConditionCode.IS_NAN); break;
-                case Mnemonic.fcmovu: RewriteFcmov(arch.Registers.P, ConditionCode.NOT_NAN); break;
+                case Mnemonic.fcmovb: RewriteFcmov(arch.RegisterAliases.C, ConditionCode.GE); break;
+                case Mnemonic.fcmovbe: RewriteFcmov(arch.RegisterAliases.CZ, ConditionCode.GT); break;
+                case Mnemonic.fcmove: RewriteFcmov(arch.RegisterAliases.Z, ConditionCode.NE); break;
+                case Mnemonic.fcmovnb: RewriteFcmov(arch.RegisterAliases.CZ, ConditionCode.GE); break;
+                case Mnemonic.fcmovnbe: RewriteFcmov(arch.RegisterAliases.CZ, ConditionCode.LE); break;
+                case Mnemonic.fcmovne: RewriteFcmov(arch.RegisterAliases.Z, ConditionCode.EQ); break;
+                case Mnemonic.fcmovnu: RewriteFcmov(arch.RegisterAliases.P, ConditionCode.IS_NAN); break;
+                case Mnemonic.fcmovu: RewriteFcmov(arch.RegisterAliases.P, ConditionCode.NOT_NAN); break;
                 case Mnemonic.fcom: RewriteFcom(0); break;
                 case Mnemonic.fcomi: RewriteFcomi(false); break;
                 case Mnemonic.fcomip: RewriteFcomi(true); break;
@@ -384,7 +384,7 @@ namespace Reko.Arch.X86.Rewriter
                 case Mnemonic.ja: RewriteConditionalGoto(ConditionCode.UGT, instrCur.Operands[0]); break;
                 case Mnemonic.jbe: RewriteConditionalGoto(ConditionCode.ULE, instrCur.Operands[0]); break;
                 case Mnemonic.jc: RewriteConditionalGoto(ConditionCode.ULT, instrCur.Operands[0]); break;
-                case Mnemonic.jcxz: RewriteJcxz(arch.Registers.cx); break;
+                case Mnemonic.jcxz: RewriteJcxz(arch.RegisterAliases.cx); break;
                 case Mnemonic.jecxz: RewriteJcxz(Registers.ecx); break;
                 case Mnemonic.jge: RewriteConditionalGoto(ConditionCode.GE, instrCur.Operands[0]); break;
                 case Mnemonic.jg: RewriteConditionalGoto(ConditionCode.GT, instrCur.Operands[0]); break;
@@ -429,12 +429,12 @@ namespace Reko.Arch.X86.Rewriter
                 case Mnemonic.lar: RewriteLar(); break;
                 case Mnemonic.lddqu:
                 case Mnemonic.vlddqu: RewriteMov(); break;
-                case Mnemonic.lds: RewriteLxs(arch.Registers.ds); break;
+                case Mnemonic.lds: RewriteLxs(arch.RegisterAliases.ds); break;
                 case Mnemonic.ldmxcsr: RewriteLdmxcsr(); break;
                 case Mnemonic.stmxcsr: RewriteStmxcsr(); break;
                 case Mnemonic.lea: RewriteLea(); break;
                 case Mnemonic.leave: RewriteLeave(); break;
-                case Mnemonic.les: RewriteLxs(arch.Registers.es); break;
+                case Mnemonic.les: RewriteLxs(arch.RegisterAliases.es); break;
                 case Mnemonic.lfence: RewriteLfence(); break;
                 case Mnemonic.lfs: RewriteLxs(Registers.fs); break;
                 case Mnemonic.lgs: RewriteLxs(Registers.gs); break;
@@ -446,10 +446,10 @@ namespace Reko.Arch.X86.Rewriter
                 case Mnemonic.lods: RewriteStringInstruction(); break;
                 case Mnemonic.lodsb: RewriteStringInstruction(); break;
                 case Mnemonic.loop: RewriteLoop(null, ConditionCode.EQ); break;
-                case Mnemonic.loope: RewriteLoop(arch.Registers.Z, ConditionCode.EQ); break;
-                case Mnemonic.loopne: RewriteLoop(arch.Registers.Z, ConditionCode.NE); break;
+                case Mnemonic.loope: RewriteLoop(arch.RegisterAliases.Z, ConditionCode.EQ); break;
+                case Mnemonic.loopne: RewriteLoop(arch.RegisterAliases.Z, ConditionCode.NE); break;
                 case Mnemonic.lsl: RewriteLsl(); break;
-                case Mnemonic.lss: RewriteLxs(arch.Registers.ss); break;
+                case Mnemonic.lss: RewriteLxs(arch.RegisterAliases.ss); break;
                 case Mnemonic.ltr: RewriteLtr(); break;
                 case Mnemonic.lzcnt: RewriteLeadingTrailingZeros(lzcnt_intrinsic); break;
                 case Mnemonic.maskmovdqu: RewriteMaskmov(false, maskmovdqu_intrinsic); break;
@@ -733,7 +733,7 @@ namespace Reko.Arch.X86.Rewriter
                 case Mnemonic.vroundss: RewriteRoundsx(true, PrimitiveType.Real32); break;
                 case Mnemonic.rsm: RewriteRsm(); break;
                 case Mnemonic.rsqrtps: RewritePackedUnaryop(rsqrtp_intrinsic, PrimitiveType.Real32); break;
-                case Mnemonic.sahf: m.Assign(binder.EnsureFlagGroup(X86Instruction.DefCc(instrCur.Mnemonic, arch.Registers)!), orw.AluRegister(Registers.ah)); break;
+                case Mnemonic.sahf: m.Assign(binder.EnsureFlagGroup(X86Instruction.DefCc(instrCur.Mnemonic, arch.RegisterAliases)!), orw.AluRegister(Registers.ah)); break;
                 case Mnemonic.sar: RewriteSar(); break;
                 case Mnemonic.sarx: RewriteBinOp(Operator.Sar); break;
                 case Mnemonic.sbb: RewriteAdcSbb(CommonOps.ISubC); break;
@@ -781,8 +781,8 @@ namespace Reko.Arch.X86.Rewriter
                 case Mnemonic.vsqrtsd: RewriteScalarUnaryOp(true, sqrt_intrinsic, PrimitiveType.Real64); break;
                 case Mnemonic.sqrtss: RewriteScalarUnaryOp(false, fsqrt_intrinsic, PrimitiveType.Real32); break;
                 case Mnemonic.vsqrtss: RewriteScalarUnaryOp(true, fsqrt_intrinsic, PrimitiveType.Real32); break;
-                case Mnemonic.stc: RewriteSetFlag(arch.Registers.C, arch.Registers.C.FlagGroupBits); break;
-                case Mnemonic.std: RewriteSetFlag(arch.Registers.D, arch.Registers.D.FlagGroupBits); break;
+                case Mnemonic.stc: RewriteSetFlag(arch.RegisterAliases.C, arch.RegisterAliases.C.FlagGroupBits); break;
+                case Mnemonic.std: RewriteSetFlag(arch.RegisterAliases.D, arch.RegisterAliases.D.FlagGroupBits); break;
                 case Mnemonic.sti: RewriteSti(); break;
                 case Mnemonic.stos: RewriteStringInstruction(); break;
                 case Mnemonic.stosb: RewriteStringInstruction(); break;
@@ -906,7 +906,7 @@ namespace Reko.Arch.X86.Rewriter
             }
             if ((flags & CopyFlags.EmitCc) != 0)
             {
-                EmitCcInstr(dst, X86Instruction.DefCc(instrCur.Mnemonic, arch.Registers));
+                EmitCcInstr(dst, X86Instruction.DefCc(instrCur.Mnemonic, arch.RegisterAliases));
             }
             return dst;
         }

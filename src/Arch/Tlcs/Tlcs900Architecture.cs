@@ -42,7 +42,7 @@ namespace Reko.Arch.Tlcs
     public class Tlcs900Architecture : ProcessorArchitecture
     {
         public Tlcs900Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             this.CarryFlag = Registers.C;
             this.Endianness = EndianServices.Little;
@@ -116,22 +116,6 @@ namespace Reko.Arch.Tlcs
         public override int? GetMnemonicNumber(string name)
         {
             throw new NotImplementedException();
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain regDomain, BitRange range)
-        {
-            if (!Registers.Subregisters.TryGetValue(regDomain, out var subs))
-                return null;
-            int key = (range.Extent << 4) + range.Lsb;
-            if (subs.TryGetValue(key, out var subreg))
-                return subreg;
-            else
-                return Registers.regs[regDomain - StorageDomain.Register];
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.regs.ToArray();
         }
 
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)

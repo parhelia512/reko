@@ -38,7 +38,7 @@ namespace Reko.Arch.Zilog
     public class Z80Architecture : ProcessorArchitecture
     {
         public Z80Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.RegisterBank)
         {
             this.Endianness = EndianServices.Little;
             this.InstructionBitSize = 8;
@@ -93,29 +93,9 @@ namespace Reko.Arch.Zilog
             return (int)result;
         }
 
-        public override RegisterStorage? GetRegister(string name)
-        {
-            return Registers.GetRegister(name);
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            return Registers.GetRegister(domain, range.BitMask());
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.All!;
-        }
-
         public override FlagGroupStorage[] GetFlags()
         {
             return Registers.Flags;
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.regsByName.TryGetValue(name, out reg);
         }
 
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)

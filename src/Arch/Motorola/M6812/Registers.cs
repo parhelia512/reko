@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,8 @@ namespace Reko.Arch.Motorola.M6812
         public static RegisterStorage pc = RegisterStorage.Reg16("pc", 4);
 
         public static RegisterStorage ccr = RegisterStorage.Reg8("ccr", 5);
+
+        public static RegisterBank All { get; } = new RegisterBank(new[] { d, a, b, x, y, sp, pc, ccr });
 
         public static readonly FlagGroupStorage C = new FlagGroupStorage(ccr, (ulong) FlagM.CF, nameof(C));
         public static readonly FlagGroupStorage V = new FlagGroupStorage(ccr, (ulong) FlagM.VF, nameof(V));

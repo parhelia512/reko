@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -86,16 +87,11 @@ namespace Reko.Arch.OpenRISC.Aeon
             F = new FlagGroupStorage(SR, (uint) FlagSR.F, "f");
             CY = new FlagGroupStorage(SR, (uint) FlagSR.CY, "cy");
             OV = new FlagGroupStorage(SR, (uint) FlagSR.OV, "ov");
-            Registers.ByDomain = Registers.GpRegisters
-                .Concat(Registers.SpecialRegisters.Values)
-                .ToDictionary(r => r.Domain);
-            Registers.ByName = Registers.GpRegisters
-                .Concat(Registers.SpecialRegisters.Values)
-                .ToDictionary(r => r.Name);
+            Registers.All = new RegisterBank(Registers.GpRegisters
+                .Concat(Registers.SpecialRegisters.Values));
         }
 
-        public static Dictionary<string, RegisterStorage> ByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
+        public static RegisterBank All { get; }
         public static RegisterStorage[] GpRegisters { get; }
         public static RegisterStorage[] acs { get; }
         public static RegisterStorage[] VectorRegisters { get; }

@@ -115,7 +115,7 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     private static bool RegA(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf16_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain) r);
         dasm.ops.Add(reg);
         return true;
     }
@@ -123,7 +123,7 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     private static bool RegA1(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf16_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain) r);
         dasm.ops.Add(reg);
         return true;
     }
@@ -131,7 +131,7 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     private static bool RegA2(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf16_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r + 16];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain) r + 16);
         dasm.ops.Add(reg);
         return true;
     }
@@ -139,7 +139,7 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     private static bool RegB(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf4_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain)r);
         dasm.ops.Add(reg);
         return true;
     }
@@ -147,14 +147,14 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     private static bool RegB1(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf4_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain)r);
         dasm.ops.Add(reg);
         return true;
     }
     private static bool RegB2(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf4_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r + 16];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain)r + 16);
         dasm.ops.Add(reg);
         return true;
     }
@@ -162,7 +162,7 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     private static bool RegC(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf20_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain)r);
         dasm.ops.Add(reg);
         return true;
     }
@@ -170,14 +170,14 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     private static bool RegC1(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf20_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain)r);
         dasm.ops.Add(reg);
         return true;
     }
     private static bool RegC2(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf20_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r + 16];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain)r + 16);
         dasm.ops.Add(reg);
         return true;
     }
@@ -223,7 +223,7 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     private static bool MRegA(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf16_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain)r);
         var mem = new MemoryOperand(KalimbaArchitecture.Word24, reg);
         dasm.ops.Add(mem);
         return true;
@@ -232,7 +232,7 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     private static bool MRegB(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf4_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain)r);
         var mem = new MemoryOperand(KalimbaArchitecture.Word24, reg);
         dasm.ops.Add(mem);
         return true;
@@ -241,7 +241,7 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     private static bool MRegC(uint uInstr, KalimbaDisassembler dasm)
     {
         var r = bf20_4.Read(uInstr);
-        var reg = Registers.ByDomain[(StorageDomain) r];
+        var reg = Registers.All.GetRegisterByDomain((StorageDomain)r);
         var mem = new MemoryOperand(KalimbaArchitecture.Word24, reg);
         dasm.ops.Add(mem);
         return true;
@@ -259,8 +259,8 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     {
         var ra = bf16_4.Read(uInstr);
         var rb = bf4_4.Read(uInstr);
-        var regA = Registers.ByDomain[(StorageDomain) ra];
-        var regB = Registers.ByDomain[(StorageDomain) rb];
+        var regA = Registers.All.GetRegisterByDomain((StorageDomain)ra);
+        var regB = Registers.All.GetRegisterByDomain((StorageDomain)rb);
         var mem = new MemoryOperand(KalimbaArchitecture.Word24, regA, regB);
         dasm.ops.Add(mem);
         return true;
@@ -270,7 +270,7 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     {
         var ra = bf16_4.Read(uInstr);
         var imm = bf0_16.Read(uInstr);
-        var regA = Registers.ByDomain[(StorageDomain) ra];
+        var regA = Registers.All.GetRegisterByDomain((StorageDomain)ra);
         var mem = new MemoryOperand(KalimbaArchitecture.Word24, regA, Constant.Int64((short) imm));
         dasm.ops.Add(mem);
         return true;
@@ -280,8 +280,8 @@ internal class KalimbaDisassembler : DisassemblerBase<KalimbaInstruction, Mnemon
     {
         var ra = bf16_4.Read(uInstr);
         var rc = bf20_4.Read(uInstr);
-        var regA = Registers.ByDomain[(StorageDomain) ra];
-        var regC = Registers.ByDomain[(StorageDomain) rc];
+        var regA = Registers.All.GetRegisterByDomain((StorageDomain)ra);
+        var regC = Registers.All.GetRegisterByDomain((StorageDomain)rc);
         var mem = new MemoryOperand(KalimbaArchitecture.Word24, regC, regA);
         dasm.ops.Add(mem);
         return true;

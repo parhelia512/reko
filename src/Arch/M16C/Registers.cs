@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -68,8 +69,7 @@ public static class Registers
     public static SequenceStorage r3r1 { get; }
 
 
-    public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
-    public static Dictionary<string, RegisterStorage> ByName { get; }
+    public static RegisterBank All { get; }
 
     static Registers()
     {
@@ -113,20 +113,7 @@ public static class Registers
         r2r0 = new SequenceStorage("r2r0", PrimitiveType.Word32, r2, r0);
         r3r1 = new SequenceStorage("r3r1", PrimitiveType.Word32, r3, r1);
 
-        ByDomain = new[] {
-            r0,
-            r1,
-            r2,
-            r3,
-            a0,
-            a1,
-            fb,
-            sb,
-            usp,
-            isp,
-            flg,
-        }.ToDictionary(r => r.Domain);
-        ByName = new[] {
+        All = new RegisterBank(new[] {
             r0,
             r1,
             r2,
@@ -142,7 +129,9 @@ public static class Registers
             r0h,
             r1l,
             r1h,
-        }.ToDictionary(r => r.Name);
+            intbl,
+            intbh
+        });
     }
 }
 

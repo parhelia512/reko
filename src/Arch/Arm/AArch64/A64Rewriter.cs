@@ -458,7 +458,7 @@ namespace Reko.Arch.Arm.AArch64
         private Expression AssignSimd(int iop, Expression exp)
         {
             var dst = (Identifier) RewriteOp(iop);
-            var vreg = Registers.ByDomain[dst.Storage.Domain];
+            var vreg = arch.RegisterBank.GetRegisterByDomain(dst.Storage.Domain);
             m.Assign(dst, exp);
             var highBitsRemaining = vreg.DataType.BitSize - dst.DataType.BitSize;
             if (highBitsRemaining > 0)

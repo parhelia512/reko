@@ -40,7 +40,7 @@ public class M16CArchitecture : ProcessorArchitecture
     private readonly static ConcurrentDictionary<ulong, FlagGroupStorage> flagGroups = [];
 
     public M16CArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-        : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+        : base(services, archId, options, Registers.All)
     {
         Endianness = EndianServices.Little;
         this.CarryFlag = Registers.C;
@@ -102,36 +102,6 @@ public class M16CArchitecture : ProcessorArchitecture
     public override int? GetMnemonicNumber(string name)
     {
         throw new System.NotImplementedException();
-    }
-
-    public override RegisterStorage[] GetRegisters()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-    {
-        var n = (int) domain;
-        bool isHi = 8 <= range.Lsb && range.Msb <= 16;
-        bool isLo = 0 <= range.Lsb && range.Msb <= 8;
-        switch (n)
-        {
-        case 0:
-            if (isLo)
-                return Registers.r0l;
-            if (isHi)
-                return Registers.r0h;
-            return Registers.r0;
-        case 1:
-            if (isLo)
-                return Registers.r1l;
-            if (isHi)
-                return Registers.r1h;
-            return Registers.r1;
-        }
-        if (Registers.ByDomain.TryGetValue(domain, out var reg))
-            return reg;
-        return null;
     }
 
     public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)

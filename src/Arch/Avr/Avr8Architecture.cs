@@ -37,7 +37,7 @@ namespace Reko.Arch.Avr
     {
 
         public Avr8Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Little;
             this.PointerType = PrimitiveType.Ptr16;
@@ -99,27 +99,9 @@ namespace Reko.Arch.Avr
         }
 
 
-        public override RegisterStorage GetRegister(StorageDomain domain, BitRange range)
-        {
-            var reg= Registers.regs[domain - StorageDomain.Register];
-            if (domain == Registers.z.Domain)
-            {
-                if (range.Lsb == 0)
-                    return Registers.regs[30];
-                else
-                    return Registers.regs[31];
-            }
-            return reg;
-        }
-
         public RegisterStorage GetRegister(int i)
         {
             return Registers.regs[i];
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.regs;
         }
 
         public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
@@ -144,11 +126,6 @@ namespace Reko.Arch.Avr
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

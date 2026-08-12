@@ -34,7 +34,7 @@ namespace Reko.Arch.Pdp;
 public class Pdp1Architecture : ProcessorArchitecture
 {
     public Pdp1Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-        : base(services, archId, options, null, null)
+        : base(services, archId, options, Registers.All)
     {
         this.CodeMemoryGranularity = 18;
         this.Endianness = EndianServices.Big;
@@ -85,11 +85,6 @@ public class Pdp1Architecture : ProcessorArchitecture
     }
 
     public override int? GetMnemonicNumber(string name)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override RegisterStorage[] GetRegisters()
     {
         throw new NotImplementedException();
     }

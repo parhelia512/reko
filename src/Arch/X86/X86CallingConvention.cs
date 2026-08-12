@@ -125,12 +125,12 @@ namespace Reko.Arch.X86
                     if (stackAlignment == 4)
                         ccr.RegReturn(Registers.eax);
                     else
-                        ccr.SequenceReturn(arch.Registers.dx, arch.Registers.ax);
+                        ccr.SequenceReturn(arch.RegisterAliases.dx, arch.RegisterAliases.ax);
                     return;
                 }
                 if (retSize > 1)
                 {
-                    ccr.RegReturn(arch.Registers.ax);
+                    ccr.RegReturn(arch.RegisterAliases.ax);
                     return;
                 }
                 ccr.RegReturn(Registers.al);

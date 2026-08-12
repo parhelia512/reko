@@ -19,13 +19,11 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reko.Arch.i8051
 {
@@ -73,9 +71,7 @@ namespace Reko.Arch.i8051
 
 
         private static Dictionary<int, RegisterStorage> regsByNumber;
-        public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
-        public static Dictionary<string, RegisterStorage> ByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage[]> Subregisters { get; }
+        public static RegisterBank All { get; }
 
 
         static Registers()
@@ -114,15 +110,6 @@ namespace Reko.Arch.i8051
             TH1 = RegisterStorage.Reg8("TH1", T1.Number, 8);
             A = RegisterStorage.Reg8("A", AB.Number, 8);
             B = RegisterStorage.Reg8("B", AB.Number, 0);
-
-            Subregisters = new()
-            {
-                { DPTR.Domain, new[] { DPL, DPH }  },
-                { T0.Domain, new[] { TL0, TH0 } },
-                { T1.Domain, new[] { TL1, TH1 } },
-                { AB.Domain, new[] { A, B } },
-            };
-
 
             PC = new RegisterStorage("PC", 0x100, 0, PrimitiveType.Ptr16);
             var r = GpRegisters;
@@ -195,11 +182,8 @@ namespace Reko.Arch.i8051
             PFlag = new FlagGroupStorage(PSW, (ulong) FlagM.P, "P");
             CAOP = new FlagGroupStorage(PSW, (uint) (FlagM.C | FlagM.AC | FlagM.OV | FlagM.P), nameof(CAOP));
 
-            ByDomain = factory.DomainsToRegisters.Values
-                .Concat(ctrFactory.DomainsToRegisters.Values)
-                .ToDictionary(k => k.Domain);
-            ByName = regsByNumber.Values
-                .ToDictionary(k => k.Name);
+            All = new RegisterBank(factory.NamesToRegisters.Values
+                .Concat(ctrFactory.NamesToRegisters.Values));
         }
 
         public static RegisterStorage GetRegister(int i)
@@ -209,16 +193,6 @@ namespace Reko.Arch.i8051
             reg = new RegisterStorage($"SFR{i:X2}", i, 0, PrimitiveType.Byte);
             regsByNumber.Add(i, reg);
             return reg;
-        }
-
-        public static RegisterStorage[] GetRegisters()
-        {
-            return regsByNumber.Values.OrderBy(r => r.Number).ToArray();
-        }
-
-        public static bool TryGetRegister(string regName, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return ByName.TryGetValue(regName, out reg);
         }
     }
 

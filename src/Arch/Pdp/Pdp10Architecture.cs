@@ -38,7 +38,7 @@ namespace Reko.Arch.Pdp
     public class Pdp10Architecture : ProcessorArchitecture
     {
         public Pdp10Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             this.CarryFlag = null; //$TODO:
             this.DefaultBase = 8;
@@ -101,16 +101,6 @@ namespace Reko.Arch.Pdp
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            return Registers.Accumulators[(int) domain];
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
@@ -148,21 +138,6 @@ namespace Reko.Arch.Pdp
             if (!reader.TryReadBeUInt36(out ulong uInstr))
                 return "";
             return Convert.ToString((long) uInstr, 8).PadLeft(12, '0');
-        }
-
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
-        {
-            var r = Registers.Accumulators.FirstOrDefault(r => r.Name == name);
-            if (r is not null)
-            {
-                reg = r;
-                return true;
-            }
-            else
-            {
-                reg = default!;
-                return false;
-            }
         }
 
         public override bool TryParseAddress(string? txtAddr, out Address addr)

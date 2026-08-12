@@ -70,7 +70,7 @@ namespace Reko.Arch.PowerPC
         /// </summary>
         /// <param name="wordWidth">Supplies the word width of the PowerPC architecture.</param>
         public PowerPcArchitecture(IServiceProvider services, string archId, EndianServices endianness, PrimitiveType wordWidth, PrimitiveType signedWord, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, new([]))
         {
             Endianness = endianness;
             WordWidth = wordWidth;
@@ -125,11 +125,13 @@ namespace Reko.Arch.PowerPC
 
             spregs = new Dictionary<int, RegisterStorage>
             {
-                { 8, new RegisterStorage("lr", 0x0100 + 8, 0, PointerType) },
-                { 9, new RegisterStorage("ctr", 0x0100 + 9, 0, WordWidth) },
+                { 8, lr },
+                { 9, ctr },
                 { 26, RegisterStorage.Reg32("srr0", 0x0100 + 26) },
                 { 27, RegisterStorage.Reg32("srr1", 0x0100 + 27) },
             };
+
+            base.RegisterBank = new RegisterBank(regs);
 
             //$REVIEW: using R1 as the stack register is a _convention_. It 
             // should be platform-specific at the very least.
@@ -290,27 +292,6 @@ namespace Reko.Arch.PowerPC
                 return regs[i];
             else
                 return null;
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            return GetRegister(domain - StorageDomain.Register);
-        }
-
-        public override RegisterStorage? GetRegister(string name)
-        {
-            return this.regs.Where(r => r.Name == name).SingleOrDefault();
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return regs.ToArray();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            reg = GetRegister(name);
-            return reg is not null;
         }
 
         public FlagGroupStorage? GetCcFieldAsFlagGroup(RegisterStorage reg)

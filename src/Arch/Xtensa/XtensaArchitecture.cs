@@ -147,7 +147,7 @@ namespace Reko.Arch.Xtensa
             .ToArray();
 
         public XtensaArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, allRegs.ToDictionary(r => r.Name), allRegs.ToDictionary(r => r.Domain))
+            : base(services, archId, options, new RegisterBank(allRegs))
         {
             //$TODO: Xtensa is bi-endian, but we're assuming little-endian here.
             // Fix this if encountering a big-endian binary.
@@ -249,20 +249,6 @@ namespace Reko.Arch.Xtensa
             if (!Enum.TryParse(name.Replace('.', '_'), true, out Mnemonic result))
                 return null;
             return (int)result;
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain domain, BitRange range)
-        {
-            var ireg = domain - StorageDomain.Register;
-            if (0 <= ireg && ireg < allRegs.Length)
-                return allRegs[ireg];
-            else
-                return null;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
         }
 
         public override string GrfToString(RegisterStorage flagregister, string prefix, ulong grf)

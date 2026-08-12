@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Reko.Arch.Maxim;
 
 public static class Registers
 {
-    public static Dictionary<string, RegisterStorage> ByName { get; }
+    public static RegisterBank All { get; }
     public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
 
     public static RegisterStorage[] Accumulators { get; }
@@ -121,7 +122,7 @@ public static class Registers
             .Concat([(A_AP, "a[ap]")])
             .ToDictionary(p => p.Item1, p => p.Item2);
 
-        ByName = factory.NamesToRegisters;
+        All = new RegisterBank(factory.NamesToRegisters.Values);
         ByDomain = factory.DomainsToRegisters;
     }
 }

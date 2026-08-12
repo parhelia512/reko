@@ -33,7 +33,7 @@ namespace Reko.Arch.Zilog
 {
     public class Z8000Architecture : ProcessorArchitecture
     {
-        public Z8000Architecture(IServiceProvider services, string archId, Dictionary<string, object> options, Dictionary<string, RegisterStorage>? regsByName, Dictionary<StorageDomain, RegisterStorage>? regsByDomain) : base(services, archId, options, regsByName, regsByDomain)
+        public Z8000Architecture(IServiceProvider services, string archId, Dictionary<string, object> options, RegisterBank bank) : base(services, archId, options, bank)
         {
             this.CodeMemoryGranularity = 8;
             this.Endianness = EndianServices.Big;
@@ -83,11 +83,6 @@ namespace Reko.Arch.Zilog
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }

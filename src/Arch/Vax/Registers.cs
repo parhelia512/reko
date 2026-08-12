@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,11 @@ namespace Reko.Arch.Vax
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
+        public static RegisterStorage[] GpRegisters { get; }
+
+
         public static RegisterStorage r0 { get; }
         public static RegisterStorage r1 { get; }
         public static RegisterStorage r2 { get; }
@@ -46,7 +52,6 @@ namespace Reko.Arch.Vax
         public static RegisterStorage fp { get; }
         public static RegisterStorage sp { get; }
         public static RegisterStorage pc { get; }
-
         public static RegisterStorage psw { get; }
 
 
@@ -61,8 +66,6 @@ namespace Reko.Arch.Vax
         public static FlagGroupStorage VZN  { get; }
         public static FlagGroupStorage ZN { get; }
 
-        public static Dictionary<string, RegisterStorage> ByName { get; }
-        public static Dictionary<StorageDomain, RegisterStorage> ByDomain { get; }
 
         static Registers()
         {
@@ -87,6 +90,12 @@ namespace Reko.Arch.Vax
             sp = factory.Reg32("sp");
             pc = factory.Reg32("pc");
 
+            GpRegisters = [
+                r0, r1, r2, r3,
+                r4, r5, r6, r7,
+                r8, r9, r10, r11,
+                ap, fp, sp, pc
+            ];
             psw = RegisterStorage.Reg32("psw", 20);
 
             C = new FlagGroupStorage(psw, (ulong) FlagM.CF, "C");
@@ -100,8 +109,7 @@ namespace Reko.Arch.Vax
             VZN = new FlagGroupStorage(psw, (ulong) FlagM.VZN, "VZN");
             ZN = new FlagGroupStorage(psw, (ulong) FlagM.ZN, "ZN");
 
-            ByName = factory.NamesToRegisters;
-            ByDomain = factory.DomainsToRegisters;
+            All = new RegisterBank(factory.NamesToRegisters.Values);
         }
     }
 

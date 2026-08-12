@@ -37,7 +37,7 @@ namespace Reko.Arch.zSeries
         private readonly zSeriesIntrinsics intrinsics;
 
         public zSeriesArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Big;
             this.InstructionBitSize = 16;
@@ -97,11 +97,6 @@ namespace Reko.Arch.zSeries
         public RegisterStorage GetRegister(int i)
         {
             return Registers.GpRegisters[i];
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.GpRegisters;
         }
 
         public override FlagGroupStorage[] GetFlags()

@@ -38,7 +38,7 @@ namespace Reko.UnitTests.Arch.MN103
 
         public MN103RewriterTests()
         {
-            this.arch = new MN103Architecture(CreateServiceContainer(), "mn103", new(), new(), new());
+            this.arch = new MN103Architecture(CreateServiceContainer(), "mn103", []);
             this.addr = Address.Ptr32(0x0010_0000);
         }
 

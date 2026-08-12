@@ -82,7 +82,7 @@ namespace Reko.Environments.Windows
                 }
                 else if (dtRet.Size <= 2)
                 {
-                    ccr.RegReturn(arch.Registers.ax);
+                    ccr.RegReturn(arch.RegisterAliases.ax);
                 }
                 else if (dtRet.Size <= 4)
                 {

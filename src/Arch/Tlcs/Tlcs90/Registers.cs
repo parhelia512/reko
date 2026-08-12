@@ -19,12 +19,15 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 
 namespace Reko.Arch.Tlcs.Tlcs90
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
         public static readonly RegisterStorage af = RegisterStorage.Reg16("af", 0);
         public static readonly RegisterStorage bc = RegisterStorage.Reg16("bc", 1);
         public static readonly RegisterStorage de = RegisterStorage.Reg16("de", 2);
@@ -50,7 +53,7 @@ namespace Reko.Arch.Tlcs.Tlcs90
         public static readonly RegisterStorage ix = RegisterStorage.Reg16("ix", 8);
         public static readonly RegisterStorage iy = RegisterStorage.Reg16("iy", 9);
 
-        public static readonly RegisterStorage f = RegisterStorage.Reg8("f", 32);
+        public static readonly RegisterStorage f = RegisterStorage.Reg8("f", 0, 0);
 
         public static readonly FlagGroupStorage S = new FlagGroupStorage(f, (ulong) FlagM.SF, nameof(S));
         public static readonly FlagGroupStorage Z = new FlagGroupStorage(f, (ulong) FlagM.ZF, nameof(Z));
@@ -78,6 +81,10 @@ namespace Reko.Arch.Tlcs.Tlcs90
             af_, bc_, de_, hl_,
         };
 
+        static Registers()
+        {
+            All = new RegisterBank(allRegs);
+        }
     }
 
     public enum FlagM

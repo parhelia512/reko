@@ -42,7 +42,7 @@ namespace Reko.Arch.MilStd1750
         public static PrimitiveType Real48 { get; } 
 
         public MilStd1750Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.Endianness = EndianServices.Big;
             this.FramePointerType = PrimitiveType.Ptr16;
@@ -106,11 +106,6 @@ namespace Reko.Arch.MilStd1750
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }
@@ -181,11 +176,6 @@ namespace Reko.Arch.MilStd1750
                 (double) int_mant_lo / FLOATING_TWO_TO_THE_THIRTYNINE;
             var flt_exp = Constant.IntPow(2, int_exp);
             return flt_mant * flt_exp;
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            return Registers.ByName.TryGetValue(name, out reg);
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

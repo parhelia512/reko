@@ -144,7 +144,7 @@ namespace Reko.Arch.Tlcs
         };
 
         public Tlcs90Architecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, null, null)
+            : base(services, archId, options, Registers.All)
         {
             base.CarryFlag = Registers.C;
             base.Endianness = EndianServices.Little;
@@ -221,26 +221,6 @@ namespace Reko.Arch.Tlcs
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage? GetRegister(string name)
-        {
-            return Registers.allRegs.FirstOrDefault(r => r.Name == name);
-        }
-
-        public override RegisterStorage? GetRegister(StorageDomain regDomain, BitRange range)
-        {
-            if (!Subregisters.TryGetValue(regDomain, out var subs))
-                return null;
-            var key = range.BitMask();
-            if (!subs.TryGetValue(key, out var subreg))
-                return null;
-            return subreg;
-        }
-
-        public override RegisterStorage[] GetRegisters()
-        {
-            return Registers.allRegs;
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             ulong grf = flags.FlagGroupBits;
@@ -273,12 +253,6 @@ namespace Reko.Arch.Tlcs
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, [MaybeNullWhen(false)] out RegisterStorage reg)
-        {
-            reg = Registers.allRegs.FirstOrDefault(r => string.Compare(r.Name ,name, StringComparison.OrdinalIgnoreCase) == 0);
-            return reg is not null;
         }
 
         public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)

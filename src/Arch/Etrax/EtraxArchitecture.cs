@@ -37,7 +37,7 @@ namespace Reko.Arch.Etrax
             IServiceProvider services,
             string archId, 
             Dictionary<string, object> options) 
-            : base(services, archId, options, Registers.ByName, Registers.ByDomain)
+            : base(services, archId, options, Registers.All)
         {
             this.CarryFlag = Registers.C;
             this.Endianness = EndianServices.Little;
@@ -95,11 +95,6 @@ namespace Reko.Arch.Etrax
             throw new NotImplementedException();
         }
 
-        public override RegisterStorage[] GetRegisters()
-        {
-            throw new NotImplementedException();
-        }
-
         public override IEnumerable<FlagGroupStorage> GetSubFlags(FlagGroupStorage flags)
         {
             var mask = (FlagM) flags.FlagGroupBits;
@@ -140,11 +135,6 @@ namespace Reko.Arch.Etrax
         }
 
         public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool TryGetRegister(string name, out RegisterStorage reg)
         {
             throw new NotImplementedException();
         }

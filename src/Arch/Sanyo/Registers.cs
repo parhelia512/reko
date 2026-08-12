@@ -21,6 +21,7 @@
 // https://mc.pp.se/dc/vms/sfr.html
 
 using Reko.Core;
+using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,8 @@ namespace Reko.Arch.Sanyo
 {
     public static class Registers
     {
+        public static RegisterBank All { get; }
+
         public static RegisterStorage[] Regs { get; }
         public static Dictionary<int, RegisterStorage> SFR { get; }
 
@@ -137,6 +140,8 @@ namespace Reko.Arch.Sanyo
                 //Reg("XRAM", 0x180),  // 0x180-0x185 - XRAM (Bank 2)[4 Icons on bottom of LCD - DO NOT USE!] 
                                                                             // 0x1FB - 0x1FF - Not Used 
             }.ToDictionary(r => r.Number);
+
+            All = new RegisterBank(Regs.Concat(SFR.Values));
         }
 
         internal static RegisterStorage? DReg(uint n)

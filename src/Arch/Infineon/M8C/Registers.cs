@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Machine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,10 +38,10 @@ public static class Registers
         PC = factory.Reg16("PC");
         SP = factory.Reg8("SP");
         F = factory.Reg8("F");
+        All = new RegisterBank(factory.NamesToRegisters.Values);
     }
 
-    public static Dictionary<string, RegisterStorage>? ByName { get; internal set; }
-    public static Dictionary<StorageDomain, RegisterStorage>? ByDomain { get; internal set; }
+    public static RegisterBank All { get; }
     public static RegisterStorage A { get; }
     public static RegisterStorage X { get; }
     public static RegisterStorage PC { get; }

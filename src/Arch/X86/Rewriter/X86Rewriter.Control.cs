@@ -36,7 +36,7 @@ namespace Reko.Arch.X86.Rewriter
     {
         private Expression CreateTestCondition(ConditionCode cc, Mnemonic mnemonic)
         {
-            var grf = orw.FlagGroup(X86Instruction.UseCc(mnemonic, arch.Registers)
+            var grf = orw.FlagGroup(X86Instruction.UseCc(mnemonic, arch.RegisterAliases)
                 ?? throw new ArgumentException("Mnemonic not setting conditions"));
             var tc = m.Test(cc, grf);
             return tc;
@@ -181,7 +181,7 @@ namespace Reko.Arch.X86.Rewriter
         private void RewriteInto()
         {
             m.BranchInMiddleOfInstruction(
-                m.Test(ConditionCode.NO, binder.EnsureFlagGroup(arch.Registers.O)),
+                m.Test(ConditionCode.NO, binder.EnsureFlagGroup(arch.RegisterAliases.O)),
                 instrCur.Address + instrCur.Length,
                 InstrClass.CondJump);
             m.SideEffect(m.Fn(CommonOps.Syscall_1, m.Byte(4)));
@@ -272,16 +272,16 @@ namespace Reko.Arch.X86.Rewriter
                 return;
             }
             m.Return(
-                this.arch.WordWidth.Size + (instrCur.Mnemonic == Mnemonic.retf ? arch.Registers.cs.DataType.Size : 0),
+                this.arch.WordWidth.Size + (instrCur.Mnemonic == Mnemonic.retf ? arch.RegisterAliases.cs.DataType.Size : 0),
                 extraBytesPopped);
         }
 
         public void RewriteIret()
         {
             RewritePop(
-                binder.EnsureFlagGroup(arch.Registers.SCZO), instrCur.DataWidth);
+                binder.EnsureFlagGroup(arch.RegisterAliases.SCZO), instrCur.DataWidth);
             m.Return(
-                arch.Registers.cs.DataType.Size +
+                arch.RegisterAliases.cs.DataType.Size +
                 arch.WordWidth.Size, 
                 0);
         }
@@ -322,7 +322,7 @@ namespace Reko.Arch.X86.Rewriter
 
         private void RewriteVerrw(IntrinsicProcedure intrinsic)
         {
-            var z = binder.EnsureFlagGroup(arch.Registers.Z);
+            var z = binder.EnsureFlagGroup(arch.RegisterAliases.Z);
             m.Assign(z, m.Fn(intrinsic, SrcOp(0)));
         }
 

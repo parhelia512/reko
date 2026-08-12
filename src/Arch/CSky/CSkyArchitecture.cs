@@ -41,7 +41,7 @@ namespace Reko.Arch.CSky
         /// <remarks>Implemented by the CK810 device.</remarks>
         public CSkyArchitecture(IServiceProvider services, string name, Dictionary<string, object> options)
             : base(services, name,
-                  options, Registers.ByName, Registers.ByDomain)
+                  options, Registers.All)
         {
             this.CarryFlag = Registers.C;
             this.Endianness = EndianServices.Little;
@@ -100,11 +100,6 @@ namespace Reko.Arch.CSky
         }
 
         public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override RegisterStorage[] GetRegisters()
         {
             throw new NotImplementedException();
         }
