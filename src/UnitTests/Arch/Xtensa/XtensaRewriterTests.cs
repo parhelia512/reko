@@ -1270,7 +1270,7 @@ namespace Reko.UnitTests.Arch.Xtensa
             Given_UInt32s(0x274242);
             AssertCode(
                 "0|L--|00010000(3): 1 instructions",
-                "1|L--|Mem0[a2 + 0x27<u32>:byte] = a4");        //$LIT: check 0x27<u32>
+                "1|L--|Mem0[a2 + 0x27<u32>:byte] = SLICE(a4, byte, 0)");        //$LIT: check 0x27<u32>
         }
 
         [Test]
@@ -1363,7 +1363,6 @@ namespace Reko.UnitTests.Arch.Xtensa
               "1|T--|if ((a11 & a2) == 0<32>) branch 0000FFFA");
         }
 
-
         [Test]
         public void Xtrw_ssai()
         {
@@ -1371,7 +1370,7 @@ namespace Reko.UnitTests.Arch.Xtensa
             Given_UInt32s(0x404800);
             AssertCode(
               "0|L--|00010000(3): 1 instructions",
-              "1|L--|SAR = 8<8>");
+              "1|L--|SAR = CONVERT(8<8>, byte, word32)");
         }
 
         [Test]
@@ -1609,7 +1608,7 @@ namespace Reko.UnitTests.Arch.Xtensa
                "0|L--|00010000(3): 3 instructions",
                "1|L--|v5 = CONVERT(a6, word32, uint16)",
                "2|L--|v6 = CONVERT(a5, word32, uint16)",
-               "3|L--|a5 = v5 *u v6");
+               "3|L--|a5 = v5 *u32 v6");
         }
 
         [Test]

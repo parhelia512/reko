@@ -1470,5 +1470,14 @@ namespace Reko.UnitTests.Decompiler.Evaluation
             exp = RunExpressionSimplifier(exp);
             Assert.That(exp.ToString(), Is.EqualTo("foo_1 == 0x2F<32>"));
         }
+
+        [Test]
+        public void Exs_compare_boolean_exp_with_zero()
+        {
+            Given_ExpressionSimplifier();
+            Expression exp = m.Eq0(m.Ne(foo, 0x42));
+            exp = RunExpressionSimplifier(exp);
+            Assert.That(exp.ToString(), Is.EqualTo("foo_1 == 0x42<32>"));
+        }
     }
 }

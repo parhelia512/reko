@@ -38,6 +38,11 @@ namespace Reko.Core.Rtl
             this.Dst = dst;
             this.Src = src;
             this.Class = InstrClass.Linear;
+#if PEDANTIC
+            if (dst.DataType.BitSize != src.DataType.BitSize &&
+                (dst is not Identifier id || id.Storage is not FlagGroupStorage))
+                throw new System.ArgumentException($"{src} of size {src.DataType.BitSize} is being assigned to {dst} of size {dst.DataType.BitSize}.");
+#endif
         }
 
         /// <summary>

@@ -1605,5 +1605,43 @@ SsaProcedureBuilder_exit:
             });
         }
 
+        [Test]
+        public void CceExplicitComparison()
+        {
+            string sExpected =
+                @"// ProcedureBuilder
+// Return size: 0
+define ProcedureBuilder
+ProcedureBuilder_entry:
+	def r1
+	def r2
+	// succ:  l1
+l1:
+	branch r1 <u r2 == 0<32> skip
+	// succ:  m1 skip
+m1:
+	// succ:  skip
+skip:
+	return
+	// succ:  ProcedureBuilder_exit
+ProcedureBuilder_exit:
+
+";
+            RunStringTest(sExpected, m =>
+            {
+                var eflags = RegisterStorage.Reg32("eflags", 42);
+                var r1 = m.Reg32("r1");
+                var r2 = m.Reg32("r2");
+                var C = FlagGroup("C");
+
+                m.Assign(C, m.Cond(C.DataType, m.Ult(r1, r2)));
+                m.BranchIf(m.Test(ConditionCode.EQ, C), "skip");
+                m.Label("m1");
+                m.Assign(r1, r2);
+                m.Label("skip");
+                m.Return();
+            });
+        }
+
     }
 }

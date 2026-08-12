@@ -1038,6 +1038,21 @@ namespace Reko.Core.Expressions
         }
 
         /// <summary>
+        /// Zero extend the expression <paramref name="exp"/> to the same size as 
+        /// <paramref name="newSize"/>, but only if the new size is larger than
+        /// the current size.
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <param name="newSize"></param>
+        /// <returns></returns>
+        public Expression MaybeExtendZ(Expression exp, DataType newSize)
+        {
+            if (exp.DataType.BitSize >= newSize.BitSize)
+                return exp;
+            return ExtendZ(exp, newSize);
+        }
+
+        /// <summary>
         /// Generates a slice operation to extract the least-significant bits
         /// if the expression <paramref name="expr"/> is wider than the data type
         /// <paramref name="dt"/>. Otherwise, returns the original expression.

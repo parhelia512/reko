@@ -32,6 +32,7 @@ using Reko.Core.Services;
 using Reko.Core.Memory;
 using Reko.Core.Intrinsics;
 using Reko.Core.Serialization;
+using Reko.Core.Operators;
 
 namespace Reko.Arch.Xtensa
 {
@@ -85,18 +86,18 @@ namespace Reko.Arch.Xtensa
                     iclass = InstrClass.Invalid; m.Invalid(); break;
                 case Mnemonic.abs: RewriteUnaryFn(CommonOps.Abs); break;
                 case Mnemonic.add:
-                case Mnemonic.add_n: RewriteBinOp(m.IAdd); break;
-                case Mnemonic.add_s: RewriteBinOp(m.FAdd); break;
+                case Mnemonic.add_n: RewriteBinOp(Operator.IAdd); break;
+                case Mnemonic.add_s: RewriteBinOp(Operator.FAdd); break;
                 case Mnemonic.addi: RewriteAddi(); break;
                 case Mnemonic.addi_n: RewriteAddi(); break;
-                case Mnemonic.addmi: RewriteBinOp(m.IAdd); break;
+                case Mnemonic.addmi: RewriteBinOp(Operator.IAdd); break;
                 case Mnemonic.addx2: RewriteAddx(2); break;
                 case Mnemonic.addx4: RewriteAddx(4); break;
                 case Mnemonic.addx8: RewriteAddx(8); break;
                 case Mnemonic.all4: RewriteAll(4, m.And); break;
                 case Mnemonic.all8: RewriteAll(8, m.And); break;
-                case Mnemonic.and: RewriteBinOp(m.And); break;
-                case Mnemonic.andb: RewriteBinOp(m.And); break;
+                case Mnemonic.and: RewriteBinOp(Operator.And); break;
+                case Mnemonic.andb: RewriteBinOp(Operator.And); break;
                 case Mnemonic.andbc: RewriteBinOp((a, b) => m.And(a, m.Not(b))); break;
                 case Mnemonic.any4: RewriteAll(4, m.Or); break;
                 case Mnemonic.any8: RewriteAll(8, m.Or); break;
@@ -156,7 +157,7 @@ namespace Reko.Arch.Xtensa
                 case Mnemonic.extui: RewriteExtui(); break;
                 case Mnemonic.entry: RewriteEntry(); break;
                 case Mnemonic.float_s: RewriteFloat_s(PrimitiveType.Int32); break;
-                case Mnemonic.floor_s: RewriteBinOp((a, b) => m.Fn(floor_intrinsic, a, b)); break;
+                case Mnemonic.floor_s: RewriteBinOp(floor_intrinsic); break;
                 case Mnemonic.iii: RewriteCacheFn(iii_intrinsic); break;
                 case Mnemonic.iitlb: RewriteIntrinsicProc(iitlb_intrinsic); break;
                 case Mnemonic.ipf: RewriteCacheFn(ipf_intrinsic); break;
@@ -177,7 +178,7 @@ namespace Reko.Arch.Xtensa
                 case Mnemonic.ldpte: RewriteIntrinsicProc(ldpte_intrinsic); break;
                 case Mnemonic.loop: RewriteLoop(); break;
                 case Mnemonic.lsiu: RewriteLsiu(); break;
-                case Mnemonic.madd_s: RewriteMaddSub(m.FAdd); break;
+                case Mnemonic.madd_s: RewriteMaddSub(Operator.FAdd); break;
                 case Mnemonic.memw: RewriteNop(); break; /// memory sync barriers?
                 case Mnemonic.max: RewriteMax(); break;
                 case Mnemonic.maxu: RewriteMaxu(); break;
@@ -200,7 +201,7 @@ namespace Reko.Arch.Xtensa
                 case Mnemonic.movnez_s: RewriteMovcc(m.Ne); break;
                 case Mnemonic.movt:
                 case Mnemonic.movt_s: RewriteMovft(m.Not); break;
-                case Mnemonic.msub_s: RewriteMaddSub(m.FSub); break;
+                case Mnemonic.msub_s: RewriteMaddSub(Operator.FSub); break;
                 case Mnemonic.mul_aa_hh: RewriteMul(mul_hh_intrinsic, Int40); break;
                 case Mnemonic.mul_aa_hl: RewriteMul(mul_hl_intrinsic, Int40); break;
                 case Mnemonic.mul_aa_lh: RewriteMul(mul_lh_intrinsic, Int40); break;
@@ -260,30 +261,30 @@ namespace Reko.Arch.Xtensa
                 case Mnemonic.muls_dd_lh: RewriteMuls(mul_lh_intrinsic, Int40); break;
                 case Mnemonic.muls_dd_ll: RewriteMuls(mul_ll_intrinsic, Int40); break;
 
-                case Mnemonic.mul_s: RewriteBinOp(m.FMul); break;
-                case Mnemonic.mul16s: RewriteMul16(m.SMul, Domain.SignedInt); break;
-                case Mnemonic.mul16u: RewriteMul16(m.UMul, Domain.UnsignedInt); break;
-                case Mnemonic.mull: RewriteBinOp(m.IMul); break;
+                case Mnemonic.mul_s: RewriteBinOp(Operator.FMul); break;
+                case Mnemonic.mul16s: RewriteMul16(Operator.SMul, Domain.SignedInt); break;
+                case Mnemonic.mul16u: RewriteMul16(Operator.UMul, Domain.UnsignedInt); break;
+                case Mnemonic.mull: RewriteBinOp(Operator.IMul); break;
                 case Mnemonic.mulsh: RewriteMulh(mulsh_intrinsic, PrimitiveType.Int32); break;
                 case Mnemonic.muluh: RewriteMulh(muluh_intrinsic, PrimitiveType.UInt32); break;
-                case Mnemonic.neg: RewriteUnaryOp(m.Neg); break;
+                case Mnemonic.neg: RewriteUnaryOp(Operator.Neg); break;
                 case Mnemonic.nop: m.Nop(); break;
                 case Mnemonic.nop_n: m.Nop(); break;
                 case Mnemonic.nsa: RewriteUnaryFn(nsa_intrinsic); break;
                 case Mnemonic.nsau: RewriteUnaryFn(nsau_intrinsic); break;
-                case Mnemonic.oeq_s: RewriteBinOp(m.FEq); break;    //$REVIEW: what to do about 'ordered' and 'unordered'
-                case Mnemonic.ole_s: RewriteBinOp(m.FLe); break;    //$REVIEW: what to do about 'ordered' and 'unordered'
-                case Mnemonic.olt_s: RewriteBinOp(m.FLt); break;    //$REVIEW: what to do about 'ordered' and 'unordered'
+                case Mnemonic.oeq_s: RewriteBoolBinOp(Operator.Feq); break;    //$REVIEW: what to do about 'ordered' and 'unordered'
+                case Mnemonic.ole_s: RewriteBoolBinOp(Operator.Fle); break;    //$REVIEW: what to do about 'ordered' and 'unordered'
+                case Mnemonic.olt_s: RewriteBoolBinOp(Operator.Flt); break;    //$REVIEW: what to do about 'ordered' and 'unordered'
                 case Mnemonic.or: RewriteOr(); break;
                 case Mnemonic.orb: RewriteOr(); break;
                 case Mnemonic.orbc: RewriteBinOp((a, b) => m.Or(a, m.Not(b))); break;
                 case Mnemonic.pitlb: RewriteUnaryFn(pitlb_intrinsic); break;
-                case Mnemonic.quos: RewriteBinOp(m.SDiv); break;
-                case Mnemonic.quou: RewriteBinOp(m.UDiv); break;
+                case Mnemonic.quos: RewriteBinOp(Operator.SDiv); break;
+                case Mnemonic.quou: RewriteBinOp(Operator.UDiv); break;
                 case Mnemonic.rdtlb0: RewriteUnaryFn(rdtlb0_intrinsic); break;
                 case Mnemonic.rdtlb1: RewriteUnaryFn(rdtlb1_intrinsic); break;
-                case Mnemonic.rems: RewriteBinOp(m.SMod); break;
-                case Mnemonic.remu: RewriteBinOp(m.UMod); break;
+                case Mnemonic.rems: RewriteBinOp(Operator.SMod); break;
+                case Mnemonic.remu: RewriteBinOp(Operator.UMod); break;
                 case Mnemonic.ret:
                 case Mnemonic.ret_n: RewriteRet(); break;
                 case Mnemonic.rfe: RewriteRet(); break;      //$REVIEW: emit some hint this is a return from exception?
@@ -306,35 +307,35 @@ namespace Reko.Arch.Xtensa
                 case Mnemonic.s32ri: RewriteSi(PrimitiveType.Word32); break; //$REVIEW: what about concurrency semantics
                 case Mnemonic.s8i: RewriteSi(PrimitiveType.Byte); break;
                 case Mnemonic.sext: RewriteSext(); break;
-                case Mnemonic.sll: RewriteShift(m.Shl); break;
-                case Mnemonic.slli: RewriteShiftI(m.Shl); break;
-                case Mnemonic.sra: RewriteShift(m.Sar); break;
-                case Mnemonic.srai: RewriteShiftI(m.Sar); break;
+                case Mnemonic.sll: RewriteShift(Operator.Shl); break;
+                case Mnemonic.slli: RewriteShiftI(Operator.Shl); break;
+                case Mnemonic.sra: RewriteShift(Operator.Sar); break;
+                case Mnemonic.srai: RewriteShiftI(Operator.Sar); break;
                 case Mnemonic.src: RewriteSrc(); break;
-                case Mnemonic.srl: RewriteShift(m.Sar); break;
-                case Mnemonic.srli: RewriteShiftI(m.Shr); break;
+                case Mnemonic.srl: RewriteShift(Operator.Sar); break;
+                case Mnemonic.srli: RewriteShiftI(Operator.Shr); break;
                 case Mnemonic.ssa8b: RewriteSsa8b(); break;
                 case Mnemonic.ssa8l: RewriteSsa8l(); break;
                 case Mnemonic.ssi: RewriteSi(PrimitiveType.Real32); break;
                 case Mnemonic.ssl: RewriteSsl(); break;
                 case Mnemonic.ssr:
                 case Mnemonic.ssai: RewriteSsa(); break;
-                case Mnemonic.sub: RewriteBinOp(m.ISub); break;
-                case Mnemonic.sub_s: RewriteBinOp(m.FSub); break;
+                case Mnemonic.sub: RewriteBinOp(Operator.ISub); break;
+                case Mnemonic.sub_s: RewriteBinOp(Operator.FSub); break;
                 case Mnemonic.subx2: RewriteSubx(2); break;
                 case Mnemonic.subx4: RewriteSubx(4); break;
                 case Mnemonic.subx8: RewriteSubx(8); break;
                 case Mnemonic.syscall: RewriteSyscall(); break;
                 case Mnemonic.trunc_s: RewriteCvtFloatToIntegral(trunc_intrinsic, PrimitiveType.Int32); break;
-                case Mnemonic.ueq_s: RewriteBinOp(m.Eq); break;     //$REVIEW: what to do about 'ordered' and 'unordered'
+                case Mnemonic.ueq_s: RewriteBoolBinOp(Operator.Eq); break;     //$REVIEW: what to do about 'ordered' and 'unordered'
                 case Mnemonic.ufloat_s: RewriteFloat_s(PrimitiveType.UInt32); break;
-                case Mnemonic.ule_s: RewriteBinOp(m.FLe); break;    //$REVIEW: what to do about 'ordered' and 'unordered'
-                case Mnemonic.ult_s: RewriteBinOp(m.FLt); break;    //$REVIEW: what to do about 'ordered' and 'unordered'
+                case Mnemonic.ule_s: RewriteBoolBinOp(Operator.Fle); break;    //$REVIEW: what to do about 'ordered' and 'unordered'
+                case Mnemonic.ult_s: RewriteBoolBinOp(Operator.Flt); break;    //$REVIEW: what to do about 'ordered' and 'unordered'
                 case Mnemonic.umul_aa_hh: RewriteMul(umul_hh_intrinsic, UInt40); break;
                 case Mnemonic.umul_aa_hl: RewriteMul(umul_hl_intrinsic, UInt40); break;
                 case Mnemonic.umul_aa_lh: RewriteMul(umul_lh_intrinsic, UInt40); break;
                 case Mnemonic.umul_aa_ll: RewriteMul(umul_ll_intrinsic, UInt40); break;
-                case Mnemonic.un_s: RewriteBinOp((a,b) => m.Fn(FpOps.IsUnordered_f32, a, b)); break;
+                case Mnemonic.un_s: RewriteBinOp(FpOps.IsUnordered_f32); break;
                 case Mnemonic.utrunc_s: RewriteCvtFloatToIntegral(utrunc_intrinsic, PrimitiveType.UInt32); break;
                 case Mnemonic.waiti: RewriteIntrinsicProc(waiti_instrinsic); break;
                 case Mnemonic.wdtlb: RewriteIntrinsicProc(wdtlb_instrinsic); break;
@@ -342,8 +343,8 @@ namespace Reko.Arch.Xtensa
                 case Mnemonic.wer: RewriteWer(); break;
                 case Mnemonic.wsr: RewriteWsr(); break;
                 case Mnemonic.wur: RewriteInverseCopy(); break;
-                case Mnemonic.xor: RewriteBinOp(m.Xor); break;
-                case Mnemonic.xorb: RewriteBinOp(m.Xor); break;
+                case Mnemonic.xor: RewriteBinOp(Operator.Xor); break;
+                case Mnemonic.xorb: RewriteBinOp(Operator.Xor); break;
                 case Mnemonic.xsr: RewriteXsr(); break;
                 }
                 CheckForLoopExit();

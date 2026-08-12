@@ -22,6 +22,7 @@ using Reko.Core;
 using Reko.Core.Expressions;
 using Reko.Core.Intrinsics;
 using Reko.Core.Machine;
+using Reko.Core.Operators;
 using Reko.Core.Rtl;
 using Reko.Core.Types;
 using System;
@@ -82,12 +83,36 @@ namespace Reko.Arch.Xtensa
             m.Assign(dst, m.ISub(m.IMul(src1, scale), src2));
         }
 
+        private void RewriteBinOp(BinaryOperator fn)
+        {
+            var src1 = RewriteOp(instr.Operands[1]);
+            var src2 = RewriteOp(instr.Operands[2]);
+            var dst = RewriteOp(instr.Operands[0]);
+            m.Assign(dst, m.Bin(fn, src1, src2));
+        }
+
+        private void RewriteBinOp(IntrinsicProcedure fn)
+        {
+            var src1 = RewriteOp(instr.Operands[1]);
+            var src2 = RewriteOp(instr.Operands[2]);
+            var dst = RewriteOp(instr.Operands[0]);
+            m.Assign(dst, m.Fn(fn, src1, src2));
+        }
+
         private void RewriteBinOp(Func<Expression, Expression, Expression> fn)
         {
             var src1 = RewriteOp(instr.Operands[1]);
             var src2 = RewriteOp(instr.Operands[2]);
             var dst = RewriteOp(instr.Operands[0]);
             m.Assign(dst, fn(src1, src2));
+        }
+
+        private void RewriteBoolBinOp(BinaryOperator fn)
+        {
+            var src1 = RewriteOp(instr.Operands[1]);
+            var src2 = RewriteOp(instr.Operands[2]);
+            var dst = RewriteOp(instr.Operands[0]);
+            m.Assign(dst, m.Bin(fn, PrimitiveType.Bool, src1, src2));
         }
 
         private void RewriteUnary(IntrinsicProcedure intrinsic)
@@ -295,12 +320,12 @@ namespace Reko.Arch.Xtensa
             m.Assign(dst, m.Convert(tmp, tmp.DataType, PrimitiveType.UInt32));
         }
 
-        private void RewriteMaddSub(Func<Expression, Expression, Expression> fn)
+        private void RewriteMaddSub(BinaryOperator fn)
         {
             var src1 = RewriteOp(this.instr.Operands[1]);
             var src2 = RewriteOp(this.instr.Operands[2]);
             var dst = RewriteOp(this.instr.Operands[0]);
-            m.Assign(dst, fn(dst, m.FMul(src1, src2)));
+            m.Assign(dst, m.Bin(fn, dst, m.FMul(src1, src2)));
         }
 
         private void RewriteMovcc(Func<Expression,Expression,Expression> fn)
@@ -367,7 +392,7 @@ namespace Reko.Arch.Xtensa
         }
 
 
-        private void RewriteMul16(Func<Expression, Expression, Expression> mul, Domain dom)
+        private void RewriteMul16(BinaryOperator mul, Domain dom)
         {
             var src1 = RewriteOp(instr.Operands[1]);
             var src2 = RewriteOp(instr.Operands[2]);
@@ -376,7 +401,7 @@ namespace Reko.Arch.Xtensa
             var tmp2 = binder.CreateTemporary(PrimitiveType.Create(dom, 16));
             m.Assign(tmp1, m.Convert(src1, src1.DataType, tmp1.DataType));
             m.Assign(tmp2, m.Convert(src2, src2.DataType, tmp2.DataType));
-            m.Assign(dst, mul(tmp1, tmp2));
+            m.Assign(dst, m.Bin(mul, dst.DataType, tmp1, tmp2));
         }
 
         private void RewriteMulh(IntrinsicProcedure generic, PrimitiveType dt)
@@ -401,7 +426,7 @@ namespace Reko.Arch.Xtensa
             }
             m.Assign(
                 m.Mem(dt, ea),
-                src);
+                m.MaybeSlice(src, dt));
         }
 
         private void RewriteSext()
@@ -412,22 +437,22 @@ namespace Reko.Arch.Xtensa
             m.Assign(dst, m.Fn(sext_intrinsic, src, bits));
         }
 
-        private void RewriteShift(Func<Expression, Expression, Expression> fn)
+        private void RewriteShift(BinaryOperator fn)
         {
             //$REVIEW: the Xtensa spec is unclear on left shifts, shouild it be
             // a[0] = a[1] << (32 - SAR)?
             var src1 = RewriteOp(instr.Operands[1]);
             var sa = binder.EnsureRegister(Registers.SAR);
             var dst = RewriteOp(instr.Operands[0]);
-            m.Assign(dst, fn(src1, sa));
+            m.Assign(dst, m.Bin(fn, src1, sa));
         }
 
-        private void RewriteShiftI(Func<Expression,Expression,Expression> fn)
+        private void RewriteShiftI(BinaryOperator fn)
         {
             var src1 = RewriteOp(instr.Operands[1]);
             var src2 = RewriteSimm(instr.Operands[2]);
             var dst = RewriteOp(instr.Operands[0]);
-            m.Assign(dst, fn(src1, src2));
+            m.Assign(dst, m.Bin(fn, src1, src2));
         }
 
         private void RewriteSrc()
@@ -450,7 +475,7 @@ namespace Reko.Arch.Xtensa
         {
             var src = RewriteOp(instr.Operands[0]);
             var dst = binder.EnsureRegister(Registers.SAR);
-            m.Assign(dst, src);
+            m.Assign(dst, m.MaybeExtendZ(src, dst.DataType));
         }
 
         private void RewriteSsl()
@@ -490,11 +515,11 @@ namespace Reko.Arch.Xtensa
             m.Assign(dst, src);
         }
 
-        private void RewriteUnaryOp(Func<Expression, Expression> fn)
+        private void RewriteUnaryOp(UnaryOperator fn)
         {
             var src = RewriteOp(instr.Operands[1]);
             var dst = RewriteOp(instr.Operands[0]);
-            m.Assign(dst, fn(src));
+            m.Assign(dst, m.Unary(fn, src));
         }
 
         private void RewriteUnaryFn(IntrinsicProcedure intrinsic)
