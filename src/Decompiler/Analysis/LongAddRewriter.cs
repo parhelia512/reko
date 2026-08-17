@@ -553,7 +553,7 @@ public class LongAddRewriter : IAnalysis<SsaState>
 
                 if (ass.Src is Application app &&
                     app.Procedure is ProcedureConstant pc &&
-                    pc.Procedure.Name == CommonOps.ISubC.Name &&
+                    pc.Procedure.IsInstanceOf(CommonOps.ISubC) &&
                     app.Arguments[0] is Identifier idNeg)
                 {
                     var sid = ssa.Identifiers[idNeg];
@@ -785,9 +785,9 @@ public class LongAddRewriter : IAnalysis<SsaState>
             }
 
             BinaryOperator? binop = null;
-            if (fn.Name == CommonOps.IAddC.Name)
+            if (fn.IsInstanceOf(CommonOps.IAddC))
                 binop = Operator.IAdd;
-            else if (fn.Name == CommonOps.ISubC.Name)
+            else if (fn.IsInstanceOf(CommonOps.ISubC))
                 binop = Operator.ISub;
             else
                 return null;

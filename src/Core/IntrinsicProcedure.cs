@@ -110,18 +110,20 @@ namespace Reko.Core
         /// </summary>
         /// <param name="name">The name of the intrinsic procedure.</param>
         /// <param name="genericTypes">The generic types of this procedure.</param>
-        /// <param name="isConcrete">True if this is an instance of the generic intrinsic.</param>
+        /// <param name="genericOriginal">If this is a concrete intrinsic, this is 
+        /// a reference to the generic intrinsic from which it was instanciated;
+        /// otherwise null.</param>
         /// <param name="hasSideEffect">True of the procedure has a side effect (<see cref="ProcedureBase.HasSideEffect"/></param>
         /// <param name="evaluator">Optional partial evaluation procedure.</param>
         /// <param name="sig">The signature of the procedure.</param>
         public IntrinsicProcedure(
             string name, 
             DataType[] genericTypes, 
-            bool isConcrete,
+            IntrinsicProcedure genericOriginal,
             bool hasSideEffect,
             Func<DataType, Constant[], Constant?>? evaluator,
             FunctionType sig)
-            : base(name, genericTypes, isConcrete, hasSideEffect)
+            : base(name, genericOriginal, genericTypes, genericOriginal is not null, hasSideEffect)
         {
             this.sig = sig;
             this.ReturnType = sig.ReturnValue?.DataType!;
@@ -210,7 +212,7 @@ namespace Reko.Core
         /// </returns>
         protected virtual IntrinsicProcedure DoMakeInstance(DataType[] concreteTypes, FunctionType sig)
         {
-            return new IntrinsicProcedure(this.Name, concreteTypes, true, this.HasSideEffect, Evaluate, sig)
+            return new IntrinsicProcedure(this.Name, concreteTypes, this, this.HasSideEffect, Evaluate, sig)
             {
                 Characteristics = this.Characteristics,
                 EnclosingType = this.EnclosingType

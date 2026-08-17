@@ -261,11 +261,11 @@ namespace Reko.Core.Intrinsics
             {
                 if (this.simdOp is not null)
                 {
-                    proc = new SimdIntrinsic(intrinsicName, this.simdOp, genericTypes, false, signature);
+                    proc = new SimdIntrinsic(intrinsicName, this.simdOp, genericTypes, null, signature);
                 }
                 else
                 {
-                    proc = new IntrinsicProcedure(intrinsicName, genericTypes, false, hasSideEffect, this.applyConstants, signature);
+                    proc = new IntrinsicProcedure(intrinsicName, genericTypes, null, hasSideEffect, this.applyConstants, signature);
                 }
             }
             else

@@ -41,6 +41,7 @@ namespace Reko.Core
         public event EventHandler? NameChanged;
 
         private readonly DataType[] genericArguments;
+        private readonly IntrinsicProcedure? genericOriginal;
         private readonly bool isConcrete;
 
         /// <summary>
@@ -52,6 +53,7 @@ namespace Reko.Core
 		public ProcedureBase(string name, bool hasSideEffect)
 		{
 			this.name = name;
+
             this.genericArguments = [];
             this.HasSideEffect = hasSideEffect;
 			this.Characteristics = DefaultProcedureCharacteristics.Instance;
@@ -61,6 +63,7 @@ namespace Reko.Core
         /// Initialize a generic instance of <see cref="ProcedureBase"/>.
         /// </summary>
         /// <param name="name">The name of the callable.</param>
+        /// <param name="genericOriginal">The "base" of the concrete instance.</param>
         /// <param name="genericArguments">An array of <see cref="DataType"/> objects that 
         /// represent the type arguments of a generic procedure.</param>
         /// <param name="isConcrete">True if this is a concrete instance of a generic procedure; otherwise false.</param>
@@ -68,11 +71,13 @@ namespace Reko.Core
         /// visible in architectural registers; otherwise false.</param>
         public ProcedureBase(
             string name, 
+            IntrinsicProcedure genericOriginal,
             DataType[] genericArguments,
             bool isConcrete,
             bool hasSideEffect)
         {
             this.name = name;
+            this.genericOriginal = genericOriginal;
             this.genericArguments = genericArguments;
             this.isConcrete = isConcrete;
             this.HasSideEffect = hasSideEffect;
@@ -161,6 +166,17 @@ namespace Reko.Core
         /// is not generic, an empty array is returned.
         /// </returns>
         public DataType[] GetGenericArguments() => this.genericArguments;
+
+        /// <summary>
+        /// Determines whether this intrinsic procedure is an instance
+        /// of the provided <paramref name="intrinsic"/> or a generic intrinsic procedure.
+        /// </summary>
+        /// <param name="intrinsic"></param>
+        /// <returns></returns>
+        public bool IsInstanceOf(IntrinsicProcedure intrinsic)
+        {
+            return this == intrinsic || this.genericOriginal == intrinsic;
+        }
 
         /// <summary>
         /// Creates a concrete version of this procedure by applying the provided

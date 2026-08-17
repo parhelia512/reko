@@ -61,7 +61,7 @@ namespace Reko.Evaluation
                         return (cResult, true);
                 }
 
-                if (intrinsic.Name == CommonOps.IAddC.Name)
+                if (intrinsic.IsInstanceOf(CommonOps.IAddC))
                 {
                     if (args[2] is Constant c)
                     {
@@ -82,7 +82,7 @@ namespace Reko.Evaluation
                         }
                     }
                 }
-                else if (intrinsic.Name == CommonOps.ISubC.Name)
+                else if (intrinsic.IsInstanceOf(CommonOps.ISubC))
                 {
                     var carry = args[2];
                     if (carry is Constant c)
@@ -114,31 +114,31 @@ namespace Reko.Evaluation
                 // Rotations-with-carries that rotate in a false carry 
                 // flag can be simplified to shifts.
 
-                if (intrinsic.Name == CommonOps.RolC.Name)
+                if (intrinsic.IsInstanceOf(CommonOps.RolC))
                 {
                     if (IsSingleBitRotationWithClearCarryIn(args))
                     {
                         return (m.Bin(Operator.Shl, appl.DataType, args[0], args[1]), true);
                     }
                 }
-                else if (intrinsic.Name == CommonOps.RorC.Name)
+                else if (intrinsic.IsInstanceOf(CommonOps.RorC))
                 {
                     if (IsSingleBitRotationWithClearCarryIn(args))
                     {
                         return (m.Bin(Operator.Shr, appl.DataType, args[0], args[1]), true);
                     }
                 }
-                else if (intrinsic.Name == CommonOps.Rol.Name)
+                else if (intrinsic.IsInstanceOf(CommonOps.Rol))
                 {
-                    var rol = CombineRotations(intrinsic.Name, appl, args);
+                    var rol = CombineRotations(intrinsic, appl, args);
                     if (rol is not null)
                     {
                         return (rol, true);
                     }
                 }
-                else if (intrinsic.Name == CommonOps.Ror.Name)
+                else if (intrinsic.IsInstanceOf(CommonOps.Ror))
                 {
-                    var ror = CombineRotations(intrinsic.Name, appl, args);
+                    var ror = CombineRotations(intrinsic, appl, args);
                     if (ror is not null)
                     {
                         return (ror, true);
@@ -165,14 +165,14 @@ namespace Reko.Evaluation
             }
         }
 
-        private Expression? CombineRotations(string rotationName, Application appl, Expression[] args)
+        private Expression? CombineRotations(IntrinsicProcedure rotation, Application appl, Expression[] args)
         {
             if (args[1] is Constant cOuter &&
                 args[0] is Application appInner &&
                 appInner.Procedure is ProcedureConstant pcInner &&
                 pcInner.Procedure is IntrinsicProcedure intrinsicInner)
             {
-                if (intrinsicInner.Name == rotationName)
+                if (intrinsicInner.IsInstanceOf(rotation))
                 {
                     if (appInner.Arguments[1] is Constant cInner)
                     {

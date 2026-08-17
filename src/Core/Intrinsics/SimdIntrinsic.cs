@@ -44,15 +44,16 @@ namespace Reko.Core.Intrinsics
         /// <param name="name">Name of the function to create.</param>
         /// <param name="laneOp">Operation for each lane.</param>
         /// <param name="genericTypes">Generic types used.</param>
-        /// <param name="isConcrete">True if this instance is concrete.</param>
+        /// <param name="genericProcedure">Non-null instance is a generic "base"
+        /// intrinsic from which this intrinsic is derived.</param>
         /// <param name="signature">Type signature.</param>
         public SimdIntrinsic(
             string name,
             IFunctionalUnit laneOp,
             DataType[] genericTypes,
-            bool isConcrete,
+            IntrinsicProcedure? genericProcedure,
             FunctionType signature) :
-            base(name, genericTypes, isConcrete, false, null, signature)
+            base(name, genericTypes, genericProcedure, false, null, signature)
         {
             this.Operator = laneOp;
         }
@@ -69,7 +70,7 @@ namespace Reko.Core.Intrinsics
                 this.Name,
                 this.Operator,
                 concreteTypes,
-                true,
+                this,
                 sig)
             { 
                 Characteristics = this.Characteristics,

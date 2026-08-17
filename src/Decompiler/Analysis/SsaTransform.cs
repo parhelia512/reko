@@ -1076,7 +1076,7 @@ namespace Reko.Analysis
         public override Expression VisitApplication(Application appl)
         {
             if (appl.Procedure is ProcedureConstant { Procedure: IntrinsicProcedure ip } &&
-                ip.Name == CommonOps.ISubC.Name &&
+                ip.IsInstanceOf(CommonOps.ISubC) &&
                 appl.Arguments[0] is Identifier idSame &&
                 appl.Arguments[1] == idSame)
             {
