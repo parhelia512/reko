@@ -28,6 +28,7 @@ using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 
 namespace Reko.Arch.Blackfin
 {
@@ -37,6 +38,8 @@ namespace Reko.Arch.Blackfin
     public class BlackfinDisassembler : DisassemblerBase<BlackfinInstruction, Mnemonic>
     {
         private static readonly Decoder rootDecoder;
+        private static readonly Bitfield bf0_3 = new(0, 3);
+        private static readonly Bitfield bf3_3 = new(3, 3);
 
         private readonly BlackfinArchitecture arch;
         private readonly EndianImageReader rdr;
@@ -47,7 +50,7 @@ namespace Reko.Arch.Blackfin
         {
             this.arch = arch;
             this.rdr = rdr;
-            this.ops = new List<MachineOperand>();
+            this.ops = [];
         }
 
         public override BlackfinInstruction? DisassembleInstruction()
@@ -118,6 +121,7 @@ namespace Reko.Arch.Blackfin
 
             public override BlackfinInstruction Decode(uint uInstr, BlackfinDisassembler dasm)
             {
+                DumpMaskedInstruction(32, uInstr, bitfield.Mask << bitfield.Position, "");
                 var decoder = decoders[bitfield.Read(uInstr)];
                 return decoder.Decode(uInstr, dasm);
             }
@@ -288,10 +292,19 @@ namespace Reko.Arch.Blackfin
         private static readonly Mutator D9 = R(Registers.Data, 9, 3);
         private static readonly Mutator D16 = R(Registers.Data, 16, 3);
 
+        private static readonly Mutator D0_hi = R(Registers.RPI_Hi, 0, 3);
+        private static readonly Mutator D0_lo = R(Registers.RPIB_Lo, 0, 3);
+
         private static readonly Mutator P0 = R(Registers.Pointers, 0, 3);
         private static readonly Mutator P3 = R(Registers.Pointers, 3, 3);
         private static readonly Mutator P6 = R(Registers.Pointers, 6, 3);
         private static readonly Mutator P16 = R(Registers.Pointers, 16, 3);
+
+        private static readonly Mutator M0 = R(Registers.Ms, 0, 2);
+        private static readonly Mutator M2 = R(Registers.Ms, 2, 2);
+
+        private static readonly Mutator I0 = R(Registers.Indices, 0, 2);
+        private static readonly Mutator I2 = R(Registers.Indices, 2, 2);
 
         private static readonly Mutator R0 = R(Registers.DataPointers, 0, 4);
 
@@ -331,6 +344,28 @@ namespace Reko.Arch.Blackfin
                 d.ops.Add(new MemoryOperand(dt)
                 {
                     Base = ptrReg,
+                });
+                return true;
+            };
+        }
+
+        private static Mutator PostModify(PrimitiveType dt)
+        {
+            return (u, d) =>
+            {
+                var ptrReg = Registers.Pointers[bf0_3.Read(u)];
+                var idxReg = Registers.Pointers[bf3_3.Read(u)];
+                bool postInc = true;
+                if (idxReg == ptrReg)
+                {
+                    idxReg = null;
+                    postInc = false;
+                }
+                d.ops.Add(new MemoryOperand(dt)
+                {
+                    Base = ptrReg,
+                    Index = idxReg,
+                    PostIncrement = postInc 
                 });
                 return true;
             };
@@ -493,7 +528,7 @@ namespace Reko.Arch.Blackfin
             {
                 d.ops.Add(new MemoryOperand(dt)
                 {
-                    Base = Registers.Pointers[bitfield.Read(u)],
+                    Base = regs[bitfield.Read(u)],
                     PostDecrement = true
                 });
                 return true;
@@ -591,8 +626,43 @@ namespace Reko.Arch.Blackfin
         static BlackfinDisassembler()
         {
             var invalid = Instr(Mnemonic.invalid, InstrClass.Invalid);
+
+            var loopSetup_lc0 = Nyi("loopsetup_lc0");
+            var loopSetup_lc1 = Nyi("loopsetup_lc1");
+            var loopSetup_lc0_preg = Nyi("loopsetup_lc0_preg");
+            var loopSetup_lc1_preg = Nyi("loopsetup_lc1_preg");
+            var loopSetup_lc0_preg_rsh_1 = Nyi("loopsetup_lc0_preg_rsh_1");
+            var loopSetup_lc1_preg_rsh_1 = Nyi("loopsetup_lc1_preg_rsh_1");
+
+            var decodeC080_op = Mask(13, 1,
+                Mask(16, 2,
+                    Nyi("mul"),
+                    Nyi("madd"),
+                    Nyi("msub"),
+                    invalid));
+            var decodeC083 = Nyi("C083");
+            var decodeC088_op = Nyi("C088_op");
+            var decodeC08B = Nyi("C08B");
+
+            var decodeC288 = Nyi("C288");
+            var decodeC28C = Nyi("C28C");
+
             var instr32 = Mask32(24, 8,
-                Nyi(""),
+                Nyi("  32-bit"),
+                (0xC0, Mask(16, 8,
+                    Nyi("C0..."),
+                    (0x80, decodeC080_op),
+                    (0x81, decodeC080_op),
+                    (0x82, decodeC080_op),
+                    (0x83, decodeC083),
+                    (0x88, decodeC080_op),
+                    (0x89, decodeC080_op),
+                    (0x8A, decodeC080_op),
+                    (0x8B, decodeC08B))),
+                (0xC2, Mask(16, 8,
+                    Nyi("C2..."),
+                    (0x88, decodeC288),
+                    (0x8C, decodeC28C))),
                 (0xC4, Mask(16, 8,
                     invalid,
                     (0x02, Mask(12, 4,
@@ -600,7 +670,7 @@ namespace Reko.Arch.Blackfin
                         (0, Instr(Mnemonic.add3, 
                             R(Registers.RPIB_Lo, 9, 3), 
                             R(Registers.RPIB_Lo, 3, 3), 
-                            R(Registers.RPIB_Lo, 3, 3))))),
+                            R(Registers.RPIB_Lo, 0, 3))))),
                     (0x22, Mask(12, 4,
                         invalid,
                         (4, Instr(Mnemonic.add3, R(Registers.RPI_Hi,9,3), R(Registers.RPIB_Lo,3,3), R(Registers.RPI_Hi,3,3))))))),
@@ -617,6 +687,26 @@ namespace Reko.Arch.Blackfin
                 (0xC8, Cond(16, 8, n => n == 3, 
                     Instr(Mnemonic.MNOP, InstrClass.Padding | InstrClass.Linear),
                     invalid)),
+                (0xE0, Mask(4 + 16, 4,
+                    invalid,
+                    invalid,
+                    invalid,
+                    invalid,
+
+                    invalid,
+                    invalid,
+                    invalid,
+                    invalid,
+
+                    loopSetup_lc0,
+                    loopSetup_lc1,
+                    loopSetup_lc0_preg,
+                    loopSetup_lc1_preg,
+
+                    invalid,
+                    invalid,
+                    loopSetup_lc0_preg_rsh_1,
+                    loopSetup_lc1_preg_rsh_1)),
                 (0xE1, Mask(5 + 16, 2,
                     Instr(Mnemonic.mov, Rlo16, Imm(0, 16, PrimitiveType.Word16)),
                     Instr(Mnemonic.mov_x, Rpib16, Imm(0, 16, PrimitiveType.Word16)),
@@ -723,29 +813,30 @@ namespace Reko.Arch.Blackfin
                         Instr(Mnemonic.iflush, Post0))),
 
                     (0x30, Instr(Mnemonic.mov_cc_eq, D0,Imms(3, 3, PrimitiveType.Word32))),
+                    (0x31, Instr(Mnemonic.mov_cc_eq, D0,Imms(3, 3, PrimitiveType.Word32))),
                     (0x38, Instr(Mnemonic.mov_r_cc, FlagGroup(0, 4))),
-                    (0x48, Instr(Mnemonic.mov, Range0(5, Registers.Pointers), SPpost)),
-                    (0x4C, Instr(Mnemonic.mov, SPpre, Range0(5, Registers.Pointers))),
+                    (0x48, Instr(Mnemonic.mov_post, Range0(5, Registers.Pointers), SPpost)),
+                    (0x4C, Instr(Mnemonic.mov_pre, SPpre, Range0(5, Registers.Pointers))),
 
-                    (0x50, Instr(Mnemonic.mov, Range0(7, Registers.Pointers), SPpost)),
-                    (0x51, Instr(Mnemonic.mov, Range0(7, Registers.Pointers), SPpost)),
-                    (0x52, Instr(Mnemonic.mov, Range0(7, Registers.Pointers), SPpost)),
-                    (0x53, Instr(Mnemonic.mov, Range0(7, Registers.Pointers), SPpost)),
+                    (0x50, Instr(Mnemonic.mov_post, Range0(7, Registers.Pointers), SPpost)),
+                    (0x51, Instr(Mnemonic.mov_post, Range0(7, Registers.Pointers), SPpost)),
+                    (0x52, Instr(Mnemonic.mov_post, Range0(7, Registers.Pointers), SPpost)),
+                    (0x53, Instr(Mnemonic.mov_post, Range0(7, Registers.Pointers), SPpost)),
 
-                    (0x54, Instr(Mnemonic.mov, SPpre, Range0(7, Registers.Pointers))),
-                    (0x55, Instr(Mnemonic.mov, SPpre, Range0(7, Registers.Pointers))),
-                    (0x56, Instr(Mnemonic.mov, SPpre, Range0(7, Registers.Pointers))),
-                    (0x57, Instr(Mnemonic.mov, SPpre, Range0(7, Registers.Pointers))),
+                    (0x54, Instr(Mnemonic.mov_pre, SPpre, Range0(7, Registers.Pointers))),
+                    (0x55, Instr(Mnemonic.mov_pre, SPpre, Range0(7, Registers.Pointers))),
+                    (0x56, Instr(Mnemonic.mov_pre, SPpre, Range0(7, Registers.Pointers))),
+                    (0x57, Instr(Mnemonic.mov_pre, SPpre, Range0(7, Registers.Pointers))),
 
-                    (0x58, Instr(Mnemonic.mov, Range0(7, Registers.Pointers), SPpost)),
-                    (0x59, Instr(Mnemonic.mov, Range0(7, Registers.Pointers), SPpost)),
-                    (0x5A, Instr(Mnemonic.mov, Range0(7, Registers.Pointers), SPpost)),
-                    (0x5B, Instr(Mnemonic.mov, Range0(7, Registers.Pointers), SPpost)),
+                    (0x58, Instr(Mnemonic.mov_post, Range0(7, Registers.Pointers), SPpost)),
+                    (0x59, Instr(Mnemonic.mov_post, Range0(7, Registers.Pointers), SPpost)),
+                    (0x5A, Instr(Mnemonic.mov_post, Range0(7, Registers.Pointers), SPpost)),
+                    (0x5B, Instr(Mnemonic.mov_post, Range0(7, Registers.Pointers), SPpost)),
 
-                    (0x5C, Instr(Mnemonic.mov, SPpre, Range0(7, Registers.Pointers))),
-                    (0x5D, Instr(Mnemonic.mov, SPpre, Range0(7, Registers.Pointers))),
-                    (0x5E, Instr(Mnemonic.mov, SPpre, Range0(7, Registers.Pointers))),
-                    (0x5F, Instr(Mnemonic.mov, SPpre, Range0(7, Registers.Pointers))),
+                    (0x5C, Instr(Mnemonic.mov_pre, SPpre, Range0(7, Registers.Pointers))),
+                    (0x5D, Instr(Mnemonic.mov_pre, SPpre, Range0(7, Registers.Pointers))),
+                    (0x5E, Instr(Mnemonic.mov_pre, SPpre, Range0(7, Registers.Pointers))),
+                    (0x5F, Instr(Mnemonic.mov_pre, SPpre, Range0(7, Registers.Pointers))),
 
                     (0x60, Instr(Mnemonic.if_ncc_mov, D3, D0)),
                     (0x61, Instr(Mnemonic.if_ncc_mov, D3, D0)),
@@ -951,6 +1042,7 @@ namespace Reko.Arch.Blackfin
 
                     (0b0101_10, Instr(Mnemonic.add_sh1, P0,P0,P3)),
                     (0b0101_11, Instr(Mnemonic.add_sh2, P0,P0,P3)),
+                    (0b011110, invalid),
 
                     (0b100100, Instr(Mnemonic.mov_cc_bittest, D0,Imm(3, 5, PrimitiveType.Byte))),
                     (0b100101, Instr(Mnemonic.mov_cc_bittest, D0,Imm(3, 5, PrimitiveType.Byte))),
@@ -1003,10 +1095,18 @@ namespace Reko.Arch.Blackfin
                     Instr(Mnemonic.add, D0,Imms(3,7,PrimitiveType.Word32)),
                     Instr(Mnemonic.mov, P0,Imms(3,7,PrimitiveType.Word32)),
                     Instr(Mnemonic.add, P0,Imms(3,7,PrimitiveType.Word32))),
-                Nyi("0b0111............"),
+                invalid, // Yes, all 0x7... opcodes are invalid
 
                 // 8xxx
-                Nyi("0b1000............"),
+                Mask(9, 3, "0b1000............",
+                    Instr(Mnemonic.mov, D6, PostModify(PrimitiveType.Word32)),
+                    Nyi("82"),
+                    Nyi("84"),
+                    Nyi("86"),
+                    Nyi("88"),
+                    Nyi("8A"),
+                    Nyi("8C"),
+                    Nyi("8E")),
                 // 9xxx
                 Mask(6, 6,
                     Nyi("0b1001............"),
@@ -1058,19 +1158,34 @@ namespace Reko.Arch.Blackfin
                         Instr(Mnemonic.mov, D0,PostInc(Registers.Indices, 3, 2, PrimitiveType.Word32)),
                         Instr(Mnemonic.mov, R(Registers.RPIB_Lo,0,3),PostInc(Registers.Indices, 3, 2, PrimitiveType.Word16)))),
                     (0x31, Mask(5, 1,
-                        Instr(Mnemonic.mov, R(Registers.RPI_Hi,0,3),PostInc(Registers.Indices, 3, 2, PrimitiveType.Word16)),
+                        Instr(Mnemonic.mov, D0_hi,PostInc(Registers.Indices, 3, 2, PrimitiveType.Word16)),
                         invalid)),
                     (0x32, Mask(5, 1,
                         Instr(Mnemonic.mov, D0,PostDec(Registers.Indices, 3, 2, PrimitiveType.Word32)),
                         Instr(Mnemonic.mov, R(Registers.RPIB_Lo,0,3),PostDec(Registers.Indices, 3, 2,PrimitiveType.Word16)))),
                     (0x33, Mask(5, 1,
-                        Instr(Mnemonic.mov, R(Registers.RPI_Hi,0,3),PostDec(Registers.Indices, 3, 2, PrimitiveType.Word16)),
+                        Instr(Mnemonic.mov, D0_hi,PostDec(Registers.Indices, 3, 2, PrimitiveType.Word16)),
                         invalid)),
-                    (0x38, Mask(5, 1,
+                    (0x34, Mask(5, 1,
                         Instr(Mnemonic.mov, D0, IdxInd(3, PrimitiveType.Word32)),
-                        Instr(Mnemonic.mov, R(Registers.RPIB_Lo,0,3),IdxInd(3, PrimitiveType.Word16)))),
+                        Instr(Mnemonic.mov, R(Registers.RPIB_Lo, 0, 3), IdxInd(3, PrimitiveType.Word16)))),
+                    (0x35, Mask(5, 1,
+                        Instr(Mnemonic.mov, D0_hi, IdxInd(3, PrimitiveType.Word16)),
+                        Nyi("0x34"))),
+                    (0x36, Mask(5, 1,
+                        Instr(Mnemonic.mov, D0, PostModify(PrimitiveType.Word32)),
+                        Nyi("0x36"))),
+                    (0x38, Mask(5, 1,
+                        Instr(Mnemonic.mov, D0_hi, IdxInd(3, PrimitiveType.Word16)),
+                        invalid)),
+                    (0x39, Mask(5, 1,
+                        Instr(Mnemonic.mov, PostInc(Registers.Indices, 3, 2, PrimitiveType.Word16), D0_hi),
+                        Instr(Mnemonic.add, M2, I0))),
+                    (0x3C, Mask(5, 1,
+                        Instr(Mnemonic.mov, IdxInd(3, PrimitiveType.Word32), D0),
+                        Instr(Mnemonic.mov, IdxInd(3, PrimitiveType.Word16), R(Registers.RPIB_Lo, 0, 3)))),
                     (0x3D, Mask(5, 1,
-                        Instr(Mnemonic.mov, PostInc(Registers.Indices, 3, 2, PrimitiveType.Word16), R(Registers.RPI_Hi,0,3)),
+                        Instr(Mnemonic.mov, PostInc(Registers.Indices, 3, 2, PrimitiveType.Word16), D0_hi),
                         Instr(Mnemonic.add, R(Registers.Indices, 0, 2), R(Registers.Ms, 2, 2))))),
                 // A...
                 Mask(10, 2,

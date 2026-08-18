@@ -18,13 +18,8 @@
  */
 #endregion
 
-using Reko.Core;
 using Reko.Core.Machine;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reko.Arch.Blackfin
 {
@@ -97,7 +92,7 @@ namespace Reko.Arch.Blackfin
             { Mnemonic.xor3, (null, " ^ ", null) },
             { Mnemonic.asr, (null, " >>>= ", null) },       // SIC: this is opposite to the Java syntax.
             { Mnemonic.asr3, (null, " >>> ", null) },
-            { Mnemonic.DIVQ, ("DIVQ (", null, ")") },
+            { Mnemonic.DIVQ, ("DIVQ (", null, " )") },
             { Mnemonic.lsl, (null, " <<= ", null) },
             { Mnemonic.lsl3, (null, " << ", null) },
             { Mnemonic.lsr, (null, " >>= ", null) },
@@ -119,6 +114,8 @@ namespace Reko.Arch.Blackfin
             { Mnemonic.mov_cc_ult, ("CC = ", " < ", null) },
             { Mnemonic.mov_cc_bittest, ( "CC = BITTEST(", ",", ")" )},
             { Mnemonic.mov_cc_n_bittest, ( "CC = !BITTEST(", ",", ")" )},
+            { Mnemonic.mov_post, (null, " = ", null) },
+            { Mnemonic.mov_pre, (null, " = ", null) },
             { Mnemonic.mov_r_cc, (null, " = ", "CC") },
             { Mnemonic.mov_xb, (null, " = ", ".B (X)") },
             { Mnemonic.mov_xl, (null, " = ", ".L (X)") },
@@ -132,6 +129,8 @@ namespace Reko.Arch.Blackfin
             { Mnemonic.not, (null, " = ~", null) },
             { Mnemonic.JUMP_S, ("JUMP.S", null, null) },
             { Mnemonic.JUMP_L, ("JUMP.L", null, null) },
+            { Mnemonic.shift1add, (null, " + (", " << 1)") },
+            { Mnemonic.shift2add, (null, " + (", " << 2)") },
             { Mnemonic.sub, (null, " -= ", null) },
 
         };

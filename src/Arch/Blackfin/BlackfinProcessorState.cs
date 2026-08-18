@@ -52,7 +52,7 @@ namespace Reko.Arch.Blackfin
 
         public override CallSite OnBeforeCall(Identifier stackReg, int returnAddressSize)
         {
-            throw new System.NotImplementedException();
+            return new CallSite(returnAddressSize);
         }
 
         public override void OnProcedureEntered(Address addr)

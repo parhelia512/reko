@@ -55,7 +55,7 @@ namespace Reko.Arch.Blackfin
             renderer.WriteString(Base!.Name);
             if (Index is not null)
             {
-                renderer.WriteString(" + ");
+                renderer.WriteString(PostIncrement ? " ++ " : " + ");
                 renderer.WriteString(Index.Name);
             }
             else if (Offset > 0)
@@ -66,7 +66,7 @@ namespace Reko.Arch.Blackfin
             {
                 renderer.WriteString($" - 0x{-Offset:X4}");
             }
-            if (PostIncrement)
+            if (PostIncrement && Index is null)
             {
                 renderer.WriteString("++");
             }

@@ -27,92 +27,90 @@ using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
-namespace Reko.Arch.Blackfin
+namespace Reko.Arch.Blackfin;
+
+public class BlackfinArchitecture : ProcessorArchitecture
 {
-    public class BlackfinArchitecture : ProcessorArchitecture
+    public BlackfinArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
+        : base(services, archId, options, Registers.All)
     {
-        public BlackfinArchitecture(IServiceProvider services, string archId, Dictionary<string, object> options)
-            : base(services, archId, options, Registers.All)
-        {
-            Endianness = EndianServices.Little;
-            PointerType = PrimitiveType.Ptr32;
-            FramePointerType = PrimitiveType.Ptr32;
-            WordWidth = PrimitiveType.Word16;
-            StackRegister = Registers.SP;
-            InstructionBitSize = 16;
-        }
+        Endianness = EndianServices.Little;
+        PointerType = PrimitiveType.Ptr32;
+        FramePointerType = PrimitiveType.Ptr32;
+        WordWidth = PrimitiveType.Word16;
+        StackRegister = Registers.SP;
+        InstructionBitSize = 16;
+    }
 
-        public override IEnumerable<MachineInstruction> CreateDisassembler(EndianImageReader imageReader)
-        {
-            return new BlackfinDisassembler(this, imageReader);
-        }
+    public override IEnumerable<MachineInstruction> CreateDisassembler(EndianImageReader imageReader)
+    {
+        return new BlackfinDisassembler(this, imageReader);
+    }
 
-        public override IEqualityComparer<MachineInstruction> CreateInstructionComparer(Normalize norm)
-        {
-            throw new NotImplementedException();
-        }
+    public override IEqualityComparer<MachineInstruction> CreateInstructionComparer(Normalize norm)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override IEnumerable<Address> CreatePointerScanner(SegmentMap map, EndianImageReader rdr, IEnumerable<Address> knownAddresses, PointerScannerFlags flags)
-        {
-            throw new NotImplementedException();
-        }
+    public override IEnumerable<Address> CreatePointerScanner(SegmentMap map, EndianImageReader rdr, IEnumerable<Address> knownAddresses, PointerScannerFlags flags)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override ProcessorState CreateProcessorState()
-        {
-            return new BlackfinProcessorState(this);
-        }
+    public override ProcessorState CreateProcessorState()
+    {
+        return new BlackfinProcessorState(this);
+    }
 
-        public override IEnumerable<RtlInstructionCluster> CreateRewriter(EndianImageReader rdr, ProcessorState state, IStorageBinder binder, IRewriterHost host)
-        {
-            return new BlackfinRewriter(this, rdr, state, binder, host);
-        }
+    public override IEnumerable<RtlInstructionCluster> CreateRewriter(EndianImageReader rdr, ProcessorState state, IStorageBinder binder, IRewriterHost host)
+    {
+        return new BlackfinRewriter(this, rdr, state, binder, host);
+    }
 
-        public override FlagGroupStorage GetFlagGroup(RegisterStorage reg, ulong grf)
+    public override FlagGroupStorage GetFlagGroup(RegisterStorage reg, ulong grf)
+    {
+        if (reg == Registers.ASTAT)
         {
-            if (reg == Registers.ASTAT)
-            {
-                return Registers.AStatFlags.TryGetValue(grf, out FlagGroupStorage? flags)
-                    ? flags
-                    : null!;
-            }
-            throw new NotImplementedException();
+            return Registers.AStatFlags.TryGetValue(grf, out FlagGroupStorage? flags)
+                ? flags
+                : null!;
         }
+        throw new NotImplementedException();
+    }
 
-        public override FlagGroupStorage GetFlagGroup(string name)
-        {
-            throw new NotImplementedException();
-        }
+    public override FlagGroupStorage GetFlagGroup(string name)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override SortedList<string, int> GetMnemonicNames()
-        {
-            throw new NotImplementedException();
-        }
+    public override SortedList<string, int> GetMnemonicNames()
+    {
+        throw new NotImplementedException();
+    }
 
-        public override int? GetMnemonicNumber(string name)
-        {
-            throw new NotImplementedException();
-        }
+    public override int? GetMnemonicNumber(string name)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
-        {
-            throw new NotImplementedException();
-        }
+    public override string GrfToString(RegisterStorage flagRegister, string prefix, ulong grf)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override Address MakeAddressFromConstant(Constant c, bool codeAlign)
-        {
-            throw new NotImplementedException();
-        }
+    public override Address MakeAddressFromConstant(Constant c, bool codeAlign)
+    {
+        return Address.Ptr32(c.ToUInt32());
+    }
 
-        public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
-        {
-            throw new NotImplementedException();
-        }
+    public override Address? ReadCodeAddress(int size, EndianImageReader rdr, ProcessorState? state)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)
-        {
-            return Address.TryParse32(txtAddr, out addr);
-        }
+    public override bool TryParseAddress(string? txtAddr, [MaybeNullWhen(false)] out Address addr)
+    {
+        return Address.TryParse32(txtAddr, out addr);
     }
 }

@@ -61,6 +61,18 @@ namespace Reko.UnitTests.Arch.Blackfin
         }
 
         [Test]
+        public void BlackfinRw_add_sh2()
+        {
+            Given_HexString("4841");
+            AssertCode(     // R0 = R0 + R1 << 2;
+                "0|L--|00100000(2): 4 instructions",
+                "1|L--|v5 = R0 + R1",
+                "2|L--|R0 = v5 << 2<8>",
+                "3|L--|NZV = cond(R0)",
+                "4|L--|VS = 0<32>");
+        }
+
+        [Test]
         public void BlackfinRw_and3()
         {
             Given_HexString("0854");
@@ -119,6 +131,19 @@ namespace Reko.UnitTests.Arch.Blackfin
         }
 
         [Test]
+        public void BlackfinRw_bittgl()
+        {
+            Given_HexString("004B");
+            AssertCode(     // BITTGL(R0,00);
+                "0|L--|00100000(2): 5 instructions",
+                "1|L--|R0 = __invert_bit<word32,byte>(R0, 0<8>)",
+                "2|L--|AN = cond(R0)",
+                "3|L--|AZ = 0<32>",
+                "4|L--|V = 0<32>",
+                "5|L--|AC0 = 0<32>");
+        }
+
+        [Test]
         public void BlackfinRw_CALL()
         {
             Given_HexString("FFE34FFF");
@@ -136,6 +161,51 @@ namespace Reko.UnitTests.Arch.Blackfin
                 "1|L--|__core_synchronize()");
         }
 
+        [Test]
+        public void BlackfinRw_divq()
+        {
+            Given_HexString("0842");
+            AssertCode(     // DIVQ (R0,R1);
+                "0|L--|00100000(2): 1 instructions",
+                "1|L--|AQ = Test(NE,__divq_step(AQ, R0, R1, out R0))");
+        }
+
+        [Test]
+        public void BlackfinRw_if_cc_jump_bp()
+        {
+            Given_HexString("0A1C");
+            AssertCode(     // IF CC JUMP 07F61634 (BP);
+                "0|L--|00100000(2): 1 instructions",
+                "1|T--|if (Test(NE,CC)) branch 00100014");
+        }
+
+        [Test]
+        public void BlackfinRw_if_ncc_jump()
+        {
+            Given_HexString("0210");
+            AssertCode(     // IF !CC JUMP 07F64D0E;
+                "0|L--|00100000(2): 1 instructions",
+                "1|T--|if (Test(EQ,CC)) branch 00100004");
+        }
+
+        [Test]
+        public void BlackfinRw_if_ncc_jump_bp()
+        {
+            Given_HexString("3114");
+            AssertCode(     // IF !CC JUMP 07F66000 (BP);
+                "0|L--|00100000(2): 1 instructions",
+                "1|T--|if (Test(EQ,CC)) branch 00100062");
+        }
+
+        [Test]
+        public void BlackfinRw_if_ncc_mov()
+        {
+            Given_HexString("9007");
+            AssertCode(     // IF !CC P2 = R0;
+                "0|L--|00100000(2): 2 instructions",
+                "1|T--|if (Test(NE,CC)) branch 00100002",
+                "2|L--|P2 = R0");
+        }
 
         [Test]
         public void BlackfinRw_JUMP()
@@ -151,10 +221,23 @@ namespace Reko.UnitTests.Arch.Blackfin
         {
             Given_HexString("1805");
             AssertCode( // (FP:P0) = [SP++];
-                "0|L--|00100000(2): 3 instructions",
-                "1|L--|v4 = SP",
+                "0|L--|00100000(2): 16 instructions",
+                "1|L--|FP = Mem0[SP:word32]",
                 "2|L--|SP = SP + 4<i32>",
-                "3|L--|FP_SP_P5_P4_P3_P2_P1_P0 = Mem0[v4:word32]");
+                "3|L--|SP = Mem0[SP:word32]",
+                "4|L--|SP = SP + 4<i32>",
+                "5|L--|P5 = Mem0[SP:word32]",
+                "6|L--|SP = SP + 4<i32>",
+                "7|L--|P4 = Mem0[SP:word32]",
+                "8|L--|SP = SP + 4<i32>",
+                "9|L--|P3 = Mem0[SP:word32]",
+                "10|L--|SP = SP + 4<i32>",
+                "11|L--|P2 = Mem0[SP:word32]",
+                "12|L--|SP = SP + 4<i32>",
+                "13|L--|P1 = Mem0[SP:word32]",
+                "14|L--|SP = SP + 4<i32>",
+                "15|L--|P0 = Mem0[SP:word32]",
+                "16|L--|SP = SP + 4<i32>");
         }
 
         [Test]
@@ -188,12 +271,59 @@ namespace Reko.UnitTests.Arch.Blackfin
         }
 
         [Test]
+        public void BlackfinRw_mov_cc_bittest()
+        {
+            Given_HexString("0049");
+            AssertCode(     // CC = BITTEST(R0,00);
+                "0|L--|00100000(2): 2 instructions",
+                "1|L--|CC = cond(__bit<word32,byte>(R0, 0<8>))",
+                "2|L--|NZVC = cond(__bit<word32,byte>(R0, 0<8>))");
+        }
+
+        [Test]
+        public void BlackfinRw_mov_cc_ult()
+        {
+            Given_HexString("8A09");
+            AssertCode(     // CC = R1 < R2;
+                "0|L--|00100000(2): 2 instructions",
+                "1|L--|CC = cond(R1 <u R2)",
+                "2|L--|NZVC = cond(R1 <u R2)");
+        }
+
+        [Test]
         public void BlackfinRw_mov_x()
         {
             Given_HexString("20E1E803");
             AssertCode(
                 "0|L--|00100000(4): 1 instructions",
                 "1|L--|R0 = CONVERT(0x3E8<16>, int16, int32)");
+        }
+
+        [Test]
+        public void BlackfinRw_mov_xl()
+        {
+            Given_HexString("AD42");
+            AssertCode(     // R5 = R5.L (X);
+                "0|L--|00100000(2): 1 instructions",
+                "1|L--|R5 = CONVERT(SLICE(R5, word16, 0), word16, int32)");
+        }
+
+        [Test]
+        public void BlackfinRw_neg_cc()
+        {
+            Given_HexString("1802");
+            AssertCode(     // CC = !CC;
+                "0|L--|00100000(2): 1 instructions",
+                "1|L--|CC = ~CC");
+        }
+
+        [Test]
+        public void BlackfinRw_RAISE()
+        {
+            Given_HexString("9F00");
+            AssertCode(     // RAISE 0F;
+                "0|L--|00100000(2): 1 instructions",
+                "1|L--|__raise_interrupt(0xF<8>)");
         }
 
         [Test]
@@ -204,7 +334,7 @@ namespace Reko.UnitTests.Arch.Blackfin
                 "0|L--|00100000(2): 3 instructions",
                 "1|L--|v5 = P0",
                 "2|L--|P0 = P0 + 1<i32>",
-                "3|L--|Mem0[v5:byte] = R5");
+                "3|L--|Mem0[v5:byte] = SLICE(R5, byte, 0)");
         }
 
         [Test]
@@ -234,6 +364,15 @@ namespace Reko.UnitTests.Arch.Blackfin
             AssertCode(     // EXCPT 01;
                 "0|L--|00100000(2): 1 instructions",
                 "1|L--|__force_exception(1<8>)");
+        }
+
+        [Test]
+        public void BlackfinRw_if_cc_jump()
+        {
+            Given_HexString("5B18");
+            AssertCode(     // IF CC JUMP 07F5F36A;
+                "0|L--|00100000(2): 1 instructions",
+                "1|T--|if (Test(NE,CC)) branch 001000B6");
         }
 
         [Test]
@@ -302,8 +441,8 @@ namespace Reko.UnitTests.Arch.Blackfin
             Given_HexString("810C");
             AssertCode(     // CC = R1 < 00000001;
                 "0|L--|00100000(2): 2 instructions",
-                "1|L--|CC = R1 < 1<32>",
-                "2|L--|NZVC = R1 < 1<32>");
+                "1|L--|CC = cond(R1 < 1<32>)",
+                "2|L--|NZVC = cond(R1 < 1<32>)");
         }
 
         [Test]
@@ -312,8 +451,8 @@ namespace Reko.UnitTests.Arch.Blackfin
             Given_HexString("010A");
             AssertCode(     // CC = R0 <= R1;
                 "0|L--|00100000(2): 2 instructions",
-                "1|L--|CC = R0 <=u R1",
-                "2|L--|NZVC = R0 <=u R1");
+                "1|L--|CC = cond(R0 <=u R1)",
+                "2|L--|NZVC = cond(R0 <=u R1)");
         }
 
         [Test]
@@ -336,33 +475,33 @@ namespace Reko.UnitTests.Arch.Blackfin
         }
 
         [Test]
-        [Ignore("Need an actual binary")]
         public void BlackfinRw_mov_cc_eq()
         {
-            Given_HexString("010C");
-            AssertCode(
-                "0|L--|00100000(2): 1 instructions",
-                "1|L--|@@@");
+            Given_HexString("2C08");
+            AssertCode(     // CC = R5 == R4;
+                "0|L--|00100000(2): 2 instructions",
+                "1|L--|CC = cond(R5 == R4)",
+                "2|L--|NZVC = cond(R5 == R4)");
         }
 
         [Test]
-        [Ignore("Need an actual binary")]
         public void BlackfinRw_mov_cc_n_bittest()
         {
-            Given_HexString("3948");
-            AssertCode(
-                "0|L--|00100000(2): 1 instructions",
-                "1|L--|@@@");
+            Given_HexString("1048");
+            AssertCode(     // CC = !BITTEST(R0,02);
+                "0|L--|00100000(2): 2 instructions",
+                "1|L--|CC = cond(!__bit<word32,byte>(R0, 2<8>))",
+                "2|L--|NZVC = cond(!__bit<word32,byte>(R0, 2<8>))");
         }
 
         [Test]
-        [Ignore("Need an actual binary")]
         public void BlackfinRw_mov_cc_le()
         {
             Given_HexString("020D");
             AssertCode(
-                "0|L--|00100000(2): 1 instructions",
-                "1|L--|@@@");
+                "0|L--|00100000(2): 2 instructions",
+                "1|L--|CC = cond(R2 <= 2<32>)",
+                "2|L--|NZVC = cond(R2 <= 2<32>)");
         }
 
         [Test]
@@ -412,6 +551,38 @@ namespace Reko.UnitTests.Arch.Blackfin
                 "1|L--|nop");
         }
 
+        [Test]
+        public void BlackfinRw_not()
+        {
+            Given_HexString("C043");
+            AssertCode(     // R0 = ~R0;
+                "0|L--|00100000(2): 3 instructions",
+                "1|L--|R0 = ~R0",
+                "2|L--|NZV = cond(R0)",
+                "3|L--|AC0 = R0 == 0<32>");
+        }
+
+        [Test]
+        public void BlackfinRw_or3()
+        {
+            Given_HexString("0856");
+            AssertCode(     // R0 = R0 | R1;
+                "0|L--|00100000(2): 4 instructions",
+                "1|L--|R0 = R0 | R1",
+                "2|L--|NZ = cond(R0)",
+                "3|L--|V = 0<32>",
+                "4|L--|AC0 = 0<32>");
+        }
+
+        [Test]
+        public void BlackfinRw_RTI()
+        {
+            Given_HexString("1100");
+            AssertCode(     // RTI;
+                "0|R--|00100000(2): 2 instructions",
+                "1|L--|__return_from_interrupt()",
+                "2|R--|return (0,0)");
+        }
 
         [Test]
         public void BlackfinRw_RTN()
@@ -432,12 +603,66 @@ namespace Reko.UnitTests.Arch.Blackfin
         }
 
         [Test]
+        public void BlackfinRw_RTX()
+        {
+            Given_HexString("1200");
+            AssertCode(     // RTX;
+                "0|R--|00100000(2): 2 instructions",
+                "1|L--|__return_from_exception()",
+                "2|R--|return (0,0)");
+        }
+
+
+        [Test]
+        public void BlackfinRw_shift1add()
+        {
+            Given_HexString("955C");
+            AssertCode(     // shift1add P2,P5,P2;
+                "0|L--|00100000(2): 4 instructions",
+                "1|L--|v5 = P2 << 1<8>",
+                "2|L--|P2 = P5 + v5",
+                "3|L--|NZV = cond(P2)",
+                "4|L--|VS = 0<32>");
+        }
+
+        [Test]
+        public void BlackfinRw_shift2add()
+        {
+            Given_HexString("955E");
+            AssertCode(     // shift2add P2,P5,P2;
+                "0|L--|00100000(2): 4 instructions",
+                "1|L--|v5 = P2 << 2<8>",
+                "2|L--|P2 = P5 + v5",
+                "3|L--|NZV = cond(P2)",
+                "4|L--|VS = 0<32>");
+        }
+
+        [Test]
         public void BlackfinRw_SSYNC()
         {
             Given_HexString("2400");
             AssertCode(     // SSYNC;
                 "0|L--|00100000(2): 1 instructions",
                 "1|L--|__system_synchronize()");
+        }
+
+        [Test]
+        public void BlackfinRw_STI()
+        {
+            Given_HexString("4200");
+            AssertCode(     // STI R2;
+                "0|L--|00100000(2): 1 instructions",
+                "1|L--|__enable_interrupts(R2)");
+        }
+
+        [Test]
+        public void BlackfinRw_sub()
+        {
+            Given_HexString("1644");
+            AssertCode(     // SP -= P2;
+                "0|L--|00100000(2): 2 instructions",
+                "1|L--|SP = SP - P2",
+                "2|L--|NZVC = cond(SP)");
         }
 
         [Test]
