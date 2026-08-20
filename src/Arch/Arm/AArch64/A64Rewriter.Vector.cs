@@ -448,7 +448,7 @@ namespace Reko.Arch.Arm.AArch64
             else
             {
                 var dtElem = PrimitiveType.CreateWord(Bitsize(vec.ElementType));
-                int offset = 0;
+                long offset = 0;
                 foreach (var reg in vec.GetRegisters())
                 {
                     var vReg = binder.EnsureRegister(reg);
@@ -476,8 +476,8 @@ namespace Reko.Arch.Arm.AArch64
         {
             var src = RewriteOp(1);
             var dst = RewriteOp(0);
-            int srcBitSize = src.DataType.BitSize;
-            int dstBitSize = dst.DataType.BitSize;
+            long srcBitSize = src.DataType.BitSize;
+            long dstBitSize = dst.DataType.BitSize;
             var realType = PrimitiveType.Create(Domain.Real, dstBitSize);
             if (instr.Operands.Length == 3)
             {

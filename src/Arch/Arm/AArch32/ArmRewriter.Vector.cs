@@ -88,7 +88,7 @@ namespace Reko.Arch.Arm.AArch32
             }
             else
             {
-                var cElems = dst.DataType.BitSize / dstType.BitSize;
+                var cElems = (int) (dst.DataType.BitSize / dstType.BitSize);
                 var aSrc = new ArrayType(srcType, cElems);
                 var aDst = new ArrayType(dstType, cElems);
                 var tmpSrc = binder.CreateTemporary(aSrc);
@@ -129,7 +129,7 @@ namespace Reko.Arch.Arm.AArch32
         private void RewriteVldmia()
         {
             var rSrc = this.Operand(0, PrimitiveType.Word32, true);
-            var offset = 0;
+            long offset = 0;
             foreach (var r in ((MultiRegisterOperand)instr.Operands[1]).GetRegisters())
             {
                 var dst = Reg(r);
@@ -250,7 +250,7 @@ namespace Reko.Arch.Arm.AArch32
                 var srcType = src.DataType;
                 var srcElemSize = Arm32Architecture.VectorElementDataType(instr.vector_data);
                 var celemSrc = dstType.BitSize / srcElemSize.BitSize;
-                var arrDst = new ArrayType(dstType, celemSrc);
+                var arrDst = new ArrayType(dstType, (int)celemSrc);
 
                 if (instr.Operands[1] is Constant imm)
                 {
@@ -409,7 +409,7 @@ namespace Reko.Arch.Arm.AArch32
             var src2 = Operand(2);
             var dst = Operand(0);
             var elemType = Arm32Architecture.VectorElementDataType(instr.vector_data);
-            var celem = src1.DataType.BitSize / elemType.BitSize;
+            var celem = (int)(src1.DataType.BitSize / elemType.BitSize);
             if (dst.DataType.BitSize == src1.DataType.BitSize)
             {
                 var intrinsic = shiftIntrinsic.MakeInstance(
@@ -430,7 +430,7 @@ namespace Reko.Arch.Arm.AArch32
         {
             var rSrc = this.Operand(0, PrimitiveType.Word32, true);
             var regs = ((MultiRegisterOperand)instr.Operands[1]).GetRegisters().ToArray();
-            int totalRegsize = regs.Length * regs[0].DataType.Size;
+            int totalRegsize = (int)(regs.Length * regs[0].DataType.Size);
             int offset = add ? 0 : -totalRegsize;
             foreach (var r in regs)
             {
@@ -440,7 +440,7 @@ namespace Reko.Arch.Arm.AArch32
                     ? m.IAddS(rSrc, offset)
                     : rSrc;
                 m.Assign(m.Mem(r.DataType, ea), dst);
-                offset += r.DataType.Size;
+                offset += (int)r.DataType.Size;
             }
             if (instr.Writeback)
             {
@@ -487,7 +487,7 @@ namespace Reko.Arch.Arm.AArch32
             var dstType = dst.DataType;
             var srcType = src.DataType;
             var celem = dstType.BitSize / dtElem.BitSize;
-            var arrType = new ArrayType(srcType, celem);
+            var arrType = new ArrayType(srcType, (int)celem);
             m.Assign(dst, m.Fn(vdup_intrinsic.MakeInstance(dtElem, arrType), src));
         }
 
@@ -527,7 +527,7 @@ namespace Reko.Arch.Arm.AArch32
             var srcType = src1.DataType;
             var srcElemSize = Arm32Architecture.VectorElementDataType(elemType);
             var celemSrc = srcType.BitSize / srcElemSize.BitSize;
-            var arrSrc = new ArrayType(srcElemSize, celemSrc);
+            var arrSrc = new ArrayType(srcElemSize, (int)celemSrc);
             intrinsic = intrinsic.MakeInstance(arrSrc);
             m.Assign(dst, m.Fn(intrinsic, src1));
         }
@@ -577,7 +577,7 @@ namespace Reko.Arch.Arm.AArch32
             var srcType = src1.DataType;
             //$BUG: some instructions are returned with srcElemnSize == 0!
             var celemSrc = srcType.BitSize / (srcElemType.BitSize != 0 ? srcElemType.BitSize : 8);
-            var arrSrc = new ArrayType(srcElemType, celemSrc);
+            var arrSrc = new ArrayType(srcElemType, (int)celemSrc);
             IntrinsicProcedure intrinsicInstance;
             if (srcElemType == dstElemType)
             {
@@ -586,7 +586,7 @@ namespace Reko.Arch.Arm.AArch32
             else
             {
                 var celemDst = dst.DataType.BitSize / (dstElemType.BitSize);
-                var arrDst = new ArrayType(dstElemType, celemDst);
+                var arrDst = new ArrayType(dstElemType, (int)celemDst);
                 intrinsicInstance = intrinsic.MakeInstance(arrSrc, arrDst);
             }
             m.Assign(dst, m.Fn(intrinsicInstance, src1, src2));
@@ -617,7 +617,7 @@ namespace Reko.Arch.Arm.AArch32
             var srcType = src.DataType;
             //$BUG: some instructions are returned with srcElemnSize == 0!
             var celemSrc = srcType.BitSize / (srcElemType.BitSize != 0 ? srcElemType.BitSize : 8);
-            var arrSrc = new ArrayType(srcElemType, celemSrc);
+            var arrSrc = new ArrayType(srcElemType, (int)celemSrc);
             IntrinsicProcedure intrinsicInstance;
             if (srcElemType == dstElemType)
             {
@@ -626,7 +626,7 @@ namespace Reko.Arch.Arm.AArch32
             else
             {
                 var celemDst = dst.DataType.BitSize / (dstElemType.BitSize);
-                var arrDst = new ArrayType(dstElemType, celemDst);
+                var arrDst = new ArrayType(dstElemType, (int)celemDst);
                 intrinsicInstance = intrinsic.MakeInstance(arrSrc, arrDst);
             }
             m.Assign(dst, m.Fn(intrinsicInstance, src));

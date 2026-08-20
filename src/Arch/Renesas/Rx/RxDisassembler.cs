@@ -411,7 +411,7 @@ namespace Reko.Arch.Renesas.Rx
             var iReg = bf4_4.Read(uInstr);
             var reg = Registers.GpRegisters[iReg];
             Debug.Assert(dasm.dataWidth is not null);
-            var mem = new MemoryOperand(dasm.dataWidth, reg, dasm.dataWidth.Size * (sbyte)b);
+            var mem = new MemoryOperand(dasm.dataWidth, reg, (int)dasm.dataWidth.Size * (sbyte)b);
             dasm.ops.Add(mem);
             return true;
         }

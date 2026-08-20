@@ -282,7 +282,7 @@ public class M88kDisassembler : DisassemblerBase<M88kInstruction, Mnemonic>
             var b = Registers.GpRegisters[breg];
             var i = Registers.GpRegisters[ireg];
             int scale = Bits.IsBitSet(u, 9)
-                ? dt.Size
+                ? (int) dt.Size
                 : 0;
             d.userSpace = Bits.IsBitSet(u, 8);
             if (d.userSpace && disallowUserspace)

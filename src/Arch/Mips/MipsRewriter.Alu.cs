@@ -316,7 +316,7 @@ namespace Reko.Arch.Mips
         {
             var opDstFloat = RewriteOperand(instr.Operands[0]);
             var opSrcMem = RewriteOperand(instr.Operands[1]);
-            int bitDiff = opDstFloat.DataType.BitSize - opSrcMem.DataType.BitSize;
+            long bitDiff = opDstFloat.DataType.BitSize - opSrcMem.DataType.BitSize;
             if (bitDiff > 0)
             {
                 var tmpLo = binder.CreateTemporary(opSrcMem.DataType);

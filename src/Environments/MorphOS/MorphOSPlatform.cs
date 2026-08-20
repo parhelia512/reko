@@ -31,7 +31,7 @@ namespace Reko.Environments.MorphOS
         public MorphOSPlatform(IServiceProvider services, IProcessorArchitecture arch, string platformId) 
             : base(services, arch, platformId)
         {
-            this.StructureMemberAlignment = arch.WordWidth.Size;
+            this.StructureMemberAlignment = (int) arch.WordWidth.Size;
         }
 
         public override string DefaultCallingConvention => "";

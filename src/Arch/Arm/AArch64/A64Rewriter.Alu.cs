@@ -115,7 +115,7 @@ namespace Reko.Arch.Arm.AArch64
             var right = RewriteOp(instr.Operands[2], true);
 
             var toBitSize = left.DataType.BitSize;
-            right = MaybeExtendExpression(right, toBitSize);
+            right = MaybeExtendExpression(right, (int)toBitSize);
             m.Assign(dst, fn(left, right));
             setFlags?.Invoke(m.Cond(Registers.pstate.DataType, dst));
         }
@@ -127,7 +127,7 @@ namespace Reko.Arch.Arm.AArch64
             var right = RewriteOp(instr.Operands[2], true);
 
             var toBitSize = left.DataType.BitSize;
-            right = MaybeExtendExpression(right, toBitSize);
+            right = MaybeExtendExpression(right, (int)toBitSize);
             var src = m.Fn(intrinsic.MakeInstance(left.DataType), left, right);
             m.Assign(dst, src);
             setFlags?.Invoke(m.Cond(Registers.pstate.DataType, dst));
@@ -157,7 +157,7 @@ namespace Reko.Arch.Arm.AArch64
             }
         }
 
-        private Expression MaybeExtendExpression(Expression right, int toBitSize)
+        private Expression MaybeExtendExpression(Expression right, long toBitSize)
         {
             if (instr.ShiftCode != Mnemonic.Invalid &&
                 (instr.ShiftCode != Mnemonic.lsl ||
@@ -597,7 +597,7 @@ namespace Reko.Arch.Arm.AArch64
             return null;
         }
 
-        private Expression ZeroExtend(int bitsizeDst, PrimitiveType dtOrig, Expression e)
+        private Expression ZeroExtend(long bitsizeDst, PrimitiveType dtOrig, Expression e)
         {
             var dtUint = PrimitiveType.Create(Domain.UnsignedInt, bitsizeDst);
             if (e.DataType.BitSize > dtOrig.BitSize)
@@ -607,7 +607,7 @@ namespace Reko.Arch.Arm.AArch64
             return m.Convert(e, dtOrig, dtUint);
         }
 
-        private Expression SignExtend(int bitsizeDst, PrimitiveType dtOrig, Expression e)
+        private Expression SignExtend(long bitsizeDst, PrimitiveType dtOrig, Expression e)
         {
             var dtInt = PrimitiveType.Create(Domain.SignedInt, bitsizeDst);
             if (e.DataType.BitSize > dtOrig.BitSize)

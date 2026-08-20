@@ -391,7 +391,7 @@ namespace Reko.Arch.Mips
             return (u, d) =>
             {
                 var offset = (int) offsetField.Read(u);
-                offset *= dt.Size;
+                offset *= (int) dt.Size;
                 d.ops.Add(MemoryOperand.Indirect(
                     dt,
                     Constant.Int32(offset),
@@ -408,7 +408,7 @@ namespace Reko.Arch.Mips
             return (u, d) =>
             {
                 var offset = (int) offsetField.Read(u);
-                offset *= dt.Size;
+                offset *= (int) dt.Size;
                 d.ops.Add(MemoryOperand.Indirect(
                     dt,
                     Constant.Int32(offset),
@@ -430,7 +430,7 @@ namespace Reko.Arch.Mips
             return (u, d) =>
             {
                 var offset = (int) offsetField.Read(u);
-                offset *= dt.Size;
+                offset *= (int) dt.Size;
                 d.ops.Add(MemoryOperand.Indirect(
                     dt,
                     Constant.Int32(offset),

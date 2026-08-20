@@ -479,7 +479,7 @@ namespace Reko.ImageLoaders.WebAssembly
             if (!rdr.TryReadVarUInt32(out param_count))
                 return null;
             var args = new List<Identifier>();
-            int cbOffset = 0;
+            long cbOffset = 0;
             for (int i = 0; i < param_count; ++i)
             {
                 var dt = ReadValueType(rdr);

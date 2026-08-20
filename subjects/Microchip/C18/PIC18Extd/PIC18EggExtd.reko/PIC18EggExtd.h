@@ -55,7 +55,7 @@ Eq_128: (fn cu8 (cu8, byte, Eq_132))
 Eq_132: (union "Eq_132" (bool u0) (byte u1))
 	T_132 (in p3 @ 0000A6 : bool)
 	T_139 (in !(cond(g_b00C5) & 1<8>) @ 0000A6 : bool)
-Eq_151: (struct "Eq_151" (FFFFFFFE byte bFFFFFFFE))
+Eq_151: (struct "Eq_151" (-2 byte bFFFE))
 	T_151 (in FSR2 @ 0000AA : (ptr16 Eq_151))
 Eq_183: (union "Eq_183" (word16 u0) ((ptr32 byte) u1))
 	T_183 (in FSR0 @ 0000EC : Eq_183)
@@ -673,7 +673,7 @@ T_150: (in FSR2L @ 0000AA : byte)
 T_151: (in FSR2 @ 0000AA : (ptr16 Eq_151))
   Class: Eq_151
   DataType: (ptr16 Eq_151)
-  OrigDataType: (ptr16 (struct (FFFFFFFE T_172 tFFFFFFFE)))
+  OrigDataType: (ptr16 (struct (-2 T_172 tFFFE)))
 T_152: (in FSR1 @ 0000AA : (ptr16 byte))
   Class: Eq_152
   DataType: (ptr16 byte)
@@ -762,7 +762,7 @@ T_173: (in 0<8> @ 0000DC : byte)
   Class: Eq_172
   DataType: byte
   OrigDataType: byte
-T_174: (in FSR2->bFFFFFFFE == 0<8> @ 0000DC : bool)
+T_174: (in FSR2->bFFFE == 0<8> @ 0000DC : bool)
   Class: Eq_174
   DataType: bool
   OrigDataType: bool
@@ -909,7 +909,7 @@ typedef union Eq_132 {
 } Eq_132;
 
 typedef struct Eq_151 {
-	byte bFFFFFFFE;	// FFFFFFFE
+	byte bFFFE;	// FFFFFFFFFFFFFFFE
 } Eq_151;
 
 typedef union Eq_183 {

@@ -244,8 +244,8 @@ void fn00001278(word32 dwArg04)
 void fn0000127C()
 {
 	struct Eq_n * a7_n = g_ptr1494;
-	struct Eq_n * v8_n = a7_n->ptrFFFFFFFC;
-	struct Eq_n * v6_n = a7_n->ptrFFFFFFF8;
+	struct Eq_n * v8_n = a7_n->ptrFFFC;
+	struct Eq_n * v6_n = a7_n->ptrFFF8;
 	if (v8_n->dw0004 != 0x00)
 		execPrivate1();
 	CloseLibrary(g_dw149C);

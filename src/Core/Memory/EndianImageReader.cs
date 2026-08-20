@@ -356,7 +356,7 @@ namespace Reko.Core.Memory
 				encoding.GetString(
 					bytes,
 					iStart,
-					length * charType.Size));
+					length * (int)charType.Size));
             Offset += length;
             return cStr;
 		}

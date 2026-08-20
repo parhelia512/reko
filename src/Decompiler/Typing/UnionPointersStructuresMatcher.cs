@@ -31,7 +31,7 @@ namespace Reko.Typing
 	{
 		private readonly List<EquivalenceClass> eqClasses;
 		private readonly List<StructureType> strs;
-        private int pointerBitSize;
+        private long pointerBitSize;
 
         /// <summary>
         /// Constructs an instance of the <see cref="UnionPointersStructuresMatcher"/> class.
@@ -49,7 +49,7 @@ namespace Reko.Typing
         /// <returns></returns>
 		public bool Match(UnionType ut)
 		{
-            int structureSize = 0;
+            long structureSize = 0;
 			foreach (UnionAlternative a in ut.Alternatives.Values)
 			{
                 if (a.DataType is not PointerType p)
@@ -80,7 +80,7 @@ namespace Reko.Typing
         /// <summary>
         /// The bit size of the pointers in the union.
         /// </summary>
-        public int PointerBitSize
+        public long PointerBitSize
         {
             get { return pointerBitSize; }
         }

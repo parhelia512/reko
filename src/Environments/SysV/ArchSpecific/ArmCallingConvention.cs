@@ -55,7 +55,7 @@ namespace Reko.Environments.SysV.ArchSpecific
 
             if (dtRet is not null)
             {
-                SetReturnRegister(ccr, dtRet.BitSize);
+                SetReturnRegister(ccr, (int)dtRet.BitSize);
             }
 
             foreach (var dt in dtParams)
@@ -84,11 +84,6 @@ namespace Reko.Environments.SysV.ArchSpecific
                     ccr.StackParam(dt);
                 }
             }
-        }
-
-        private int AlignedStackArgumentSize(DataType dt)
-        {
-            return ((dt.Size + 3) / 4) * 4; 
         }
 
         public void SetReturnRegister(ICallingConventionBuilder ccr, int bitSize)

@@ -573,6 +573,6 @@ word32 g_a1D1D0[] = // 0001D1D0
 <unknown> g_t2DCD4 = // 0002DCD4;
 <unknown> g_t2E710 = // 0002E710;
 <unknown> g_t2E7AC = // 0002E7AC;
-byte g_bFFFF8E64; // FFFF8E64
-byte g_bFFFFD644; // FFFFD644
+byte g_b8E64; // FFFF8E64
+byte g_bD644; // FFFFD644
 Eq_n g_tFFFFFFFF;

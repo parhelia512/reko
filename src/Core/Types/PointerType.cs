@@ -40,17 +40,17 @@ namespace Reko.Core.Types
         /// only, and should not occur during type reference.
         /// </param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-		public PointerType(DataType pointee, int bitSize)
+		public PointerType(DataType pointee, long bitSize)
             : base(Domain.Pointer)
 		{
-            if (bitSize < 0)
+            if ((ulong)bitSize > int.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(bitSize), "Invalid pointer size.");
             this.Pointee = pointee;
-			this.bitSize = bitSize;
+			this.bitSize = (int)bitSize;
 		}
 
         /// <inheritdoc/>
-        public override int BitSize => this.bitSize;
+        public override long BitSize => this.bitSize;
 
         /// <inheritdoc/>
         public override bool IsComplex => true;
@@ -65,7 +65,7 @@ namespace Reko.Core.Types
 
 
         /// <inheritdoc/>
-        public override int Size
+        public override long Size
         {
             get { return (bitSize + (BitsPerByte - 1)) / BitsPerByte; }
             set { ThrowBadSize(); }

@@ -120,7 +120,7 @@ namespace Reko.Arch.Loongson
         {
             PrimitiveType w = GetWordWidthFromOptions(options);
             this.WordWidth = w;
-            int bitsize = w.BitSize;
+            long bitsize = w.BitSize;
             this.FramePointerType = PrimitiveType.Create(Domain.Pointer, bitsize);
             this.PointerType = this.FramePointerType;
             this.SignedWord = PrimitiveType.Create(Domain.SignedInt, bitsize);

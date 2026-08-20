@@ -4,4 +4,4 @@
 
 #include "a.h"
 
-<anonymous> * g_ptr8000270C = &g_tFFFFFFFF; // 8000270C
+<anonymous> * g_ptr8000270C = &g_tFFFF; // 8000270C

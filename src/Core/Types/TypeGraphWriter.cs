@@ -285,7 +285,15 @@ namespace Reko.Core.Types
                 {
                     foreach (StructureField f in str.Fields)
                     {
-                        writer.Write(" ({0:X} ", f.Offset);
+                        long offset = f.Offset;
+                        if (offset >= 0)
+                        {
+                            writer.Write(" ({0:X} ", f.Offset);
+                        }
+                        else
+                        {
+                            writer.Write(" (-{0:X} ", -f.Offset);
+                        }
                         f.DataType.Accept(this);
                         writer.Write(" {0})", f.Name);
                     }

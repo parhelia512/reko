@@ -525,7 +525,7 @@ l000F1D4A:
 		{
 			*loc12_n.u2 = 0x02;
 			loc22_n = loc13_n + 0x01;
-			loc23_n.u2 = &loc14_n.u17->bFFFFFFFF;
+			loc23_n.u2 = &loc14_n.u17->bFFFF;
 		}
 		else
 		{
@@ -690,7 +690,7 @@ l000F14F6:
 						*loc21_n.u2 = 0x00;
 						loc24_n = loc20_n;
 						loc31_n = loc29_n;
-						loc32_n.u2 = &loc30_n.u17->bFFFFFFFF;
+						loc32_n.u2 = &loc30_n.u17->bFFFF;
 						goto l000F185F;
 					}
 					int8 v242_n = *v230_n;
@@ -704,7 +704,7 @@ l000F14F6:
 					{
 						*loc21_n.u2 = 0x02;
 						loc31_n = loc29_n + 0x01;
-						loc32_n.u2 = &loc30_n.u17->bFFFFFFFF;
+						loc32_n.u2 = &loc30_n.u17->bFFFF;
 					}
 					else
 					{
@@ -1055,7 +1055,7 @@ Eq_n fn000F1D6A(Eq_n arg0, Eq_n arg1, Eq_n arg2, Eq_n arg3, Eq_n arg4, Eq_n arg5
 							while (true)
 							{
 								Eq_n v73_n;
-								v73_n.u2 = &loc63_n.u17->ptrFFFFFFF4;
+								v73_n.u2 = &loc63_n.u17->ptrFFF4;
 								fn0011C7BA(v73_n);
 								if (v73_n == v73_n.u17 + 8)
 									break;
@@ -1071,7 +1071,7 @@ l000F20C4:
 						while (true)
 						{
 							Eq_n v73_n;
-							v73_n.u2 = &loc67_n.u17->ptrFFFFFFF4;
+							v73_n.u2 = &loc67_n.u17->ptrFFF4;
 							fn0011C7BA(v73_n);
 							if (v73_n == v73_n.u17 + 8)
 								break;
@@ -1758,7 +1758,7 @@ l000F30E2:
 			Mem259 = Mem99;
 			if (v63_n < 88 != 0x00)
 				goto l000F31DD;
-			if (!v65_n && (v63_n - arg2 < 0x03 != 0x00 && ((v63_n.u17)->bFFFFFFFF == 0x30) != 0x00))
+			if (!v65_n && (v63_n - arg2 < 0x03 != 0x00 && ((v63_n.u17)->bFFFF == 0x30) != 0x00))
 			{
 				*arg4.u3 = 0x00;
 				int8 v70_n = loc48_n->b37AB;
@@ -2356,7 +2356,7 @@ l000F3FE1:
 			}
 			Eq_n v99_n;
 			v99_n.u2 = *arg4;
-			if (v99_n == arg3 != 0x00 || (((word32) (v99_n.u17)->bFFFFFFFF & 0x5F) == ((word32) (*arg2) & 0x7F)) != 0x00)
+			if (v99_n == arg3 != 0x00 || (((word32) (v99_n.u17)->bFFFF & 0x5F) == ((word32) (*arg2) & 0x7F)) != 0x00)
 			{
 				*arg4 = (union Eq_n *) (v99_n.u17 + 1);
 				*v99_n.u2 = v109_n;
@@ -5921,7 +5921,7 @@ l000F95BA:
 		{
 			*loc19_n.u2 = 0x02;
 			loc26_n = loc20_n + 0x01;
-			loc27_n.u2 = &loc21_n.u17->bFFFFFFFF;
+			loc27_n.u2 = &loc21_n.u17->bFFFF;
 		}
 		else
 		{
@@ -6105,7 +6105,7 @@ l000F95BA:
 					*loc25_n.u2 = 0x00;
 					loc28_n = loc15_n;
 					loc35_n = loc33_n;
-					loc36_n.u2 = &loc34_n.u17->bFFFFFFFF;
+					loc36_n.u2 = &loc34_n.u17->bFFFF;
 					goto l000F908E;
 				}
 				int8 v250_n = v240_n->b0003;
@@ -6119,7 +6119,7 @@ l000F95BA:
 				{
 					*loc25_n.u2 = 0x02;
 					loc35_n = loc33_n + 0x01;
-					loc36_n.u2 = &loc34_n.u17->bFFFFFFFF;
+					loc36_n.u2 = &loc34_n.u17->bFFFF;
 				}
 				else
 				{
@@ -7953,7 +7953,7 @@ l000FB8AB:
 					while (true)
 					{
 						Eq_n v216_n;
-						v216_n.u2 = &loc9_n.u17->bFFFFFFFF;
+						v216_n.u2 = &loc9_n.u17->bFFFF;
 						if (loc15_n < v216_n == 0x00)
 							break;
 						int8 v232_n = *loc15_n.u2;
@@ -8006,7 +8006,7 @@ l000FB8AB:
 							v216_n = v216_n;
 						else
 							v216_n = v216_n & 0xFF;
-						loc17_n = (word32) loc11_n + (loc11_n < &(v216_n.u17)->bFFFFFFFF & 0x01);
+						loc17_n = (word32) loc11_n + (loc11_n < &(v216_n.u17)->bFFFF & 0x01);
 						loc18_n = 0x00;
 					}
 					else
@@ -8050,7 +8050,7 @@ l000FB8AB:
 					while (true)
 					{
 						Eq_n v216_n;
-						v216_n.u2 = &loc10_n.u17->bFFFFFFFF;
+						v216_n.u2 = &loc10_n.u17->bFFFF;
 						if (loc16_n < v216_n == 0x00)
 							break;
 						int8 v242_n = *loc16_n.u2;
@@ -8445,7 +8445,7 @@ l000FBD5D:
 			while (true)
 			{
 				Eq_n v151_n;
-				v151_n.u2 = &loc9_n.u17->bFFFFFFFF;
+				v151_n.u2 = &loc9_n.u17->bFFFF;
 				if (loc11_n < v151_n == 0x00)
 					break;
 				int8 v165_n = *loc11_n.u2;
@@ -8494,7 +8494,7 @@ l000FBD5D:
 						v151_n = v151_n;
 					else
 						v151_n = v151_n & 0xFF;
-					loc16_n = (word32) loc13_n + (loc13_n < &(v151_n.u17)->bFFFFFFFF & 0x01);
+					loc16_n = (word32) loc13_n + (loc13_n < &(v151_n.u17)->bFFFF & 0x01);
 					loc17_n = 0x00;
 				}
 				else
@@ -8546,7 +8546,7 @@ l000FBD5D:
 					while (true)
 					{
 						Eq_n v151_n;
-						v151_n.u2 = &loc10_n.u17->bFFFFFFFF;
+						v151_n.u2 = &loc10_n.u17->bFFFF;
 						if (loc12_n < v151_n == 0x00)
 							break;
 						int8 v175_n = *loc12_n.u2;
@@ -9739,7 +9739,7 @@ l000FE07B:
 					while (true)
 					{
 						Eq_n v216_n;
-						v216_n.u2 = &loc9_n.u17->bFFFFFFFF;
+						v216_n.u2 = &loc9_n.u17->bFFFF;
 						if (loc15_n < v216_n == 0x00)
 							break;
 						int8 v229_n = *loc15_n.u2;
@@ -9793,7 +9793,7 @@ l000FE07B:
 							v216_n = v216_n;
 						else
 							v216_n = v216_n & 0xFF;
-						loc17_n = (word32) loc11_n + (loc11_n < &(v216_n.u17)->bFFFFFFFF & 0x01);
+						loc17_n = (word32) loc11_n + (loc11_n < &(v216_n.u17)->bFFFF & 0x01);
 						loc18_n = 0x00;
 					}
 					else
@@ -9837,7 +9837,7 @@ l000FE07B:
 					while (true)
 					{
 						Eq_n v216_n;
-						v216_n.u2 = &loc10_n.u17->tFFFFFFFC.u0;
+						v216_n.u2 = &loc10_n.u17->tFFFC.u0;
 						if (loc16_n < v216_n == 0x00)
 							break;
 						word32 v216_n = *loc16_n.u3;
@@ -10123,7 +10123,7 @@ l000FE3C5:
 			while (true)
 			{
 				Eq_n v148_n;
-				v148_n.u2 = &loc9_n.u17->bFFFFFFFF;
+				v148_n.u2 = &loc9_n.u17->bFFFF;
 				if (loc11_n < v148_n == 0x00)
 					break;
 				int8 v159_n = *loc11_n.u2;
@@ -10173,7 +10173,7 @@ l000FE3C5:
 						v148_n = v148_n;
 					else
 						v148_n = v148_n & 0xFF;
-					loc16_n = (word32) loc13_n + (loc13_n < &(v148_n.u17)->bFFFFFFFF & 0x01);
+					loc16_n = (word32) loc13_n + (loc13_n < &(v148_n.u17)->bFFFF & 0x01);
 					loc17_n = 0x00;
 				}
 				else
@@ -10225,7 +10225,7 @@ l000FE3C5:
 					while (true)
 					{
 						Eq_n v148_n;
-						v148_n.u2 = &loc10_n.u17->tFFFFFFFC.u0;
+						v148_n.u2 = &loc10_n.u17->tFFFC.u0;
 						if (loc12_n < v148_n == 0x00)
 							break;
 						word32 v148_n = *loc12_n.u3;

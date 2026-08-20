@@ -270,7 +270,7 @@ public class C33Disassembler : DisassemblerBase<C33Instruction, Mnemonic>
 
     private static Mutator<C33Disassembler> Msp_disp(PrimitiveType dt)
     {
-        int scale = dt.Size;
+        long scale = dt.Size;
         return (uInstr, dasm) =>
         {
             var imm = bf4_6.Read(uInstr);

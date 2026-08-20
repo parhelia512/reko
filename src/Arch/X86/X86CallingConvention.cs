@@ -101,7 +101,7 @@ namespace Reko.Arch.X86
             if (dtRet is null)
                 return;
 
-            int retSize = dtRet.Size;
+            int retSize = (int)dtRet.Size;
             if (retSize > 8)
             {
                 // returns a pointer to the stack-allocated large return value

@@ -304,7 +304,7 @@ namespace Reko.Environments.SysV
             }
             try
             {
-                var gcc = new GccMangledNameParser(fnName, this.PointerType.Size);
+                var gcc = new GccMangledNameParser(fnName, (int)this.PointerType.Size);
                 field = gcc.Parse();
             }
             catch (Exception ex)

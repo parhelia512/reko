@@ -380,7 +380,7 @@ namespace Reko.Core
                     dt = new UnknownType(platform.PointerType.Size);
                 }
             }
-            int bitSize = platform.PointerType.BitSize;
+            long bitSize = (int)platform.PointerType.BitSize;
             if (pointer.PointerSize != 0)
             {
                 bitSize = pointer.PointerSize * platform.Architecture.MemoryGranularity;
@@ -401,7 +401,7 @@ namespace Reko.Core
                 dt = new UnknownType();
             else
                 dt = memptr.MemberType.Accept(this);
-            return new MemberPointer(baseType, dt, platform.PointerType.BitSize);
+            return new MemberPointer(baseType, dt, (int)platform.PointerType.BitSize);
         }
 
         /// <inheritdoc/>
@@ -546,7 +546,7 @@ namespace Reko.Core
             int size = enumType.Size;
             if (size == 0)
             {
-                size = platform.Architecture.WordWidth.Size;
+                size = (int) platform.Architecture.WordWidth.Size;
             }
             return new EnumType(enumType.Name!, size, members);
         }

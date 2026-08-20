@@ -37,9 +37,9 @@ namespace Reko.Core.Types
 	/// </remarks>
 	public sealed class PrimitiveType : DataType
 	{
-        private static readonly ConcurrentDictionary<(Domain,int), PrimitiveType> cache;
+        private static readonly ConcurrentDictionary<(Domain, int), PrimitiveType> cache;
         private static readonly ConcurrentDictionary<string, PrimitiveType> lookupByName;
-        private static readonly Dictionary<int, Domain> mpBitWidthToAllowableDomain;
+        private static readonly Dictionary<long, Domain> mpBitWidthToAllowableDomain;
         private static readonly ConcurrentDictionary<int, PrimitiveType> mpBitsizeToWord;
 
         private readonly int bitSize;
@@ -94,7 +94,7 @@ namespace Reko.Core.Types
         /// <param name="dom">The domain of the type.</param>
         /// <param name="bitSize">The size of the type in bits.</param>
         /// <returns>A new instance of <see cref="PrimitiveType"/>.</returns>
-		public static PrimitiveType Create(Domain dom, int bitSize)
+		public static PrimitiveType Create(Domain dom, long bitSize)
 		{
 			return Create(dom, bitSize, null);
 		}
@@ -116,21 +116,24 @@ namespace Reko.Core.Types
             return shared;
         }
 
-        private static PrimitiveType Create(Domain dom, int bitSize, string? name)
+        private static PrimitiveType Create(Domain dom, long bitSize, string? name)
         {
-            if (mpBitWidthToAllowableDomain.TryGetValue(bitSize, out var domainMask))
+            if ((ulong) bitSize > int.MaxValue)
+                throw new ArgumentOutOfRangeException(nameof(bitSize), "Bit size is too large.");
+            int bs = (int) bitSize;
+            if (mpBitWidthToAllowableDomain.TryGetValue(bs, out var domainMask))
             {
                 dom &= domainMask;
             }
-            if (cache.TryGetValue((dom, bitSize), out var shared))
+            if (cache.TryGetValue((dom, bs), out var shared))
                 return shared;
-            var p = new PrimitiveType(dom, bitSize, false, name ?? GenerateName(dom, bitSize));
+            var p = new PrimitiveType(dom, bs, false, name ?? GenerateName(dom, bs));
             return Cache(p);
         }
 
         private static PrimitiveType Cache(PrimitiveType p)
         {
-            if (!cache.TryGetValue((p.Domain, p.BitSize), out var shared))
+            if (!cache.TryGetValue((p.Domain, (int)p.BitSize), out var shared))
             {
                 shared = p;
                 cache.TryAdd((p.Domain, p.bitSize), shared);
@@ -143,32 +146,33 @@ namespace Reko.Core.Types
         /// Creates a new primitive type of word, with the specified bit size.
         /// </summary>
         /// <param name="bitSize">Bit size of the word to be created.</param>
-        public static PrimitiveType CreateWord(int bitSize)
+        public static PrimitiveType CreateWord(long bitSize)
 		{
-            if (bitSize <= 0)
+            if ((ulong)bitSize > int.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(bitSize));
-            if (mpBitsizeToWord.TryGetValue(bitSize, out var ptWord))
+            int bsize = (int)bitSize;
+            if (mpBitsizeToWord.TryGetValue((int)bsize, out var ptWord))
                 return ptWord;
 			string name;
-            if (bitSize == 1)
+            if (bsize == 1)
 			{
                 name = "bool";
             }
-            else if (bitSize == 8)
+            else if (bsize == 8)
             {
 				name = "byte";
 			}
             else
             { 
-                name = $"word{bitSize}";
+                name = $"word{bsize}";
             }
-            if (!mpBitWidthToAllowableDomain.TryGetValue(bitSize, out var dom))
+            if (!mpBitWidthToAllowableDomain.TryGetValue(bsize, out var dom))
             {
                 dom = Domain.Integer | Domain.Pointer;
             }
-			ptWord = new PrimitiveType(dom, bitSize, true, name);
+			ptWord = new PrimitiveType(dom, bsize, true, name);
             Cache(ptWord);
-            mpBitsizeToWord[bitSize] = ptWord;
+            mpBitsizeToWord[bsize] = ptWord;
             return ptWord;
 		}
 
@@ -197,7 +201,7 @@ namespace Reko.Core.Types
         /// </remarks>
         /// <param name="dom">Type domain.</param>
         /// <param name="bitSize">Bit size.</param>
-		public static string GenerateName(Domain dom, int bitSize)
+		public static string GenerateName(Domain dom, long bitSize)
 		{
 			StringBuilder sb;
 			switch (dom)
@@ -298,16 +302,16 @@ namespace Reko.Core.Types
             var dom = this.Domain & domainMask;
             if (dom == 0)
                 dom = domainMask;
-            return Create(dom, BitSize);
+            return Create(dom, (int)BitSize);
 		}
 
         /// <inheritdoc/>
-        public override int BitSize => this.bitSize;
+        public override long BitSize => this.bitSize;
 
         /// <summary>
         /// Size of this primitive type in bytes.
         /// </summary>
-        public override int Size
+        public override long Size
 		{
 			get => byteSize; 
 			set => throw new InvalidOperationException("Size of a primitive type cannot be changed."); 
@@ -322,7 +326,7 @@ namespace Reko.Core.Types
         {
             cache = new ConcurrentDictionary<(Domain,int), PrimitiveType>();
             lookupByName = new ConcurrentDictionary<string, PrimitiveType>();
-            mpBitWidthToAllowableDomain = new Dictionary<int, Domain>
+            mpBitWidthToAllowableDomain = new Dictionary<long, Domain>
             {
                 { 0, Domain.Any },
                 { 1, Domain.Boolean },

@@ -165,11 +165,11 @@ namespace Reko.Core.Types
 
 
         /// <inheritdoc/>
-		public override int BitSize
+		public override long BitSize
 		{
 			get
 			{
-				int size = 0;
+				long size = 0;
                 ++nestoMatic;
                 if (nestoMatic > 100)
                     return 32;
@@ -183,7 +183,7 @@ namespace Reko.Core.Types
 		}
 
         /// <inheritdoc/>
-        public override int Size
+        public override long Size
         {
             get { return (BitSize + (BitsPerByte - 1)) / BitsPerByte; }
             set { ThrowBadSize(); }

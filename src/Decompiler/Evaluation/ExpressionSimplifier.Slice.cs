@@ -105,7 +105,7 @@ public partial class ExpressionSimplifier
             // If we are slicing a SEQ, and the corresponding element is >= 
             // the size of the slice, then use deposited part directly.
             var lsbElem = seq2.Expressions[^1];
-            int sizeDiff = lsbElem.DataType.BitSize - slice.DataType.BitSize;
+            int sizeDiff = (int)(lsbElem.DataType.BitSize - slice.DataType.BitSize);
             if (sizeDiff >= 0)
             {
                 if (sizeDiff > 0)

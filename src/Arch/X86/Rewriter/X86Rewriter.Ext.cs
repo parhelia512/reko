@@ -123,7 +123,7 @@ namespace Reko.Arch.X86.Rewriter
 
         private void RewriteMonitor()
         {
-            var bitsize = instrCur.AddressWidth.BitSize;
+            var bitsize = (int)instrCur.AddressWidth.BitSize;
             var rAX = arch.GetRegister(Registers.eax.Domain, new(0, bitsize))!;
             var ptr = binder.EnsureRegister(rAX);
             var ecx = binder.EnsureRegister(Registers.ecx);
@@ -136,7 +136,7 @@ namespace Reko.Arch.X86.Rewriter
         {
             var src = SrcOp(1);
             var opDst = instrCur.Operands[0];
-            int dbitSize = opDst.DataType.BitSize - src.DataType.BitSize;
+            int dbitSize = (int)(opDst.DataType.BitSize - src.DataType.BitSize);
             if (dbitSize > 0)
             {
                 // Zero-extend.

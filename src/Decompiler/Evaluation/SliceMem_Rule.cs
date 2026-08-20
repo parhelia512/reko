@@ -56,7 +56,7 @@ namespace Reko.Evaluation
                 ea = bin.Left;
             }
             int bitBegin = slice.Offset;
-			int bitEnd = bitBegin + slice.DataType.BitSize;
+			int bitEnd = bitBegin + (int)slice.DataType.BitSize;
 			if (0 <= bitBegin && bitEnd <= acc.DataType.BitSize)
 			{
                 //$REVIEW: endianness?

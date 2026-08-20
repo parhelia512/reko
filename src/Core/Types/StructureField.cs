@@ -36,7 +36,7 @@ namespace Reko.Core.Types
         /// <param name="offset">Offset of the field.</param>
         /// <param name="type">Data type of the field.</param>
         /// <param name="name">Optional field name.</param>
-		public StructureField(int offset, DataType type, string? name = null) : base(type)
+		public StructureField(long offset, DataType type, string? name = null) : base(type)
 		{
             this.Offset = offset;
             this.name = name;
@@ -58,12 +58,10 @@ namespace Reko.Core.Types
 
         private string? name;
 
-        //$TODO: make offsets long, to handle the situation where the Program
-        // globals struct is maintaining 64-bit addresses.
         /// <summary>
         /// Signed field offset (in storage units) from the start of the structure.
         /// </summary>
-        public int Offset { get; set; }
+        public long Offset { get; set; }
 
         /// <summary>
         /// Clones this structure field.
@@ -86,7 +84,7 @@ namespace Reko.Core.Types
         /// <param name="offset">Offset as a <see cref="Constant"/>.</param>
         /// <returns>An integer offset, or null if the offset wasn't an integer.
         /// </returns>
-        public static int? ToOffset(Constant? offset)
+        public static long? ToOffset(Constant? offset)
         {
             if (offset is null)
                 return 0;
@@ -94,11 +92,11 @@ namespace Reko.Core.Types
             if (pt is null)
                 return null;
             if (pt.Domain == Domain.SignedInt)
-                return offset.ToInt32();
+                return offset.ToInt64();
             else if (pt.Domain == Domain.Real)
                 return null;
             else
-                return (int) offset.ToUInt32();
+                return (long) offset.ToUInt64();
         }
 
         /// <summary>
@@ -136,7 +134,7 @@ namespace Reko.Core.Types
         /// <param name="offset">Offset for the field.</param>
         /// <param name="dt">Data type of the field.</param>
         /// <returns>The new structure field.</returns>
-		public StructureField Add(int offset, DataType dt)
+		public StructureField Add(long offset, DataType dt)
 		{
 			return Add(new StructureField(offset, dt));
 		}
@@ -148,7 +146,7 @@ namespace Reko.Core.Types
         /// <param name="dt">Data type of the field.</param>
         /// <param name="name">Optional name for the field.</param>
         /// <returns>The new structure field.</returns>
-		public StructureField Add(int offset, DataType dt, string? name)
+		public StructureField Add(long offset, DataType dt, string? name)
 		{
 			return Add(new StructureField(offset, dt, name));
 		}
@@ -253,7 +251,7 @@ namespace Reko.Core.Types
         /// </summary>
         /// <param name="offset">Offset (in bytes) of the field to retrieve.</param>
         /// <returns>The requested StructureField if it exists at <paramref>offset</paramref>, otherwise null.</returns>
-        public StructureField? AtOffset(int offset)
+        public StructureField? AtOffset(long offset)
         {
             if (innerList.Count >= BinarySearchLimit)
             {
@@ -272,7 +270,7 @@ namespace Reko.Core.Types
                 {
                     int iMid = iMin + (iMax - iMin) / 2;
                     var f = innerList[iMid];
-                    int cmp = f.Offset - offset;
+                    long cmp = f.Offset - offset;
                     if (f.Offset == offset)
                         return f;
                     else if (f.Offset < offset)
@@ -294,7 +292,7 @@ namespace Reko.Core.Types
         /// </summary>
         /// <param name="offset"></param>
         /// <returns></returns>
-		public StructureField? LowerBound(int offset)
+		public StructureField? LowerBound(long offset)
 		{
 			StructureField? fPrev = null;
 			foreach (StructureField f in innerList)

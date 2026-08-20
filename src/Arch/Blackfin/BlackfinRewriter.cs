@@ -251,7 +251,7 @@ namespace Reko.Arch.Blackfin
         {
             int nRegs = range.MaxRegister - range.MinRegister + 1;
             var regSequence = new Storage[nRegs];
-            int bitsize = 0;
+            long bitsize = 0;
             for (int i = 0; i < nRegs; ++i)
             {
                 var reg = range.Registers[range.MaxRegister - i];

@@ -62,7 +62,7 @@ namespace Reko.Core.Expressions
         public static Constant Create(DataType dt, long value)
         {
             Debug.Assert(dt.BitSize > 0, "Bad constant size; this should never happen.");
-            int bitSize = dt.BitSize;
+            int bitSize = (int)dt.BitSize;
             switch (bitSize)
             {
             case 1:
@@ -157,7 +157,7 @@ namespace Reko.Core.Expressions
         {
             if (dt.BitSize > 64)
                 return new BigConstant(dt, value);
-            var uValue = value & Bits.Mask(dt.BitSize);
+            var uValue = value & Bits.Mask((int)dt.BitSize);
             return Create(dt, (ulong) uValue);
         }
 
@@ -172,8 +172,8 @@ namespace Reko.Core.Expressions
             if (dt.BitSize > 64)
                 return BigConstant.Replicate(dt, valueToReplicate);
             var n = valueToReplicate.ToUInt64();
-            int bits = valueToReplicate.DataType.BitSize;
-            int times = dt.BitSize / bits;
+            int bits = (int)valueToReplicate.DataType.BitSize;
+            int times = (int)dt.BitSize / bits;
 
             ulong result = 0;
             for (int i = 0; i < times; ++i)
@@ -318,7 +318,7 @@ namespace Reko.Core.Expressions
         protected virtual Constant DoSlice(DataType dt, int offset)
         {
             var val = this.ToUInt64();
-            ulong mask = Bits.Mask(offset, dt.BitSize);
+            ulong mask = Bits.Mask(offset, (int)dt.BitSize);
             return Create(dt, (val & mask) >> offset);
         }
 
@@ -332,7 +332,7 @@ namespace Reko.Core.Expressions
         protected virtual Constant DoDepositBits(Constant newBits, int bitOffset)
         {
             var val = this.ToUInt64();
-            ulong mask = Bits.Mask(bitOffset, newBits.DataType.BitSize);
+            ulong mask = Bits.Mask(bitOffset, (int)newBits.DataType.BitSize);
             var newVal = (val & ~mask) | ((newBits.ToUInt64() << bitOffset) & mask);
             return Constant.Create(this.DataType, newVal);
         }
@@ -422,7 +422,7 @@ namespace Reko.Core.Expressions
         {
             get
             {
-                var mask = Bits.Mask(0, DataType.BitSize);
+                var mask = Bits.Mask(0, (int)DataType.BitSize);
                 return (this.ToUInt64() & mask) == mask;
             }
         }
@@ -500,7 +500,7 @@ namespace Reko.Core.Expressions
             else if (p.BitSize <= 64)
             {
                 ulong n = Convert.ToUInt64(c);
-                c = Bits.Mask(0, p.BitSize);
+                c = Bits.Mask(0, (int)p.BitSize);
                 return Constant.Create(PrimitiveType.CreateWord(p.BitSize), ~n + 1);
             }
             else
@@ -814,7 +814,7 @@ namespace Reko.Core.Expressions
         /// </summary>
         /// <param name="bitSize">Bit size of the word.</param>
         /// <param name="value">CLR value to encapsulate.</param>
-        public static Constant Word(int bitSize, long value)
+        public static Constant Word(long bitSize, long value)
         {
             return Create(PrimitiveType.CreateWord(bitSize), value);
         }
@@ -824,7 +824,7 @@ namespace Reko.Core.Expressions
         /// </summary>
         /// <param name="bitSize">Bit size of the word.</param>
         /// <param name="value">CLR value to encapsulate.</param>
-        public static Constant Word(int bitSize, ulong value)
+        public static Constant Word(long bitSize, ulong value)
         {
             return Create(PrimitiveType.CreateWord(bitSize), value);
         }
@@ -1761,7 +1761,7 @@ namespace Reko.Core.Expressions
         protected override Constant DoSlice(DataType dt, int offset)
         {
             var bits = (uint) BitConverter.SingleToInt32Bits(this.value);
-            var mask = Bits.Mask(0, dt.BitSize);
+            var mask = Bits.Mask(0, (int)dt.BitSize);
             return Constant.Create(dt, bits >> offset);
         }
 
@@ -1944,7 +1944,7 @@ namespace Reko.Core.Expressions
         protected override Constant DoSlice(DataType dt, int offset)
         {
             var bits = (ulong) BitConverter.DoubleToInt64Bits(this.value);
-            var mask = Bits.Mask(0, dt.BitSize);
+            var mask = Bits.Mask(0, (int)dt.BitSize);
             return Constant.Create(dt, bits >> offset);
         }
 

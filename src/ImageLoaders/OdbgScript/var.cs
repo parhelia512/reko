@@ -25,7 +25,7 @@ namespace Reko.ImageLoaders.OdbgScript
         public static Var Create(int rhs) { return new Var { type = EType.DW, dw = (uint)rhs, size = (4) }; } // needed for var = 0
         public static Var Create(uint rhs) { return new Var { type = EType.DW, dw = (rhs), size = (4) }; }
         public static Var Create(double rhs) { return new Var { type = EType.FLT, flt = (rhs), size = (8) }; }
-        public static Var Create(Core.Address addr) { return new Var { type = EType.ADR, Address = addr, size = addr.DataType.Size };  }
+        public static Var Create(Core.Address addr) { return new Var { type = EType.ADR, Address = addr, size = (int) addr.DataType.Size };  }
         public static Var Empty() { return new Var { type = EType.EMP }; }
         
         protected Var() {}

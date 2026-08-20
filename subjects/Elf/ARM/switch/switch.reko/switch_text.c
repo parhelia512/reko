@@ -98,7 +98,7 @@ word32 bazulate(Eq_n r0, Eq_n r1)
 	union Eq_n * sp_n = (union Eq_n *) <invalid>;
 	struct Eq_n * fp_n;
 	word32 * fp_n;
-	__divsi3(__divsi3(r0 + r1, frobulate(r0, r1, out fp_n)), frobulate(fp_n->tFFFFFFE8.u0, sp_n->u0, out fp_n));
+	__divsi3(__divsi3(r0 + r1, frobulate(r0, r1, out fp_n)), frobulate(fp_n->tFFE8.u0, sp_n->u0, out fp_n));
 	return *fp_n;
 }
 
@@ -289,7 +289,7 @@ int32 g_dw8708 = 36; // 00008708
 word32 __do_global_ctors_aux()
 {
 	struct Eq_n * r3_n = g_ptr8740;
-	<anonymous> * r2_n = r3_n->ptrFFFFFFFC;
+	<anonymous> * r2_n = r3_n->ptrFFFC;
 	if (r2_n == (<anonymous> *) ~0x00)
 	{
 		word32 r4;

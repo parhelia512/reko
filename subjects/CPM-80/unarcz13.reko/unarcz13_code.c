@@ -108,7 +108,7 @@ l018D:
 		while (a_n == 0x1A)
 		{
 			word16 af_n = fn052E(out b_n, out de_n, out hl_n);
-			sp_n->wFFFFFFFE = af_n;
+			sp_n->wFFFE = af_n;
 			uint8 f_n = (byte) af_n;
 			if (SLICE(af_n, byte, 8) < 0x0A)
 			{
@@ -269,18 +269,18 @@ l03D0:
 		byte a_n;
 		fn04AB(out a_n);
 		struct Eq_n * sp_n = (struct Eq_n *) <invalid>;
-		sp_n->wFFFFFFFE = SEQ(a_n, f);
+		sp_n->wFFFE = SEQ(a_n, f);
 		if (a_n == 0x00)
 			fn0D15(&g_b0F9F);
 		fn0D15(&g_b0FA6);
-		word16 af_n = sp_n->wFFFFFFFE;
-		sp_n->wFFFFFFFE = af_n;
+		word16 af_n = sp_n->wFFFE;
+		sp_n->wFFFE = af_n;
 		if (SLICE(af_n, byte, 8) == 0x00)
 			fn0D15(&g_b1013);
 		if (g_b0117 == 0x00)
 		{
-			word16 af_n = sp_n->wFFFFFFFE;
-			sp_n->wFFFFFFFE = af_n;
+			word16 af_n = sp_n->wFFFE;
+			sp_n->wFFFE = af_n;
 			if (SLICE(af_n, byte, 8) != 0x00)
 			{
 l040A:
@@ -288,8 +288,8 @@ l040A:
 				if (g_b011C == 0x00)
 					fn0D15(&g_b1101);
 				fn0D15(&g_b1079);
-				word16 af_n = sp_n->wFFFFFFFE;
-				sp_n->wFFFFFFFE = af_n;
+				word16 af_n = sp_n->wFFFE;
+				sp_n->wFFFE = af_n;
 				if (SLICE(af_n, byte, 8) == 0x00)
 				{
 					fn0D15(&g_b108F);
@@ -1523,8 +1523,8 @@ l0849:
 					break;
 				byte a_n = wLoc06_n->b0000;
 				wLoc06_n->b0000 = SLICE(hl_n - 0x01, byte, 8);
-				byte a_n = wLoc06_n->bFFFFFFFF;
-				wLoc06_n->bFFFFFFFF = (byte) hl_n - 0x01;
+				byte a_n = wLoc06_n->bFFFF;
+				wLoc06_n->bFFFF = (byte) hl_n - 0x01;
 				hl_n = wLoc06_n;
 				wLoc06_n = SEQ(a_n, a_n);
 			}

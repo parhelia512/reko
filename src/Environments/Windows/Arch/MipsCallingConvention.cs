@@ -124,7 +124,7 @@ namespace Reko.Environments.Windows
                 }
                 else
                 {
-                    int regsNeeded = (dtArg.Size + 3) / 4;
+                    int regsNeeded = ((int)dtArg.Size + 3) / 4;
                     if (regsNeeded > 4 || ir + regsNeeded >= iregs.Length)
                     {
                         ccr.StackParam(dtArg);
@@ -144,7 +144,7 @@ namespace Reko.Environments.Windows
 
         public void SetReturnRegister(ICallingConventionBuilder ccr, DataType dtArg)
         {
-            int bitSize = dtArg.BitSize;
+            int bitSize = (int)dtArg.BitSize;
             var pt = dtArg as PrimitiveType;
             if (pt is not null && pt.Domain == Domain.Real)
             {

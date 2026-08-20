@@ -142,11 +142,11 @@ Arguments of varargs functions are passed on the stack. This applies even to the
             int iReg = 26;
             foreach (var dtParam in dtParams)
             {
-                int size = dtParam.Size;
+                int size = (int)dtParam.Size;
                 if ((size & 1) != 0) // odd sized register occupies two regs
                 {
                     // Round size to even # of bytes.
-                    size = dtParam.Size + 1;
+                    size = (int)dtParam.Size + 1;
                 }
                 iReg -= size;
                 if (iReg >= 8)
@@ -183,11 +183,11 @@ Arguments of varargs functions are passed on the stack. This applies even to the
 
         private void GenerateReturnValue(DataType dtRet, ICallingConventionBuilder ccr)
         {
-            int size = dtRet.Size;
+            int size = (int)dtRet.Size;
             if ((size & 1) != 0) // odd sized register occupies two regs
             {
                 // Round size to even # of bytes.
-                size = dtRet.Size + 1;
+                size = (int)dtRet.Size + 1;
             }
 
             var iReg = 26 - size;

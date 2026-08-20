@@ -416,7 +416,7 @@ namespace Reko.Core.Types
 			if (ptrA is not null && ptrB is not null)
 			{
 				DataType dt = UnifyInternal(ptrA.Pointee, ptrB.Pointee)!;
-				return new PointerType(dt, Math.Max(ptrA.BitSize, ptrB.BitSize));
+				return new PointerType(dt, (int)Math.Max(ptrA.BitSize, ptrB.BitSize));
 			}
             if (ptrA is not null)
             {
@@ -437,7 +437,7 @@ namespace Reko.Core.Types
 			{
 				DataType baseType = UnifyInternal(mpA.BasePointer, mpB.BasePointer)!;
 				DataType pointee = UnifyInternal(mpA.Pointee, mpB.Pointee)!;
-				return new MemberPointer(baseType, pointee, mpB.BitSize);
+				return new MemberPointer(baseType, pointee, (int)mpB.BitSize);
 			}
 			if (mpA is not null)
 			{
@@ -644,7 +644,7 @@ namespace Reko.Core.Types
 		/// <returns></returns>
 		public DataType UnifyStructures(StructureType a, StructureType b)
 		{
-			int newSize = 0;
+			long newSize = 0;
 			if (a.Size != 0 && b.Size != 0)
 			{
 				if (a.Size != b.Size)
@@ -812,7 +812,7 @@ namespace Reko.Core.Types
 
                 // check which of two fields is nested structure and store it
                 // and other field in corresponding variables.
-                int strSize;
+                long strSize;
                 if (strFa is not null)
                 {
                     fNestedStruct = fa;

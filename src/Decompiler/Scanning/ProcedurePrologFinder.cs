@@ -74,7 +74,7 @@ namespace Reko.Scanning
             var heap = new List<BaseAddressCandidate>();
             var news = new HashSet<ulong>(prologsOffsets.Count);
             var queue = new Queue<List<BaseAddressCandidate>>();
-            var wordMask = Bits.Mask(0, arch.PointerType.BitSize);
+            var wordMask = Bits.Mask(0, (int)arch.PointerType.BitSize);
             for (ulong uBaseAddr = 0; uBaseAddr <= ~0u;)
             {
                 news.Clear();

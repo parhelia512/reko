@@ -236,7 +236,7 @@ namespace Reko.Core.Code
         /// <param name="name">name of the identifier.</param>
         public Identifier Local(PrimitiveType primitiveType, string name)
         {
-            localStackOffset -= primitiveType.Size;
+            localStackOffset -= (int) primitiveType.Size;
             return Frame.EnsureStackLocal(localStackOffset, primitiveType, name);
         }
 
@@ -245,7 +245,7 @@ namespace Reko.Core.Code
         /// </summary>
         public Identifier LocalBool(string name)
         {
-            localStackOffset -= PrimitiveType.Word32.Size;
+            localStackOffset -= (int) PrimitiveType.Word32.Size;
             return Frame.EnsureStackLocal(localStackOffset, PrimitiveType.Bool, name);
         }
 
@@ -254,7 +254,7 @@ namespace Reko.Core.Code
         /// </summary>
         public Identifier LocalByte(string name)
         {
-            localStackOffset -= PrimitiveType.Word32.Size;
+            localStackOffset -= (int) PrimitiveType.Word32.Size;
             return Frame.EnsureStackLocal(localStackOffset, PrimitiveType.Byte, name);
         }
 
@@ -263,7 +263,7 @@ namespace Reko.Core.Code
         /// </summary>
         public Identifier Local16(string name)
         {
-            localStackOffset -= PrimitiveType.Word32.Size;
+            localStackOffset -= (int) PrimitiveType.Word32.Size;
             return Local16(name, localStackOffset);
         }
 
@@ -281,7 +281,7 @@ namespace Reko.Core.Code
         /// </summary>
         public Identifier Local32(string name)
         {
-            localStackOffset -= PrimitiveType.Word32.Size;
+            localStackOffset -= (int) PrimitiveType.Word32.Size;
             return Frame.EnsureStackLocal(localStackOffset, PrimitiveType.Word32, name);
         }
 

@@ -41,8 +41,8 @@ namespace Reko.Libraries.Libc
         protected readonly int longSize;
         protected readonly int doubleSize;
         protected readonly int longDoubleSize;
-        protected readonly int pointerSize;
-        protected readonly int wordSize;
+        protected readonly long pointerSize;
+        protected readonly long wordSize;
         private readonly IServiceProvider services;
 
         public PrintfFormatParser(
@@ -112,7 +112,7 @@ namespace Reko.Libraries.Libc
         protected virtual DataType MakeDataType(PrintfSize size, char cDomain)
         {
             Domain domain;
-            int bitSize = this.intSize;
+            long bitSize = this.intSize;
             switch (cDomain)
             {
             case 'c':

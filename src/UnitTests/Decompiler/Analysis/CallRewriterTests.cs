@@ -421,7 +421,7 @@ namespace Reko.UnitTests.Decompiler.Analysis
         public void GcrStackArguments()
         {
             Frame f = program.Architecture.CreateFrame();
-            f.ReturnAddressSize = PrimitiveType.Word16.Size;
+            f.ReturnAddressSize = (int)PrimitiveType.Word16.Size;
 
             var uses = new List<KeyValuePair<Storage, BitRange>>
             {

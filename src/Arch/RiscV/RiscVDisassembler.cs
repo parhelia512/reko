@@ -887,7 +887,7 @@ namespace Reko.Arch.RiscV
 
             return (u, d) =>
             {
-                var uOffset = (int) Bitfield.ReadFields(masks, u) * dt.Size;
+                var uOffset = (int) Bitfield.ReadFields(masks, u) * (int) dt.Size;
                 var iBase = (int)baseRegField.Read(u);
 
                 d.state.ops.Add(new MemoryOperand(
@@ -913,7 +913,7 @@ namespace Reko.Arch.RiscV
             var baseRegMask = new Bitfield(regOffset, 3);
             return (u, d) =>
             {
-                var uOffset = (int) Bitfield.ReadFields(masks, u) * dt.Size;
+                var uOffset = (int) Bitfield.ReadFields(masks, u) * (int) dt.Size;
                 var iBase = compressedRegs[baseRegMask.Read(u)];
 
                 d.state.ops.Add(new MemoryOperand(
@@ -937,7 +937,7 @@ namespace Reko.Arch.RiscV
         {
             return (u, d) =>
             {
-                var uOffset = (int) Bitfield.ReadFields(masks, u) * dt.Size;
+                var uOffset = (int) Bitfield.ReadFields(masks, u) * (int) dt.Size;
 
                 d.state.ops.Add(new MemoryOperand(
                     dt,

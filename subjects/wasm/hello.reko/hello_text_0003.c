@@ -66,7 +66,7 @@ void fn00100180(Eq_n arg0)
 	while (true)
 	{
 		Eq_n v8_n;
-		v8_n.u2 = &loc2_n.u17->ptrFFFFFFF4;
+		v8_n.u2 = &loc2_n.u17->ptrFFF4;
 		fn0011BAF7(v8_n);
 		if (v8_n == 19688)
 			break;
@@ -82,7 +82,7 @@ void fn001001B8(Eq_n arg0)
 	while (true)
 	{
 		Eq_n v8_n;
-		v8_n.u2 = &loc2_n.u17->ptrFFFFFFF4;
+		v8_n.u2 = &loc2_n.u17->ptrFFF4;
 		fn0011BAF7(v8_n);
 		if (v8_n == 0x4E0C)
 			break;
@@ -98,7 +98,7 @@ void fn001001F0(Eq_n arg0)
 	while (true)
 	{
 		Eq_n v8_n;
-		v8_n.u2 = &loc2_n.u17->ptrFFFFFFF4;
+		v8_n.u2 = &loc2_n.u17->ptrFFF4;
 		fn0011BAF7(v8_n);
 		if (v8_n == 20272)
 			break;
@@ -1199,7 +1199,7 @@ l00101FD2:
 			Eq_n loc10_n = arg4;
 l001021C8:
 			Eq_n v187_n;
-			v187_n.u2 = &loc10_n.u17->bFFFFFFFF;
+			v187_n.u2 = &loc10_n.u17->bFFFF;
 			Eq_n v187_n;
 			v187_n.u2 = *arg0.u3;
 			Eq_n loc157_n;
@@ -2357,7 +2357,7 @@ void fn00104191(Eq_n arg0)
 	while (true)
 	{
 		Eq_n v8_n;
-		v8_n.u2 = &loc2_n.u17->ptrFFFFFFF4;
+		v8_n.u2 = &loc2_n.u17->ptrFFF4;
 		fn0011C7BA(v8_n);
 		if (v8_n == 20500)
 			break;
@@ -2373,7 +2373,7 @@ void fn001041C9(Eq_n arg0)
 	while (true)
 	{
 		Eq_n v8_n;
-		v8_n.u2 = &loc2_n.u17->ptrFFFFFFF4;
+		v8_n.u2 = &loc2_n.u17->ptrFFF4;
 		fn0011C7BA(v8_n);
 		if (v8_n == 20792)
 			break;
@@ -2389,7 +2389,7 @@ void fn00104201(Eq_n arg0)
 	while (true)
 	{
 		Eq_n v8_n;
-		v8_n.u2 = &loc2_n.u17->ptrFFFFFFF4;
+		v8_n.u2 = &loc2_n.u17->ptrFFF4;
 		fn0011C7BA(v8_n);
 		if (v8_n == 0x525C)
 			break;
@@ -3526,7 +3526,7 @@ Eq_n fn00105E65(Eq_n arg0, Eq_n arg1, Eq_n arg2, Eq_n arg3, Eq_n arg4)
 			while (true)
 			{
 				Eq_n v188_n;
-				v188_n.u2 = &loc16_n.u17->bFFFFFFFF;
+				v188_n.u2 = &loc16_n.u17->bFFFF;
 				Eq_n v188_n;
 				v188_n.u2 = *arg0.u3;
 				Eq_n loc166_n;
@@ -4659,7 +4659,7 @@ Eq_n fn001078B8(Eq_n arg0, word32 * arg1, Eq_n arg2, Eq_n arg3, Eq_n arg4, Eq_n 
 		v126_n.u2 = v126_n.u11[4];
 		Eq_n loc7_n;
 		loc7_n.u2 = v126_n.u19[4];
-		while (loc7_n < &(v126_n.u17)->bFFFFFFFF != 0x00 && ((int32) (*loc7_n.u2) == (int32) ((byte) v126_n)) != 0x00)
+		while (loc7_n < &(v126_n.u17)->bFFFF != 0x00 && ((int32) (*loc7_n.u2) == (int32) ((byte) v126_n)) != 0x00)
 			++loc7_n.u17;
 		g_t140048.u2 = (int8 *) 0x00;
 		invoke_iiii(424, arg6, loc7_n, v126_n);
@@ -6993,7 +6993,7 @@ l0010A11C:
 										struct Eq_n * v970_n = (struct Eq_n *) *arg9;
 										*arg9 = (struct Eq_n **) ((char *) &v970_n->t0000 + 1);
 										v970_n->t0000.u0 = (int8) (byte) loc26_n;
-										v970_n.u17[4] = (struct Eq_n) v970_n.u17[4].bFFFFFFFF;
+										v970_n.u17[4] = (struct Eq_n) v970_n.u17[4].bFFFF;
 										struct Eq_n * v970_n = (struct Eq_n *) *arg0;
 										union Eq_n * v970_n = v970_n->ptr000C;
 										if (v970_n == v970_n->ptr0010)
@@ -7903,7 +7903,7 @@ Eq_n fn0010C889(Eq_n arg0, word32 * arg1, Eq_n arg2, Eq_n arg3, Eq_n arg4, Eq_n 
 		v131_n.u2 = v131_n.u11[4];
 		Eq_n loc7_n;
 		loc7_n.u2 = v131_n.u19[4];
-		while (loc7_n < &((v131_n.u17)->tFFFFFFFC).u0 != 0x00 && (*loc7_n.u3 == v131_n) != 0x00)
+		while (loc7_n < &((v131_n.u17)->tFFFC).u0 != 0x00 && (*loc7_n.u3 == v131_n) != 0x00)
 			loc7_n.u17 += 4;
 		g_t140048.u2 = (int8 *) 0x00;
 		invoke_iiii(0x01B0, arg6, loc7_n, v131_n);
@@ -10340,7 +10340,7 @@ l0010EBD7:
 						struct Eq_n * v981_n = (struct Eq_n *) *arg9;
 						*arg9 = (struct Eq_n **) ((char *) &v981_n->t0000 + 4);
 						v981_n->t0000.u2 = (int8 *) loc40_n;
-						v981_n.u17[4] = (struct Eq_n) v981_n.u17[4].bFFFFFFFF;
+						v981_n.u17[4] = (struct Eq_n) v981_n.u17[4].bFFFF;
 						struct Eq_n * v981_n = (struct Eq_n *) *arg0;
 						union Eq_n * v981_n = v981_n->ptr000C;
 						if (v981_n == v981_n->ptr0010)

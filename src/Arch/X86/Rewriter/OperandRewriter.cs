@@ -74,7 +74,7 @@ namespace Reko.Arch.X86.Rewriter
 
         public Identifier AluRegister(RegisterStorage reg, DataType vt)
         {
-            return binder.EnsureRegister(arch.GetRegister(reg.Domain, new BitRange(0, vt.BitSize))!);
+            return binder.EnsureRegister(arch.GetRegister(reg.Domain, new BitRange(0, (int)vt.BitSize))!);
         }
 
         public Constant CreateConstant(Constant imm, PrimitiveType dataWidth)

@@ -75,7 +75,7 @@ namespace Reko.Scanning
             this.alignMask = alignMask;
             this.maskedValue = maskedValue;
             this.Endianness = EndianServices.Little;
-            this.wordMask = Bits.Mask(arch.PointerType.BitSize);
+            this.wordMask = Bits.Mask((int)arch.PointerType.BitSize);
             this.word_size = (uint)(arch.WordWidth.BitSize / arch.MemoryGranularity);
         }
 

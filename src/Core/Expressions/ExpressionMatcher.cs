@@ -560,7 +560,7 @@ namespace Reko.Core.Expressions
                 this.Label = label;
             }
 
-            public override int Size { get; set; }
+            public override long Size { get; set; }
 
             public string? Label { get; private set; }
 

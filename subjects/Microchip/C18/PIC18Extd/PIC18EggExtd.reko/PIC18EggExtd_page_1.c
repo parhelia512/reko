@@ -94,7 +94,7 @@ byte g_b00CA = 0x02; // 000000CA
 void fn0000D0(byte LATB, byte FSR2L, struct Eq_n * FSR2, byte * FSR1)
 {
 	*FSR1 = FSR2L;
-	while (FSR2->bFFFFFFFE != 0x00)
+	while (FSR2->bFFFE != 0x00)
 	{
 		if ((g_b00CA & 0x01) != 0x00)
 		{

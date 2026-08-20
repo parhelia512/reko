@@ -51,7 +51,7 @@ namespace Reko.UnitTests.Arch.Arm
             var value = BigInteger.Zero;
             for (int i = 0; i < values.Length; ++i)
             {
-                value <<= at.ElementType.BitSize;
+                value <<= (int)at.ElementType.BitSize;
                 value |= values[i];
             }
             return Constant.Create(at, value);

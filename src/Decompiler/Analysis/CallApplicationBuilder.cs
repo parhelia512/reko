@@ -198,7 +198,7 @@ namespace Reko.Analysis
                 // No available identifier, so synthesize one.
                 var idSeq = ssaCaller.Procedure.Frame.EnsureSequence(seq.DataType, seq.Elements);
                 var sidSeq = ssaCaller.Identifiers.Add(idSeq, this.stmCall, true);
-                int bitOffset = seq.DataType.BitSize;
+                int bitOffset = (int)seq.DataType.BitSize;
                 foreach (var stg in seq.Elements)
                 {
                     bitOffset -= (int) stg.BitSize;

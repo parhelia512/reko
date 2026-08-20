@@ -76,7 +76,7 @@ namespace Reko.Arch.Mips
             var src1 = RewriteOperand(instr.Operands[2]);
             var src2 = RewriteOperand(instr.Operands[3]);
             var product = m.FMul(src1, src2);
-            product.DataType = new ArrayType(dt, src1.DataType.BitSize / dt.BitSize);
+            product.DataType = new ArrayType(dt, (int)(src1.DataType.BitSize / dt.BitSize));
             var sum = m.Bin(accFn, acc, product);
             sum.DataType = product.DataType;
             m.Assign(dst, sum);

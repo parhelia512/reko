@@ -230,9 +230,9 @@ namespace Reko.ImageLoaders.MzExe.CodeView
             switch (type)
             {
             case PrimitiveType_v1 pt:
-                return pt.ByteSize;
+                return (int) pt.ByteSize;
             case PointerType_v1 ptr:
-                return ptr.PointerSize;
+                return (int) ptr.PointerSize;
             case MemberPointer_v1 mptr:
                 return mptr.Size;
             case ArrayType_v1 arr:

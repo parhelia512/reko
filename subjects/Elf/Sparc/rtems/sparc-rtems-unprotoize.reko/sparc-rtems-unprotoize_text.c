@@ -43,7 +43,7 @@ void __do_global_dtors_aux(word32 o3, word32 o4, word32 o5, word32 o7)
 		while (true)
 		{
 			*o2_n = (struct Eq_n **) o0_n;
-			<anonymous> * o1_n = o0_n->ptrFFFFFFFC;
+			<anonymous> * o1_n = o0_n->ptrFFFC;
 			o1_n();
 			struct Eq_n * o0_n = (struct Eq_n *) *o2_n;
 			if (o0_n->dw0000 == 0x00)
@@ -799,7 +799,7 @@ Eq_n abspath(Eq_n o0, Eq_n o1, word32 & l0Out, struct Eq_n & l2Out, struct Eq_n 
 			}
 			++o2_n;
 		}
-		o2_n->bFFFFFFFF = 0x2F;
+		o2_n->bFFFF = 0x2F;
 	}
 	else
 		o2_n = (struct Eq_n *) &sp_n->b0060;
@@ -829,7 +829,7 @@ l00012024:
 		if (!v36_n)
 		{
 			word32 o3_n = (word32) o1_n->b0000;
-			if (o2_n->bFFFFFFFF == 0x2F)
+			if (o2_n->bFFFF == 0x2F)
 			{
 				o1_n = (struct Eq_n *) &o1_n->b0001;
 				goto l00012110;
@@ -847,7 +847,7 @@ l00012024:
 			o0_n = (word32) o1_n->b0000;
 			goto l00012104;
 		}
-		if (o2_n->bFFFFFFFF != 0x2F)
+		if (o2_n->bFFFF != 0x2F)
 		{
 			o0_n = (word32) o1_n->b0000;
 			goto l00012104;
@@ -900,10 +900,10 @@ l00012104:
 		}
 	}
 l00012120:
-	if (o2_n->bFFFFFFFF == 0x2F)
+	if (o2_n->bFFFF == 0x2F)
 	{
 		o2_n->b0000 = 0x00;
-		o2_n = (struct Eq_n *) &o2_n->bFFFFFFFF;
+		o2_n = (struct Eq_n *) &o2_n->bFFFF;
 		o2_n->b0000 = 0x00;
 	}
 	else
@@ -1024,8 +1024,8 @@ l000122B8:
 					if (o0_n << 0x18 == 0x00)
 					{
 						struct Eq_n * l1_n = (word32) l1_n + 1;
-						if (l1_n->bFFFFFFFE == 0x2F)
-							l1_n->bFFFFFFFE = 0x00;
+						if (l1_n->bFFFE == 0x2F)
+							l1_n->bFFFE = 0x00;
 						i0_n = o0_n;
 						return i0_n;
 					}
@@ -1144,9 +1144,9 @@ void check_aux_info(word32 o0)
 //      save_def_or_dec
 Eq_n find_corresponding_lparen(Eq_n o0)
 {
-	byte * o0_n = &o0.u1->bFFFFFFFF + -1;
+	byte * o0_n = &o0.u1->bFFFF + -1;
 	word32 g3_n = 0x01;
-	int32 g2_n = (int32) o0.u1->bFFFFFFFF;
+	int32 g2_n = (int32) o0.u1->bFFFF;
 l00012424:
 	if (g2_n != 0x28)
 	{
@@ -1297,7 +1297,7 @@ l00012688:
 					int32 o0_n;
 					while (i0_n != i0_n + (char *) 0x04)
 					{
-						int32 o0_n = (int32) i0_n.u1->bFFFFFFFF;
+						int32 o0_n = (int32) i0_n.u1->bFFFF;
 						if (o0_n != 0x20)
 						{
 							if (o0_n == 0x09)
@@ -1323,14 +1323,14 @@ l00012AC0:
 					l2_n->dw001C = 0x00;
 					struct Eq_n * o0_n = find_corresponding_lparen(i0_n);
 					++l2_n->dw001C;
-					if (o0_n->bFFFFFFFE == 0x29)
-						check_aux_info((word32) (o0_n->bFFFFFFFD != 0x29));
-					byte * i0_n = &o0_n->bFFFFFFFE;
-					check_aux_info((word32) (o0_n->bFFFFFFFF != 0x20));
+					if (o0_n->bFFFE == 0x29)
+						check_aux_info((word32) (o0_n->bFFFD != 0x29));
+					byte * i0_n = &o0_n->bFFFE;
+					check_aux_info((word32) (o0_n->bFFFF != 0x20));
 					while (is_id_char((int32) *i0_n) != 0x00)
 						i0_n += -1;
 					char * i0_n = i0_n + 1;
-					int32 l1_n = &o0_n->bFFFFFFFF - i0_n;
+					int32 l1_n = &o0_n->bFFFF - i0_n;
 					struct Eq_n * sp_n = sp_n - (l1_n + 0x08 & ~0x07);
 					strncpy(sp_n->a0060, i0_n, l1_n);
 					sp_n->a0060[l1_n] = 0x00;
@@ -1390,7 +1390,7 @@ l00012AC0:
 						}
 						else
 							i0_n.u0 = i0_n + 0x06;
-						struct Eq_n * i0_n = (struct Eq_n *) &i0_n.u1->bFFFFFFFF;
+						struct Eq_n * i0_n = (struct Eq_n *) &i0_n.u1->bFFFF;
 						l2_n->ptr0024 = dupnstr(i0_n + (char *) 0x05, i0_n - (i0_n + (char *) 0x05));
 						check_aux_info((word32) (i0_n->b0001 != 0x20));
 						if (i0_n->b0002 != 0x2A)
@@ -1549,7 +1549,7 @@ Eq_n gen_aux_info_file(Eq_n o0, word32 & l2Out, char & l4Out, char & i0Out, word
 		Eq_n o2_n;
 		o2_n.u0 = g_t28150.u0;
 		sp_n->dw005C = 0x07;
-		if (pexecute(o1_n, o2_n, o0_n, &i6_n->ptrFFFFFFEC, (char *) i6_n - 24, 0x00027C00, sp_n->dw005C) != ~0x00)
+		if (pexecute(o1_n, o2_n, o0_n, &i6_n->ptrFFEC, (char *) i6_n - 24, 0x00027C00, sp_n->dw005C) != ~0x00)
 		{
 			int32 * o1_n = (int32 *) ((char *) i6_n - 28);
 			pwait(o1_n);
@@ -1558,7 +1558,7 @@ Eq_n gen_aux_info_file(Eq_n o0, word32 & l2Out, char & l4Out, char & i0Out, word
 		{
 			char * l2_n = errno;
 			fprintf(&g_t2B640, "%s: ", g_t28150.u0);
-			fprintf(o0, i6_n->ptrFFFFFFEC, 0x00);
+			fprintf(o0, i6_n->ptrFFEC, 0x00);
 			fprintf(&g_t2B640, ": %s\n", xstrerror(l2_n));
 			pwait(&g_dw17270);
 			char * i0_n = sp_n->ptr0000;
@@ -1657,7 +1657,7 @@ word32 process_aux_info_file(Eq_n o0, word32 o2, word32 & l1Out)
 			goto l000131D0;
 		}
 		Eq_n l0_n;
-		l0_n.u0 = i6_n->tFFFFFF98.u0;
+		l0_n.u0 = i6_n->tFF98.u0;
 		if (l0_n == 0x00)
 			break;
 		if (i2_n != 0x00)
@@ -1701,7 +1701,7 @@ l00013218:
 			close(o0_n);
 			break;
 		}
-		int32 l7_n = i6_n->dwFFFFFFA8;
+		int32 l7_n = i6_n->dwFFA8;
 		if (stat(i0_n, l1_n) == ~0x00)
 		{
 			l2_n = errno;
@@ -1717,7 +1717,7 @@ l000131D0:
 l000131F0:
 			notice(o0_n, o1_n, sp_n->dw0048);
 		}
-		int32 o0_n = i6_n->dwFFFFFFA8;
+		int32 o0_n = i6_n->dwFFA8;
 		if (o0_n <= l7_n)
 			goto l00013218;
 		l2_n = 0x01;
@@ -2266,8 +2266,8 @@ l000145B4:
 		do
 		{
 			struct Eq_n * o0_n = careful_find_l_paren(g_t28140.u0);
-			g_t28140.u0 = &o0_n->bFFFFFFFF;
-			if (((word32) g_a2B411[(word32) o0_n->bFFFFFFFF] & 0x08) != 0x00)
+			g_t28140.u0 = &o0_n->bFFFF;
+			if (((word32) g_a2B411[(word32) o0_n->bFFFF] & 0x08) != 0x00)
 			{
 				Eq_n o2_n;
 				o2_n.u0 = g_t28140.u0;
@@ -2436,7 +2436,7 @@ int32 main(int32 o0, struct Eq_n * o1)
 			if (o0_n == 0x00)
 			{
 				ui32 dwLoc14;
-				o0_n = (&g_t27F58.dw000C)[dwLoc14 * 4] + ~0x4D;
+				o0_n = (&g_t27F58.dw000C)[dwLoc14 * 0x04] + ~0x4D;
 			}
 			else
 				o0_n = o0_n + ~0x4D;
@@ -2464,7 +2464,7 @@ int32 main(int32 o0, struct Eq_n * o1)
 				{
 					Eq_n o0_n = abspath(0x00, i6_n->ptr0048[l7_n->dw0068].u0, out l0_n, out l2_n, out l3_n, out l4_n, out l7_n, out i1_n, out i6_n);
 					Eq_n o1_n = (Eq_n) (strlen(o0_n) + o0_n);
-					if (o1_n->tFFFFFFFF.b0000 == 99 && o1_n->bFFFFFFFE == 0x2E)
+					if (o1_n->tFFFF.b0000 == 99 && o1_n->bFFFE == 0x2E)
 					{
 						ui32 o0_n = l4_n->dw034C;
 						g_t28160.u0[o0_n * 0x04] = (byte) o0_n;
@@ -3025,7 +3025,7 @@ void make_temp_file(char * o0)
 	if (o0_n != 0x00)
 	{
 		Eq_n o0_n = (Eq_n) (o0_n + o0_n);
-		if (o0_n->bFFFFFFFF != 0x2F)
+		if (o0_n->bFFFF != 0x2F)
 		{
 			*(o0_n + o0_n) = (word32) 0x2F;
 			l1_n = (word32) o0_n + 1;
@@ -4012,10 +4012,10 @@ word32 fn00016E64(word32 o7, word32 l7)
 void __do_global_ctors_aux(word32 o3, word32 o4, word32 o5, word32 o7)
 {
 	struct Eq_n * o1_n = fn00016E64(o7, 0x00010D08)->ptr0014;
-	word32 o2_n = o1_n->dwFFFFFFFC;
+	word32 o2_n = o1_n->dwFFFC;
 	if (o2_n != ~0x00)
 	{
-		<anonymous> ** l0_n = &o1_n->dwFFFFFFFC;
+		<anonymous> ** l0_n = &o1_n->dwFFFC;
 		do
 		{
 			(*l0_n)();

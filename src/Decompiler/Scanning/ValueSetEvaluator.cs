@@ -292,7 +292,7 @@ namespace Reko.Scanning
             memAccesses[addr] = dt;
             if (dt == PrimitiveType.SegPtr32)
             {
-                var addrRead = arch.ReadCodeAddress(dt.Size, rdr, null);
+                var addrRead = arch.ReadCodeAddress((int)dt.Size, rdr, null);
                 if (addrRead is not null)
                 {
                     return addrRead;
@@ -325,7 +325,7 @@ namespace Reko.Scanning
                 var elemRange = new BitRange(0, Math.Min((short) elem.DataType.BitSize, (short) (bitRange.Msb - nTotalBits)));
                 var vs = elem.Accept(this, elemRange);
                 valuesets.Add(vs);
-                nTotalBits += elem.DataType.BitSize;
+                nTotalBits += (int)elem.DataType.BitSize;
             }
             if (valuesets.Count == 1)
                 return valuesets[0];

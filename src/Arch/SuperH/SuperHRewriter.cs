@@ -176,7 +176,7 @@ namespace Reko.Arch.SuperH
                 case Mnemonic.sets: RewriteClrtSet(Registers.S, m.True()); break;
                 case Mnemonic.sett: RewriteClrtSet(Registers.T, m.True()); break;
                 case Mnemonic.shad: RewriteShd(m.Shl, m.Sar); break;
-                case Mnemonic.shal: RewriteShift1(m.Shl, arch.WordWidth.BitSize-1); break;
+                case Mnemonic.shal: RewriteShift1(m.Shl, (int)arch.WordWidth.BitSize-1); break;
                 case Mnemonic.shar: RewriteShift1(m.Sar, 0); break;
                 case Mnemonic.shld: RewriteShd(m.Shl, m.Shr); break;
                 case Mnemonic.shll: RewriteShift(m.Shl, 1); break;

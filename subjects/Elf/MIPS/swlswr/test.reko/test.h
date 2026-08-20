@@ -5,7 +5,7 @@
 /*
 // Equivalence classes ////////////
 Eq_1: (struct "Globals"
-		(FFFFFFFF code tFFFFFFFF)
+		(FFFFFFFFFFFFFFFF code tFFFF)
 		(0 code t0000)
 		(A58 word32 _IO_stdin_used)
 		(10A60 (ptr32 code) ptr10A60)
@@ -101,11 +101,11 @@ Eq_176: (struct "Eq_176" (0 word32 dw0000) (1 (ptr32 Eq_150) ptr0001))
 Eq_190: (fn void ())
 	T_190 (in _init @ 000008FC : ptr32)
 	T_191 (in signature of _init @ 00000588 : void)
-Eq_229: (struct "Eq_229" (FFFF8010 (ptr32 code) ptrFFFF8010))
+Eq_229: (struct "Eq_229" (-7FF0 (ptr32 code) ptr8010))
 	T_229 (in r28 @ 000009B4 : (ptr32 Eq_229))
-Eq_234: (struct "Eq_234" (FFFF8010 (ptr32 code) ptrFFFF8010))
+Eq_234: (struct "Eq_234" (-7FF0 (ptr32 code) ptr8010))
 	T_234 (in r28 @ 000009D8 : (ptr32 Eq_234))
-Eq_239: (struct "Eq_239" (FFFF8010 (ptr32 code) ptrFFFF8010))
+Eq_239: (struct "Eq_239" (-7FF0 (ptr32 code) ptr8010))
 	T_239 (in r28 @ 000009E8 : (ptr32 Eq_239))
 Eq_244: (fn void ())
 	T_244 (in _fini @ 00000A0C : ptr32)
@@ -1026,7 +1026,7 @@ T_228: (in r25_18 != (<anonymous> *) -1<i32> @ 000009B4 : bool)
 T_229: (in r28 @ 000009B4 : (ptr32 Eq_229))
   Class: Eq_229
   DataType: (ptr32 Eq_229)
-  OrigDataType: (ptr32 (struct (FFFF8010 T_233 tFFFF8010)))
+  OrigDataType: (ptr32 (struct (-7FF0 T_233 t8010)))
 T_230: (in ra @ 000009B4 : word32)
   Class: Eq_230
   DataType: word32
@@ -1046,7 +1046,7 @@ T_233: (in Mem0[r28 + -32752<i32>:word32] @ 000009D8 : word32)
 T_234: (in r28 @ 000009D8 : (ptr32 Eq_234))
   Class: Eq_234
   DataType: (ptr32 Eq_234)
-  OrigDataType: (ptr32 (struct (FFFF8010 T_238 tFFFF8010)))
+  OrigDataType: (ptr32 (struct (-7FF0 T_238 t8010)))
 T_235: (in ra @ 000009D8 : word32)
   Class: Eq_235
   DataType: word32
@@ -1066,7 +1066,7 @@ T_238: (in Mem0[r28 + -32752<i32>:word32] @ 000009E8 : word32)
 T_239: (in r28 @ 000009E8 : (ptr32 Eq_239))
   Class: Eq_239
   DataType: (ptr32 Eq_239)
-  OrigDataType: (ptr32 (struct (FFFF8010 T_243 tFFFF8010)))
+  OrigDataType: (ptr32 (struct (-7FF0 T_243 t8010)))
 T_240: (in ra @ 000009E8 : word32)
   Class: Eq_240
   DataType: word32
@@ -1121,7 +1121,7 @@ T_252:
   OrigDataType: word32
 */
 typedef struct Globals {
-	<anonymous> tFFFFFFFF;	// FFFFFFFF
+	<anonymous> tFFFF;	// FFFFFFFFFFFFFFFF
 	<anonymous> t0000;	// 0
 	word32 _IO_stdin_used;	// A58
 	<anonymous> * ptr10A60;	// 10A60
@@ -1229,15 +1229,15 @@ typedef struct Eq_176 {
 typedef void (Eq_190)();
 
 typedef struct Eq_229 {
-	<anonymous> * ptrFFFF8010;	// FFFF8010
+	<anonymous> * ptr8010;	// FFFFFFFFFFFF8010
 } Eq_229;
 
 typedef struct Eq_234 {
-	<anonymous> * ptrFFFF8010;	// FFFF8010
+	<anonymous> * ptr8010;	// FFFFFFFFFFFF8010
 } Eq_234;
 
 typedef struct Eq_239 {
-	<anonymous> * ptrFFFF8010;	// FFFF8010
+	<anonymous> * ptr8010;	// FFFFFFFFFFFF8010
 } Eq_239;
 
 typedef void (Eq_244)();

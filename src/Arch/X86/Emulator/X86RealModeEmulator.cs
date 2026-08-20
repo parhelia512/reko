@@ -130,7 +130,7 @@ namespace Reko.Arch.X86.Emulator
             var dt = instr.DataWidth;
             var es = ReadSegmentRegister(instr.Operands[0], arch.RegisterAliases.es);
             var di = (uint) ReadRegister(arch.RegisterAliases.di);
-            var value = (uint) (Registers[X86.Registers.rax.Number] & Bits.Mask(0, dt.BitSize));
+            var value = (uint) (Registers[X86.Registers.rax.Number] & Bits.Mask(0, (int)dt.BitSize));
             WriteMemory(value, ToLinear(es, di), dt);
             var delta = (uint) dt.Size * ((Flags & Dmask) != 0 ? 0xFFFFu : 0x0001u);
             di += delta;

@@ -290,7 +290,7 @@ namespace Reko.Analysis
 
         private void AddInterval(int offset, DataType dt)
         {
-            var newInterval = Interval.Create(offset, offset + dt.MeasureSize());
+            var newInterval = Interval.Create(offset, offset + (int) dt.MeasureSize());
             var ints = intervals.GetIntervalsOverlappingWith(
                 newInterval).Select(de => de.Key).ToArray();
             foreach (var interval in ints)

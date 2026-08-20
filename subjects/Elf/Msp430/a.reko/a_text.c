@@ -926,7 +926,7 @@ void vTaskSwitchContext()
 {
 	if (uxSchedulerSuspended == 0x00)
 	{
-		while ((&g_w0222)[uxTopReadyPriority *16 8] == 0x00)
+		while ((&g_w0222)[uxTopReadyPriority * 0x08] == 0x00)
 			uxTopReadyPriority += ~0x00;
 		g_a0226[uxTopReadyPriority] = *g_a0226[uxTopReadyPriority].ptr0002;
 		if (g_a0226[uxTopReadyPriority] == g_a0224[uxTopReadyPriority])
@@ -1509,20 +1509,20 @@ void vPortInitialiseBlocks()
 struct Eq_n * pxPortInitialiseStack(word16 r13, word16 r14, struct Eq_n * r15)
 {
 	r15->w0000 = r14;
-	r15->wFFFFFFFE = 0x08;
-	r15->wFFFFFFFC = 0x4444;
-	r15->wFFFFFFFA = 0x5555;
-	r15->wFFFFFFF8 = 0x6666;
-	r15->wFFFFFFF6 = 0x7777;
-	r15->wFFFFFFF4 = 0x8888;
-	r15->wFFFFFFF2 = 0x9999;
-	r15->wFFFFFFF0 = 0xAAAA;
-	r15->wFFFFFFEE = ~0x4444;
-	r15->wFFFFFFEC = 0xCCCC;
-	r15->wFFFFFFEA = ~0x2222;
-	r15->wFFFFFFE8 = ~0x1111;
-	r15->wFFFFFFE6 = r13;
-	r15->wFFFFFFE4 = 0x00;
+	r15->wFFFE = 0x08;
+	r15->wFFFC = 0x4444;
+	r15->wFFFA = 0x5555;
+	r15->wFFF8 = 0x6666;
+	r15->wFFF6 = 0x7777;
+	r15->wFFF4 = 0x8888;
+	r15->wFFF2 = 0x9999;
+	r15->wFFF0 = 0xAAAA;
+	r15->wFFEE = ~0x4444;
+	r15->wFFEC = 0xCCCC;
+	r15->wFFEA = ~0x2222;
+	r15->wFFE8 = ~0x1111;
+	r15->wFFE6 = r13;
+	r15->wFFE4 = 0x00;
 	return r15 - 0x1C;
 }
 
@@ -1629,7 +1629,7 @@ struct Eq_n * PRINT(word16 r14, struct Eq_n * r15)
 			ci16 r15_n;
 			if (r15_n < 0x00)
 			{
-				r15_n = (struct Eq_n *) &g_tFFFFFFFF;
+				r15_n = (struct Eq_n *) &g_tFFFF;
 				return r15_n;
 			}
 			++total_len;

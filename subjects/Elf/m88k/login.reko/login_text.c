@@ -1163,8 +1163,8 @@ word32 fn00004110(word64 r22_r23, word64 r24_r25, struct Eq_n & r30Out)
 			__trap(0xFF);
 		if (!__bit<word32,byte>(cond(r30_n->dw2028 - r12_n), 0x00))
 		{
-			word64 r24_r25_n = r30_n->qwFFFFFFF8;
-			word64 r22_r23_n = r30_n->qwFFFFFFF0;
+			word64 r24_r25_n = r30_n->qwFFF8;
+			word64 r22_r23_n = r30_n->qwFFF0;
 			r30_n->ptr0004();
 			struct Eq_n * r30_n;
 			r30Out = r30_n;
@@ -1360,9 +1360,9 @@ word32 fn00004780(int32 r2, struct Eq_n & r20Out, struct Eq_n * (& r22Out, struc
 		struct Eq_n * r2_n = g_ptr26024;
 		struct Eq_n * r31_n;
 		word32 r30_n;
-		r31_n->dwFFFFFFF0 = r30_n;
+		r31_n->dwFFF0 = r30_n;
 		word32 r1_n;
-		r31_n->dwFFFFFFF4 = r1_n;
+		r31_n->dwFFF4 = r1_n;
 		if (r2_n != null)
 		{
 			Eq_n r2_n = fn00004520(out r3_n, out r4_n, out r5_n);

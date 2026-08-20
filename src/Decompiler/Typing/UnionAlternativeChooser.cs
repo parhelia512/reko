@@ -30,14 +30,16 @@ namespace Reko.Typing
     /// </summary>
     public class UnionAlternativeChooser : IDataTypeVisitor<bool>
     {
-        private int offset;
+        private long offset;
         private bool isEnclosingPtr;
         private readonly HashSet<DataType> visitedTypes;
         private readonly DataType? dtResult;
         private readonly Unifier unifier;
 
         private UnionAlternativeChooser(
-            DataType? dtResult, int offset, bool isEnclosingPtr,
+            DataType? dtResult,
+            long offset,
+            bool isEnclosingPtr,
             HashSet<DataType> visitedTypes)
         {
             this.dtResult = dtResult;
@@ -60,7 +62,7 @@ namespace Reko.Typing
             UnionType ut,
             DataType? dtResult,
             bool isEnclosingPtr,
-            int offset)
+            long offset)
         {
             return Choose(
                 ut, dtResult, isEnclosingPtr, offset, new HashSet<DataType>());
@@ -198,7 +200,7 @@ namespace Reko.Typing
             UnionType ut,
             DataType? dtResult,
             bool isEnclosingPtr,
-            int offset,
+            long offset,
             HashSet<DataType> visitedTypes)
         {
             foreach (var alt in ut.Alternatives.Values)

@@ -128,7 +128,7 @@ namespace Reko.Core.Code
         {
             this.Storage = stg;
             this.Expression = exp;
-            this.BitRange = new BitRange(0, exp.DataType.BitSize);
+            this.BitRange = new BitRange(0, (int)exp.DataType.BitSize);
         }
 
         /// <inheritdoc/>

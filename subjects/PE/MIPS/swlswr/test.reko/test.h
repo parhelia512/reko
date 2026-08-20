@@ -114,7 +114,7 @@ Eq_58: (fn Eq_54 ())
 Eq_62: (fn void (Eq_54))
 	T_62 (in fn00011278 @ 00011130 : ptr32)
 	T_63 (in signature of fn00011278 @ 00011278 : void)
-Eq_66: (struct "Eq_66" (FFFFFFE8 word32 dwFFFFFFE8) (FFFFFFEC (ptr32 (ptr32 word32)) ptrFFFFFFEC) (FFFFFFF0 (ptr32 (ptr32 word32)) ptrFFFFFFF0) (FFFFFFF4 word32 dwFFFFFFF4))
+Eq_66: (struct "Eq_66" (-18 word32 dwFFE8) (-14 (ptr32 (ptr32 word32)) ptrFFEC) (-10 (ptr32 (ptr32 word32)) ptrFFF0) (-C word32 dwFFF4))
 	T_66 (in r2 @ 00011164 : (ptr32 Eq_66))
 Eq_95: (fn void ())
 	T_95 (in XcptFilter @ 000111A8 : ptr32)
@@ -443,7 +443,7 @@ T_65: (in fn00011278(r2_25) @ 00011130 : void)
 T_66: (in r2 @ 00011164 : (ptr32 Eq_66))
   Class: Eq_66
   DataType: (ptr32 Eq_66)
-  OrigDataType: (ptr32 (struct (FFFFFFE8 T_94 tFFFFFFE8) (FFFFFFEC T_67 tFFFFFFEC) (FFFFFFF0 T_76 tFFFFFFF0) (FFFFFFF4 T_85 tFFFFFFF4)))
+  OrigDataType: (ptr32 (struct (-18 T_94 tFFE8) (-14 T_67 tFFEC) (-10 T_76 tFFF0) (-C T_85 tFFF4)))
 T_67: (in r4 @ 00011164 : (ptr32 (ptr32 word32)))
   Class: Eq_67
   DataType: (ptr32 (ptr32 word32))
@@ -1983,10 +1983,10 @@ typedef UINT (Eq_58)();
 typedef void (Eq_62)(UINT);
 
 typedef struct Eq_66 {
-	word32 dwFFFFFFE8;	// FFFFFFE8
-	word32 ** ptrFFFFFFEC;	// FFFFFFEC
-	word32 ** ptrFFFFFFF0;	// FFFFFFF0
-	word32 dwFFFFFFF4;	// FFFFFFF4
+	word32 dwFFE8;	// FFFFFFFFFFFFFFE8
+	word32 ** ptrFFEC;	// FFFFFFFFFFFFFFEC
+	word32 ** ptrFFF0;	// FFFFFFFFFFFFFFF0
+	word32 dwFFF4;	// FFFFFFFFFFFFFFF4
 } Eq_66;
 
 typedef void (Eq_95)();

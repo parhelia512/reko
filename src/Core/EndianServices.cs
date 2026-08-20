@@ -24,6 +24,7 @@ using Reko.Core.Memory;
 using Reko.Core.Operators;
 using Reko.Core.Types;
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -261,7 +262,7 @@ namespace Reko.Core
         protected MemoryAccess MakeSlicedMemoryAccess(
             Identifier memoryId,
             Expression effectiveAddress,
-            int byteOffset,
+            long byteOffset,
             BitRange bitRange)
         {
             var eaBitsize = effectiveAddress.DataType.BitSize;
@@ -463,7 +464,10 @@ namespace Reko.Core
 
             public override Slice MakeSlice(DataType dataType, Expression expr, int bitOffset, int bitsPerUnit)
             {
-                return new Slice(dataType, expr, expr.DataType.MeasureBitSize(bitsPerUnit) - (dataType.MeasureBitSize(bitsPerUnit) + bitOffset));
+                var sliceOffset =
+                expr.DataType.MeasureBitSize(bitsPerUnit) - (dataType.MeasureBitSize(bitsPerUnit) + bitOffset);
+                Debug.Assert(sliceOffset < int.MaxValue);
+                return new Slice(dataType, expr, (int)sliceOffset);
             }
 
             public override bool OffsetsAdjacent(long oLsb, long oMsb, long size)

@@ -430,7 +430,7 @@ namespace Reko.Arch.Motorola.M68k.Rewriter
                     }
                     else
                     {
-                        var dtDividend = PrimitiveType.CreateWord((int) (dreg.Register1.BitSize + dreg.Register2.BitSize));
+                        var dtDividend = PrimitiveType.CreateWord((long)(dreg.Register1.BitSize + dreg.Register2.BitSize));
                         dividend = binder.EnsureSequence(dtDividend, dreg.Register1, dreg.Register2);
                     }
                     m.Assign(rem, mod(dt, dividend, src));

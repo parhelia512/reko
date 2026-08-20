@@ -18,6 +18,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 
 namespace Reko.Core.Types
@@ -36,9 +37,11 @@ namespace Reko.Core.Types
         /// <param name="basePtr">Data type of the base pointer.</param>
         /// <param name="pointee">Data type of the offset from base pointer.</param>
         /// <param name="bitSize">The size of this pointer.</param>
-		public MemberPointer(DataType basePtr, DataType pointee, int bitSize)
+		public MemberPointer(DataType basePtr, DataType pointee, long bitSize)
             : base(Domain.Offset)
 		{
+            if ((ulong) bitSize >= int.MaxValue)
+                throw new ArgumentOutOfRangeException(nameof(bitSize));
 			this.Pointee = pointee;
 			this.BasePointer = basePtr;
 			this.BitSize = bitSize;
@@ -59,14 +62,14 @@ namespace Reko.Core.Types
         /// <inheritdoc/>
         public override DataType Clone(IDictionary<DataType, DataType>? clonedTypes)
 		{
-            return new MemberPointer(BasePointer.Clone(clonedTypes), Pointee.Clone(clonedTypes), BitSize)
+            return new MemberPointer(BasePointer.Clone(clonedTypes), Pointee.Clone(clonedTypes), (int)BitSize)
             {
                 Qualifier = this.Qualifier
             };
 		}
 
         /// <inheritdoc/>
-        public override int BitSize { get; }
+        public override long BitSize { get; }
 
         /// <inheritdoc/>
         public override bool IsComplex => true;
@@ -77,7 +80,7 @@ namespace Reko.Core.Types
 		public DataType Pointee { get; set; }
 
         /// <inheritdoc/>
-		public override int Size
+		public override long Size
         {
             get { return (BitSize + (BitsPerByte - 1)) / BitsPerByte; }
             set { ThrowBadSize(); }

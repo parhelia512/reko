@@ -257,7 +257,7 @@ namespace Reko.Arch.Mips
                 var iBase = (int) baseField.Read(u);
                 var baseReg =  d.arch.GetRegister(iBase)!;
 
-                var offset = offsetField.ReadSigned(u) * dt.Size;
+                var offset = offsetField.ReadSigned(u) * (int)dt.Size;
                 var mop = MemoryOperand.Indirect(
                     dt,
                     Constant.Int32(offset),
@@ -318,7 +318,7 @@ namespace Reko.Arch.Mips
                 var iBase = baseField.Read(u);
                 var iBase32 = threeBitRegisterEncodings[iBase];
                 var baseReg = d.arch.GetRegister(iBase32)!;
-                var offset = offsetField.ReadSigned(u) * dt.Size;
+                var offset = offsetField.ReadSigned(u) * (int) dt.Size;
                 var mop = MemoryOperand.Indirect(
                     dt,
                     Constant.Int32(offset),

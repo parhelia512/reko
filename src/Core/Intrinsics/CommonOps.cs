@@ -110,8 +110,8 @@ namespace Reko.Core.Intrinsics
                 throw new ArgumentException(nameof(inputs), "One argument is required for 'abs'.");
             if ((dt.Domain & (Domain.SignedInt|Domain.UnsignedInt)) != 0)
             {
-                int iSignbit = dt.BitSize - 1;
-                ulong signExtended = Bits.SignExtend(inputs[0].ToUInt64(), dt.BitSize);
+                int iSignbit = (int)dt.BitSize - 1;
+                ulong signExtended = Bits.SignExtend(inputs[0].ToUInt64(), (int)dt.BitSize);
                 ulong allOnesIfSigned = (ulong) ((long) signExtended >> iSignbit);
                 ulong result =
                     (signExtended & ~allOnesIfSigned) |
@@ -125,13 +125,13 @@ namespace Reko.Core.Intrinsics
         {
             if (inputs.Length == 0)
                 throw new ArgumentException(nameof(inputs), "Must have at least one input parameter to EvalMax.");
-                var mask = Bits.Mask(0, dt.BitSize);
+                var mask = Bits.Mask(0, (int)dt.BitSize);
             if (dt.Domain == Domain.SignedInt)
             {
-                long max = (long) Bits.SignExtend((ulong) inputs[0].ToInt64(), dt.BitSize);
+                long max = (long) Bits.SignExtend((ulong) inputs[0].ToInt64(), (int) dt.BitSize);
                 for (int i = 1; i < inputs.Length; ++i)
                 {
-                    var input = (long) Bits.SignExtend((ulong) inputs[i].ToInt64(), dt.BitSize);
+                    var input = (long) Bits.SignExtend((ulong) inputs[i].ToInt64(), (int) dt.BitSize);
                     max = Math.Max(max, input);
                 }
                 return Constant.Create(dt, max);

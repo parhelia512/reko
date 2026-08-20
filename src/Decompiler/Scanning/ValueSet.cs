@@ -311,7 +311,7 @@ namespace Reko.Scanning
             if (SI.Stride < 0)
                 return this;
 
-            var mask = (1 << dt.BitSize) - 1;
+            var mask = (1 << (int)dt.BitSize) - 1;
             StridedInterval siNew;
             if (SI.Low == SI.High)
             {
@@ -440,7 +440,7 @@ namespace Reko.Scanning
         {
             if (arg is Constant v)
             {
-                int bits = this.DataType.BitSize;
+                int bits = (int)this.DataType.BitSize;
                 return Constant.Create(dt, Bits.SignExtend(v.ToUInt64(), bits));
             }
             throw new NotImplementedException();
@@ -474,7 +474,7 @@ namespace Reko.Scanning
         {
             if (value is Constant c)
             {
-                var mask = (1L << dt.BitSize) - 1;
+                var mask = (1L << (int)dt.BitSize) - 1;
                 return Constant.Create(dt, c.ToInt64() & mask);
             }
             throw new NotImplementedException();
@@ -490,7 +490,7 @@ namespace Reko.Scanning
         {
             if (arg is Constant v)
             {
-                int bits = this.DataType.BitSize;
+                int bits = (int)this.DataType.BitSize;
                 return Constant.Create(dt, Bits.ZeroExtend(v.ToUInt64(), bits));
             }
             throw new NotImplementedException();

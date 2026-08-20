@@ -102,7 +102,7 @@ namespace Reko.Core.Types
 		{
 			var pointee = memptr.Pointee.Accept(this);
 			var basePointer = memptr.BasePointer.Accept(this);
-            return new MemberPointer(basePointer, pointee, memptr.BitSize);
+            return new MemberPointer(basePointer, pointee, (int)memptr.BitSize);
 		}
 
         /// <inheritdoc/>

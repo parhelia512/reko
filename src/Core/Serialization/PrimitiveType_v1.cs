@@ -41,7 +41,7 @@ namespace Reko.Core.Serialization
         /// Size in bytes of the data type.
         /// </summary>
 		[XmlAttribute("size")]
-		public int ByteSize;
+		public long ByteSize;
 
         /// <summary>
         /// Default constructor.

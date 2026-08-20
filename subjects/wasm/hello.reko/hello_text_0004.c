@@ -5088,7 +5088,7 @@ void fn00119406(Eq_n arg0)
 		while (loc6_n != v15_n)
 		{
 			Eq_n v15_n;
-			v15_n.u2 = &loc6_n.u17->tFFFFFFFC.u0;
+			v15_n.u2 = &loc6_n.u17->tFFFC.u0;
 			arg0.u17[4] = (struct Eq_n) v15_n;
 			loc6_n = v15_n;
 		}
@@ -5596,7 +5596,7 @@ void fn00119E4F(Eq_n arg0)
 //      fn0011B2CD
 void fn00119EA4(Eq_n arg0, Eq_n arg1)
 {
-	arg0.u17[4] = (struct Eq_n) &arg1.u17->bFFFFFFFF;
+	arg0.u17[4] = (struct Eq_n) &arg1.u17->bFFFF;
 	*arg0.u3 = 0x24A8;
 	g_t140048.u2 = (int8 *) 0x00;
 	invoke_vii(0x01C3, arg0.u17 + 8, 0x1C);
@@ -5629,7 +5629,7 @@ void fn00119EA4(Eq_n arg0, Eq_n arg1)
 	while (loc10_n != v100_n)
 	{
 		Eq_n v100_n;
-		v100_n.u2 = &loc10_n.u17->tFFFFFFFC.u0;
+		v100_n.u2 = &loc10_n.u17->tFFFC.u0;
 		arg0.u19[3] = (struct Eq_n) v100_n;
 		loc10_n = v100_n;
 	}
@@ -6046,7 +6046,7 @@ void fn0011A812(Eq_n arg0, Eq_n arg1)
 // 0011A82D: void fn0011A82D(Stack Eq_n arg0, Stack Eq_n arg1)
 void fn0011A82D(Eq_n arg0, Eq_n arg1)
 {
-	arg0.u17[4] = (struct Eq_n) &arg1.u17->bFFFFFFFF;
+	arg0.u17[4] = (struct Eq_n) &arg1.u17->bFFFF;
 	*arg0.u3 = 9336;
 	g_t140048.u2 = (int8 *) 0x00;
 	Eq_n v13_n = invoke_i(0x017B);
@@ -6082,7 +6082,7 @@ void fn0011A8C4(Eq_n arg0, Eq_n arg1)
 //      fn00119EA4
 void fn0011A8DF(Eq_n arg0, Eq_n arg1)
 {
-	arg0.u17[4] = (struct Eq_n) &arg1.u17->bFFFFFFFF;
+	arg0.u17[4] = (struct Eq_n) &arg1.u17->bFFFF;
 	*arg0.u3 = 0x24F0;
 	arg0.u11[4] = (struct Eq_n) 0x2E;
 	arg0.u17[9] = (struct Eq_n) 44;
@@ -6104,7 +6104,7 @@ void fn0011A970(Eq_n arg0, Eq_n arg1)
 //      fn00119EA4
 void fn0011A98B(Eq_n arg0, Eq_n arg1)
 {
-	arg0.u17[4] = (struct Eq_n) &arg1.u17->bFFFFFFFF;
+	arg0.u17[4] = (struct Eq_n) &arg1.u17->bFFFF;
 	*arg0.u3 = 9496;
 	arg0.u11[4] = (struct Eq_n) 0x2E;
 	arg0.u19[3] = (struct Eq_n) 44;
@@ -6322,7 +6322,7 @@ void fn0011AD0E(Eq_n arg0, Eq_n arg1)
 		while (loc6_n != v19_n)
 		{
 			Eq_n v19_n;
-			v19_n.u2 = &loc6_n.u17->tFFFFFFFC.u0;
+			v19_n.u2 = &loc6_n.u17->tFFFC.u0;
 			arg0.u17[4] = (struct Eq_n) v19_n;
 			loc6_n = v19_n;
 		}
@@ -6377,7 +6377,7 @@ void fn0011AD9F(Eq_n arg0, Eq_n arg1)
 			v34_n.u2 = v34_n.u11[4];
 			v34_n.u11[4] = (struct Eq_n) (v34_n.u17 + 4);
 			Eq_n v34_n;
-			v34_n.u2 = &loc2_n.u17->bFFFFFFFF;
+			v34_n.u2 = &loc2_n.u17->bFFFF;
 			if (v34_n == 0x00)
 				break;
 			loc2_n = v34_n;
@@ -6407,7 +6407,7 @@ void fn0011AEEB(Eq_n arg0, Eq_n arg1)
 		v13_n.u2 = arg0.u17[4];
 		arg0.u17[4] = (struct Eq_n) (v13_n.u17 + 4);
 		Eq_n v13_n;
-		v13_n.u2 = &loc2_n.u17->bFFFFFFFF;
+		v13_n.u2 = &loc2_n.u17->bFFFF;
 		if (v13_n == 0x00)
 			break;
 		loc2_n = v13_n;
@@ -6486,7 +6486,7 @@ void fn0011B113(Eq_n arg0)
 	while (loc9_n != v18_n)
 	{
 		Eq_n v18_n;
-		v18_n.u2 = &loc9_n.u17->tFFFFFFFC.u0;
+		v18_n.u2 = &loc9_n.u17->tFFFC.u0;
 		arg0.u11[4] = (struct Eq_n) v18_n;
 		loc9_n = v18_n;
 	}
@@ -6714,7 +6714,7 @@ Eq_n fn0011B43F(Eq_n arg0)
 {
 	Eq_n v13_n;
 	v13_n.u2 = arg0.u17[4];
-	arg0.u17[4] = (struct Eq_n) &v13_n.u17->bFFFFFFFF;
+	arg0.u17[4] = (struct Eq_n) &v13_n.u17->bFFFF;
 	return <invalid>;
 }
 
@@ -8860,8 +8860,8 @@ void fn0011E416(Eq_n arg0)
 	Eq_n v13_n;
 	v13_n.u2 = *arg0.u3;
 	Eq_n v13_n;
-	v13_n.u0 = v13_n.u17->tFFFFFFFC.u0;
-	v13_n.u17->tFFFFFFFC.u0 = (word32) v13_n.u0 - 1;
+	v13_n.u0 = v13_n.u17->tFFFC.u0;
+	v13_n.u17->tFFFC.u0 = (word32) v13_n.u0 - 1;
 	if (v13_n < 0x01)
 		fn0011B709(*arg0.u3 + ~0x0B);
 }

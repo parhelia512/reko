@@ -993,7 +993,7 @@ namespace Reko.Arch.Arm.AArch64
         {
             return (u, d) =>
             {
-                var imm = DecodeLogicalImmediate(u >> offset, dt.BitSize);
+                var imm = DecodeLogicalImmediate(u >> offset, (int)dt.BitSize);
                 if (imm is null)
                     return false;
                 var op = Constant.Create(dt, imm.Value);
@@ -1354,7 +1354,7 @@ namespace Reko.Arch.Arm.AArch64
                 var iIndex = (u >> 16) & 0x1F;
                 if (iIndex == 0x1F)
                 {
-                    mem.Offset = Constant.Int32(elems * dt.Size);
+                    mem.Offset = Constant.Int32(elems * (int)dt.Size);
                 }
                 else
                 {
@@ -1390,7 +1390,7 @@ namespace Reko.Arch.Arm.AArch64
                 var mem = new MemoryOperand(dt);
                 var iReg = (u >> 5) & 0x1F;
                 mem.Base = Registers.AddrRegs64[iReg];
-                mem.Offset = Constant.Int32(elems * dt.Size);
+                mem.Offset = Constant.Int32(elems * (int) dt.Size);
                 mem.PostIndex = true;
                 d.state.ops.Add(mem);
                 return true;
@@ -1708,7 +1708,7 @@ namespace Reko.Arch.Arm.AArch64
         {
             var immr = ((Constant)dasm.state.ops[2]).ToUInt32();
             var imms = ((Constant)dasm.state.ops[3]).ToUInt32();
-            int width = dasm.state.ops[0].DataType.BitSize;
+            int width = (int)dasm.state.ops[0].DataType.BitSize;
             if ((width == 32 && imms == 0x1F) ||
                 (width == 64 && imms == 0x3F))
             {
@@ -1752,7 +1752,7 @@ namespace Reko.Arch.Arm.AArch64
         {
             var immr = ((Constant) dasm.state.ops[2]).ToUInt32();
             var imms = ((Constant) dasm.state.ops[3]).ToUInt32();
-            int width = dasm.state.ops[0].DataType.BitSize;
+            long width = dasm.state.ops[0].DataType.BitSize;
             if (width == 32)
             {
                 if (imms == 0x1F)

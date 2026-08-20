@@ -35,7 +35,7 @@ namespace Reko.Core.Serialization
         /// </summary>
         [XmlAttribute("size")]
         [DefaultValue(0)]
-        public int ByteSize;
+        public long ByteSize;
 
         /// <summary>
         /// Constructs an empty union type.

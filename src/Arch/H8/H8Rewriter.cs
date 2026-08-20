@@ -419,8 +419,8 @@ namespace Reko.Arch.H8
 
         private void RewriteExt(H8Instruction instr, Domain domain)
         {
-            var dstRange = new BitRange(0, instr.Size!.BitSize);
-            var srcRange = new BitRange(0, instr.Size!.BitSize / 2);
+            var dstRange = new BitRange(0, (int)instr.Size!.BitSize);
+            var srcRange = new BitRange(0, (int)instr.Size!.BitSize / 2);
             var dt = PrimitiveType.Create(domain, dstRange.Extent);
             var dst = (Identifier) OpSrc(instr.Operands[0]);
             var src = binder.EnsureRegister(arch.GetRegister(
@@ -572,8 +572,8 @@ namespace Reko.Arch.H8
             var right = OpSrc(instr.Operands[0]);
             var left = (Identifier) OpSrc(instr.Operands[1]);
             var dst = binder.EnsureRegister(
-                arch.GetRegister(left.Storage.Domain, new BitRange(0, left.DataType.BitSize * 2)) ??
-                arch.GetRegister(left.Storage.Domain, new BitRange(0, left.DataType.BitSize))!);
+                arch.GetRegister(left.Storage.Domain, new BitRange(0, (int)left.DataType.BitSize * 2)) ??
+                arch.GetRegister(left.Storage.Domain, new BitRange(0, (int)left.DataType.BitSize))!);
             var product = mul(left, right);
             product.DataType = dst.DataType;
             m.Assign(dst, product);

@@ -612,21 +612,21 @@ public class Intrinsics
 
     private static IntrinsicProcedure _addhn = IntrinsicBuilder.GenericBinary("__add_high_narrow", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var highPart = (cs[0].ToUInt64() + cs[1].ToUInt64()) >> bitsResult;
         return Constant.Create(dt, highPart);
     });
     private static IntrinsicProcedure _subhn = IntrinsicBuilder.GenericBinary("__sub_high_narrow", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var highPart = (cs[0].ToUInt64() - cs[1].ToUInt64()) >> bitsResult;
         return Constant.Create(dt, highPart);
     });
     private static IntrinsicProcedure _cmeq = IntrinsicBuilder.GenericBinary("__cmeq", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var result = cs[0].ToUInt64() == cs[1].ToUInt64() 
             ? ~0ul
@@ -635,7 +635,7 @@ public class Intrinsics
     });
     private static IntrinsicProcedure _cmge = IntrinsicBuilder.GenericBinary("__cmge", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var result = cs[0].ToInt64() >= cs[1].ToInt64()
             ? ~0ul
@@ -644,7 +644,7 @@ public class Intrinsics
     });
     private static IntrinsicProcedure _cmgt = IntrinsicBuilder.GenericBinary("__cmgt", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var result = cs[0].ToInt64() > cs[1].ToInt64()
             ? ~0ul
@@ -653,7 +653,7 @@ public class Intrinsics
     });
     private static IntrinsicProcedure _cmhi = IntrinsicBuilder.GenericBinary("__cmhi", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var result = cs[0].ToUInt64() > cs[1].ToUInt64()
             ? ~0ul
@@ -662,7 +662,7 @@ public class Intrinsics
     });
     private static IntrinsicProcedure _cmhs = IntrinsicBuilder.GenericBinary("__cmhs", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var result = cs[0].ToUInt64() >= cs[1].ToUInt64()
             ? ~0ul
@@ -671,7 +671,7 @@ public class Intrinsics
     });
     private static IntrinsicProcedure _cmle = IntrinsicBuilder.GenericBinary("__cmle", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var result = cs[0].ToInt64() <= cs[1].ToInt64()
             ? ~0ul
@@ -680,7 +680,7 @@ public class Intrinsics
     });
     private static IntrinsicProcedure _cmlt = IntrinsicBuilder.GenericBinary("__cmlt", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var result = cs[0].ToInt64() < cs[1].ToInt64()
             ? ~0ul
@@ -689,7 +689,7 @@ public class Intrinsics
     });
     private static IntrinsicProcedure _cmtst = IntrinsicBuilder.GenericBinary("__cmtst", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var result = ((cs[0].ToUInt64() & cs[1].ToUInt64()) != 0)
             ? ~0ul
@@ -698,19 +698,19 @@ public class Intrinsics
     });
     private static IntrinsicProcedure _cnt = IntrinsicBuilder.GenericBinary("__cnt", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var result = BitOperations.PopCount(cs[0].ToUInt64());
         return Constant.Create(dt, result);
     });
     private static Constant? _dup(DataType dt, Constant?[] cs)
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int)dt.BitSize;
         var c = cs[0];
         if (c is null)
             return null;
         var at = (ArrayType) dt;
-        var bitsElement = at.ElementType.BitSize;
+        var bitsElement = (int) at.ElementType.BitSize;
         var mask = Bits.Mask(0, bitsElement);
         var elemvalue = c.ToBigInteger() & mask;
         var result = BigInteger.Zero;
@@ -723,7 +723,7 @@ public class Intrinsics
 
     private static IntrinsicProcedure _raddhn = IntrinsicBuilder.GenericBinary("__add_high_narrow", (dt, cs) =>
     {
-        var bitsResult = dt.BitSize;
+        var bitsResult = (int) dt.BitSize;
         var mask = Bits.Mask(0, bitsResult);
         var sum = cs[0].ToUInt64() + cs[1].ToUInt64();
         var highPart = (sum + (1ul << bitsResult - 1)) >> bitsResult;
@@ -762,12 +762,12 @@ public class Intrinsics
         return Constant.Create(dt, Math.Min(a, b));
     });
 
-    private static BigInteger AllOnesSeed(DataType dt) => (BigInteger.One << dt.BitSize) - 1;
+    private static BigInteger AllOnesSeed(DataType dt) => (BigInteger.One << (int)dt.BitSize) - 1;
 
     private static BigInteger AllZerosSeed(DataType _) => BigInteger.Zero;
 
-    private static BigInteger MaxSignedInt(DataType dt) => (BigInteger.One << (dt.BitSize - 1)) - 1;
-    private static BigInteger MinSignedInt(DataType dt) => (BigInteger.One << (dt.BitSize - 1));
+    private static BigInteger MaxSignedInt(DataType dt) => (BigInteger.One << ((int)dt.BitSize - 1)) - 1;
+    private static BigInteger MinSignedInt(DataType dt) => (BigInteger.One << ((int)dt.BitSize - 1));
 
     /// <summary>
     /// Apply the operation horizontally across a SIMD register, reducing
@@ -776,11 +776,11 @@ public class Intrinsics
     private static Constant? Reduce(DataType dtResult, Constant[] cs, BigInteger seed, IFunctionalUnit operation)
     {
         var cSrc = cs[0];
-        var bitsSrc = cSrc.DataType.BitSize;
+        var bitsSrc = (int)cSrc.DataType.BitSize;
         var at = (ArrayType) cSrc.DataType;
         var dtElement = at.ElementType;
         var result = Constant.Create(dtResult, seed);
-        var bitsElement = dtElement.BitSize;
+        var bitsElement = (int)dtElement.BitSize;
         var mask = Bits.Mask(0, bitsElement);
         var value = cSrc.ToBigInteger();
         for (int bitpos = bitsSrc - bitsElement; bitpos >= 0; bitpos -= bitsElement)
@@ -812,11 +812,11 @@ public class Intrinsics
                 // action on consecutive pairs.
                 var at = (ArrayType) dt;
                 var dtElement = at.ElementType;
-                var src = (cs[1].ToBigInteger() << cs[0].DataType.BitSize) | cs[0].ToBigInteger();
-                var bitsSrc = cs[1].DataType.BitSize + cs[0].DataType.BitSize;
+                var src = (cs[1].ToBigInteger() << (int)cs[0].DataType.BitSize) | cs[0].ToBigInteger();
+                var bitsSrc = (int) (cs[1].DataType.BitSize + cs[0].DataType.BitSize);
                 var result = BigInteger.Zero;
 
-                var bitsElement = dtElement.BitSize;
+                var bitsElement = (int)dtElement.BitSize;
                 var maskLane = (BigInteger.One << bitsElement) - 1;
                 var ccs = new Constant[2];
                 for (int bitpos = bitsSrc - bitsElement; bitpos >= 0; bitpos -= bitsElement)

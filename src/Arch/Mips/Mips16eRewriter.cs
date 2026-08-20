@@ -296,7 +296,7 @@ Architecture */
         {
             var sp = binder.EnsureRegister(arch.StackRegister);
             var mop = (MultiRegisterOperand) instr.Operands[0];
-            int decrement = 0;
+            long decrement = 0;
 
             foreach (var iReg in saveRegs)
             {

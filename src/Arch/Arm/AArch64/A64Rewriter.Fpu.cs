@@ -67,7 +67,7 @@ namespace Reko.Arch.Arm.AArch64
                 elemType = PrimitiveType.CreateWord(elemBitsize);
             else
                 elemType = PrimitiveType.Create(domain, elemBitsize);
-            return new ArrayType(elemType, celem);
+            return new ArrayType(elemType, (int)celem);
         }
 
         private PrimitiveType? ElementDataType(DataType dt)

@@ -35,7 +35,7 @@ namespace Reko.Core.Serialization
         /// </summary>
 		[XmlAttribute("size")]
         [DefaultValue(0)]
-		public int ByteSize;
+		public long ByteSize;
 
         /// <summary>
         /// Disallow simplification of this structure type.
@@ -92,7 +92,7 @@ namespace Reko.Core.Serialization
         /// Field offset.
         /// </summary>
 		[XmlAttribute("offset")]
-		public int Offset;
+		public long Offset;
 
         /// <summary>
         /// Field name.
@@ -120,7 +120,7 @@ namespace Reko.Core.Serialization
         /// <param name="offset">Field offset.</param>
         /// <param name="name">Field name.</param>
         /// <param name="type">Field data type.</param>
-		public StructField_v1(int offset, string name, SerializedType type)
+		public StructField_v1(long offset, string name, SerializedType type)
 		{
 			this.Offset = offset;
 			this.Name = name;

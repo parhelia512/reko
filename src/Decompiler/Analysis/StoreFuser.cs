@@ -289,7 +289,7 @@ public class StoreFuser : IAnalysis<SsaState>
             {
                 if (slice.Expression is Identifier idSliced)
                 {
-                    return (ssa.Identifiers[idSliced], new BitRange(slice.Offset, slice.DataType.BitSize));
+                    return (ssa.Identifiers[idSliced], new BitRange(slice.Offset, (int)slice.DataType.BitSize));
                 }
             } else if (src is Identifier id)
             {
@@ -299,7 +299,7 @@ public class StoreFuser : IAnalysis<SsaState>
                     ass.Src is Slice sliced &&
                     sliced.Expression is Identifier idSliced)
                 {
-                    return (ssa.Identifiers[idSliced], new BitRange(sliced.Offset, sliced.Offset + sliced.DataType.BitSize));
+                    return (ssa.Identifiers[idSliced], new BitRange(sliced.Offset, sliced.Offset + (int)sliced.DataType.BitSize));
                 }
             }
             return (default, default);

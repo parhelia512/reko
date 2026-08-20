@@ -35,9 +35,9 @@ namespace Reko.ImageLoaders.LLVM
     /// </summary>
     public class TypeTranslator : LLVMTypeVisitor<DataType>
     {
-        private readonly int ptrBitSize;
+        private readonly long ptrBitSize;
 
-        public TypeTranslator(int pointerBitSize)
+        public TypeTranslator(long pointerBitSize)
         {
             this.ptrBitSize = pointerBitSize;
         }
@@ -102,7 +102,7 @@ namespace Reko.ImageLoaders.LLVM
         public DataType VisitStructure(StructureType s)
         {
             var str = new Reko.Core.Types.StructureType(null, 0, true);
-            int offset = 0;
+            long offset = 0;
             foreach (var field in s.Fields!)
             {
                 var ft = field.Accept(this);

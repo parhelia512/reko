@@ -5,4 +5,4 @@
 #include "tar.h"
 
 Eq_n g_a0025[];
-byte * g_ptrFFFFFFFF; // FFFFFFFF
+byte * g_ptrFFFF; // FFFFFFFF

@@ -4,7 +4,7 @@
 
 /*
 // Equivalence classes ////////////
-Eq_1: (struct "Globals" (800004FC real96 r800004FC) (80000508 real96 r80000508) (80000514 real96 r80000514) (80000520 real96 r80000520) (8000052C real96 r8000052C) (80000538 real96 r80000538))
+Eq_1: (struct "Globals" (-7FFFFB04 real96 r800004FC) (-7FFFFAF8 real96 r80000508) (-7FFFFAEC real96 r80000514) (-7FFFFAE0 real96 r80000520) (-7FFFFAD4 real96 r8000052C) (-7FFFFAC8 real96 r80000538))
 	globals_t (in globals : (ptr32 (struct "Globals")))
 Eq_2: (fn void ())
 	T_2 (in fn800003CC @ 80000000 : ptr32)
@@ -557,12 +557,12 @@ T_131: (in fn8000036C(fp0_8) @ 8000043A : void)
   OrigDataType: void
 */
 typedef struct Globals {
-	real96 r800004FC;	// 800004FC
-	real96 r80000508;	// 80000508
-	real96 r80000514;	// 80000514
-	real96 r80000520;	// 80000520
-	real96 r8000052C;	// 8000052C
-	real96 r80000538;	// 80000538
+	real96 r800004FC;	// FFFFFFFF800004FC
+	real96 r80000508;	// FFFFFFFF80000508
+	real96 r80000514;	// FFFFFFFF80000514
+	real96 r80000520;	// FFFFFFFF80000520
+	real96 r8000052C;	// FFFFFFFF8000052C
+	real96 r80000538;	// FFFFFFFF80000538
 } Eq_1;
 
 typedef void (Eq_2)();

@@ -169,7 +169,7 @@ namespace Reko.Core.Analysis
                 {
                     if (idOut.Storage is not FlagGroupStorage)
                     {
-                        int extraBits = idOut.DataType.BitSize - dtOut.BitSize;
+                        long extraBits = idOut.DataType.BitSize - dtOut.BitSize;
                         if (extraBits > 0)
                         {
                             // The non-live bits of expOut can safely be replaced with anything,

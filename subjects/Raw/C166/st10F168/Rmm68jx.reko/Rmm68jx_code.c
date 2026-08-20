@@ -9,9 +9,9 @@ void fn0000(struct Eq_n * SP)
 {
 	*(word16 *) ~0xED = 0x8004;
 	*(word16 *) ~0xED = 0x8004;
-	SP->wFFFFFFFE = 0x00;
-	SP->wFFFFFFFC = 0x00;
-	SP->wFFFFFFFA = 0x34;
+	SP->wFFFE = 0x00;
+	SP->wFFFC = 0x00;
+	SP->wFFFA = 0x34;
 }
 
 // 0034: void fn0034()

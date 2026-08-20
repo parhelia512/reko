@@ -189,13 +189,13 @@ namespace Reko.UnitTests.Decompiler.Analysis
             flow.ProcedureFlows.Add(procCallee, procFlow);
 
             m.Call(procCallee, 0,
-                new (Storage, Expression)[] { (ecx.Storage, m.ISubS(fp, 16)) },
-                new (Storage, Identifier)[] { });
+                [(ecx.Storage, m.ISubS(fp, 16))],
+                []);
 
             RunEscapedFrameIntervalsFinder();
 
             var expected = @"
-[[-16, -8], (struct (FFFFFFF4 word32 dwFFFFFFF4) (FFFFFFF8 word32 dwFFFFFFF8))]";
+[[-16, -8], (struct (-C word32 dwFFF4) (-8 word32 dwFFF8))]";
             AssertIntervals(expected);
 
         }

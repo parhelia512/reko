@@ -96,7 +96,7 @@ Eq_11: (union "Eq_11" (up32 u0) (cup16 u1))
 	T_2017 (in dwArg08 @ 00002080 : Eq_11)
 	T_2018 (in dwArg0C @ 00002080 : Eq_11)
 	T_2021 (in dwArg04 - 4<i32> @ 00002080 : word32)
-	T_2026 (in dwArg04->dwFFFFFFFC + 4<32> @ 00002080 : word32)
+	T_2026 (in dwArg04->dwFFFC + 4<32> @ 00002080 : word32)
 	T_2031 (in Mem20[Mem20[0x00002B8C<p32>:word32] + 20<i32>:word16] @ 00002144 : word16)
 	T_2032 (in 0x27<16> @ 00002144 : word16)
 	T_2038 (in memory @ 00002152 : word32)
@@ -116,7 +116,7 @@ Eq_11: (union "Eq_11" (up32 u0) (cup16 u1))
 	T_2282 (in 0x27<16> @ 00002300 : word16)
 	T_2331 (in Mem11[Mem11[0x00002B8C<p32>:word32] + 20<i32>:word16] @ 0000236C : word16)
 	T_2332 (in 0x27<16> @ 0000236C : word16)
-Eq_14: (struct "Eq_14" (FFFFFFF8 (ptr32 Eq_123) ptrFFFFFFF8) (FFFFFFFC (ptr32 Eq_440) ptrFFFFFFFC))
+Eq_14: (struct "Eq_14" (-8 (ptr32 Eq_123) ptrFFF8) (-4 (ptr32 Eq_440) ptrFFFC))
 	T_14 (in fp @ 00001036 : (ptr32 Eq_14))
 	T_16 (in Mem29[0x00002B88<p32>:word32] @ 00001036 : word32)
 	T_441 (in Mem0[0x00002B88<p32>:word32] @ 00001286 : word32)
@@ -975,7 +975,7 @@ Eq_1977: (fn Eq_5 (word32, up32, up32, Eq_5))
 Eq_1987: (fn (ptr32 word32) (Eq_5, Eq_11, Eq_5))
 	T_1987 (in fn000021C4 @ 0000203E : ptr32)
 	T_1988 (in signature of fn000021C4 @ 000021C4 : void)
-Eq_2008: (struct "Eq_2008" (FFFFFFFC word32 dwFFFFFFFC))
+Eq_2008: (struct "Eq_2008" (-4 word32 dwFFFC))
 	T_2008 (in dwArg04 @ 0000204C : (ptr32 Eq_2008))
 	T_2009 (in 0<32> @ 00002068 : word32)
 Eq_2014: (fn void (Eq_5, Eq_11, Eq_11))
@@ -3057,7 +3057,7 @@ T_441: (in Mem0[0x00002B88<p32>:word32] @ 00001286 : word32)
 T_442: (in a7_6 @ 00001286 : (ptr32 Eq_14))
   Class: Eq_14
   DataType: (ptr32 Eq_14)
-  OrigDataType: (ptr32 (struct (FFFFFFF8 T_449 tFFFFFFF8) (FFFFFFFC T_445 tFFFFFFFC)))
+  OrigDataType: (ptr32 (struct (-8 T_449 tFFF8) (-4 T_445 tFFFC)))
 T_443: (in -4<i32> @ 0000128E : int32)
   Class: Eq_443
   DataType: int32
@@ -9321,7 +9321,7 @@ T_2007: (in 0<32> @ 0000204C : word32)
 T_2008: (in dwArg04 @ 0000204C : (ptr32 Eq_2008))
   Class: Eq_2008
   DataType: (ptr32 Eq_2008)
-  OrigDataType: (ptr32 (struct (FFFFFFFC T_2024 tFFFFFFFC)))
+  OrigDataType: (ptr32 (struct (-4 T_2024 tFFFC)))
 T_2009: (in 0<32> @ 00002068 : word32)
   Class: Eq_2008
   DataType: (ptr32 Eq_2008)
@@ -9390,11 +9390,11 @@ T_2025: (in 4<32> @ 00002080 : word32)
   Class: Eq_2025
   DataType: word32
   OrigDataType: word32
-T_2026: (in dwArg04->dwFFFFFFFC + 4<32> @ 00002080 : word32)
+T_2026: (in dwArg04->dwFFFC + 4<32> @ 00002080 : word32)
   Class: Eq_11
   DataType: Eq_11
   OrigDataType: word32
-T_2027: (in fn00002128(g_t2BC0.u1, dwArg04 - 4<i32>, dwArg04->dwFFFFFFFC + 4<32>) @ 00002080 : void)
+T_2027: (in fn00002128(g_t2BC0.u1, dwArg04 - 4<i32>, dwArg04->dwFFFC + 4<32>) @ 00002080 : void)
   Class: Eq_2027
   DataType: void
   OrigDataType: void
@@ -14516,8 +14516,8 @@ typedef union Eq_11 {
 } Eq_11;
 
 typedef struct Eq_14 {
-	struct Eq_123 * ptrFFFFFFF8;	// FFFFFFF8
-	struct Eq_440 * ptrFFFFFFFC;	// FFFFFFFC
+	struct Eq_123 * ptrFFF8;	// FFFFFFFFFFFFFFF8
+	struct Eq_440 * ptrFFFC;	// FFFFFFFFFFFFFFFC
 } Eq_14;
 
 typedef Eq_23 * (Eq_19)(word32);
@@ -14928,7 +14928,7 @@ typedef Eq_5 (Eq_1977)(word32, up32, up32, Eq_5);
 typedef word32 * (Eq_1987)(Eq_5, Eq_11, Eq_5);
 
 typedef struct Eq_2008 {
-	word32 dwFFFFFFFC;	// FFFFFFFC
+	word32 dwFFFC;	// FFFFFFFFFFFFFFFC
 } Eq_2008;
 
 typedef void (Eq_2014)(Eq_5, Eq_11, Eq_11);

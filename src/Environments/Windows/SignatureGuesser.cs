@@ -169,7 +169,7 @@ namespace Reko.Environments.Windows
             var sproc = new SerializedSignature
             {
                 ParametersValid = false,
-                StackDelta = argBytes - 2 * arch.PointerType.Size, // ecx, edx
+                StackDelta = argBytes - 2 * (int) arch.PointerType.Size, // ecx, edx
             };
             return new Procedure_v1
             {

@@ -309,7 +309,7 @@ namespace Reko.Evaluation
                         : m.Slice(elem, dtSlice, offset);
                     return eNew;
                 }
-                bitoffset += bitsElem;
+                bitoffset += (int)bitsElem;
             }
             return null;
         }

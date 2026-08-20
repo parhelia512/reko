@@ -273,7 +273,7 @@ namespace Reko.Typing
 			{
                 if (f.DataType is ArrayType array)
                 {
-                    ex.DataType = new MemberPointer(p, array.ElementType, platform.PointerType.BitSize);
+                    ex.DataType = new MemberPointer(p, array.ElementType, (int)platform.PointerType.BitSize);
                 }
                 else
                 {
@@ -461,7 +461,7 @@ namespace Reko.Typing
                     platform.PointerType.BitSize);
                 return e;
             }
-            var ptr = new PointerType(e.DataType, platform.PointerType.BitSize);
+            var ptr = new PointerType(e.DataType, (int)platform.PointerType.BitSize);
             return m.AddrOf(ptr, e);
         }
 
@@ -512,7 +512,7 @@ namespace Reko.Typing
 			}
 			else if (pt.Domain == Domain.Pointer)
             {
-                var ptr = new PointerType(new UnknownType(), pt.BitSize);
+                var ptr = new PointerType(new UnknownType(), (int)pt.BitSize);
                 return VisitPointer(ptr);
             }
             else

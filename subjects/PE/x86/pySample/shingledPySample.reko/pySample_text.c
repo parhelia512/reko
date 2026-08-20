@@ -152,9 +152,9 @@ l10001384:
 		}
 		struct Eq_n * esp_n = esp_n - 4;
 		esp_n->t0000 = 0x00;
-		esp_n->ptrFFFFFFFC = (LONG *) &g_t100033AC;
+		esp_n->ptrFFFC = (LONG *) &g_t100033AC;
 		g_dw100033A8 = 0x00;
-		InterlockedExchange(esp_n->ptrFFFFFFFC, esp_n->t0000);
+		InterlockedExchange(esp_n->ptrFFFC, esp_n->t0000);
 		esp_n = (word32 *) (&esp_n->t0000 + 1);
 		break;
 	}
@@ -175,59 +175,59 @@ Eq_n fn10001388(Eq_n ecx, Eq_n edx, ptr32 ebx, ptr32 esi, word32 edi)
 	struct Eq_n * ebp_n = fn100017E8(ebx, esi, edi, dwLoc0C, 0x10);
 	Eq_n ebx_n;
 	ebx_n.u0 = ebp_n->t0008.u0;
-	ebp_n->tFFFFFFE4 = 0x01;
-	ebp_n->dwFFFFFFFC = 0x00;
+	ebp_n->tFFE4 = 0x01;
+	ebp_n->dwFFFC = 0x00;
 	g_t10003008 = (Eq_n) edx;
-	ebp_n->dwFFFFFFFC = 0x01;
+	ebp_n->dwFFFC = 0x01;
 	struct Eq_n * esp_n = fp - 8;
 	Eq_n edi_n = ecx;
 	Eq_n esi_n = edx;
 	if (edx == 0x00 && g_dw10003070 == 0x00)
 	{
-		ebp_n->tFFFFFFE4 = 0x00;
+		ebp_n->tFFE4 = 0x00;
 		goto l1000147A;
 	}
 	if (edx == 0x01 || edx == 0x02)
 	{
 		if (g_dw100020CC != 0x00)
-			ebp_n->tFFFFFFE4 = fn00000000(ebx_n, edx, ecx);
-		if (ebp_n->tFFFFFFE4 == 0x00)
+			ebp_n->tFFE4 = fn00000000(ebx_n, edx, ecx);
+		if (ebp_n->tFFE4 == 0x00)
 		{
 l1000147A:
-			ebp_n->dwFFFFFFFC = 0x00;
-			ebp_n->dwFFFFFFFC = ~0x01;
+			ebp_n->dwFFFC = 0x00;
+			ebp_n->dwFFFC = ~0x01;
 			fn10001493();
-			Eq_n eax_n = ebp_n->tFFFFFFE4;
-			fn1000182D(ebp_n, esp_n->tFFFFFFFC.u0);
+			Eq_n eax_n = ebp_n->tFFE4;
+			fn1000182D(ebp_n, esp_n->tFFFC.u0);
 			return eax_n;
 		}
 		struct Eq_n * esp_n = esp_n - 4;
 		esp_n->t0000 = ecx;
-		esp_n->tFFFFFFFC = edx;
-		esp_n->tFFFFFFF8.u0 = (_onexit_t) ebx_n;
-		Eq_n eax_n = fn100011E9(esp_n->tFFFFFFF8.u0, esp_n->tFFFFFFFC, esp_n->t0000, out ebx_n, out esi_n, out edi_n);
-		ebp_n->tFFFFFFE4 = eax_n;
+		esp_n->tFFFC = edx;
+		esp_n->tFFF8.u0 = (_onexit_t) ebx_n;
+		Eq_n eax_n = fn100011E9(esp_n->tFFF8.u0, esp_n->tFFFC, esp_n->t0000, out ebx_n, out esi_n, out edi_n);
+		ebp_n->tFFE4 = eax_n;
 		esp_n = (struct Eq_n *) ((char *) &esp_n->t0000 + 4);
 		if (eax_n == 0x00)
 			goto l1000147A;
 	}
 	struct Eq_n * esp_n = esp_n - 4;
 	esp_n->t0000 = edi_n;
-	esp_n->tFFFFFFFC = esi_n;
-	esp_n->tFFFFFFF8.u0 = (_onexit_t) ebx_n;
-	Eq_n eax_n = fn100017C6(esp_n->tFFFFFFF8.u0, esp_n->tFFFFFFFC);
-	ebp_n->tFFFFFFE4 = eax_n;
+	esp_n->tFFFC = esi_n;
+	esp_n->tFFF8.u0 = (_onexit_t) ebx_n;
+	Eq_n eax_n = fn100017C6(esp_n->tFFF8.u0, esp_n->tFFFC);
+	ebp_n->tFFE4 = eax_n;
 	esp_n = (struct Eq_n *) ((char *) &esp_n->t0000 + 4);
 	if (esi_n == 0x01 && eax_n == 0x00)
 	{
 		esp_n->t0000 = edi_n;
-		esp_n->tFFFFFFFC = eax_n;
-		esp_n->tFFFFFFF8.u0 = (_onexit_t) ebx_n;
-		fn100017C6(esp_n->tFFFFFFF8.u0, esp_n->tFFFFFFFC);
+		esp_n->tFFFC = eax_n;
+		esp_n->tFFF8.u0 = (_onexit_t) ebx_n;
+		fn100017C6(esp_n->tFFF8.u0, esp_n->tFFFC);
 		esp_n->t0000 = edi_n;
-		esp_n->tFFFFFFFC = 0x00;
-		esp_n->tFFFFFFF8.u0 = (_onexit_t) ebx_n;
-		fn100011E9(esp_n->tFFFFFFF8.u0, esp_n->tFFFFFFFC, esp_n->t0000, out ebx_n, out esi_n, out edi_n);
+		esp_n->tFFFC = 0x00;
+		esp_n->tFFF8.u0 = (_onexit_t) ebx_n;
+		fn100011E9(esp_n->tFFF8.u0, esp_n->tFFFC, esp_n->t0000, out ebx_n, out esi_n, out edi_n);
 		esp_n = (struct Eq_n *) ((char *) &esp_n->t0000 + 4);
 		if (g_dw100020CC != 0x00)
 			fn00000000(ebx_n, 0x00, edi_n);
@@ -236,14 +236,14 @@ l1000147A:
 	{
 		struct Eq_n * esp_n = esp_n - 4;
 		esp_n->t0000 = edi_n;
-		esp_n->tFFFFFFFC = esi_n;
-		esp_n->tFFFFFFF8.u0 = (_onexit_t) ebx_n;
-		Eq_n eax_n = fn100011E9(esp_n->tFFFFFFF8.u0, esp_n->tFFFFFFFC, esp_n->t0000, out ebx_n, out esi_n, out edi_n);
+		esp_n->tFFFC = esi_n;
+		esp_n->tFFF8.u0 = (_onexit_t) ebx_n;
+		Eq_n eax_n = fn100011E9(esp_n->tFFF8.u0, esp_n->tFFFC, esp_n->t0000, out ebx_n, out esi_n, out edi_n);
 		esp_n = (struct Eq_n *) ((char *) &esp_n->t0000 + 4);
 		if (eax_n == 0x00)
-			ebp_n->tFFFFFFE4 &= eax_n;
-		if (ebp_n->tFFFFFFE4 != 0x00 && g_dw100020CC != 0x00)
-			ebp_n->tFFFFFFE4 = fn00000000(ebx_n, esi_n, edi_n);
+			ebp_n->tFFE4 &= eax_n;
+		if (ebp_n->tFFE4 != 0x00 && g_dw100020CC != 0x00)
+			ebp_n->tFFE4 = fn00000000(ebx_n, esi_n, edi_n);
 	}
 	goto l1000147A;
 }
@@ -276,7 +276,7 @@ Eq_n fn100015CF(ptr32 ebx, ptr32 esi, word32 edi)
 	word32 dwLoc0C;
 	struct Eq_n * ebp_n = fn100017E8(ebx, esi, edi, dwLoc0C, 0x14);
 	Eq_n eax_n = _decode_pointer(g_ptr100033B4);
-	ebp_n->tFFFFFFE4 = eax_n;
+	ebp_n->tFFE4 = eax_n;
 	Eq_n eax_n;
 	struct Eq_n * esp_n;
 	if (eax_n == ~0x00)
@@ -289,23 +289,23 @@ Eq_n fn100015CF(ptr32 ebx, ptr32 esi, word32 edi)
 	{
 		lock(0x08);
 		void * ecx_n = esp_n->ptr0000;
-		ebp_n->dwFFFFFFFC = 0x00;
+		ebp_n->dwFFFC = 0x00;
 		void * v16_n = g_ptr100033B4;
-		ebp_n->tFFFFFFE4 = _decode_pointer(esp_n->ptr0000);
+		ebp_n->tFFE4 = _decode_pointer(esp_n->ptr0000);
 		void * v17_n = g_ptr100033B0;
-		ebp_n->ptrFFFFFFE0 = _decode_pointer(esp_n->ptrFFFFFFFC);
+		ebp_n->ptrFFE0 = _decode_pointer(esp_n->ptrFFFC);
 		Eq_n v18_n;
 		v18_n.u0 = ebp_n->t0008.u0;
-		ebp_n->tFFFFFFDC.u0 = (_onexit_t) __dllonexit(esp_n->tFFFFFFF0.u0, esp_n->ptrFFFFFFF4, esp_n->ptrFFFFFFF8);
-		g_ptr100033B4 = encode_pointer(ecx_n, ebp_n->tFFFFFFE4, v18_n, ebp_n - 28, ebp_n - 32, v17_n, v16_n);
-		g_ptr100033B0 = encode_pointer(ebp_n->ptrFFFFFFE0);
-		ebp_n->dwFFFFFFFC = ~0x01;
+		ebp_n->tFFDC.u0 = (_onexit_t) __dllonexit(esp_n->tFFF0.u0, esp_n->ptrFFF4, esp_n->ptrFFF8);
+		g_ptr100033B4 = encode_pointer(ecx_n, ebp_n->tFFE4, v18_n, ebp_n - 28, ebp_n - 32, v17_n, v16_n);
+		g_ptr100033B0 = encode_pointer(ebp_n->ptrFFE0);
+		ebp_n->dwFFFC = ~0x01;
 		fn10001665();
 		word32 esp_n;
 		esp_n = esp_n + 0x1C;
-		eax_n.u0 = ebp_n->tFFFFFFDC.u0;
+		eax_n.u0 = ebp_n->tFFDC.u0;
 	}
-	fn1000182D(ebp_n, esp_n->tFFFFFFFC.u0);
+	fn1000182D(ebp_n, esp_n->tFFFC.u0);
 	return eax_n;
 }
 
@@ -382,7 +382,7 @@ ui32 fn10001742(ptr32 ebx, ptr32 esi, word32 edi, word32 & ediOut)
 {
 	word32 dwLoc0C;
 	struct Eq_n * ebp_n = fn100017E8(ebx, esi, edi, dwLoc0C, 0x08);
-	ebp_n->dwFFFFFFFC = 0x00;
+	ebp_n->dwFFFC = 0x00;
 	Eq_n dwLoc0C_n;
 	dwLoc0C_n.u1 = 0x10000000;
 	ui32 eax_n;
@@ -395,13 +395,13 @@ ui32 fn10001742(ptr32 ebx, ptr32 esi, word32 edi, word32 & ediOut)
 		if (eax_n != null)
 		{
 			eax_n = ~(eax_n->dw0024 >> 0x1F) & 0x01;
-			ebp_n->dwFFFFFFFC = ~0x01;
+			ebp_n->dwFFFC = ~0x01;
 l100017A8:
 			ediOut = fn1000182D(ebp_n, dwLoc0C_n);
 			return eax_n;
 		}
 	}
-	ebp_n->dwFFFFFFFC = ~0x01;
+	ebp_n->dwFFFC = ~0x01;
 	eax_n = 0x00;
 	goto l100017A8;
 }
@@ -425,11 +425,11 @@ ptr32 fn100017E8(ptr32 ebx, ptr32 esi, word32 edi, word32 dwArg00, ui32 dwArg08)
 {
 	ptr32 fp;
 	struct Eq_n * esp_n = fp - 8 - dwArg08;
-	esp_n->ptrFFFFFFFC = ebx;
-	esp_n->ptrFFFFFFF8 = esi;
-	esp_n->dwFFFFFFF4 = edi;
-	esp_n->dwFFFFFFF0 = g_dw10003000 ^ fp + 8;
-	esp_n->dwFFFFFFEC = dwArg00;
+	esp_n->ptrFFFC = ebx;
+	esp_n->ptrFFF8 = esi;
+	esp_n->dwFFF4 = edi;
+	esp_n->dwFFF0 = g_dw10003000 ^ fp + 8;
+	esp_n->dwFFEC = dwArg00;
 	selector fs;
 	fs->ptr0000 = fp - 8;
 	return fp + 8;
@@ -443,7 +443,7 @@ ptr32 fn100017E8(ptr32 ebx, ptr32 esi, word32 edi, word32 dwArg00, ui32 dwArg08)
 word32 fn1000182D(struct Eq_n * ebp, Eq_n dwArg00)
 {
 	selector fs;
-	fs->dw0000 = ebp->dwFFFFFFF0;
+	fs->dw0000 = ebp->dwFFF0;
 	ebp->t0000.u0 = (ui32) dwArg00;
 	word32 dwArg08;
 	return dwArg08;

@@ -35,7 +35,7 @@ namespace Reko.Core.Hll.C
         /// <summary>
         /// The size of the data type in storage units.
         /// </summary>
-        public int Size { get; set; } // in bytes.
+        public long Size { get; set; } // in bytes.
 
         /// <summary>
         /// Its corresponding Reko data type.

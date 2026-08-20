@@ -1037,7 +1037,7 @@ namespace Reko.Core.Output
         {
             if (value < 10)
                 return "{0}";
-            var nybbles = Nybbles(type.BitSize);
+            var nybbles = Nybbles((int)type.BitSize);
             if (nybbles < unsignedConstantFormatStrings.Length)
                 return unsignedConstantFormatStrings[nybbles];
             else

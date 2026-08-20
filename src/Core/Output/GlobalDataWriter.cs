@@ -294,7 +294,7 @@ namespace Reko.Core.Output
         {
             if (IsLargeBlob(pt))
             {
-                var bytes = rdr.ReadBytes(pt.Size);
+                var bytes = rdr.ReadBytes((int)pt.Size);
                 FormatRawBytes(bytes);
             }
             else
@@ -425,7 +425,7 @@ namespace Reko.Core.Output
             bool ok = true;
             for (int i = 0; ok && i < str.Fields.Count; ++i)
             {
-                int fieldOffset = str.Fields[i].Offset;
+                long fieldOffset = str.Fields[i].Offset;
                 if (fieldOffset < 0)
                     continue;
                 fmt.Indent();

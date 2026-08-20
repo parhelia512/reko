@@ -356,7 +356,7 @@ namespace Reko.Arch.Msp430
 
         private Constant WordAligned(DataType width)
         {
-            return m.Int32(((width.Size + 1) / 2) * 2);
+            return m.Int32((((int)width.Size + 1) / 2) * 2);
         }
 
         private void RewriteAdcSbc(IntrinsicProcedure fn)

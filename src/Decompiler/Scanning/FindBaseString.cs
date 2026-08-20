@@ -233,7 +233,7 @@ namespace Reko.Scanning
             var steps = (int)((interval.EndAddress - interval.BeginAddress) / Stride);
             pb.ShowProgress("Finding string pointers", 0, steps);
             var intersection = new HashSet<ulong>(strOffsets.Count);
-            var wordMask = Bits.Mask(0, arch.PointerType.BitSize);
+            var wordMask = Bits.Mask(0, (int)arch.PointerType.BitSize);
             while (uBaseAddr <= interval.EndAddress)
             {
                 if (ct.IsCancellationRequested)

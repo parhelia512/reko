@@ -9,10 +9,10 @@ void _start()
 {
 	Eq_n fp;
 	struct Eq_n * r15_n = fp - 0x00A0 & ~0x0F;
-	r15_n->bFFFFFF50 = 0x00;
+	r15_n->bFF50 = 0x00;
 	ptr64 %continuation;
-	r15_n->ptrFFFFFFF0 = %continuation;
-	r15_n->ptrFFFFFFF8 = r15_n - 0x00B0;
+	r15_n->ptrFFF0 = %continuation;
+	r15_n->ptrFFF8 = r15_n - 0x00B0;
 	__libc_start_main();
 }
 

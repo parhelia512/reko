@@ -43,8 +43,8 @@ namespace Reko.Core.Operators
             if (c1 is BigConstant bc1)
             {
                 // Force operands to be unsigned.
-                var left = bc1.Value & Bits.Mask(c1.DataType.BitSize);
-                var right = c2.ToBigInteger() & Bits.Mask(c2.DataType.BitSize);
+                var left = bc1.Value & Bits.Mask((int)c1.DataType.BitSize);
+                var right = c2.ToBigInteger() & Bits.Mask((int)c2.DataType.BitSize);
                 return BuildConstant(bc1.DataType, c2.DataType, left / right);
             }
             return BuildConstant(c1.DataType, c2.DataType, (long) (c1.ToUInt64() / c2.ToUInt64()));

@@ -72,9 +72,9 @@ namespace Reko.Arch.zSeries
             this.host = host;
             this.dasm = new zSeriesDisassembler(arch, rdr).GetEnumerator();
             this.cmp = new ExpressionValueComparer();
-            this.instrs = new List<RtlInstruction>();
+            this.instrs = [];
             this.m = new RtlEmitter(instrs);
-            this.ptrSize = arch.PointerType.BitSize;
+            this.ptrSize = (int) arch.PointerType.BitSize;
             this.instr = default!;
         }
 

@@ -5,13 +5,13 @@
 /*
 // Equivalence classes ////////////
 Eq_1: (struct "Globals"
-		(8000065C <unknown> t8000065C)
-		(8000270C (ptr32 code) ptr8000270C)
-		(80002714 (arr (ptr32 code)) a80002714)
-		(8000271C word32 dw8000271C)
-		(80002724 byte b80002724)
-		(80002726 uint32 dtor_idx.3228)
-		(8000272A <unknown> t8000272A)
+		(FFFFFFFF8000065C <unknown> t8000065C)
+		(FFFFFFFF8000270C (ptr32 code) ptr8000270C)
+		(FFFFFFFF80002714 (arr (ptr32 code)) a80002714)
+		(FFFFFFFF8000271C word32 dw8000271C)
+		(FFFFFFFF80002724 byte b80002724)
+		(FFFFFFFF80002726 uint32 dtor_idx.3228)
+		(FFFFFFFF8000272A <unknown> t8000272A)
 		(FFFFFFFF code tFFFFFFFF))
 	globals_t (in globals : (ptr32 (struct "Globals")))
 Eq_6: (fn word32 ((ptr32 byte)))
@@ -58,7 +58,7 @@ Eq_153: (ref int32)
 	T_153 (in tArg14 + 0<32> @ 80000608 : word32)
 Eq_158: (union "Eq_158" ((ptr32 word32) u0) ((ref int32) u1))
 	T_158 (in tArg14 + 0<32> @ 80000608 : word32)
-Eq_206: (struct "Eq_206" (FFFFFFFC (ptr32 code) ptrFFFFFFFC))
+Eq_206: (struct "Eq_206" (-4 (ptr32 code) ptrFFFC))
 	T_206 (in a2_24 @ 8000063E : (ptr32 Eq_206))
 // Type Variables ////////////
 globals_t: (in globals : (ptr32 (struct "Globals")))
@@ -884,7 +884,7 @@ T_205: (in a0_11 == (<anonymous> *) 0xFFFFFFFF<32> @ 8000063A : bool)
 T_206: (in a2_24 @ 8000063E : (ptr32 Eq_206))
   Class: Eq_206
   DataType: (ptr32 Eq_206)
-  OrigDataType: (ptr32 (struct (FFFFFFFC T_209 tFFFFFFFC)))
+  OrigDataType: (ptr32 (struct (-4 T_209 tFFFC)))
 T_207: (in -4<i32> @ 8000063E : int32)
   Class: Eq_207
   DataType: int32
@@ -927,13 +927,13 @@ T_216:
   OrigDataType: (arr T_215)
 */
 typedef struct Globals {
-	<unknown> t8000065C;	// 8000065C
-	<anonymous> * ptr8000270C;	// 8000270C
-	<anonymous> * a80002714[];	// 80002714
-	word32 dw8000271C;	// 8000271C
-	byte b80002724;	// 80002724
-	uint32 dtor_idx.3228;	// 80002726
-	<unknown> t8000272A;	// 8000272A
+	<unknown> t8000065C;	// FFFFFFFF8000065C
+	<anonymous> * ptr8000270C;	// FFFFFFFF8000270C
+	<anonymous> * a80002714[];	// FFFFFFFF80002714
+	word32 dw8000271C;	// FFFFFFFF8000271C
+	byte b80002724;	// FFFFFFFF80002724
+	uint32 dtor_idx.3228;	// FFFFFFFF80002726
+	<unknown> t8000272A;	// FFFFFFFF8000272A
 	<anonymous> tFFFFFFFF;	// FFFFFFFF
 } Eq_1;
 
@@ -981,6 +981,6 @@ typedef union Eq_158 {
 } Eq_158;
 
 typedef struct Eq_206 {
-	<anonymous> * ptrFFFFFFFC;	// FFFFFFFC
+	<anonymous> * ptrFFFC;	// FFFFFFFFFFFFFFFC
 } Eq_206;
 

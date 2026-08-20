@@ -63,7 +63,7 @@ Eq_50: (fn void ())
 	T_186 (in fn0945 @ 01CF : ptr16)
 	T_251 (in fn0945 @ 0127 : ptr16)
 	T_612 (in fn0945 @ 01ED : ptr16)
-Eq_53: (struct "Eq_53" (FFFFFFFE ui16 wFFFFFFFE) (0 Eq_87 t0000) (2 uint8 b0002))
+Eq_53: (struct "Eq_53" (-2 ui16 wFFFE) (0 Eq_87 t0000) (2 uint8 b0002))
 	T_53 (in <invalid> @ 011A : word16)
 	T_54 (in de_31 @ 011A : (ptr16 Eq_53))
 	T_65 (in sp_47 @ 012A : (ptr16 Eq_53))
@@ -285,7 +285,7 @@ Eq_246: (fn void ())
 	T_1535 (in fn0A2A @ 0987 : ptr16)
 	T_1752 (in fn0A2A @ 09F2 : ptr16)
 	T_1770 (in fn0A2A @ 0A1A : ptr16)
-Eq_271: (struct "Eq_271" (FFFFFFFE Eq_72 tFFFFFFFE) (0 (ptr16 byte) ptr0000))
+Eq_271: (struct "Eq_271" (-2 Eq_72 tFFFE) (0 (ptr16 byte) ptr0000))
 	T_271 (in sp_47 - 2<16> @ 02AA : word16)
 	T_272 (in sp_620 @ 02AA : (ptr16 Eq_271))
 Eq_288: (fn byte ())
@@ -1716,7 +1716,7 @@ T_271: (in sp_47 - 2<16> @ 02AA : word16)
 T_272: (in sp_620 @ 02AA : (ptr16 Eq_271))
   Class: Eq_271
   DataType: (ptr16 Eq_271)
-  OrigDataType: (ptr16 (struct (FFFFFFFE T_72 tFFFFFFFE) (0 T_70 t0000)))
+  OrigDataType: (ptr16 (struct (-2 T_72 tFFFE) (0 T_70 t0000)))
 T_273: (in 1<16> @ 02AA : word16)
   Class: Eq_273
   DataType: int16
@@ -2872,7 +2872,7 @@ T_560: (in hl_286 @ 0905 : ui16)
 T_561: (in sp_298 @ 0919 : (ptr16 Eq_53))
   Class: Eq_53
   DataType: (ptr16 Eq_53)
-  OrigDataType: (ptr16 (struct (FFFFFFFE T_564 tFFFFFFFE) (0 T_574 t0000) (2 T_571 t0002)))
+  OrigDataType: (ptr16 (struct (-2 T_564 tFFFE) (0 T_574 t0000) (2 T_571 t0002)))
 T_562: (in -2<i16> @ 0919 : int16)
   Class: Eq_562
   DataType: int16
@@ -8307,7 +8307,7 @@ typedef void (Eq_42)();
 typedef void (Eq_50)();
 
 typedef struct Eq_53 {
-	ui16 wFFFFFFFE;	// FFFFFFFE
+	ui16 wFFFE;	// FFFFFFFFFFFFFFFE
 	Eq_87 t0000;	// 0
 	uint8 b0002;	// 2
 } Eq_53;
@@ -8359,7 +8359,7 @@ typedef void (Eq_221)();
 typedef void (Eq_246)();
 
 typedef struct Eq_271 {
-	Eq_72 tFFFFFFFE;	// FFFFFFFE
+	Eq_72 tFFFE;	// FFFFFFFFFFFFFFFE
 	byte * ptr0000;	// 0
 } Eq_271;
 

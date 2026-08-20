@@ -310,7 +310,7 @@ namespace Reko.Scanning
                 blockThen = proc.AddBlock((Address) b.Target, label);
                 if (program.User.BlockLabels.TryGetValue(label, out var userLabel))
                     blockThen.UserLabel = userLabel;
-                var jmpSite = state.OnBeforeCall(stackReg!, arch.PointerType.Size);
+                var jmpSite = state.OnBeforeCall(stackReg!, (int)arch.PointerType.Size);
                 GenerateCallToOutsideProcedure(jmpSite, (Address) b.Target);
                 Emit(new ReturnInstruction());
                 blockCur.Procedure.ControlGraph.AddEdge(blockCur, blockCur.Procedure.ExitBlock);

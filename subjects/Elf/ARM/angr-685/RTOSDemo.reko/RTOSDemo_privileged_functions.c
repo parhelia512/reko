@@ -1617,7 +1617,7 @@ struct Eq_n ** g_ptr1330 = &g_ptr200000C8; // 00001330
 //      vPortSVCHandler
 void prvSVCHandler(struct Eq_n * r0, word32 cpsr)
 {
-	up32 r3_n = (word32) r0->ptr0018->bFFFFFFFE;
+	up32 r3_n = (word32) r0->ptr0018->bFFFE;
 	if (r3_n == 0x01)
 	{
 		*g_ptr1378 = 0x10000000;
@@ -1650,11 +1650,11 @@ struct Eq_n * pxPortInitialiseStack(struct Eq_n * r0, ui32 r1, word32 r2, int32 
 		r3_n = 0x02;
 	if (r3 != 0x01)
 		r3_n = 0x03;
-	r0->dwFFFFFFE0 = r2;
-	r0->dwFFFFFFF8 = r1 & ~0x01;
-	r0->dwFFFFFFFC = 0x01000000;
-	r0->dwFFFFFFF4 = 0x00;
-	r0->dwFFFFFFBC = r3_n;
+	r0->dwFFE0 = r2;
+	r0->dwFFF8 = r1 & ~0x01;
+	r0->dwFFFC = 0x01000000;
+	r0->dwFFF4 = 0x00;
+	r0->dwFFBC = r3_n;
 	return r0 - 0x44;
 }
 
@@ -1762,7 +1762,7 @@ l000014AE:
 		ui32 * r1_n = g_ptr1530;
 		r2_n->dw0000 = r3_n;
 		*r1_n |= 0x00010000;
-		r2_n->dwFFFFFFF4 |= 0x05;
+		r2_n->dwFFF4 |= 0x05;
 	}
 	word32 * r2_n = g_ptr14F4;
 	word32 * r3_n = g_ptr14F8;
@@ -1950,15 +1950,15 @@ void xPortPendSVHandler(word32 r4, word32 r5, word32 r6, word32 r7, word32 r8, w
 	struct Eq_n * r0_n = __mrs(cpsr);
 	struct Eq_n ** r3_n = g_ptr16E0;
 	struct Eq_n * r2_n = (struct Eq_n *) *r3_n;
-	r0_n->dwFFFFFFDC = __mrs(cpsr);
-	r0_n->dwFFFFFFE0 = r4;
-	r0_n->dwFFFFFFE4 = r5;
-	r0_n->dwFFFFFFE8 = r6;
-	r0_n->dwFFFFFFEC = r7;
-	r0_n->dwFFFFFFF0 = r8;
-	r0_n->dwFFFFFFF4 = r9;
-	r0_n->dwFFFFFFF8 = r10;
-	r0_n->dwFFFFFFFC = fp;
+	r0_n->dwFFDC = __mrs(cpsr);
+	r0_n->dwFFE0 = r4;
+	r0_n->dwFFE4 = r5;
+	r0_n->dwFFE8 = r6;
+	r0_n->dwFFEC = r7;
+	r0_n->dwFFF0 = r8;
+	r0_n->dwFFF4 = r9;
+	r0_n->dwFFF8 = r10;
+	r0_n->dwFFFC = fp;
 	r2_n->ptr0000 = r0_n - 36;
 	__msr(cpsr, 191);
 	vTaskSwitchContext();

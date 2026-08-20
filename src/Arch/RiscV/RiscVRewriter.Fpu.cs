@@ -34,7 +34,7 @@ namespace Reko.Arch.RiscV
         /// <param name="exp"></param>
         private Expression MaybeNanBox(Expression exp, DataType dtDst)
         {
-            int cbNanBox = dtDst.BitSize - exp.DataType.BitSize;
+            int cbNanBox = (int) (dtDst.BitSize - exp.DataType.BitSize);
             if (cbNanBox > 0)
             {
                 var dtNan = PrimitiveType.CreateWord(cbNanBox);

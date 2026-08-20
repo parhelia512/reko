@@ -21,6 +21,7 @@
 using Reko.Core.Expressions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Reko.Core.Types
 {
@@ -94,7 +95,7 @@ namespace Reko.Core.Types
         /// A value of 0 means "unknown size".
         /// </param>
         /// <returns></returns>
-		public StructureType CreateStructureType(string? name, int size)
+		public StructureType CreateStructureType(string? name, long size)
 		{
 			return new StructureType(name, size);
 		}
@@ -120,7 +121,7 @@ namespace Reko.Core.Types
         /// <param name="pointee">Type of the offset.</param>
         /// <param name="bitSize">Bit size of the pointer.</param>
         /// <returns>The created member pointer.</returns>
-		public MemberPointer CreateMemberPointer(DataType basePointer, DataType pointee, int bitSize)
+		public MemberPointer CreateMemberPointer(DataType basePointer, DataType pointee, long bitSize)
 		{
 			return new MemberPointer(basePointer, pointee, bitSize);
 		}
@@ -131,9 +132,11 @@ namespace Reko.Core.Types
         /// <param name="pointee">The type pointed to.</param>
         /// <param name="bitSize">The bit size of the pointer.</param>
         /// <returns>The created pointer.</returns>
-		public PointerType CreatePointer(DataType pointee, int bitSize)
+		public PointerType CreatePointer(DataType pointee, long bitSize)
 		{
-			return new PointerType(pointee, bitSize);
+            if ((ulong) bitSize > uint.MaxValue)
+                throw new ArgumentOutOfRangeException($"Unreasonably large pointer size {bitSize}.");
+			return new PointerType(pointee, (int)bitSize);
 		}
 
         /// <summary>

@@ -94,7 +94,7 @@ namespace Reko.Core
         /// Generates the name of a global variable.
         /// </summary>
         /// <param name="field">Global variable field.</param>
-        /// <returns></returns>
+        /// <returns>A name to be used for a global variable.</returns>
         public virtual string GlobalName(StructureField field)
         {
             if (field.IsNameSet)

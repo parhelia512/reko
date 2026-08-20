@@ -4,6 +4,7 @@
 
 #include "hello_ppc.h"
 
+Eq_n g_t0001;
 Eq_n g_t0016;
 Eq_n g_t0041;
 Eq_n g_t0060;

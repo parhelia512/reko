@@ -545,7 +545,7 @@ namespace Reko.Arch.Arc
                 {
                     return (null, null);
                 }
-                offset = offset * suSize;
+                offset = offset * (int)suSize;
             }
             if (mem.Base is not null)
             {

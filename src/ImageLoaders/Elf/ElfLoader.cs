@@ -697,9 +697,9 @@ namespace Reko.ImageLoaders.Elf
         public ImageSymbol CreateGotSymbol(IProcessorArchitecture arch, Address addrGot, string name)
         {
             //$TODO: look up function signature.
-            int size = arch.PointerType.Size;
-            int bitSize = arch.PointerType.BitSize;
-            return ImageSymbol.DataObject(arch, addrGot, name + "_GOT", new PointerType(new CodeType(), bitSize));
+            long size = arch.PointerType.Size;
+            long bitSize = arch.PointerType.BitSize;
+            return ImageSymbol.DataObject(arch, addrGot, name + "_GOT", new PointerType(new CodeType(), (int)bitSize));
         }
 
         public IEnumerable<ElfSymbol> GetAllSymbols()

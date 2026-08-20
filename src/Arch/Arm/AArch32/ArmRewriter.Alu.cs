@@ -929,7 +929,7 @@ namespace Reko.Arch.Arm.AArch32
                 return;
             }
             var rSrc = this.Operand(0, PrimitiveType.Word32, true);
-            int regSize = regs[0].DataType.Size;
+            int regSize = (int)regs[0].DataType.Size;
             int totalRegsize = regs.Length * regSize;
             int offset;
             if (add)
@@ -950,7 +950,7 @@ namespace Reko.Arch.Arm.AArch32
                     ? m.IAddS(rSrc, offset)
                     : rSrc;
                 m.Assign(m.Mem(r.DataType, ea), dst);
-                offset += r.DataType.Size;
+                offset += (int)r.DataType.Size;
             }
             if (instr.Writeback)
             {

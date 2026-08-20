@@ -81,7 +81,7 @@ namespace Reko.Scanning
                 Index = RegisterOf(target as Identifier);
             }
             Operations = [];
-            JumpSize = target.DataType.Size;
+            JumpSize = (int)target.DataType.Size;
         }
 
         /// <summary>

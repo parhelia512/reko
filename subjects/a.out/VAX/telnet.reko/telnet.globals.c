@@ -5,4 +5,4 @@
 #include "telnet.h"
 
 Eq_n g_t0010;
-Eq_n g_tFFFFFFFF;
+Eq_n g_tFFFF;

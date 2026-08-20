@@ -93,7 +93,7 @@ namespace Reko.Arch.X86.Rewriter
                 m.Conditional(
                     dst.DataType,
                     cmp(op1, op2),
-                    Constant.Create(dst.DataType, (BigInteger.One << dst.DataType.BitSize) - 1),
+                    Constant.Create(dst.DataType, (BigInteger.One << (int)dst.DataType.BitSize) - 1),
                     Constant.Zero(dst.DataType)));
         }
 
@@ -294,7 +294,7 @@ namespace Reko.Arch.X86.Rewriter
         {
             var src = SrcOp(1);
             var dst = SrcOp(0);
-            int wideDataWidth = src.DataType.BitSize + dst.DataType.BitSize;
+            int wideDataWidth = (int)(src.DataType.BitSize + dst.DataType.BitSize);
             var dtSrc = new ArrayType(elementType, wideDataWidth / elementType.BitSize);
             var dtDst = CreatePackedArrayType(elementType, dst.DataType);
             Identifier idWideData;
@@ -682,7 +682,7 @@ namespace Reko.Arch.X86.Rewriter
         /// </summary>
         private ArrayType CreatePackedArrayType(DataType elementType, DataType arrayType)
         {
-            int celem = arrayType.Size / elementType.Size;
+            long celem = arrayType.Size / elementType.Size;
             var at = new ArrayType(elementType, celem);
             return at;
         }

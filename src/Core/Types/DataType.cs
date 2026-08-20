@@ -71,7 +71,7 @@ namespace Reko.Core.Types
         /// <summary>
         /// The size of this data type in bits.
         /// </summary>
-        public virtual int BitSize { get { return Size * BitsPerByte; } }       //$REVIEW: Wrong for 36-bit machines
+        public virtual long BitSize { get { return Size * BitsPerByte; } }       //$REVIEW: Wrong for 36-bit machines
 
         /// <summary>
         /// The type <see cref="Domain"/> of this <see cref="DataType"/>.
@@ -116,7 +116,7 @@ namespace Reko.Core.Types
         /// <remarks>
         /// Storage units are commonly, but not always, eight-bit octets, or "bytes".
         /// </remarks>
-        public abstract int Size { get; set; }
+        public abstract long Size { get; set; }
 
         /// <summary>
         /// Accepts an <see cref="IDataTypeVisitor"/>.
@@ -162,10 +162,10 @@ namespace Reko.Core.Types
         /// don't have a value for their Size properties.
         /// </remarks>
         //$TODO: convert to virtual method.
-        public int MeasureSize()
+        public long MeasureSize()
         {
             DataType dt = this;
-            int offset = 0;
+            long offset = 0;
             for (; ; )
             {
                 switch (dt)
@@ -189,7 +189,7 @@ namespace Reko.Core.Types
                     dt = field.DataType;
                     break;
                 case UnionType ut:
-                    int unionSize = 0;
+                    long unionSize = 0;
                     foreach (var alt in ut.Alternatives.Values)
                     {
                         unionSize = Math.Max(unionSize, alt.DataType.MeasureSize());
@@ -240,10 +240,10 @@ namespace Reko.Core.Types
         /// the types may be inferred. For instance, inferred <see cref="StructureType"/>s
         /// don't have a value for their Size properties.
         /// </remarks>
-        public int MeasureBitSize(int bitsPerUnit)
+        public long MeasureBitSize(int bitsPerUnit)
         {
             DataType dt = this;
-            int bitOffset = 0;
+            long bitOffset = 0;
             for (; ; )
             {
                 switch (dt)
@@ -267,7 +267,7 @@ namespace Reko.Core.Types
                     dt = field.DataType;
                     break;
                 case UnionType ut:
-                    int unionBitSize = 0;
+                    long unionBitSize = 0;
                     foreach (var alt in ut.Alternatives.Values)
                     {
                         unionBitSize = Math.Max(unionBitSize, alt.DataType.MeasureBitSize(bitsPerUnit));

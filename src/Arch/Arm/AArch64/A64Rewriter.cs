@@ -489,7 +489,7 @@ namespace Reko.Arch.Arm.AArch64
                     throw new NotImplementedException($"ExtendSimdConstant {instr.ShiftCode}.");
                 }
             }
-            int nElements = v.DataType.BitSize / cbitsElement;
+            long nElements = v.DataType.BitSize / cbitsElement;
             var n = new BigInteger(imm);
             var result = BigInteger.Zero;
             for (int i = 0; i < nElements; ++i)

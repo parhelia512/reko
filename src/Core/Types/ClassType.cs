@@ -58,7 +58,7 @@ namespace Reko.Core.Types
         public List<ClassBase> Bases { get; private set; }
 
         /// <inheritdoc/>
-        public override int Size { get; set; }
+        public override long Size { get; set; }
 
         /// <inheritdoc/>
         public override void Accept(IDataTypeVisitor v)

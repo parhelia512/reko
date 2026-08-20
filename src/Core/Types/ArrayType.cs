@@ -18,6 +18,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 
 namespace Reko.Core.Types
@@ -34,10 +35,10 @@ namespace Reko.Core.Types
         /// <param name="length">Number of elements in the array, or 0 if 
         /// the number of elements is unknown.
         /// </param>
-		public ArrayType(DataType elType, int length) : base(Domain.Array)
+		public ArrayType(DataType elType, long length) : base(Domain.Array)
 		{
-			this.ElementType = elType;
-			this.Length = length;
+            this.ElementType = elType;
+			this.Length = (int)length;
 		}
 
         /// <inheritdoc/>
@@ -78,7 +79,7 @@ namespace Reko.Core.Types
 
 
         /// <inheritdoc/>
-		public override int Size
+		public override long Size
 		{
 			get { return ElementType.Size * Length; }
 			set { ThrowBadSize(); }

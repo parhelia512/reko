@@ -137,7 +137,7 @@ namespace Reko.Arch.Motorola.M68k.Assembler
             throw new NotImplementedException(op.ToString());
         }
 
-        private void Imm(int size, uint c)
+        private void Imm(long size, uint c)
         {
             switch (size)
             {

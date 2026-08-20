@@ -134,7 +134,7 @@ namespace Reko.Arch.Mos6502
 
         private Symbol EmitRelativeTarget(string target, PrimitiveType dt)
         {
-            int offBytes = dt.Size;
+            int offBytes = (int) dt.Size;
             switch (offBytes)
             {
             case 1: m.EmitByte(-(m.Position + 1)); break;

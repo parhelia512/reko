@@ -39,7 +39,7 @@ namespace Reko.Core.Serialization
         /// </summary>
         [XmlAttribute("size")]
         [DefaultValue(0)]
-        public int PointerSize;
+        public long PointerSize;
 
         /// <summary>
         /// Constructs an empty instance of <see cref="PointerType_v1"/>.

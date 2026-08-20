@@ -81,7 +81,8 @@ namespace Reko.Core.Output
             {
                 var (field, addr) = item;
                 var filename = DetermineFilename(addr, fileExtension);
-                var globalVar = new GlobalVariable(addr, field.DataType, program.NamingPolicy.GlobalName(field));
+                var globalName = program.NamingPolicy.GlobalName(field);
+                var globalVar = new GlobalVariable(addr, field.DataType, globalName);
                 PlaceObject(globalVar, filename, result);
                 objectTracer.TraceObject(field.DataType, addr);
             }

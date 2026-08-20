@@ -1192,8 +1192,8 @@ public class Ns32kRewriter : IEnumerable<RtlInstructionCluster>
             m.Assign(tmp, product);
             var lo = binder.EnsureRegister(reg);
             var hi = binder.EnsureRegister(Registers.GpRegisters[reg.Number + 1]);
-            m.Assign(lo, m.Dpb(lo, m.Slice(tmp, 0, dt.BitSize), 0));
-            m.Assign(hi, m.Dpb(hi, m.Slice(tmp, dt.BitSize, dt.BitSize), 0));
+            m.Assign(lo, m.Dpb(lo, m.Slice(tmp, 0, (int) dt.BitSize), 0));
+            m.Assign(hi, m.Dpb(hi, m.Slice(tmp, (int) dt.BitSize, (int) dt.BitSize), 0));
             return;
         }
         DstOperand(1, product);

@@ -33,31 +33,31 @@ ptr32 g_ptrFFFF796C; // FFFF796C
 ptr32 g_ptrFFFF7970; // FFFF7970
 word32 g_dwFFFF79CC; // FFFF79CC
 byte g_bFFFF7ACC; // FFFF7ACC
-word32 g_dwFFFF8250; // FFFF8250
-word32 g_dwFFFF827C; // FFFF827C
-byte * g_ptrFFFF8498; // FFFF8498
-byte * g_ptrFFFF849C; // FFFF849C
-word64 g_qwFFFF84A4; // FFFF84A4
-int32 g_dwFFFF84A8; // FFFF84A8
-byte * g_ptrFFFF84B4; // FFFF84B4
-word32 g_dwFFFF84C0; // FFFF84C0
-byte * g_ptrFFFF84C4; // FFFF84C4
-word32 g_dwFFFF84C8; // FFFF84C8
-int32 g_dwFFFF84CC; // FFFF84CC
-word32 * g_ptrFFFF8504; // FFFF8504
-Eq_n g_tFFFFB3D0;
-word32 g_dwFFFFB3D8; // FFFFB3D8
-int32 g_dwFFFFB3DC; // FFFFB3DC
-word32 g_dwFFFFB3E8; // FFFFB3E8
-word32 g_dwFFFFB3EC; // FFFFB3EC
-word32 g_dwFFFFB3FC; // FFFFB3FC
-word32 g_dwFFFFB404; // FFFFB404
-word32 g_dwFFFFB410; // FFFFB410
-word32 g_dwFFFFB414; // FFFFB414
-word32 g_dwFFFFB41C; // FFFFB41C
-int32 g_dwFFFFB434; // FFFFB434
-word32 g_dwFFFFB444; // FFFFB444
-word32 g_dwFFFFB448; // FFFFB448
-int32 g_dwFFFFB454; // FFFFB454
-int32 g_dwFFFFB458; // FFFFB458
-struct Eq_n * g_ptrFFFFB9B7; // FFFFB9B7
+word32 g_dw8250; // FFFF8250
+word32 g_dw827C; // FFFF827C
+byte * g_ptr8498; // FFFF8498
+byte * g_ptr849C; // FFFF849C
+word64 g_qw84A4; // FFFF84A4
+int32 g_dw84A8; // FFFF84A8
+byte * g_ptr84B4; // FFFF84B4
+word32 g_dw84C0; // FFFF84C0
+byte * g_ptr84C4; // FFFF84C4
+word32 g_dw84C8; // FFFF84C8
+int32 g_dw84CC; // FFFF84CC
+word32 * g_ptr8504; // FFFF8504
+Eq_n g_tB3D0;
+word32 g_dwB3D8; // FFFFB3D8
+int32 g_dwB3DC; // FFFFB3DC
+word32 g_dwB3E8; // FFFFB3E8
+word32 g_dwB3EC; // FFFFB3EC
+word32 g_dwB3FC; // FFFFB3FC
+word32 g_dwB404; // FFFFB404
+word32 g_dwB410; // FFFFB410
+word32 g_dwB414; // FFFFB414
+word32 g_dwB41C; // FFFFB41C
+int32 g_dwB434; // FFFFB434
+word32 g_dwB444; // FFFFB444
+word32 g_dwB448; // FFFFB448
+int32 g_dwB454; // FFFFB454
+int32 g_dwB458; // FFFFB458
+struct Eq_n * g_ptrB9B7; // FFFFB9B7

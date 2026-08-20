@@ -368,7 +368,7 @@ namespace Reko.Arch.X86
 
         private RegisterStorage GpRegFromBits(int bits, DataType dataWidth)
 		{
-            int bitSize = dataWidth.BitSize;
+            int bitSize = (int)dataWidth.BitSize;
             bits &= 0x1F;
             RegisterStorage[] bank;
             switch (bitSize)

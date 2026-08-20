@@ -104,7 +104,7 @@ namespace Reko.Core.Types
 		}
 
         /// <inheritdoc/>
-        public override int Size
+        public override long Size
 		{
 			get { return 0; }
 			set { ThrowBadSize(); }

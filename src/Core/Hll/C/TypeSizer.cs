@@ -30,11 +30,11 @@ namespace Reko.Core.Hll.C
     /// <summary>
     /// Returns the size and alignment requirement of a type in bytes.
     /// </summary>
-    public class TypeSizer : ISerializedTypeVisitor<(int, int)>
+    public class TypeSizer : ISerializedTypeVisitor<(long, int)>
     {
         private readonly IPlatform platform;
         private readonly IDictionary<string, SerializedType> typedefs;
-        private readonly Dictionary<SerializedTaggedType, (int,int)> tagSizes;
+        private readonly Dictionary<SerializedTaggedType, (long,int)> tagSizes;
         private int structureAlignment;
 
         /// <summary>
@@ -46,80 +46,80 @@ namespace Reko.Core.Hll.C
         {
             this.platform = platform;
             this.typedefs = typedefs;
-            this.tagSizes = new Dictionary<SerializedTaggedType, (int,int)>(new SerializedTypeComparer());
+            this.tagSizes = new Dictionary<SerializedTaggedType, (long, int)>(new SerializedTypeComparer());
             this.structureAlignment = platform.StructureMemberAlignment;
         }
 
-        private int Align(int size)
+        private long Align(long size)
         {
             return size;
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitCode(CodeType_v1 code)
+        public (long, int) VisitCode(CodeType_v1 code)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitPrimitive(PrimitiveType_v1 primitive)
+        public (long, int) VisitPrimitive(PrimitiveType_v1 primitive)
         {
             var size = primitive.ByteSize;
-            return (size, size);
+            return (size, (int)size);
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitPointer(PointerType_v1 pointer)
+        public (long, int) VisitPointer(PointerType_v1 pointer)
         {
-            var ptrSize = platform.PointerType.Size;
+            var ptrSize = (int) platform.PointerType.Size;
             return (ptrSize, ptrSize);
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitReference(ReferenceType_v1 pointer)
+        public (long, int) VisitReference(ReferenceType_v1 pointer)
         {
-            var refSize = platform.PointerType.Size;
+            var refSize = (int) platform.PointerType.Size;
             return (refSize, refSize);
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitMemberPointer(MemberPointer_v1 memptr)
+        public (long, int) VisitMemberPointer(MemberPointer_v1 memptr)
         {
-            var mpSize = platform.FramePointerType.Size;
+            var mpSize = (int) platform.FramePointerType.Size;
             return (mpSize, mpSize);
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitArray(ArrayType_v1 array)
+        public (long, int) VisitArray(ArrayType_v1 array)
         {
             var (elemSize, elemAlign) = array.ElementType!.Accept(this);
             return (Align(elemSize) * array.Length, elemAlign);
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitEnum(SerializedEnumType e)
+        public (long, int) VisitEnum(SerializedEnumType e)
         {
             //$BUGBUG: at most sizeof int according to the C lang def, but varies widely among compilers.
             return (4, 4);
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitSignature(SerializedSignature signature)
+        public (long, int) VisitSignature(SerializedSignature signature)
         {
             return (0, 1);
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitString(StringType_v2 str)
+        public (long, int) VisitString(StringType_v2 str)
         {
-            var pstrSize = platform.PointerType.Size;
+            var pstrSize = (int) platform.PointerType.Size;
             return (pstrSize, pstrSize);
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitStructure(StructType_v1 structure)
+        public (long, int) VisitStructure(StructType_v1 structure)
         {
-            var size = 0;
+            long size = 0;
             var alignment = 1;
             if (structure.Fields is null)
             {
@@ -137,7 +137,7 @@ namespace Reko.Core.Hll.C
             return (size, alignment);
         }
 
-        private int AlignFieldOffset(int offset, int preferredAlignment)
+        private long AlignFieldOffset(long offset, int preferredAlignment)
         {
             int alignment;
             if (preferredAlignment < this.structureAlignment)
@@ -155,7 +155,7 @@ namespace Reko.Core.Hll.C
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitTypedef(SerializedTypedef typedef)
+        public (long, int) VisitTypedef(SerializedTypedef typedef)
         {
             //int size = typedef.DataType.Accept(this);
             //namedTypeSizes[typedef.Name] = size;
@@ -166,7 +166,7 @@ namespace Reko.Core.Hll.C
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitTypeReference(TypeReference_v1 typeReference)
+        public (long, int) VisitTypeReference(TypeReference_v1 typeReference)
         {
             if (!typedefs.TryGetValue(typeReference.TypeName!, out var dataType))
             {
@@ -177,11 +177,11 @@ namespace Reko.Core.Hll.C
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitUnion(UnionType_v1 union)
+        public (long, int) VisitUnion(UnionType_v1 union)
         {
             if (union.Alternatives is null)
                 return tagSizes[union];
-            var size = 0;
+            long size = 0;
             var alignment = 1;
             foreach (var field in union.Alternatives)
             {
@@ -194,13 +194,13 @@ namespace Reko.Core.Hll.C
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitVoidType(VoidType_v1 voidType)
+        public (long, int) VisitVoidType(VoidType_v1 voidType)
         {
             return (0,1);
         }
 
         /// <inheritdoc/>
-        public (int, int) VisitTemplate(SerializedTemplate template)
+        public (long, int) VisitTemplate(SerializedTemplate template)
         {
             throw new NotImplementedException();
         }

@@ -715,7 +715,7 @@ namespace Reko.Arch.Avr.Avr32
                 sp = binder.EnsureRegister((RegisterStorage) instr.Operands[1]);
             }
             var cp = RewriteOp(0);
-            int offset = 0;
+            long offset = 0;
             foreach (var reg in regs.Reverse())
             {
                 DoRewriteLdc(
@@ -793,7 +793,7 @@ namespace Reko.Arch.Avr.Avr32
             }
 
             bool emitReturn = false;
-            int offset = 0;
+            long offset = 0;
             foreach (var reg in regs.Reverse())
             {
                 if (reg == Registers.pc)
@@ -1286,7 +1286,7 @@ namespace Reko.Arch.Avr.Avr32
             {
                 sp = binder.EnsureRegister((RegisterStorage) instr.Operands[0]);
             }
-            int offset = 0;
+            long offset = 0;
             foreach (var reg in regs)
             {
                 offset -= reg.DataType.Size;

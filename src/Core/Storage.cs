@@ -587,7 +587,7 @@ namespace Reko.Core
         {
             this.Number = number;
             this.BitAddress = bitAddress;
-            int bitSize = dataType.BitSize;
+            int bitSize = (int) dataType.BitSize;
             if (bitSize == 64)
             {
                 BitMask = ~0ul;
@@ -899,7 +899,7 @@ namespace Reko.Core
         /// that is, the first element in the array is the most significant one.
         /// </param>
         public SequenceStorage(params Storage[] elements) : this(
-            PrimitiveType.CreateWord(elements.Sum(e => (int)e.BitSize)), 
+            PrimitiveType.CreateWord(elements.Sum(e => (long)e.BitSize)), 
             elements)
         {
         }
@@ -1081,10 +1081,12 @@ namespace Reko.Core
         /// </summary>
         /// <param name="offset">offset from the stack frame start.</param>
         /// <param name="dt">Data type of this storage.</param>
-        public StackStorage(int offset, DataType dt)
-            : base(StorageDomain.Stack + offset, "stack", dt)
+        public StackStorage(long offset, DataType dt)
+            : base(StorageDomain.Stack + (int)offset, "stack", dt)
         {
-            this.StackOffset = offset;
+            if (Math.Abs(offset) > int.MaxValue)
+                throw new ArgumentOutOfRangeException(nameof(offset), "Stack offset is too large.");
+            this.StackOffset = (int)offset;
             this.BitSize = (uint)dt.BitSize;
         }
 

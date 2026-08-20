@@ -51,7 +51,7 @@ namespace Reko.Environments.SysV.ArchSpecific
                 arch.GetRegister("o1")!);
             this.fret0 = arch.GetRegister("f0")!;
             this.fret1 = arch.GetRegister("f1")!;
-            this.wordSize = this.arch.WordWidth.Size;
+            this.wordSize = (int)this.arch.WordWidth.Size;
         }
 
         public override void Generate(

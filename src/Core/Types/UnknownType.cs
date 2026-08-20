@@ -31,10 +31,10 @@ namespace Reko.Core.Types
     /// </summary>
 	public class UnknownType : DataType
 	{
-        private readonly int size;
+        private readonly long size;
 
         /// <inheritdoc/>
-		public UnknownType(int size = 0)
+		public UnknownType(long size = 0)
             : base(Domain.Any)
 		{
             this.size = size;
@@ -59,7 +59,7 @@ namespace Reko.Core.Types
 		}
 
         /// <inheritdoc/>
-		public override int Size
+		public override long Size
 		{
 			get { return size; }
 			set { ThrowBadSize(); }

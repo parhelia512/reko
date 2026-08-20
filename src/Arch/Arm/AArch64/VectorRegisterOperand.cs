@@ -70,7 +70,7 @@ namespace Reko.Arch.Arm.AArch64
             }
         }
 
-        public static void WriteName(int bitSize, RegisterStorage VectorRegister, VectorData ElementType, int Index, MachineInstructionRenderer renderer)
+        public static void WriteName(long bitSize, RegisterStorage VectorRegister, VectorData ElementType, int Index, MachineInstructionRenderer renderer)
         {
             renderer.WriteString(VectorRegister.Name);
             renderer.WriteChar('.');

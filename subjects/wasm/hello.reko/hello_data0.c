@@ -1176,7 +1176,7 @@ Eq_n g_t2664 = // 00002664
 	{
 		-1
 	};
-struct Eq_n ******************* g_ptr2670 = &g_ptrFFFFFFFF; // 00002670
+struct Eq_n ******************* g_ptr2670 = &g_ptrFFFF; // 00002670
 struct Eq_n ************** g_ptr2698 = &g_ptrAFFFFFF; // 00002698
 int8 g_a2D75[88] = // 00002D75
 	{

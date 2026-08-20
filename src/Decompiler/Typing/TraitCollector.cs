@@ -109,7 +109,7 @@ namespace Reko.Typing
 			atrco.Collect(null, 0, field, effectiveAddress);
 		}
 
-		private void CollectEffectiveAddress(Expression basePtr, int basePtrBitSize, Expression field, Expression effectiveAddress)
+		private void CollectEffectiveAddress(Expression basePtr, long basePtrBitSize, Expression field, Expression effectiveAddress)
 		{
 			atrco.Collect(basePtr, basePtrBitSize, field, effectiveAddress);
 		}

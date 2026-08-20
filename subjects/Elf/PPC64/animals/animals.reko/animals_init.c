@@ -9,14 +9,14 @@
 //      fn0000000000002780
 void fn0000000000002760(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = r2->ptrFFFF8280;
+	<anonymous> * r12_n = r2->ptr8280;
 	r12_n();
 }
 
 // 0000000000002780: void fn0000000000002780(Register (ptr64 Eq_n) r2, Register word64 lr, Register word64 xer)
 void fn0000000000002780(struct Eq_n * r2, word64 lr, word64 xer)
 {
-	if (r2->qwFFFF8008 != 0x00)
+	if (r2->qw8008 != 0x00)
 	{
 		fn0000000000002760(r2);
 		struct Eq_n * qwLoc48;

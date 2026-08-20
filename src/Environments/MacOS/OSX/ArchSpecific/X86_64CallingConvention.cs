@@ -103,7 +103,7 @@ namespace Reko.Environments.MacOS.OSX.ArchSpecific
                 }
                 else
                 {
-                    int regsNeeded = (dtParam.Size + 7) / 8;
+                    int regsNeeded = ((int)dtParam.Size + 7) / 8;
                     if (regsNeeded > 4 || ir + regsNeeded >= iregs.Length)
                     {
                         ccr.StackParam(dtParam);
@@ -112,12 +112,12 @@ namespace Reko.Environments.MacOS.OSX.ArchSpecific
                         throw new NotImplementedException();
                 }
             }
-            ccr.CallerCleanup(arch.PointerType.Size);
+            ccr.CallerCleanup((int)arch.PointerType.Size);
         }
 
         public void SetReturnRegister(ICallingConventionBuilder ccr, DataType dtArg)
         {
-            int bitSize = dtArg.BitSize;
+            int bitSize = (int)dtArg.BitSize;
             if (dtArg.Domain == Domain.Real)
             {
                 var xmm0 = fregs[0];

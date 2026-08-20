@@ -28,16 +28,16 @@ void fn0000(cui16 acc, Eq_n offs, word16 * bp, <anonymous> * grxl, word16 wArg1A
 		offs.u1->u1 = (word16) 0x00;
 		grxl();
 		int16 offs_n = sp_n->w0000;
-		ptr16 bp_n = sp_n->ptrFFFFFFFE;
-		__read_modreg(0x00) = sp_n->wFFFFFFFC;
+		ptr16 bp_n = sp_n->ptrFFFE;
+		__read_modreg(0x00) = sp_n->wFFFC;
 		word16 csze_n = cond(__read_modreg(0x00));
-		__read_modreg(0x00) = sp_n->wFFFFFFFA;
+		__read_modreg(0x00) = sp_n->wFFFA;
 		word16 csze_n = cond(__read_modreg(0x00));
-		*((word16) bp_n + offs_n) = sp_n->wFFFFFFF8;
+		*((word16) bp_n + offs_n) = sp_n->wFFF8;
 		struct Eq_n * dp1_n;
-		dp1_n->w0001 = sp_n->wFFFFFFF6;
-		word16 lc1_n = sp_n->wFFFFFFF2;
-		word16 lc0_n = sp_n->wFFFFFFF0;
+		dp1_n->w0001 = sp_n->wFFF6;
+		word16 lc1_n = sp_n->wFFF2;
+		word16 lc0_n = sp_n->wFFF0;
 	}
 	__return_from_interrupt();
 }

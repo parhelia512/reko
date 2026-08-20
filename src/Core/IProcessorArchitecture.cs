@@ -713,7 +713,7 @@ namespace Reko.Core
         /// Size of the return address equals to pointer size on the most of
         /// architectures.
         /// </remarks>
-        public virtual int ReturnAddressOnStack => PointerType.Size; //$TODO: deal with near/far calls in x86-realmode
+        public virtual int ReturnAddressOnStack => (int)PointerType.Size; //$TODO: deal with near/far calls in x86-realmode
         
         /// <inheritdoc />
         public int InstructionBitSize { get; protected set; }

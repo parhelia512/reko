@@ -85,7 +85,7 @@ namespace Reko.Core.Expressions
         /// <returns>A binary expression for the sum.</returns>
         public BinaryExpression IAdd(Expression left, long right)
         {
-            return IAdd(left, Word(left.DataType.BitSize, right));
+            return IAdd(left, Word((int)left.DataType.BitSize, right));
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Reko.Core.Expressions
         /// <param name="src">The smaller value to deposit.</param>
         /// <param name="offset">The bit offset at which to deposit the value.</param>
         /// <returns>A deposit-bits expression.</returns>
-        public Expression Dpb(Expression dst, Expression src, int offset)
+        public Expression Dpb(Expression dst, Expression src, long offset)
         {
             Debug.Assert(dst is Identifier || dst is Constant);
             var exps = new List<Expression>();
@@ -386,7 +386,7 @@ namespace Reko.Core.Expressions
             }
             if (msb < dst.DataType.BitSize)
             {
-                exps.Add(Slice(dst, PrimitiveType.CreateWord(dst.DataType.BitSize - msb), msb));
+                exps.Add(Slice(dst, PrimitiveType.CreateWord(dst.DataType.BitSize - msb), (int)msb));
             }
             if (exps.Count == 1)
                 return exps[0];
@@ -1291,7 +1291,7 @@ namespace Reko.Core.Expressions
         /// <returns>A value sequence.</returns>
         public MkSequence Seq(Expression head, Expression tail)
         {
-            int totalBitSize = head.DataType.BitSize + tail.DataType.BitSize;
+            int totalBitSize = (int)(head.DataType.BitSize + tail.DataType.BitSize);
             Domain dom = (head.DataType == PrimitiveType.SegmentSelector)
                 ? Domain.Pointer
                 : ((PrimitiveType)head.DataType).Domain;
@@ -1307,7 +1307,7 @@ namespace Reko.Core.Expressions
         /// combined sizes of the expressions.</returns>
         public MkSequence Seq(params Expression [] exprs)
         {
-            int totalBitSize = exprs.Sum(e => e.DataType.BitSize);
+            int totalBitSize = (int)exprs.Sum(e => e.DataType.BitSize);
             var dt = PrimitiveType.CreateWord(totalBitSize);
             return new MkSequence(dt, exprs);
         }
@@ -1336,7 +1336,7 @@ namespace Reko.Core.Expressions
         /// <returns>A segmented memory access expression.</returns>
         public virtual MemoryAccess SegMem(Identifier mid, DataType dt, Expression basePtr, Expression offset)
         {
-            int segptrBitsize = basePtr.DataType.BitSize + offset.DataType.BitSize;
+            int segptrBitsize = (int)(basePtr.DataType.BitSize + offset.DataType.BitSize);
             return new MemoryAccess(mid, 
                 new SegmentedPointer(PrimitiveType.Create(Domain.SegPointer, segptrBitsize), basePtr, offset),
                 dt);
@@ -1433,7 +1433,7 @@ namespace Reko.Core.Expressions
         /// <param name="left">Multiplicand.</param>
         /// <param name="c">Multiplier, which is first converted to a <see cref="Constant"/>.</param>
         /// <returns>An integer multiplication expression</returns>
-        public Expression IMul(Expression left, int c)
+        public Expression IMul(Expression left, long c)
         {
             return IMul(left, Constant.Create(left.DataType, c));
         }
@@ -1693,7 +1693,7 @@ namespace Reko.Core.Expressions
         /// <returns>An integer subtraction expression.</returns>
         public BinaryExpression ISub(Expression left, long right)
         {
-            return ISub(left, Word(left.DataType.BitSize, right));
+            return ISub(left, Word((int)left.DataType.BitSize, right));
         }
 
         /// <summary>
@@ -1743,9 +1743,11 @@ namespace Reko.Core.Expressions
         /// <param name="dataType">The type of the bit slice</param>
         /// <param name="bitOffset">Slice offset from least significant bit.</param>
         /// <returns>A bit-slice expression.</returns>
-        public Slice Slice(Expression value, DataType dataType, int bitOffset)
+        public Slice Slice(Expression value, DataType dataType, long bitOffset)
         {
-            return new Slice(dataType, value, bitOffset);
+            if ((ulong)bitOffset >= int.MaxValue)
+                throw new ArgumentOutOfRangeException(nameof(bitOffset), "Bit offset must be non-negative.");
+            return new Slice(dataType, value, (int)bitOffset);
         }
 
         /// <summary>
@@ -1916,7 +1918,7 @@ namespace Reko.Core.Expressions
         /// <returns>An unsigned integer point inequality comparison.</returns>
         public Expression Ult(Expression a, ulong b)
         {
-            return Ult(a, Word(a.DataType.BitSize, b));
+            return Ult(a, Word((int)a.DataType.BitSize, b));
         }
 
         /// <summary>
@@ -2050,9 +2052,9 @@ namespace Reko.Core.Expressions
         /// Value to encode as a <see cref="Constant"/>.
         /// </param>
         /// <returns>Bit vector constant</returns>
-        public Constant Word(int bitSize, long n)
+        public Constant Word(long bitSize, long n)
         {
-            return Constant.Word(bitSize, n);
+            return Constant.Word((int)bitSize, n);
         }
 
         /// <summary>

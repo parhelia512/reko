@@ -47,7 +47,7 @@ namespace Reko.Core.Expressions
         /// <returns>Resulting <see cref="BigConstant"/> instance.</returns>
         public static BigConstant CreateUnsigned(DataType dt, BigInteger value)
         {
-            var mask = (BigInteger.One << dt.BitSize) - 1;
+            var mask = (BigInteger.One << (int)dt.BitSize) - 1;
             return new BigConstant(dt, value & mask);
         }
 
@@ -60,8 +60,8 @@ namespace Reko.Core.Expressions
         public static new BigConstant Replicate(DataType dt, Constant valueToReplicate)
         {
             var n = valueToReplicate.ToBigInteger();
-            int bits = valueToReplicate.DataType.BitSize;
-            int times = dt.BitSize / bits;
+            int bits = (int) valueToReplicate.DataType.BitSize;
+            int times = (int) dt.BitSize / bits;
 
             var result = BigInteger.Zero;
             for (int i = 0; i < times; ++i)
@@ -95,7 +95,7 @@ namespace Reko.Core.Expressions
         /// <inheritdoc/>
         public override Constant Complement()
         {
-            var pow = (BigInteger.One << this.DataType.BitSize) - Value - BigInteger.One;
+            var pow = (BigInteger.One << (int)this.DataType.BitSize) - Value - BigInteger.One;
             return new BigConstant(this.DataType, pow);
         }
 
@@ -104,7 +104,7 @@ namespace Reko.Core.Expressions
         {
             if (dt.BitSize <= 64)
             {
-                var mask = ~0ul >> (64 - dt.BitSize);
+                var mask = ~0ul >> (64 - (int)dt.BitSize);
                 var n = (this.Value >> offset) & mask;
                 return Constant.Create(dt, (ulong) n);
             }
@@ -116,7 +116,7 @@ namespace Reko.Core.Expressions
                 }
                 else
                 {
-                    var mask = (BigInteger.One << dt.BitSize) - BigInteger.One;
+                    var mask = (BigInteger.One << (int)dt.BitSize) - BigInteger.One;
                     var n = (this.Value >> offset) & mask;
                     return new BigConstant(dt, n);
                 }

@@ -154,41 +154,43 @@ namespace Reko.Environments.Windows
             ccName = ccName?.TrimStart('_') ?? string.Empty; // Default to cdecl (same as empty string)
 
             var arch = (IntelArchitecture) Architecture;
+            int wordSize = (int) Architecture.WordWidth.Size;
+            int pointerSize = (int) Architecture.PointerType.Size;
             switch (ccName)
             {
             case "":
             case "cdecl":
                 return new X86CallingConvention(
                     arch,
-                    Architecture.WordWidth.Size,
-                    Architecture.PointerType.Size,
+                    wordSize,
+                    pointerSize,
                     true,
                     false);
             case "stdcall":
             case "stdapi":
                 return new X86CallingConvention(
                     arch,
-                    Architecture.WordWidth.Size,
-                    Architecture.PointerType.Size,
+                    wordSize,
+                    pointerSize,
                     false,
                     false);
             case "pascal":
                 return new X86CallingConvention(
                     arch,
-                    Architecture.WordWidth.Size,
-                    Architecture.PointerType.Size,
+                    wordSize,
+                    pointerSize,
                     false,
                     true);
             case "thiscall":
                 return new ThisCallConvention(
                     arch,
                     Registers.ecx,
-                    Architecture.WordWidth.Size);
+                    wordSize);
             case "fastcall":
                 return new FastcallConvention(
                     Registers.ecx,
                     Registers.edx,
-                    Architecture.WordWidth.Size);
+                    wordSize);
             }
             throw new ArgumentOutOfRangeException(string.Format("Unknown calling convention '{0}'.", ccName));
         }

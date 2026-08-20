@@ -58,7 +58,7 @@ namespace Reko.Typing
                 }
                 else
                 {
-                    int offset = CommonOffset(cluster);
+                    long offset = CommonOffset(cluster);
                     strNew.Fields.Add(new StructureField(offset, BuildOverlappedStructure(cluster)));
                 }
             }
@@ -74,7 +74,7 @@ namespace Reko.Typing
         public DataType BuildOverlappedStructure(List<StructureField> fields)
         {
             List<StructureType> types = new List<StructureType>();
-            int commonOffset = CommonOffset(fields);
+            long commonOffset = CommonOffset(fields);
             var worklist = WorkList.Create(fields);
             while (worklist.TryGetWorkItem(out StructureField? field))
             {
@@ -89,9 +89,9 @@ namespace Reko.Typing
             return Normalize(types);
         }
 
-        private int CommonOffset(List<StructureField> fields)
+        private long CommonOffset(List<StructureField> fields)
         {
-            int offset = fields[0].Offset;
+            long offset = fields[0].Offset;
             for (int i = 1; i < fields.Count; ++i)
             {
                 offset = Math.Min(offset, fields[i].Offset);
@@ -120,11 +120,11 @@ namespace Reko.Typing
             }
         }
 
-        private static StructureType? FindStructureToFitIn(StructureField field,int commonOffset, List<StructureType> types)
+        private static StructureType? FindStructureToFitIn(StructureField field, long commonOffset, List<StructureType> types)
         {
             foreach (StructureType type in types)
             {
-                int offset = field.Offset - commonOffset;
+                long offset = field.Offset - commonOffset;
                 StructureField? low = type.Fields.LowerBound(offset);
                 if (low is null)
                     return type;
@@ -142,7 +142,7 @@ namespace Reko.Typing
         /// </returns>
         public IEnumerable<List<StructureField>> GetOverlappingClusters(StructureFieldCollection fields)
         {
-            int clusterEndOffset = 0;
+            long clusterEndOffset = 0;
             var overlappingFields = new List<StructureField>();
             foreach (StructureField field in fields)
             {
@@ -190,7 +190,7 @@ namespace Reko.Typing
             }
         }
 
-        private static bool FieldOverlaps(StructureField field, int clusterEndOffset)
+        private static bool FieldOverlaps(StructureField field, long clusterEndOffset)
         {
             return field.Offset < clusterEndOffset;
         }

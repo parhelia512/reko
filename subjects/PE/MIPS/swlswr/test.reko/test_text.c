@@ -41,10 +41,10 @@ Eq_n fn000110E8()
 // 0001116C: void fn0001116C(Register (ptr32 Eq_n) r2, Register (ptr32 (ptr32 word32)) r4)
 void fn0001116C(struct Eq_n * r2, word32 ** r4)
 {
-	r2->ptrFFFFFFEC = r4;
-	r2->ptrFFFFFFF0 = r2->ptrFFFFFFEC;
-	r2->dwFFFFFFF4 = **r2->ptrFFFFFFEC;
-	r2->dwFFFFFFE8 = r2->dwFFFFFFF4;
+	r2->ptrFFEC = r4;
+	r2->ptrFFF0 = r2->ptrFFEC;
+	r2->dwFFF4 = **r2->ptrFFEC;
+	r2->dwFFE8 = r2->dwFFF4;
 	XcptFilter();
 }
 

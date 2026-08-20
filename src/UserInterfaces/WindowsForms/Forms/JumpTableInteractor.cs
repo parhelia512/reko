@@ -112,7 +112,7 @@ namespace Reko.UserInterfaces.WindowsForms.Forms
         {
             if (dlg.FarAddress.Checked || dlg.RelativeAddress.Checked)
             {
-                return dlg.Program.Platform.PointerType.Size;
+                return (int)dlg.Program.Platform.PointerType.Size;
             }
             else
             {

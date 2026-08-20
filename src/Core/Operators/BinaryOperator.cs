@@ -88,7 +88,7 @@ namespace Reko.Core.Operators
         /// <returns>A <see cref="Constant"/> instance.</returns>
         protected Constant BuildConstant(DataType t1, DataType t2, long value)
 		{
-			int bitSize = Math.Max(t1.BitSize, t2.BitSize);
+			int bitSize = (int)Math.Max(t1.BitSize, t2.BitSize);
 			return Constant.Create(PrimitiveType.Create(t1.Domain|t2.Domain, bitSize), value);
 		}
 
@@ -104,7 +104,7 @@ namespace Reko.Core.Operators
             //$REVIEW what to do when these resolutions fail?
             PrimitiveType p1 = t1.ResolveAs<PrimitiveType>()!;
             PrimitiveType p2 = t2.ResolveAs<PrimitiveType>()!;
-            int bitSize = Math.Max(p1.BitSize, p2.BitSize);
+            int bitSize = (int)Math.Max(p1.BitSize, p2.BitSize);
             return Constant.Create(PrimitiveType.Create(p1.Domain | p2.Domain, bitSize), value);
         }
 
@@ -119,7 +119,7 @@ namespace Reko.Core.Operators
         {
             PrimitiveType p1 = t1.ResolveAs<PrimitiveType>()!;
             PrimitiveType p2 = t2.ResolveAs<PrimitiveType>()!;
-            int bitSize = Math.Max(p1.BitSize, p2.BitSize);
+            int bitSize = (int)Math.Max(p1.BitSize, p2.BitSize);
             return ConstantReal.Create(PrimitiveType.Create(p1.Domain & p2.Domain, bitSize), value);
         }
 
@@ -132,7 +132,7 @@ namespace Reko.Core.Operators
         /// <returns>A <see cref="Constant"/> instance.</returns>
         protected Constant BuildConstant(DataType t1, DataType t2, BigInteger value)
         {
-            int bitSize = Math.Max(t1.BitSize, t2.BitSize);
+            int bitSize = (int)Math.Max(t1.BitSize, t2.BitSize);
             var dtResult = PrimitiveType.CreateWord(bitSize);
             return Constant.Create(dtResult, value);
         }

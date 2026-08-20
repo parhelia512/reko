@@ -665,7 +665,7 @@ namespace Reko.Arch.SuperH
         {
             var reg = Registers.gpregs[(uInstr >> 8) & 0xF];
             var width = PrimitiveType.Word32;
-            dasm.state.ops.Add(MemoryOperand.IndirectDisplacement(width, reg, (int)(uInstr & 0xF) * width.Size));
+            dasm.state.ops.Add(MemoryOperand.IndirectDisplacement(width, reg, (int)(uInstr & 0xF) * (int) width.Size));
             return true;
         }
 
@@ -673,7 +673,7 @@ namespace Reko.Arch.SuperH
         {
             var reg = Registers.gpregs[(uInstr >> 4) & 0xF];
             var width = PrimitiveType.Byte;
-            dasm.state.ops.Add(MemoryOperand.IndirectDisplacement(width, reg, (int)(uInstr & 0xF) * width.Size));
+            dasm.state.ops.Add(MemoryOperand.IndirectDisplacement(width, reg, (int)(uInstr & 0xF) * (int) width.Size));
             return true;
         }
 
@@ -681,7 +681,7 @@ namespace Reko.Arch.SuperH
         {
             var reg = Registers.gpregs[(uInstr >> 4) & 0xF];
             var width = PrimitiveType.Word16;
-            dasm.state.ops.Add(MemoryOperand.IndirectDisplacement(width, reg, (int)(uInstr & 0xF) * width.Size));
+            dasm.state.ops.Add(MemoryOperand.IndirectDisplacement(width, reg, (int)(uInstr & 0xF) * (int) width.Size));
             return true;
         }
 
@@ -689,7 +689,7 @@ namespace Reko.Arch.SuperH
         {
             var reg = Registers.gpregs[(uInstr >> 4) & 0xF];
             var width = PrimitiveType.Word32;
-            dasm.state.ops.Add(MemoryOperand.IndirectDisplacement(width, reg, (int)(uInstr & 0xF) * width.Size));
+            dasm.state.ops.Add(MemoryOperand.IndirectDisplacement(width, reg, (int)(uInstr & 0xF) * (int) width.Size));
             return true;
         }
 
@@ -698,7 +698,7 @@ namespace Reko.Arch.SuperH
             return (u, d) =>
             {
                 var reg = Registers.gpregs[(u >> baseOffset) & 0xF];
-                d.state.ops.Add(MemoryOperand.IndirectDisplacement(dt, reg, (int) (u & 0xFFF) * dt.Size));
+                d.state.ops.Add(MemoryOperand.IndirectDisplacement(dt, reg, (int) (u & 0xFFF) * (int)dt.Size));
                 return true;
             };
         }
@@ -729,14 +729,14 @@ namespace Reko.Arch.SuperH
         private static bool Pw(uint uInstr, SuperHDisassembler dasm)
         {
             var width = PrimitiveType.Word16;
-            dasm.state.ops.Add(MemoryOperand.PcRelativeDisplacement(width, width.Size * (byte)uInstr));
+            dasm.state.ops.Add(MemoryOperand.PcRelativeDisplacement(width, (int)width.Size * (byte)uInstr));
             return true;
         }
 
         private static bool Pl(uint uInstr, SuperHDisassembler dasm)
         {
             var width = PrimitiveType.Word32;
-            dasm.state.ops.Add(MemoryOperand.PcRelativeDisplacement(width, width.Size * (byte)uInstr));
+            dasm.state.ops.Add(MemoryOperand.PcRelativeDisplacement(width, (int)width.Size * (byte)uInstr));
             return true;
         }
 
@@ -744,7 +744,7 @@ namespace Reko.Arch.SuperH
         {
             return (u, d) =>
             {
-                var displacement = (byte) u * dt.Size;
+                var displacement = (byte) u * (int)dt.Size;
                 d.state.ops.Add(MemoryOperand.GbrIndirectDisplacement(dt, displacement));
                 return true;
             };

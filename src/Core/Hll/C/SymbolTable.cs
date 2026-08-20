@@ -73,7 +73,7 @@ namespace Reko.Core.Hll.C
             Dictionary<string, SerializedType> namedTypes)
         {
             this.platform = platform;
-            this.pointerSize = platform.PointerType.Size;
+            this.pointerSize = (int)platform.PointerType.Size;
 
             this.Types = new List<SerializedType>();
             this.StructsSeen = new Dictionary<string, StructType_v1>();

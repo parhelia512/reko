@@ -41,7 +41,7 @@ namespace Reko.Core.Types
         /// <param name="size">The size of the structure in
         /// storage units, or 0 if the size is unknown.
         /// </param>
-        public StructureType(int size) : this(null, size, false)
+        public StructureType(long size) : this(null, size, false)
         {
         }
 
@@ -51,7 +51,7 @@ namespace Reko.Core.Types
         /// <param name="name">Optional name.</param>
         /// <param name="size">The size of the structure in storage units,
         /// or 0 if the size is unknown.</param>
-		public StructureType(string? name, int size) : this(name, size, false)
+		public StructureType(string? name, long size) : this(name, size, false)
 		{
 		}
 
@@ -63,7 +63,7 @@ namespace Reko.Core.Types
         /// or 0 if the size is unknown.</param>
         /// <param name="userDefined">True if the structure is user-defined; false otherwise.
         /// </param>
-        public StructureType(string? name, int size, bool userDefined) 
+        public StructureType(string? name, long size, bool userDefined) 
             : base(Domain.Structure, name)
         {
             this.UserDefined = userDefined;
@@ -136,7 +136,7 @@ namespace Reko.Core.Types
         /// set the size to a value. Use GetInferredSize() to get the size based on
         /// what fields are present.
         /// </summary>
-		public override int Size { get; set; }
+		public override long Size { get; set; }
 
         /// <summary>
         /// If the exact size is not known, compute the deferred size by finding 
@@ -145,7 +145,7 @@ namespace Reko.Core.Types
         /// <returns>The exact size if known, otherwise the inferred size
         /// based on data type analysis.
         /// </returns>
-        public int GetInferredSize()
+        public long GetInferredSize()
         {
             if (Size > 0)
                 return Size;

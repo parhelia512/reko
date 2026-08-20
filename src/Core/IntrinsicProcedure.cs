@@ -186,7 +186,7 @@ namespace Reko.Core
         /// <param name="concreteTypes">Concrete types to use.</param>
         /// <returns>A newly minted or previously cached concrete instance.
         /// </returns>
-        public IntrinsicProcedure MakeInstance(int ptrBitsize, params DataType[] concreteTypes)
+        public IntrinsicProcedure MakeInstance(long ptrBitsize, params DataType[] concreteTypes)
         {
             if (this.IsConcreteGeneric)
                 throw new InvalidOperationException($"The intrinsic {this} is already a concrete instance.");
@@ -237,7 +237,7 @@ namespace Reko.Core
         /// replaced pointers of unknown size to
         /// <paramref name="ptrSize" />-sized ones.
         /// </returns>
-        public IntrinsicProcedure ResolvePointers(int ptrSize)
+        public IntrinsicProcedure ResolvePointers(long ptrSize)
         {
             if (IsGeneric)
                 throw new InvalidOperationException($"{Name} is generic.");

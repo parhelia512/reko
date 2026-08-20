@@ -36,7 +36,7 @@ namespace Reko.Core.Serialization
         /// <summary>
         /// The implementation's size of the reference, in storage units.
         /// </summary>
-        public int Size;
+        public long Size;
 
         /// <inheritdoc/>
         public override T Accept<T>(ISerializedTypeVisitor<T> visitor)

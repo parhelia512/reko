@@ -132,7 +132,7 @@ Eq_1: (struct "Globals"
 		(1A00 (arr byte) a1A00)
 		(1A01 (arr byte) a1A01))
 	globals_t (in globals : (ptr16 (struct "Globals")))
-Eq_2: (struct "Eq_2" (FFFFFFFE word16 wFFFFFFFE) (3 byte b0003))
+Eq_2: (struct "Eq_2" (-2 word16 wFFFE) (3 byte b0003))
 	T_2 (in fp @ 015A : (ptr16 Eq_2))
 	T_4 (in Mem3[0x1CA<16>:word16] @ 015A : word16)
 	T_46 (in sp_129 @ 0187 : (ptr16 Eq_2))
@@ -173,7 +173,7 @@ Eq_33: (fn word16 (byte, (ptr16 byte), word16))
 	T_86 (in fn052E @ 01D0 : ptr16)
 	T_156 (in fn052E @ 01D7 : ptr16)
 	T_1353 (in fn052E @ 05B1 : ptr16)
-Eq_55: (struct "Eq_55" (FFFFFFFE word16 wFFFFFFFE) (0 word16 w0000) (1 byte b0001))
+Eq_55: (struct "Eq_55" (-2 word16 wFFFE) (0 word16 w0000) (1 byte b0001))
 	T_55 (in <invalid> @ 0177 : word16)
 	T_56 (in bc_39 @ 0177 : (ptr16 Eq_55))
 	T_120 (in out de_375 @ 01A3 : word16)
@@ -826,7 +826,7 @@ Eq_2115: (fn Eq_2050 (ui16, byte, (ptr16 byte)))
 	T_2116 (in signature of fn0905 @ 0905 : void)
 	T_2155 (in fn0905 @ 0892 : ptr16)
 	T_2290 (in fn0905 @ 08DF : ptr16)
-Eq_2121: (struct "Eq_2121" 0001 (FFFFFFFF byte bFFFFFFFF) (0 byte b0000))
+Eq_2121: (struct "Eq_2121" 0001 (-1 byte bFFFF) (0 byte b0000))
 	T_2121 (in hl_305 @ 087D : (ptr16 Eq_2121))
 	T_2153 (in SEQ(1<8>, e_867) @ 0895 : word16)
 	T_2154 (in de_353 @ 0895 : (ptr16 Eq_2121))
@@ -1267,7 +1267,7 @@ T_45: (in af_135 @ 0187 : word16)
 T_46: (in sp_129 @ 0187 : (ptr16 Eq_2))
   Class: Eq_2
   DataType: (ptr16 Eq_2)
-  OrigDataType: (ptr16 (struct (FFFFFFFE T_167 tFFFFFFFE) (3 T_177 t0003)))
+  OrigDataType: (ptr16 (struct (-2 T_167 tFFFE) (3 T_177 t0003)))
 T_47: (in SLICE(af_135, byte, 0) @ 0187 : byte)
   Class: Eq_22
   DataType: uint8
@@ -1315,7 +1315,7 @@ T_57: (in 0x1742<16> @ 0177 : word16)
 T_58: (in sp_264 @ 0177 : (ptr16 Eq_2))
   Class: Eq_2
   DataType: (ptr16 Eq_2)
-  OrigDataType: (ptr16 (struct (FFFFFFFE T_167 tFFFFFFFE) (3 T_177 t0003)))
+  OrigDataType: (ptr16 (struct (-2 T_167 tFFFE) (3 T_177 t0003)))
 T_59: (in SLICE(bc_39, byte, 8) @ 0177 : byte)
   Class: Eq_52
   DataType: byte
@@ -2459,7 +2459,7 @@ T_343: (in fn04AB(out a_269) @ 03DF : bool)
 T_344: (in sp_259 @ 03D6 : (ptr16 Eq_55))
   Class: Eq_55
   DataType: (ptr16 Eq_55)
-  OrigDataType: (ptr16 (struct (FFFFFFFE T_345 tFFFFFFFE)))
+  OrigDataType: (ptr16 (struct (-2 T_345 tFFFE)))
 T_345: (in SEQ(a_269, f) @ 03E2 : word16)
   Class: Eq_345
   DataType: word16
@@ -9739,11 +9739,11 @@ T_2163: (in fn08CF(f_812, wLoc02_1002) @ 08AD : void)
 T_2164: (in wLoc06_1009 @ 08AB : (ptr16 Eq_2121))
   Class: Eq_2121
   DataType: (ptr16 Eq_2121)
-  OrigDataType: (ptr16 (struct 0001 (FFFFFFFF byte bFFFFFFFF) (0 byte b0000)))
+  OrigDataType: (ptr16 (struct 0001 (-1 byte bFFFF) (0 byte b0000)))
 T_2165: (in hl_363 @ 08B0 : (ptr16 Eq_2121))
   Class: Eq_2121
   DataType: (ptr16 Eq_2121)
-  OrigDataType: (ptr16 (struct 0001 (FFFFFFFF byte bFFFFFFFF) (0 byte b0000)))
+  OrigDataType: (ptr16 (struct 0001 (-1 byte bFFFF) (0 byte b0000)))
 T_2166: (in d_414 @ 089C : byte)
   Class: Eq_2166
   DataType: byte
@@ -17507,7 +17507,7 @@ typedef struct Globals {
 } Eq_1;
 
 typedef struct Eq_2 {
-	word16 wFFFFFFFE;	// FFFFFFFE
+	word16 wFFFE;	// FFFFFFFFFFFFFFFE
 	byte b0003;	// 3
 } Eq_2;
 
@@ -17527,7 +17527,7 @@ typedef void (Eq_27)(byte, byte);
 typedef word16 (Eq_33)(byte, byte *, word16);
 
 typedef struct Eq_55 {
-	word16 wFFFFFFFE;	// FFFFFFFE
+	word16 wFFFE;	// FFFFFFFFFFFFFFFE
 	word16 w0000;	// 0
 	byte b0001;	// 1
 } Eq_55;
@@ -17795,7 +17795,7 @@ typedef void (Eq_2093)(byte, ui16);
 typedef Eq_2050 (Eq_2115)(ui16, byte, byte *);
 
 typedef struct Eq_2121 {	// size: 1 1
-	byte bFFFFFFFF;	// FFFFFFFF
+	byte bFFFF;	// FFFFFFFFFFFFFFFF
 	byte b0000;	// 0
 } Eq_2121;
 

@@ -161,7 +161,7 @@ namespace Reko.Typing
 		}
 
         /// <inheritdoc/>
-		public DataType FunctionTrait(Expression function, int funcPtrSize, TypeVariable ret, params TypeVariable [] actuals)
+		public DataType FunctionTrait(Expression function, long funcPtrSize, TypeVariable ret, params TypeVariable [] actuals)
 		{
             Identifier[] adt = actuals.Select(a => new Identifier("", a, null!)).ToArray();
 			var fn = factory.CreateFunctionType(new Identifier("", ret, null!), adt);
@@ -170,7 +170,7 @@ namespace Reko.Typing
 		}
 
         /// <inheritdoc/>
-		public DataType MemAccessArrayTrait(Expression? expBase, Expression expStruct, int structPtrBitSize, int offset, int elementSize, int length, Expression expField)
+		public DataType MemAccessArrayTrait(Expression? expBase, Expression expStruct, long structPtrBitSize, long offset, int elementSize, int length, Expression expField)
 		{
 			var element = factory.CreateStructureType(null, elementSize);
 			if (expField is not null)
@@ -179,17 +179,17 @@ namespace Reko.Typing
             tvElement.OriginalDataType = element;
 
 			DataType dtArray = factory.CreateArrayType(tvElement, length);
-		    return MemoryAccessCommon(expBase, expStruct, offset, dtArray, structPtrBitSize);
+		    return MemoryAccessCommon(expBase, expStruct, (int)offset, dtArray, (int)structPtrBitSize);
 		}
 		
         /// <inheritdoc/>
-		public DataType MemAccessTrait(Expression? tBase, Expression tStruct, int structPtrBitSize, Expression tField, int offset)
+		public DataType MemAccessTrait(Expression? tBase, Expression tStruct, long structPtrBitSize, Expression tField, long offset)
 		{
 			return MemoryAccessCommon(tBase, tStruct, offset, store.GetTypeVariable(tField), structPtrBitSize);
 		}
 
         /// <inheritdoc/>
-		public DataType MemFieldTrait(Expression? tBase, Expression tStruct, Expression tField, int offset)
+		public DataType MemFieldTrait(Expression? tBase, Expression tStruct, Expression tField, long offset)
         {
             var s = factory.CreateStructureType(null, 0);
             var field = new StructureField(offset, store.GetTypeVariable(tField));
@@ -198,7 +198,7 @@ namespace Reko.Typing
         }
 
         /// <inheritdoc/>
-        public DataType MemoryAccessCommon(Expression? tBase, Expression tStruct, int offset, DataType tField, int structPtrBitSize)
+        public DataType MemoryAccessCommon(Expression? tBase, Expression tStruct, long offset, DataType tField, long structPtrBitSize)
         {
             var s = factory.CreateStructureType(null, 0);
             var field = new StructureField(offset, tField);
@@ -211,7 +211,7 @@ namespace Reko.Typing
         }
 
         /// <inheritdoc/>
-		public DataType MemSizeTrait(Expression? tBase, Expression tStruct, int size)
+		public DataType MemSizeTrait(Expression? tBase, Expression tStruct, long size)
 		{
 			if (size <= 0)
 				throw new ArgumentOutOfRangeException("size must be positive");
@@ -223,7 +223,7 @@ namespace Reko.Typing
 		}
 
         /// <inheritdoc/>
-		public DataType PointerTrait(Expression ptrExp, int ptrSize, Expression tPointee)
+		public DataType PointerTrait(Expression ptrExp, long ptrSize, Expression tPointee)
 		{
 			var ptr = factory.CreatePointer(store.GetDataTypeOf(tPointee)!, ptrSize * DataType.BitsPerByte);
             return MergeIntoDataType(ptrExp, ptr);

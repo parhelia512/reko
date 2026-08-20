@@ -57,7 +57,7 @@ namespace Reko.Environments.RT11
                 ++gr;
                 ccr.RegParam(arg);
             }
-            ccr.CallerCleanup(arch.PointerType.Size);
+            ccr.CallerCleanup((int)arch.PointerType.Size);
         }
 
         public void SetReturnRegisters(ICallingConventionBuilder ccr, DataType dtRet)

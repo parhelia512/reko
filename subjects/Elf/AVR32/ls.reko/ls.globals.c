@@ -12,4 +12,4 @@ byte g_b0008; // 00000008
 byte g_b0009; // 00000009
 Eq_n g_t000A;
 Eq_n g_t0020;
-byte g_bFFFFFFFF; // FFFFFFFF
+byte g_bFFFF; // FFFFFFFF

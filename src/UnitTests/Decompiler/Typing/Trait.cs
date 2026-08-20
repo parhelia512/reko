@@ -46,10 +46,10 @@ namespace Reko.UnitTests.Decompiler.Typing
 		public TypeVariable ReturnType;		// return type.
 		public TypeVariable [] ArgumentTypes;	// types of the parameters.
 
-		public TraitFunc(TypeVariable func, int funcPtrSize, TypeVariable tRet, TypeVariable [] argumentTypes)
+		public TraitFunc(TypeVariable func, long funcPtrSize, TypeVariable tRet, TypeVariable [] argumentTypes)
 		{
 			FuncType = func;
-			FuncPointerSize = funcPtrSize;
+			FuncPointerSize = (int)funcPtrSize;
 			ReturnType = tRet;
 			ArgumentTypes = argumentTypes;
 		}
@@ -112,12 +112,12 @@ namespace Reko.UnitTests.Decompiler.Typing
 		public TypeVariable BasePointer;
 		public int MemPointerSize;
 		public TypeVariable FieldType;	// type of a field.
-		public int Offset;			// offset of field.
+		public long Offset;			// offset of field.
 
-		public TraitMem(TypeVariable basePtr, int memPointerSize, TypeVariable fieldType, int offset)
+		public TraitMem(TypeVariable basePtr, long memPointerSize, TypeVariable fieldType, long offset)
 		{
 			this.BasePointer = basePtr;
-			this.MemPointerSize = memPointerSize;
+			this.MemPointerSize = (int)memPointerSize;
 			this.FieldType = fieldType; 
 			this.Offset = offset; 
 		}
@@ -138,11 +138,11 @@ namespace Reko.UnitTests.Decompiler.Typing
 		public TypeVariable BasePointer;
 		public int MemPointerSize;
 		public TypeVariable AccessType;
-		public int Offset;
+		public long Offset;
 		public int ElementSize;
 		public int Length;
 
-		public TraitMemArray(TypeVariable basePtr, int structPtrSize, int offset, int elementSize, int length, TypeVariable tAccess)
+		public TraitMemArray(TypeVariable basePtr, long structPtrSize, long offset, int elementSize, int length, TypeVariable tAccess)
 		{
 			this.BasePointer = basePtr;
 			this.Offset = offset;
@@ -166,9 +166,9 @@ namespace Reko.UnitTests.Decompiler.Typing
 
 	public class TraitMemSize : Trait
 	{
-		public int Size;			// size in bytes.
+		public long Size;			// size in bytes.
 
-		public TraitMemSize(int size)
+		public TraitMemSize(long size)
 		{
 			this.Size = size;
 		}

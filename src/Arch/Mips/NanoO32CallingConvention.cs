@@ -139,7 +139,7 @@ namespace Reko.Arch.Mips
 
         public void SetReturnRegister(ICallingConventionBuilder ccr, DataType dt)
         {
-            int bitSize = dt.BitSize;
+            int bitSize = (int) dt.BitSize;
             if (dt.Domain == Domain.Real && allowFpRegs)
             {
                 ccr.RegReturn(fret);

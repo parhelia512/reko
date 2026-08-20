@@ -617,7 +617,7 @@ namespace Reko.Arch.Qualcomm
 
         private Expression RewriteCombine(Expression hi, Expression lo)
         {
-            var cbLo = lo.DataType.BitSize;
+            var cbLo = (int) lo.DataType.BitSize;
             var dt = PrimitiveType.CreateWord(hi.DataType.BitSize + cbLo);
             if (hi is Constant cHi && lo is Constant cLo)
             {

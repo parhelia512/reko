@@ -734,7 +734,7 @@ namespace Reko.Arch.PowerPC
 
         private void Dpb(Expression dst, Expression bits, int offset)
         {
-            int dstBitsLeft = dst.DataType.BitSize;
+            int dstBitsLeft = (int)dst.DataType.BitSize;
             var elems = new List<Expression>(4);
             if (offset > 0)
             {
@@ -745,7 +745,7 @@ namespace Reko.Arch.PowerPC
                 dstBitsLeft -= offset;
             }
             elems.Add(bits);
-            dstBitsLeft -= bits.DataType.BitSize;
+            dstBitsLeft -= (int)bits.DataType.BitSize;
 
             if (dstBitsLeft > 0)
             {

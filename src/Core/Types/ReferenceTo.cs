@@ -43,7 +43,11 @@ namespace Reko.Core.Types
         public DataType Referent { get; set; }
 
         /// <inheritdoc/>
-        public override int Size { get { return Referent.Size; } set { Referent.Size = value; } }
+        public override long Size 
+        { 
+            get { return Referent.Size; }
+            set { Referent.Size = value; }
+        }
 
         /// <inheritdoc/>
         public override void Accept(IDataTypeVisitor v)

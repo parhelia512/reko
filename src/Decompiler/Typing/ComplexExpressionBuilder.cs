@@ -55,7 +55,7 @@ namespace Reko.Typing
         private readonly Expression? basePtr;   // Non-null if x86-style base segment present.
         private DataType? dtComplex;            // DataType inferred by reko
         private DataType? dtComplexOrig;        // DataType of only this expression.
-        private int offset;                     // constant offset from expComplex.
+        private long offset;                    // constant offset from expComplex.
         private DataType? enclosingPtr;
         private DataType? dtResult;         // DataType of resulting expression. Defined if expComplex was dereferenced (Mem0[expComplex])
         private bool dereferenceGenerated;  // True if a dereferencing expression has been emitted (field access or the like.
@@ -116,7 +116,7 @@ namespace Reko.Typing
             var exp = this.dtComplex.Accept(this);
             if (!Dereferenced && dereferenceGenerated)
             {
-                var ptr = new PointerType(exp.DataType, dtComplex.BitSize);
+                var ptr = new PointerType(exp.DataType, (int)dtComplex.BitSize);
                 exp = m.AddrOf(ptr, exp);
             }
             if (Dereferenced && !dereferenceGenerated)
@@ -143,7 +143,7 @@ namespace Reko.Typing
             DataType dt;
             if (enclosingPtr is not null)
             {
-                dt = new PointerType(PrimitiveType.Char, enclosingPtr.BitSize);
+                dt = new PointerType(PrimitiveType.Char, (int)enclosingPtr.BitSize);
                 e = m.Cast(dt, e);
             }
             else if (e.DataType.Size != 0)
@@ -325,7 +325,7 @@ namespace Reko.Typing
             }
             if (enclosingPtr is not null)
             {
-                int strSize = str.GetInferredSize();
+                long strSize = str.GetInferredSize();
                 if (str.Size > 0 // We know the size of the struct, for sure.
                     && (offset >= strSize && offset % strSize == 0 && index is null))
                 {
@@ -409,7 +409,7 @@ namespace Reko.Typing
             return FallbackExpression();
         }
 
-        private Expression CreateArrayAccess(DataType dtPointee, DataType dtPointer, int offset, Expression? arrayIndex)
+        private Expression CreateArrayAccess(DataType dtPointee, DataType dtPointer, long offset, Expression? arrayIndex)
         {
             if (offset == 0 && arrayIndex is null && !Dereferenced)
                 return expComplex!;
@@ -429,15 +429,16 @@ namespace Reko.Typing
             }
         }
 
-        private Expression CreateOffsetExpression(int offset, Expression? index)
+        private Expression CreateOffsetExpression(long offset, Expression? index)
         {
             if (index is null)
-                return Constant.Int32(offset); //$REVIEW: forcing 32-bit ints;
+                return Constant.Int32((int)offset); //$REVIEW: forcing 32-bit ints;
             if (offset == 0)
                 return index;
             var op = offset < 0 ? Operator.ISub : Operator.IAdd;
             offset = Math.Abs(offset);
-            var cOffset = Constant.Int32(offset); //$REVIEW: forcing 32-bit ints
+            var dtOffset = PrimitiveType.Create(Domain.SignedInt, index.DataType.BitSize);
+            var cOffset = Constant.Create(dtOffset, offset);
             return m.Bin(op, index.DataType, index, cOffset);
         }
 
@@ -464,7 +465,7 @@ namespace Reko.Typing
                     return mps;
                 }
                 return m.AddrOf(
-                    new PointerType(dt, program.Platform.PointerType.BitSize),
+                    new PointerType(dt, (int)program.Platform.PointerType.BitSize),
                     mps);
             }
             else if (e is not null)
@@ -512,7 +513,7 @@ namespace Reko.Typing
         }
 
         private bool TryScaleDownIndex(
-            Expression? exp, int elementSize, out Expression? index)
+            Expression? exp, long elementSize, out Expression? index)
         {
             if (exp is null || elementSize <= 1)
             {
@@ -525,7 +526,7 @@ namespace Reko.Typing
             {
                 // Expression is of the form (* x c) where c is a multiple of elementSize.
 
-                var scale = aem.ElementSize!.ToInt32() / elementSize;
+                long scale = aem.ElementSize!.ToInt32() / elementSize;
                 if (scale == 1)
                 {
                     index = aem.Index;
@@ -535,7 +536,7 @@ namespace Reko.Typing
                     Operator.IMul,
                     bin.DataType,
                     aem.Index!,
-                    Constant.Int32(scale));
+                    Constant.Create(bin.DataType, scale));
                 return true;
             }
             else

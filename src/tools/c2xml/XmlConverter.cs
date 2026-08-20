@@ -119,7 +119,7 @@ namespace Reko.Tools.C2Xml
         private SymbolTable CreateSymbolTable()
         {
             int pointerSize = this.explicitPointerSizes
-                ? platform.PointerType.Size
+                ? (int)platform.PointerType.Size
                 : 0;
             var symtab = new SymbolTable(platform, pointerSize)
             {

@@ -151,7 +151,7 @@ namespace Reko.Core.Output
                 fmt.WriteLine();
                 return;
             default:
-                DumpBytes(pt.Size);
+                DumpBytes((int)pt.Size);
                 break;
             }
         }
@@ -291,7 +291,7 @@ namespace Reko.Core.Output
         {
             if (ut.Size > 0)
             {
-                DumpBytes(ut.Size);
+                DumpBytes((int)ut.Size);
             }
         }
 

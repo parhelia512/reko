@@ -16,517 +16,517 @@ void __start(word32 dwArg00)
 // 00400290: void strcpy(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strcpy(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
 	__do_global_dtors_aux();
 }
 
 // 004002A0: void printf(Register (ptr32 Eq_n) r28, Register word32 ra)
 void printf(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004002B0: void recv(Register (ptr32 Eq_n) r28, Register word32 ra)
 void recv(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004002C0: void connect(Register (ptr32 Eq_n) r28, Register word32 ra)
 void connect(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004002D0: void strerror(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strerror(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
 	__do_global_dtors_aux();
 }
 
 // 004002E0: void __xpg_basename(Register (ptr32 Eq_n) r28, Register word32 ra)
 void __xpg_basename(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004002F0: void snprintf(Register (ptr32 Eq_n) r28, Register word32 ra)
 void snprintf(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400300: void getpid(Register (ptr32 Eq_n) r28, Register word32 ra)
 void getpid(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400310: void fgets(Register (ptr32 Eq_n) r28, Register word32 ra)
 void fgets(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400320: void memcpy(Register (ptr32 Eq_n) r28, Register word32 ra)
 void memcpy(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400330: void tolower(Register (ptr32 Eq_n) r28, Register word32 ra)
 void tolower(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400340: void malloc(Register (ptr32 Eq_n) r28, Register word32 ra)
 void malloc(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400350: void vsnprintf(Register (ptr32 Eq_n) r28, Register word32 ra)
 void vsnprintf(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
 	__do_global_dtors_aux();
 }
 
 // 00400360: void strtoul(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strtoul(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400370: void socket(Register (ptr32 Eq_n) r28, Register word32 ra)
 void socket(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400380: void select(Register (ptr32 Eq_n) r28, Register word32 ra)
 void select(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400390: void fflush(Register (ptr32 Eq_n) r28, Register word32 ra)
 void fflush(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004003A0: void strncasecmp(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strncasecmp(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004003B0: void bzero(Register (ptr32 Eq_n) r28, Register word32 ra)
 void bzero(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004003C0: void send(Register (ptr32 Eq_n) r28, Register word32 ra)
 void send(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004003D0: void accept(Register (ptr32 Eq_n) r28, Register word32 ra)
 void accept(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004003E0: void rename(Register (ptr32 Eq_n) r28, Register word32 ra)
 void rename(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004003F0: void strrchr(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strrchr(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400400: void fprintf(Register (ptr32 Eq_n) r28, Register word32 ra)
 void fprintf(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400410: void strcat(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strcat(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400420: void bind(Register (ptr32 Eq_n) r28, Register word32 ra)
 void bind(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400430: void inet_addr(Register (ptr32 Eq_n) r28, Register word32 ra)
 void inet_addr(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400440: void signal(Register (ptr32 Eq_n) r28, Register word32 ra)
 void signal(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400450: void read(Register (ptr32 Eq_n) r28, Register word32 ra)
 void read(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
-	r28->ptrFFFF8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
+	r28->ptr8010();
 	__do_global_dtors_aux();
 }
 
 // 00400460: void strncmp(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strncmp(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400470: void strncpy(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strncpy(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400480: void unlink(Register (ptr32 Eq_n) r28, Register word32 ra)
 void unlink(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400490: void strcasecmp(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strcasecmp(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004004A0: void listen(Register (ptr32 Eq_n) r28, Register word32 ra)
 void listen(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004004B0: void fork(Register (ptr32 Eq_n) r28, Register word32 ra)
 void fork(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004004C0: void gettimeofday(Register (ptr32 Eq_n) r28, Register word32 ra)
 void gettimeofday(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004004D0: void fopen(Register (ptr32 Eq_n) r28, Register word32 ra)
 void fopen(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004004E0: void ftell(Register (ptr32 Eq_n) r28, Register word32 ra)
 void ftell(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004004F0: void fclose(Register (ptr32 Eq_n) r28, Register word32 ra)
 void fclose(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400500: void inet_ntoa(Register (ptr32 Eq_n) r28, Register word32 ra)
 void inet_ntoa(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400510: void time(Register (ptr32 Eq_n) r28, Register word32 ra)
 void time(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400520: void strcspn(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strcspn(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400530: void strsep(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strsep(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400540: void getsockopt(Register (ptr32 Eq_n) r28, Register word32 ra)
 void getsockopt(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400550: void strftime(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strftime(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400560: void __errno_location(Register (ptr32 Eq_n) r28, Register word32 ra)
 void __errno_location(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400570: void exit(Register (ptr32 Eq_n) r28, Register word32 ra)
 void exit(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400580: void gmtime(Register (ptr32 Eq_n) r28, Register word32 ra)
 void gmtime(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400590: void strspn(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strspn(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004005A0: void strlen(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strlen(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004005B0: void __uClibc_start_main(Register (ptr32 Eq_n) r28, Register word32 ra)
 void __uClibc_start_main(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004005C0: void toupper(Register (ptr32 Eq_n) r28, Register word32 ra)
 void toupper(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004005D0: void strchr(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strchr(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004005E0: void close(Register (ptr32 Eq_n) r28, Register word32 ra)
 void close(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 004005F0: void strpbrk(Register (ptr32 Eq_n) r28, Register word32 ra)
 void strpbrk(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 }
 
 // 00400600: void free(Register (ptr32 Eq_n) r28, Register word32 ra)
 void free(struct Eq_n * r28, word32 ra)
 {
-	r28->ptrFFFF8010();
+	r28->ptr8010();
 	__do_global_dtors_aux();
 }
 
@@ -668,23 +668,23 @@ void main(int32 r4, char * r5[], word32 r16, word32 ra)
 				}
 				dwLoc0150_n = dwLoc0150_n->ptr0018;
 			}
-			while (*r28_n->ptrFFFF8060 == 0x00)
+			while (*r28_n->ptr8060 == 0x00)
 			{
-				r28_n->ptrFFFF80D0();
+				r28_n->ptr80D0();
 				Eq_n dwLoc0160_n;
 				dwLoc0160_n.u0 = 0x00;
 				Eq_n dwLoc2C_n;
 				dwLoc2C_n.u0 = 0x00;
 				while (dwLoc2C_n < 32)
 				{
-					fp->aFFFFFED0[dwLoc2C_n] = 0x00;
+					fp->aFED0[dwLoc2C_n] = 0x00;
 					dwLoc2C_n = (word32) dwLoc2C_n.u1 + 1;
 				}
 				Eq_n dwLoc28_n;
 				dwLoc28_n.u0 = 0x00;
 				while (dwLoc28_n < 32)
 				{
-					fp->aFFFFFF50[dwLoc28_n] = 0x00;
+					fp->aFF50[dwLoc28_n] = 0x00;
 					dwLoc28_n = (word32) dwLoc28_n.u1 + 1;
 				}
 				struct Eq_n * dwLoc0150_n;
@@ -692,7 +692,7 @@ void main(int32 r4, char * r5[], word32 r16, word32 ra)
 				{
 					Eq_n r2_n;
 					r2_n.u0 = dwLoc0150_n->t0000.u0;
-					fp->aFFFFFED0[r2_n >> 0x05] |= 1 << ((dwLoc0150_n->t0000).u0 & 0x1F);
+					fp->aFED0[r2_n >> 0x05] |= 1 << ((dwLoc0150_n->t0000).u0 & 0x1F);
 					if (dwLoc0160_n < (dwLoc0150_n->t0000).u0)
 						dwLoc0160_n.u0 = dwLoc0150_n->t0000.u0;
 				}
@@ -707,13 +707,13 @@ void main(int32 r4, char * r5[], word32 r16, word32 ra)
 						{
 							Eq_n r2_n;
 							r2_n.u0 = dwLoc0158_n->t0000.u0;
-							fp->aFFFFFED0[r2_n >> 0x05] |= 1 << ((dwLoc0158_n->t0000).u0 & 0x1F);
+							fp->aFED0[r2_n >> 0x05] |= 1 << ((dwLoc0158_n->t0000).u0 & 0x1F);
 						}
 						else
 						{
 							Eq_n r2_n;
 							r2_n.u0 = dwLoc0158_n->t0000.u0;
-							fp->aFFFFFF50[r2_n >> 0x05] |= 1 << ((dwLoc0158_n->t0000).u0 & 0x1F);
+							fp->aFF50[r2_n >> 0x05] |= 1 << ((dwLoc0158_n->t0000).u0 & 0x1F);
 						}
 					}
 					if (dwLoc0158_n->t0004.u0 >= 0x00)
@@ -724,17 +724,17 @@ void main(int32 r4, char * r5[], word32 r16, word32 ra)
 						{
 							Eq_n r2_n;
 							r2_n.u0 = dwLoc0158_n->t0004.u0;
-							fp->aFFFFFED0[r2_n >> 0x05] |= 1 << ((dwLoc0158_n->t0004).u0 & 0x1F);
+							fp->aFED0[r2_n >> 0x05] |= 1 << ((dwLoc0158_n->t0004).u0 & 0x1F);
 						}
 						else
 						{
 							Eq_n r2_n;
 							r2_n.u0 = dwLoc0158_n->t0004.u0;
-							fp->aFFFFFF50[r2_n >> 0x05] |= 1 << ((dwLoc0158_n->t0004).u0 & 0x1F);
+							fp->aFF50[r2_n >> 0x05] |= 1 << ((dwLoc0158_n->t0004).u0 & 0x1F);
 						}
 					}
 				}
-				if (select((word32) dwLoc0160_n.u0 + 1, fp->aFFFFFED0, 0x00, 0x00, 0x00) < 0x00)
+				if (select((word32) dwLoc0160_n.u0 + 1, fp->aFED0, 0x00, 0x00, 0x00) < 0x00)
 				{
 					r5_n = (struct Eq_n *) <invalid>;
 					r28_n = (struct Eq_n *) 0x10008860;
@@ -755,9 +755,9 @@ void main(int32 r4, char * r5[], word32 r16, word32 ra)
 				struct Eq_n * dwLoc0150_n;
 				for (dwLoc0150_n = r2_n->ptr0008; dwLoc0150_n != null; dwLoc0150_n = dwLoc0150_n->ptr0018)
 				{
-					if ((fp->aFFFFFED0[dwLoc0150_n->t0000.u0 >> 0x05] >> ((dwLoc0150_n->t0000).u0 & 0x1F) & 0x01) != 0x00)
+					if ((fp->aFED0[dwLoc0150_n->t0000.u0 >> 0x05] >> ((dwLoc0150_n->t0000).u0 & 0x1F) & 0x01) != 0x00)
 					{
-						r28_n->ptrFFFF80D8();
+						r28_n->ptr80D8();
 						r28_n = (struct Eq_n *) 0x10008860;
 						struct Eq_n * r2_n;
 						if (r2_n != null)
@@ -779,9 +779,9 @@ void main(int32 r4, char * r5[], word32 r16, word32 ra)
 				struct Eq_n * dwLoc0158_n;
 				for (dwLoc0158_n = r2_n->ptr0008; dwLoc0158_n != null; dwLoc0158_n = dwLoc0158_n->ptr17B8)
 				{
-					if (dwLoc0158_n != null && ((dwLoc0158_n->t0000).u0 >= 0x00 && ((fp->aFFFFFED0)[(dwLoc0158_n->t0000).u0 >> 0x05] >> ((dwLoc0158_n->t0000).u0 & 0x1F) & 0x01) != 0x00))
+					if (dwLoc0158_n != null && ((dwLoc0158_n->t0000).u0 >= 0x00 && ((fp->aFED0)[(dwLoc0158_n->t0000).u0 >> 0x05] >> ((dwLoc0158_n->t0000).u0 & 0x1F) & 0x01) != 0x00))
 					{
-						r28_n->ptrFFFF8108();
+						r28_n->ptr8108();
 						r28_n = (struct Eq_n *) 0x10008860;
 						if (dwLoc0158_n->dw07D8 <= 0x00)
 						{
@@ -802,9 +802,9 @@ void main(int32 r4, char * r5[], word32 r16, word32 ra)
 							r28_n = (struct Eq_n *) 0x10008860;
 						}
 					}
-					if (dwLoc0158_n != null && ((dwLoc0158_n->t0004).u0 >= 0x00 && ((fp->aFFFFFED0)[(dwLoc0158_n->t0004).u0 >> 0x05] >> ((dwLoc0158_n->t0004).u0 & 0x1F) & 0x01) != 0x00))
+					if (dwLoc0158_n != null && ((dwLoc0158_n->t0004).u0 >= 0x00 && ((fp->aFED0)[(dwLoc0158_n->t0004).u0 >> 0x05] >> ((dwLoc0158_n->t0004).u0 & 0x1F) & 0x01) != 0x00))
 					{
-						r28_n->ptrFFFF81F0();
+						r28_n->ptr81F0();
 						r28_n = (struct Eq_n *) 0x10008860;
 						if (dwLoc0158_n->dw178C <= 0x00)
 						{
@@ -823,28 +823,28 @@ void main(int32 r4, char * r5[], word32 r16, word32 ra)
 							r28_n = (struct Eq_n *) 0x10008860;
 						}
 					}
-					if (dwLoc0158_n != null && ((dwLoc0158_n->t0000).u0 >= 0x00 && ((fp->aFFFFFF50)[(dwLoc0158_n->t0000).u0 >> 0x05] >> ((dwLoc0158_n->t0000).u0 & 0x1F) & 0x01) != 0x00))
+					if (dwLoc0158_n != null && ((dwLoc0158_n->t0000).u0 >= 0x00 && ((fp->aFF50)[(dwLoc0158_n->t0000).u0 >> 0x05] >> ((dwLoc0158_n->t0000).u0 & 0x1F) & 0x01) != 0x00))
 					{
 						void (* r2_n)(struct Eq_n *) = dwLoc0158_n->ptr17C4;
 						r2_n();
 						r28_n = (struct Eq_n *) 0x10008860;
 					}
-					if (dwLoc0158_n != null && ((dwLoc0158_n->t0004).u0 >= 0x00 && ((fp->aFFFFFF50)[(dwLoc0158_n->t0004).u0 >> 0x05] >> ((dwLoc0158_n->t0004).u0 & 0x1F) & 0x01) != 0x00))
+					if (dwLoc0158_n != null && ((dwLoc0158_n->t0004).u0 >= 0x00 && ((fp->aFF50)[(dwLoc0158_n->t0004).u0 >> 0x05] >> ((dwLoc0158_n->t0004).u0 & 0x1F) & 0x01) != 0x00))
 					{
-						r28_n->ptrFFFF8150();
+						r28_n->ptr8150();
 						r28_n = (struct Eq_n *) 0x10008860;
 					}
 					if (dwLoc0158_n != null)
 					{
 						if ((dwLoc0158_n->t0004.u0 >= 0x00 || (dwLoc0158_n->t0000).u0 >= 0x00) && (((dwLoc0158_n->t0004).u0 >= 0x00 || ((dwLoc0158_n->t0000).u0 < 0x00 || dwLoc0158_n->dw178C > 0x00)) && ((dwLoc0158_n->t0000).u0 >= 0x00 || ((dwLoc0158_n->t0004).u0 < 0x00 || (dwLoc0158_n->t0FAC).u0 > 0x00))))
 						{
-							r28_n->ptrFFFF8038();
+							r28_n->ptr8038();
 							r28_n = (struct Eq_n *) 0x10008860;
 							int32 r2_n;
 							if (r2_n < 3)
 								goto l00401AA4;
 						}
-						r28_n->ptrFFFF81B4();
+						r28_n->ptr81B4();
 						r28_n = (struct Eq_n *) 0x10008860;
 						dwLoc0158_n = null;
 						goto l00401AA4;
@@ -854,7 +854,7 @@ l00401AA4:
 						break;
 				}
 			}
-			r28_n->ptrFFFF8130();
+			r28_n->ptr8130();
 			slist_destroy(r2_n, ra);
 			if (r2_n != (struct Eq_n *) ~0x0694 && r2_n->b0695 != 0x00)
 				unlink(&r2_n->b0695);
@@ -1690,13 +1690,13 @@ void * request_add_lines(struct Eq_n * r4, struct Eq_n * r5, void * r6)
 			{
 				r5->t0FAC.u0 = (int32) (r5->t0FAC.u0 + (int32) (r4->a0004)[dwLoc18_n + 0x0510]);
 				int32 r2_n = (int32) r4->a0004[dwLoc18_n + 0x0510];
-				r28_n->ptrFFFF81E8();
+				r28_n->ptr81E8();
 				r28_n = (struct Eq_n *) 0x10008860;
 				dwArg08_n = (void *) ((char *) dwArg08_n + (int32) (r4->a0004)[dwLoc18_n + 0x0510]);
 			}
 			else
 			{
-				r28_n->ptrFFFF818C();
+				r28_n->ptr818C();
 				r28_n = (struct Eq_n *) 0x10008860;
 			}
 		}
@@ -1706,7 +1706,7 @@ void * request_add_lines(struct Eq_n * r4, struct Eq_n * r5, void * r6)
 		int32 r3_n = r4->dw0558;
 		r4->dw0558 = r3_n + -1;
 		ptr32 r2_n = (ptr32) (r4->a0004 + ((r3_n << 0x02) + 1040));
-		r28_n->ptrFFFF802C();
+		r28_n->ptr802C();
 		r28_n = (struct Eq_n *) 0x10008860;
 	}
 	return dwArg08_n;
@@ -2055,10 +2055,10 @@ char * properties_parse_command_line[](int32 r4, char * r5[], word32 r16, word32
 				dwLoc18_n = r5[dwLoc28_n + 1];
 			}
 			else
-				dwLoc18_n = r28_n->dwFFFF8020 + -22928;
+				dwLoc18_n = r28_n->dw8020 + -22928;
 			if (bLoc1C_n == 0x68)
 			{
-				r28_n->ptrFFFF823C();
+				r28_n->ptr823C();
 				exit(0x00);
 				struct Eq_n * r28_n;
 				r28_n = r28_n;
@@ -2067,14 +2067,14 @@ char * properties_parse_command_line[](int32 r4, char * r5[], word32 r16, word32
 			}
 			int32 dwLoc20_n = 0x00;
 			ui32 dwLoc24_n = 0x00;
-			while (((char *) r28_n->ptrFFFF81E0 + (dwLoc24_n * 0x98 + 8))[4] != 0x20 && dwLoc20_n == 0x00)
+			while (((char *) r28_n->ptr81E0 + (dwLoc24_n * 0x98 + 8))[4] != 0x20 && dwLoc20_n == 0x00)
 			{
-				if ((int32) bLoc1C_n != (int32) ((char *) r28_n->ptrFFFF81E0 + (dwLoc24_n * 0x98 + 8))[4])
+				if ((int32) bLoc1C_n != (int32) ((char *) r28_n->ptr81E0 + (dwLoc24_n * 0x98 + 8))[4])
 				{
-					if (r28_n->ptrFFFF81E0->a0008[dwLoc24_n].t0000.u0 != 2)
+					if (r28_n->ptr81E0->a0008[dwLoc24_n].t0000.u0 != 2)
 						goto l004061C8;
 					int32 r2_n = (int32) bLoc1C_n;
-					r28_n->ptrFFFF8064();
+					r28_n->ptr8064();
 					r28_n = (struct Eq_n *) 0x10008860;
 					char * (* r5_n)[];
 					r5_n = r5_n;
@@ -2088,27 +2088,27 @@ char * properties_parse_command_line[](int32 r4, char * r5[], word32 r16, word32
 l00406004:
 					dwLoc20_n = 1;
 					Eq_n r2_n;
-					r2_n.u0 = r28_n->ptrFFFF81E0->a0008[dwLoc24_n].t0000.u0;
+					r2_n.u0 = r28_n->ptr81E0->a0008[dwLoc24_n].t0000.u0;
 					if (r2_n != 1)
 					{
 						if (r2_n >= 1)
 						{
 							if (r2_n == 2)
 							{
-								((char *) r28_n->ptrFFFF81E0 + 4)[dwLoc24_n * 0x98 + 144] = (char) ((word32) *((char *) *r28_n->ptrFFFF820C + (int32) bLoc1C_n * 2) & 0x01);
+								((char *) r28_n->ptr81E0 + 4)[dwLoc24_n * 0x98 + 144] = (char) ((word32) *((char *) *r28_n->ptr820C + (int32) bLoc1C_n * 2) & 0x01);
 								dwLoc28_n += -1;
 							}
 						}
 						else
 						{
-							ui32 r2_n = (char *) &r28_n->ptrFFFF81E0->a0008->t0000 + 5 + dwLoc24_n * 0x98;
-							r28_n->ptrFFFF812C();
+							ui32 r2_n = (char *) &r28_n->ptr81E0->a0008->t0000 + 5 + dwLoc24_n * 0x98;
+							r28_n->ptr812C();
 							r28_n = (struct Eq_n *) 0x10008860;
 						}
 					}
 					else
 					{
-						ptr32 r25_n = r28_n->ptrFFFF801C;
+						ptr32 r25_n = r28_n->ptr801C;
 						(*((word32) r25_n + 21488))();
 						word32 r2_n;
 						*((word32) &g_ptr10000A40->a0004[dwLoc24_n].t0004 + 0x008C) = (Eq_n[]) r2_n;
@@ -2121,7 +2121,7 @@ l004061C8:
 			if (dwLoc20_n == 0x00)
 			{
 				int32 r2_n = (int32) bLoc1C_n;
-				r28_n->ptrFFFF818C();
+				r28_n->ptr818C();
 				r5_n = properties_print_usage(r5[0]);
 				return r5_n;
 			}

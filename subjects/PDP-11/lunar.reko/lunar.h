@@ -455,7 +455,7 @@ Eq_664: (fn void (int16, byte))
 	T_665 (in signature of fn0C90 @ 0C90 : void)
 	T_724 (in fn0C90 @ 080E : ptr16)
 	T_1201 (in fn0C90 @ 0E22 : ptr16)
-Eq_686: (struct "Eq_686" (FFFFFFFE (ptr16 word16) ptrFFFFFFFE))
+Eq_686: (struct "Eq_686" (-2 (ptr16 word16) ptrFFFE))
 	T_686 (in <invalid> @ 0990 : word16)
 	T_687 (in sp_200 @ 0990 : (ptr16 Eq_686))
 	T_1403 (in sp_7 @ 0F04 : (ptr16 Eq_686))
@@ -612,7 +612,7 @@ Eq_1296: (fn void ())
 	T_2847 (in __reset @ 34E4 : ptr32)
 	T_2849 (in __reset @ 34E6 : ptr32)
 	T_2851 (in __reset @ 34E8 : ptr32)
-Eq_1340: (struct "Eq_1340" (FFFFFFFE word16 wFFFFFFFE) (0 word16 w0000))
+Eq_1340: (struct "Eq_1340" (-2 word16 wFFFE) (0 word16 w0000))
 	T_1340 (in r5 + 2<16> @ 0EDC : word16)
 	T_1341 (in r5_44 @ 0EDC : (ptr16 Eq_1340))
 Eq_1369: (struct "Eq_1369" (2773 byte b2773))
@@ -3448,7 +3448,7 @@ T_686: (in <invalid> @ 0990 : word16)
 T_687: (in sp_200 @ 0990 : (ptr16 Eq_686))
   Class: Eq_686
   DataType: (ptr16 Eq_686)
-  OrigDataType: (ptr16 (struct (FFFFFFFE T_750 tFFFFFFFE)))
+  OrigDataType: (ptr16 (struct (-2 T_750 tFFFE)))
 T_688: (in 1<i16> @ 09AE : int16)
   Class: Eq_688
   DataType: int16
@@ -6312,7 +6312,7 @@ T_1402: (in r0_112 @ 0F12 : (ptr16 word16))
 T_1403: (in sp_7 @ 0F04 : (ptr16 Eq_686))
   Class: Eq_686
   DataType: (ptr16 Eq_686)
-  OrigDataType: (ptr16 (struct (FFFFFFFE T_22 tFFFFFFFE)))
+  OrigDataType: (ptr16 (struct (-2 T_22 tFFFE)))
 T_1404: (in fn100C @ 0F18 : ptr16)
   Class: Eq_1404
   DataType: (ptr16 Eq_1404)
@@ -12607,7 +12607,7 @@ typedef void (Eq_654)();
 typedef void (Eq_664)(int16, byte);
 
 typedef struct Eq_686 {
-	word16 * ptrFFFFFFFE;	// FFFFFFFE
+	word16 * ptrFFFE;	// FFFFFFFFFFFFFFFE
 } Eq_686;
 
 typedef void (Eq_704)();
@@ -12713,7 +12713,7 @@ typedef struct Eq_1271 {
 typedef void (Eq_1296)();
 
 typedef struct Eq_1340 {
-	word16 wFFFFFFFE;	// FFFFFFFE
+	word16 wFFFE;	// FFFFFFFFFFFFFFFE
 	word16 w0000;	// 0
 } Eq_1340;
 

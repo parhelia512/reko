@@ -67,7 +67,8 @@ namespace Reko.Core.Output
             while (wl.TryGetWorkItem(out var item))
             {
                 var (field, addr) = item;
-                var globalVar = new GlobalVariable(addr, field.DataType, program.NamingPolicy.GlobalName(field));
+                var globalName = program.NamingPolicy.GlobalName(field);
+                var globalVar = new GlobalVariable(addr, field.DataType, globalName);
                 PlaceObject(globalVar, defaultDataFile, result);
                 objectTracer.TraceObject(field.DataType, addr);
             }

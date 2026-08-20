@@ -170,7 +170,7 @@ namespace Reko.Core
         /// <returns>Resulting address.</returns>
         public static Address FromConstant(Constant value)
         {
-            int bitSize = value.DataType.BitSize;
+            int bitSize = (int)value.DataType.BitSize;
             var dt = PrimitiveType.Create(Domain.Pointer, bitSize);
             return new Address(dt, LinearHex, (byte)bitSize, value.ToUInt64(), 0);
         }
@@ -970,7 +970,7 @@ namespace Reko.Core
 
         public static CompactAddress FromConstant(Constant value)
         {
-            int bitSize = value.DataType.BitSize;
+            int bitSize = (int)value.DataType.BitSize;
             var dt = PrimitiveType.Create(Domain.Pointer, bitSize);
             return Create(dt, value.ToUInt64());
         }

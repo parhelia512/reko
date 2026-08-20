@@ -687,7 +687,7 @@ public class LongAddRewriter : IAnalysis<SsaState>
             }
             if (expLo is Constant immLo && expHi is Constant immHi)
             {
-                return m.Const(totalSize, (immHi.ToUInt64() << expLo.DataType.BitSize) | immLo.ToUInt32());
+                return m.Const(totalSize, (immHi.ToUInt64() << (int)expLo.DataType.BitSize) | immLo.ToUInt32());
             }
             return m.Seq(totalSize, expHi, expLo);
         }

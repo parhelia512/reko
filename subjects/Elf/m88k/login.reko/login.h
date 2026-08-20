@@ -1586,8 +1586,8 @@ Eq_3304: (union "Eq_3304" (word64 u0) (word32 u1))
 	T_3313 (in 0x4240<32> @ 00004194 : word32)
 	T_3316 (in Mem118[r30_32 + 8<32>:word32] @ 00004194 : word32)
 Eq_3305: (struct "Eq_3305"
-		(FFFFFFF0 word64 qwFFFFFFF0)
-		(FFFFFFF8 word64 qwFFFFFFF8)
+		(FFFFFFFFFFFFFFF0 word64 qwFFF0)
+		(FFFFFFFFFFFFFFF8 word64 qwFFF8)
 		(4 (ptr32 code) ptr0004)
 		(8 Eq_3304 t0008)
 		(C word32 dw000C)
@@ -1788,7 +1788,7 @@ Eq_3792: (fn void (int32))
 	T_3793 (in signature of exit : void)
 Eq_3803: (fn void (word32))
 	T_3803 (in auth_close @ 000047B0 : ptr32)
-Eq_3810: (struct "Eq_3810" (FFFFFFF0 word32 dwFFFFFFF0) (FFFFFFF4 word32 dwFFFFFFF4))
+Eq_3810: (struct "Eq_3810" (-10 word32 dwFFF0) (-C word32 dwFFF4))
 	T_3810 (in r31_18 @ 000047CC : (ptr32 Eq_3810))
 Eq_3820: (fn void (int32))
 	T_3820 (in exit @ 000047A4 : ptr32)
@@ -15190,8 +15190,8 @@ T_3305: (in r30_32 @ 0000418C : (ptr32 Eq_3305))
   Class: Eq_3305
   DataType: (ptr32 Eq_3305)
   OrigDataType: (ptr32 (struct
-		(FFFFFFF0 T_3397 tFFFFFFF0)
-		(FFFFFFF8 T_3393 tFFFFFFF8)
+		(FFFFFFFFFFFFFFF0 T_3397 tFFF0)
+		(FFFFFFFFFFFFFFF8 T_3393 tFFF8)
 		(4 T_3401 t0004)
 		(8 T_3304 t0008)
 		(C T_3320 t000C)
@@ -17216,7 +17216,7 @@ T_3809: (in r30_19 @ 000047CC : word32)
 T_3810: (in r31_18 @ 000047CC : (ptr32 Eq_3810))
   Class: Eq_3810
   DataType: (ptr32 Eq_3810)
-  OrigDataType: (ptr32 (struct (FFFFFFF0 T_3813 tFFFFFFF0) (FFFFFFF4 T_3817 tFFFFFFF4)))
+  OrigDataType: (ptr32 (struct (-10 T_3813 tFFF0) (-C T_3817 tFFF4)))
 T_3811: (in -16<i32> @ 000047CC : int32)
   Class: Eq_3811
   DataType: int32
@@ -20566,8 +20566,8 @@ typedef union Eq_3304 {
 } Eq_3304;
 
 typedef struct Eq_3305 {
-	word64 qwFFFFFFF0;	// FFFFFFF0
-	word64 qwFFFFFFF8;	// FFFFFFF8
+	word64 qwFFF0;	// FFFFFFFFFFFFFFF0
+	word64 qwFFF8;	// FFFFFFFFFFFFFFF8
 	<anonymous> * ptr0004;	// 4
 	Eq_3304 t0008;	// 8
 	word32 dw000C;	// C
@@ -20739,8 +20739,8 @@ typedef void (Eq_3792)(int32);
 typedef void (Eq_3803)(word32);
 
 typedef struct Eq_3810 {
-	word32 dwFFFFFFF0;	// FFFFFFF0
-	word32 dwFFFFFFF4;	// FFFFFFF4
+	word32 dwFFF0;	// FFFFFFFFFFFFFFF0
+	word32 dwFFF4;	// FFFFFFFFFFFFFFF4
 } Eq_3810;
 
 typedef void (Eq_3820)(int32);

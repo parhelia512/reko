@@ -105,7 +105,7 @@ namespace Reko.Core.Serialization
             if (ssig.StackDelta != 0)
                 sig.StackDelta = ssig.StackDelta;
             else
-                sig.StackDelta = Architecture.PointerType.Size;
+                sig.StackDelta = (int)Architecture.PointerType.Size;
             sig.FpuStackDelta = FpuStackOffset;
             if (ssig.ReturnAddressOnStack != 0)
                 sig.ReturnAddressOnStack = ssig.ReturnAddressOnStack;
@@ -154,7 +154,7 @@ namespace Reko.Core.Serialization
                     Architecture,
                     frame,
                     retAddrSize,
-                    Architecture.WordWidth.Size);
+                    (int)Architecture.WordWidth.Size);
 
                 if (ss.Arguments is not null)
                 {
@@ -195,7 +195,7 @@ namespace Reko.Core.Serialization
                     ? ss.ReturnValue.Type.Accept(TypeLoader)
                     : null;
                 var dtThis = ss.EnclosingType is not null
-                    ? new PointerType(ss.EnclosingType.Accept(TypeLoader), Architecture.PointerType.BitSize)
+                    ? new PointerType(ss.EnclosingType.Accept(TypeLoader), (int)Architecture.PointerType.BitSize)
                     : null;
                 var dtParameters = ss.Arguments is not null
                     ? ss.Arguments
@@ -271,7 +271,7 @@ namespace Reko.Core.Serialization
                 // A declaration of a parameter as “function returning type”
                 // shall be adjusted to “pointer to function returning type”,
                 // as in 6.3.2.1.
-                return new PointerType(tref.Referent, platform.PointerType.BitSize);
+                return new PointerType(tref.Referent, (int)platform.PointerType.BitSize);
             }
             return dtParam;
         }

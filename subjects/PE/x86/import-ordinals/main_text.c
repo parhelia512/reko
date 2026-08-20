@@ -21,9 +21,9 @@ void fn00401010(word32 dwArg04)
 	struct Eq_n * esp_n;
 	ptr32 fp;
 	esp_n->ptr0000 = fp + 8;
-	esp_n->dwFFFFFFFC = 0x00;
-	esp_n->dwFFFFFFF8 = dwArg04;
-	esp_n->dwFFFFFFF4 = eax_n;
+	esp_n->dwFFFC = 0x00;
+	esp_n->dwFFF8 = dwArg04;
+	esp_n->dwFFF4 = eax_n;
 	struct Eq_n * eax_n = fn00401000();
 	_stdio_common_vfprintf(eax_n->dw0000, eax_n->dw0004);
 }
@@ -39,10 +39,10 @@ word32 fn00401040(word32 ecx)
 	driver.dll!Ordinal_n(fp - 8, 0x01);
 	driver.dll!Ordinal_n(fp - 8, 0x05);
 	struct Eq_n * esp_n;
-	esp_n->dwFFFFFFFC = ecx;
-	esp_n->dwFFFFFFF8 = *driver.dll!Ordinal_n;
-	esp_n->dwFFFFFFF4 = 0x00402118;
-	fn00401010(esp_n->dwFFFFFFF4);
+	esp_n->dwFFFC = ecx;
+	esp_n->dwFFF8 = *driver.dll!Ordinal_n;
+	esp_n->dwFFF4 = 0x00402118;
+	fn00401010(esp_n->dwFFF4);
 	return 0x00;
 }
 
@@ -67,9 +67,9 @@ l00401172:
 		*esp_n = 0x07;
 		fn0040176D(*esp_n);
 	}
-	ebp_n->bFFFFFFE7 = 0x00;
-	ebp_n->dwFFFFFFFC = 0x00;
-	ebp_n->tFFFFFFDC.u0 = (byte) fn0040143A();
+	ebp_n->bFFE7 = 0x00;
+	ebp_n->dwFFFC = 0x00;
+	ebp_n->tFFDC.u0 = (byte) fn0040143A();
 	struct Eq_n * ebp_n = ebp_n;
 	word32 eax_n = g_dw403334;
 	word32 ebx_n = SEQ(ebx_24_8_n, 0x00);
@@ -82,26 +82,26 @@ l00401172:
 			g_dw403334 = 0x01;
 			struct Eq_n * esp_n = esp_n - 4;
 			esp_n->ptr0000 = &g_t4020F0;
-			esp_n->ptrFFFFFFFC = &g_t4020E4;
+			esp_n->ptrFFFC = &g_t4020E4;
 			esp_n = (struct Eq_n *) ((char *) &esp_n->ptr0000 + 4);
-			if (_initterm_e(esp_n->ptrFFFFFFFC, esp_n->ptr0000) != 0x00)
+			if (_initterm_e(esp_n->ptrFFFC, esp_n->ptr0000) != 0x00)
 			{
-				ebp_n->dwFFFFFFFC = ~0x01;
+				ebp_n->dwFFFC = ~0x01;
 				eax_n.u0 = 0xFF;
 				goto l004012C3;
 			}
 			esp_n->ptr0000 = &g_t4020E0;
-			esp_n->ptrFFFFFFFC = &g_t4020D8;
-			_initterm(esp_n->ptrFFFFFFFC, esp_n->ptr0000);
+			esp_n->ptrFFFC = &g_t4020D8;
+			_initterm(esp_n->ptrFFFC, esp_n->ptr0000);
 			g_dw403334 = 0x02;
 		}
 		else
 		{
-			ebp_n->bFFFFFFE7 = 0x01;
+			ebp_n->bFFE7 = 0x01;
 			ebx_n = SEQ(ebx_24_8_n, 0x01);
 		}
 		struct Eq_n * esp_n = esp_n - 4;
-		esp_n->t0000.u1 = ebp_n->tFFFFFFDC.u1;
+		esp_n->t0000.u1 = ebp_n->tFFDC.u1;
 		fn004015C9(esp_n->t0000.u0);
 		struct Eq_n * esp_n = (struct Eq_n *) ((char *) &esp_n->t0000 + 4);
 		Eq_n eax_n = fn00401761();
@@ -116,8 +116,8 @@ l00401172:
 			if (fn0040153F(ebx_n, eax_n, 0x00, out edx_n, out ebx_n, out ebp_n, out esi_n, out edi_n) != 0x00)
 			{
 				esp_n->t0000.u1 = (struct Eq_n *) edi_n;
-				esp_n->dwFFFFFFFC = 0x02;
-				esp_n->tFFFFFFF8.u1 = (struct Eq_n *) edi_n;
+				esp_n->dwFFFC = 0x02;
+				esp_n->tFFF8.u1 = (struct Eq_n *) edi_n;
 				<anonymous> * esi_n = (<anonymous> *) *esi_n;
 				fn00401972();
 				esi_n();
@@ -126,7 +126,7 @@ l00401172:
 		Eq_n eax_n = fn00401767();
 		if (eax_n.u1->t0000.u1 != edi_n)
 		{
-			esp_n->tFFFFFFFC.u1 = (struct Eq_n *) eax_n;
+			esp_n->tFFFC.u1 = (struct Eq_n *) eax_n;
 			word32 edx_n;
 			word32 * esi_n;
 			word32 edi_n;
@@ -136,31 +136,31 @@ l00401172:
 		char *** eax_n = __p___argv();
 		int32 * eax_n = __p___argc();
 		struct Eq_n * esp_n;
-		esp_n->tFFFFFFFC.u0 = (int32) get_initial_narrow_environment();
-		esp_n->dwFFFFFFF8 = *eax_n;
-		esp_n->dwFFFFFFF4 = *eax_n;
+		esp_n->tFFFC.u0 = (int32) get_initial_narrow_environment();
+		esp_n->dwFFF8 = *eax_n;
+		esp_n->dwFFF4 = *eax_n;
 		Eq_n eax_n = fn00401040(ecx_n);
 		byte bl_n = (byte) ebx_n;
 		struct Eq_n * esp_n = esp_n;
 		if (fn0040188B() == 0x00)
 		{
-			esp_n->tFFFFFFFC.u0 = (int32) eax_n;
-			exit(esp_n->tFFFFFFFC.u0);
+			esp_n->tFFFC.u0 = (int32) eax_n;
+			exit(esp_n->tFFFC.u0);
 		}
 		if (bl_n == 0x00)
 			cexit();
 		struct Eq_n * esp_n = esp_n - 4;
 		esp_n->t0000.u1 = 0x00;
-		esp_n->dwFFFFFFFC = 0x01;
+		esp_n->dwFFFC = 0x01;
 		fn004015E6(esp_n->t0000.u0);
-		ebp_n->dwFFFFFFFC = ~0x01;
+		ebp_n->dwFFFC = ~0x01;
 		esp_n = (struct Eq_n *) ((char *) &esp_n->t0000 + 4);
 		eax_n = eax_n;
 l004012C3:
 		word32 ebp_n;
 		word32 esi_n;
 		word32 edi_n;
-		fn004019C6(ebp_n, esp_n->dwFFFFFFFC, out ebp_n, out esi_n, out edi_n);
+		fn004019C6(ebp_n, esp_n->dwFFFC, out ebp_n, out esi_n, out edi_n);
 		return eax_n;
 	}
 	goto l00401172;
@@ -236,7 +236,7 @@ byte fn0040153F(word32 ebx, Eq_n esi, Eq_n edi, word32 & edxOut, word32 & ebxOut
 	word32 edx;
 	ui32 dwLoc0C;
 	struct Eq_n * ebp_n = fn00401980(ebx, esi, edi, dwLoc0C, 0x08);
-	ebp_n->dwFFFFFFFC = 0x00;
+	ebp_n->dwFFFC = 0x00;
 	word24 eax_24_8_n = 0x5A;
 	word32 eax_n;
 	if (g_w400000 == 23117)
@@ -251,7 +251,7 @@ byte fn0040153F(word32 ebx, Eq_n esi, Eq_n edi, word32 & edxOut, word32 & ebxOut
 			eax_24_8_n = SLICE(eax_n, word24, 8);
 			if (eax_n != null && eax_n->dw0024 >= 0x00)
 			{
-				ebp_n->dwFFFFFFFC = ~0x01;
+				ebp_n->dwFFFC = ~0x01;
 				eax_n = SEQ(eax_24_8_n, 0x01);
 l004015C3:
 				word32 ebx_n = fn004019C6(ebp_n, dwLoc0C, out ebp_n, out esi_n, out edi_n);
@@ -264,7 +264,7 @@ l004015C3:
 			}
 		}
 	}
-	ebp_n->dwFFFFFFFC = ~0x01;
+	ebp_n->dwFFFC = ~0x01;
 	eax_n = SEQ(eax_24_8_n, 0x00);
 	goto l004015C3;
 }
@@ -391,11 +391,11 @@ ptr32 fn00401980(word32 ebx, Eq_n esi, Eq_n edi, ui32 dwArg00, ui32 dwArg08)
 {
 	ptr32 fp;
 	struct Eq_n * esp_n = fp - 8 - dwArg08;
-	esp_n->dwFFFFFFFC = ebx;
-	esp_n->tFFFFFFF8.u1 = (struct Eq_n *) esi;
-	esp_n->tFFFFFFF4.u1 = (struct Eq_n *) edi;
-	esp_n->dwFFFFFFF0 = g_dw403004 ^ fp + 8;
-	esp_n->dwFFFFFFEC = dwArg00;
+	esp_n->dwFFFC = ebx;
+	esp_n->tFFF8.u1 = (struct Eq_n *) esi;
+	esp_n->tFFF4.u1 = (struct Eq_n *) edi;
+	esp_n->dwFFF0 = g_dw403004 ^ fp + 8;
+	esp_n->dwFFEC = dwArg00;
 	selector fs;
 	fs->ptr0000 = fp - 8;
 	return fp + 8;
@@ -408,7 +408,7 @@ ptr32 fn00401980(word32 ebx, Eq_n esi, Eq_n edi, ui32 dwArg00, ui32 dwArg08)
 word32 fn004019C6(struct Eq_n * ebp, ui32 dwArg00, ui32 & ebpOut, word32 & esiOut, word32 & ediOut)
 {
 	selector fs;
-	fs->dw0000 = ebp->dwFFFFFFF0;
+	fs->dw0000 = ebp->dwFFF0;
 	ui32 ebp_n = ebp->dw0000;
 	ebp->dw0000 = dwArg00;
 	ebpOut = ebp_n;

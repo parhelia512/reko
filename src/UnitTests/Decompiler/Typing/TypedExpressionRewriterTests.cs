@@ -1430,8 +1430,8 @@ define test
 test_entry:
 	// succ:  l1
 l1:
-	a5->aFFFFF578[d3] = 0<32>
-	d0_1 = a5->aFFFFF578[d3]
+	a5->aF578[d3] = 0<32>
+	d0_1 = a5->aF578[d3]
 	a2->dw0008 = d0_1
 	return
 	// succ:  test_exit

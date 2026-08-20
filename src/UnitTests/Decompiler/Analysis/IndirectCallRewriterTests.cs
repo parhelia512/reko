@@ -151,7 +151,7 @@ namespace Reko.UnitTests.Decompiler.Analysis
             var storages = parameters.Select(p => p.Storage as StackStorage)
                 .Where(stg => stg is not null);
             var stackDelta = storages.Count() == 0 ? 4 :
-                storages.Max(stg => stg.StackOffset + stg.DataType.Size);
+                storages.Max(stg => stg.StackOffset + (int) stg.DataType.Size);
             var ft = new FunctionType(parameters, [returnValue ?? new Identifier("", VoidType.Instance, null)])
             {
                 StackDelta = stackDelta,

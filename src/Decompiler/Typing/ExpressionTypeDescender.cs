@@ -193,7 +193,7 @@ namespace Reko.Typing
         }
 
         /// <inheritdoc/>
-        public void FunctionTrait(Expression function, int funcPtrBitSize, TypeVariable ret, params TypeVariable[] actuals)
+        public void FunctionTrait(Expression function, long funcPtrBitSize, TypeVariable ret, params TypeVariable[] actuals)
         {
             if (function is ProcedureConstant pc &&
                 pc.Procedure is ExternalProcedure ep &&
@@ -275,9 +275,9 @@ namespace Reko.Typing
         private TypeVariable ArrayField(
             Expression? expBase, 
             Expression expStruct,
-            int structPtrBitSize, 
-            int offset, 
-            int elementSize, 
+            long structPtrBitSize, 
+            long offset, 
+            long elementSize, 
             int length, 
             TypeVariable tvField)
         {
@@ -319,7 +319,7 @@ namespace Reko.Typing
         /// <returns>The union of <paramref name="eStructPtr" /> with a pointer to a structure
         /// containing a field at offset <paramref name="offset" />.
         /// </returns>
-        public DataType StructField(Expression? eBase, Expression eStructPtr, int offset, DataType dtField, int structPtrBitSize)
+        public DataType StructField(Expression? eBase, Expression eStructPtr, long offset, DataType dtField, long structPtrBitSize)
         {
             // Do not unify with user-defined fields
             if (IsUserDefinedField(eStructPtr, offset))
@@ -334,7 +334,7 @@ namespace Reko.Typing
             return MeetDataType(eStructPtr, pointer);
         }
 
-        private bool IsUserDefinedField(Expression eStructPtr, int offset)
+        private bool IsUserDefinedField(Expression eStructPtr, long offset)
         {
             var tv = TypeVar(eStructPtr);
             if (tv.DataType is null)
@@ -733,7 +733,7 @@ namespace Reko.Typing
         private bool VisitMemoryAccess(Expression? basePointer, TypeVariable tvAccess, Expression effectiveAddress, Expression globals)
         {
             MeetDataType(tvAccess, tvAccess.DataType);
-            int eaBitSize = TypeVar(effectiveAddress).DataType.BitSize;
+            long eaBitSize = TypeVar(effectiveAddress).DataType.BitSize;
             Expression p;
             int offset;
             var match = fieldAccessPattern.Match(effectiveAddress);
@@ -821,7 +821,13 @@ namespace Reko.Typing
             return null;
         }
 
-        private void VisitPossibleArrayAccess(Expression? basePointer, TypeVariable tvAccess, Expression left, Expression right, Expression globals, int eaBitSize)
+        private void VisitPossibleArrayAccess(
+            Expression? basePointer,
+            TypeVariable tvAccess,
+            Expression left,
+            Expression right,
+            Expression globals,
+            long eaBitSize)
         {
             // First do the array index.
             right.Accept(this, TypeVar(right));
@@ -936,7 +942,7 @@ namespace Reko.Typing
                 return (int) c.ToUInt32();
         }
 
-        private static MemberPointer MemberPointerTo(DataType baseType, DataType fieldType, int bitSize)
+        private static MemberPointer MemberPointerTo(DataType baseType, DataType fieldType, long bitSize)
         {
             return new MemberPointer(baseType, fieldType, bitSize);
         }

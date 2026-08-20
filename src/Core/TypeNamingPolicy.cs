@@ -165,7 +165,20 @@ namespace Reko.Core
             if (!string.IsNullOrEmpty(userGivenName))
                 return userGivenName;
             var prefix = field.DataType.Accept(this.prefixPolicy);
-            return $"{prefix}{field.Offset:X4}";
+            var offset = RenderFieldName(field.Offset);
+            return $"{prefix}{offset}";
+        }
+
+        private static string RenderFieldName(long offset)
+        {
+            if (offset >= 0)
+                return $"{offset:X4}";
+            else if (offset >= short.MinValue) 
+                return $"{(ushort)offset:X4}";
+            else if (offset >= int.MinValue)
+                return $"{(uint) offset:X4}";
+            else
+                return $"{offset:X4}";
         }
 
         /// <summary>

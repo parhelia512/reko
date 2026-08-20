@@ -353,12 +353,12 @@ public class ProjectionPropagator : IAnalysis<SsaState>
                     .OrderBy(s => s.StackOffset)
                     .ToArray();
                 int byteOffsetMin = stgs[0].StackOffset;
-                int byteOffsetMax = byteOffsetMin + stgs[0].DataType.Size;
+                int byteOffsetMax = byteOffsetMin + (int)stgs[0].DataType.Size;
                 for (int i = 1; i < stgs.Length; ++i)
                 {
                     if (stgs[i].StackOffset != byteOffsetMax)
                         return null;
-                    byteOffsetMax += stgs[i].DataType.Size;
+                    byteOffsetMax += (int)stgs[i].DataType.Size;
                 }
                 var word = PrimitiveType.CreateWord(DataType.BitsPerByte * (byteOffsetMax - byteOffsetMin));
                 return ssa.Procedure.Frame.EnsureStackVariable(byteOffsetMin, word);

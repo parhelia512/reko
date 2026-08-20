@@ -40,7 +40,7 @@ namespace Reko.Evaluation
 
             if (i is Constant cIndex)
             {
-                var bitPosition = cIndex.ToInt32() * acc.DataType.BitSize;
+                var bitPosition = cIndex.ToInt32() * (int)acc.DataType.BitSize;
                 if (IsSequence(ctx, a, out var seq))
                 {
                     var eNew = SliceSequence(seq, acc.DataType, bitPosition);
@@ -52,7 +52,7 @@ namespace Reko.Evaluation
                 }
                 if (a is Constant cArray)
                 {
-                    var cValue = (cArray.ToBigInteger() >> bitPosition) & Bits.Mask(acc.DataType.BitSize);
+                    var cValue = (cArray.ToBigInteger() >> bitPosition) & Bits.Mask((int)acc.DataType.BitSize);
                     result = Constant.Create(acc.DataType, cValue);
                     changed = true;
                 }

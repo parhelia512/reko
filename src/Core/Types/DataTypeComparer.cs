@@ -270,7 +270,7 @@ namespace Reko.Core.Types
 			int d;
 			if (x.Size > 0 && y.Size > 0)
 			{
-				d = x.Size - y.Size;
+				d = x.Size.CompareTo(y.Size);
 				if (d != 0)
 					return d;
 			}
@@ -286,7 +286,7 @@ namespace Reko.Core.Types
 				ey.MoveNext();
 				StructureField fx = ex.Current;
 				StructureField fy = ey.Current;
-				d = fx.Offset - fy.Offset;
+				d = fx.Offset.CompareTo(fy.Offset);
 				if (d != 0)
 					return d;
 				d = Compare(fx.DataType, fy.DataType, count);

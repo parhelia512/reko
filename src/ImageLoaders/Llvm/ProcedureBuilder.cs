@@ -181,7 +181,7 @@ namespace Reko.ImageLoaders.LLVM
 
         public Identifier AllocateStackVariable(DataType type, int count)
         {
-            var bytes = type.Size * count;
+            var bytes = (int)type.Size * count;
             Debug.Assert(bytes > 0);
             this.stackOffset -= bytes;
             var stk = Frame.EnsureStackLocal(stackOffset, type);

@@ -115,7 +115,7 @@ Eq_n fn000C195A(uint16 r1)
 				ui32 r2_r0_n = SEQ(r2_n, r0_n) - r2_r0_n;
 				*SEQ(wLoc12_n + 0x04, a1_n) = (word16) r2_r0_n;
 				SEQ(wLoc12_n + 0x04, a1_n)->w0002 = SLICE(r2_r0_n, word16, 16);
-				dwLoc12_n.u1 = &dwLoc12_n.u1->t0000.u0 + r2_r0_n * 2;
+				dwLoc12_n.u1 = &dwLoc12_n.u1->t0000.u0 + r2_r0_n * 0x02;
 			}
 			*(ui32 *) 0x040E -= r2_r0_n;
 			return dwLoc12_n;
@@ -157,7 +157,7 @@ void fn000C1ACC(uint16 r2, struct Eq_n * sb, struct Eq_n * dwArg03)
 	ui32 r2_r0_n = fn000C1DE4((uint32) r2 + 0x07, sb);
 	*(ui32 *) 0x040E += r2_r0_n;
 	Eq_n v20_v19_n;
-	v20_v19_n.u1 = &dwArg03->t0000.u0 + r2_r0_n * 2;
+	v20_v19_n.u1 = &dwArg03->t0000.u0 + r2_r0_n * 0x02;
 	word16 wLoc0C_n = SLICE(v20_v19_n, word16, 16);
 	Eq_n wLoc0E_n = (word16) v20_v19_n;
 	Eq_n dwLoc16_n = *(union Eq_n *) 0x040A;
@@ -169,7 +169,7 @@ void fn000C1ACC(uint16 r2, struct Eq_n * sb, struct Eq_n * dwArg03)
 		Eq_n wLoc16_n = (word16) dwLoc16_n;
 		if (wLoc16_n == 0x00 && wLoc14_n == 0x00)
 			break;
-		struct Eq_n * v32_v31_n = (struct Eq_n *) (&dwLoc16_n.u1->t0000.u0 + ((dwLoc16_n.u1)->t0004).u1 * 2);
+		struct Eq_n * v32_v31_n = (struct Eq_n *) (&dwLoc16_n.u1->t0000.u0 + ((dwLoc16_n.u1)->t0004).u1 * 0x02);
 		word16 wLoc18_n = SLICE(v32_v31_n, word16, 16);
 		Eq_n wLoc1A_n = (word16) v32_v31_n;
 		if (dwLoc16_n > v20_v19_n)

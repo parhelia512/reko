@@ -56,7 +56,7 @@ namespace Reko.Arch.Arm.AArch64
 
             int iReg = 0;
             int iFloat = 0;
-            int iStackOffset = 0;
+            long iStackOffset = 0;
 
             var adjusted = PrepadExtendParameters(dtParams);
             foreach (var (dom, bs) in adjusted)
@@ -150,14 +150,14 @@ namespace Reko.Arch.Arm.AArch64
             }
         }
 
-        private static int AlignUp(int n, int alignment)
+        private static long AlignUp(long n, long alignment)
         {
             return (n + (alignment - 1)) / alignment;
         }
 
-        private (Domain, int)[] PrepadExtendParameters(List<DataType> dtParams)
+        private (Domain, long)[] PrepadExtendParameters(List<DataType> dtParams)
         {
-            var result = new (Domain, int)[dtParams.Count];
+            var result = new (Domain, long)[dtParams.Count];
             for (int i = 0; i < dtParams.Count; ++i)
             {
                 var dt = dtParams[i];

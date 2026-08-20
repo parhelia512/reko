@@ -153,7 +153,7 @@ l0920:
 					struct Eq_n * sp_n = (struct Eq_n *) <invalid>;
 					if (a_n == 0x0D)
 					{
-						sp_n->wFFFFFFFE = hl_n;
+						sp_n->wFFFE = hl_n;
 						hl_n = fn0E2C(sp_n->b0002, sp_n->t0000.u1);
 						goto l0920;
 					}
@@ -325,19 +325,19 @@ l016A:
 		byte d_n = *hl_n;
 		struct Eq_n * sp_n = sp_n - 0x02;
 		sp_n->ptr0000 = hl_n + 1;
-		sp_n->tFFFFFFFE.u0 = (cui16) bc_n;
+		sp_n->tFFFE.u0 = (cui16) bc_n;
 		word16 af_n;
 		byte c_n;
 		fn099E(SEQ(d_n, f_n), e_n, out af_n, out c_n);
 		fn0A19();
 		Eq_n bc_n;
-		bc_n.u0 = sp_n->tFFFFFFFE.u0;
-		sp_n->tFFFFFFFE.u0 = (cui16) bc_n;
+		bc_n.u0 = sp_n->tFFFE.u0;
+		sp_n->tFFFE.u0 = (cui16) bc_n;
 		f_n = (byte) af_n;
 		if ((byte) bc_n == ~0x06)
 			fn093B();
 		Eq_n bc_n;
-		bc_n.u0 = sp_n->tFFFFFFFE.u0;
+		bc_n.u0 = sp_n->tFFFE.u0;
 		hl_n = sp_n->ptr0000;
 		bc_n = SEQ(SLICE(bc_n - 0x01, byte, 8), (byte) bc_n - 0x01);
 	}

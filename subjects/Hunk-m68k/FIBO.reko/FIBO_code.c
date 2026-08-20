@@ -249,8 +249,8 @@ word32 fn00001278(int8 * dwArg04, word32 & a5Out)
 int8 * fn0000127C(int8 * d2, struct Eq_n & a5Out)
 {
 	struct Eq_n * a7_n = g_ptr3E94;
-	struct Eq_n * v8_n = a7_n->ptrFFFFFFFC;
-	struct Eq_n * v6_n = a7_n->ptrFFFFFFF8;
+	struct Eq_n * v8_n = a7_n->ptrFFFC;
+	struct Eq_n * v6_n = a7_n->ptrFFF8;
 	if (v8_n->dw0004 != 0x00)
 		execPrivate1();
 	CloseLibrary(g_dw3E9C);
@@ -1150,7 +1150,7 @@ ptr32 fn00002050(word32 dwArg04, union Eq_n & a0Out)
 void fn000020BC(struct Eq_n * dwArg04)
 {
 	if (dwArg04 != null && g_t3ECC.u1 != 0x00)
-		fn00002184(g_t3ECC.u1, dwArg04 - 4, dwArg04->dwFFFFFFFC + 0x04);
+		fn00002184(g_t3ECC.u1, dwArg04 - 4, dwArg04->dwFFFC + 0x04);
 }
 
 // 00002184: void fn00002184(Stack Eq_n dwArg04, Stack Eq_n dwArg08, Stack Eq_n dwArg0C)

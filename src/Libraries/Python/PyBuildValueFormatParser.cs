@@ -61,12 +61,12 @@ namespace Reko.Libraries.Python
             this.ArgumentTypes = new List<DataType>();
             this.format = format;
             var platform = program.Platform;
-            this.pointerSize = platform.PointerType.BitSize;
+            this.pointerSize = (int) platform.PointerType.BitSize;
 
-            var wordSize = platform.Architecture.WordWidth.BitSize;
-            var longSize = platform.GetBitSizeFromCBasicType(CBasicType.Long);
-            var longLongSize = platform.GetBitSizeFromCBasicType(CBasicType.LongLong);
-            var doubleSize = platform.GetBitSizeFromCBasicType(CBasicType.Double);
+            var wordSize = (int) platform.Architecture.WordWidth.BitSize;
+            var longSize = (int) platform.GetBitSizeFromCBasicType(CBasicType.Long);
+            var longLongSize = (int) platform.GetBitSizeFromCBasicType(CBasicType.LongLong);
+            var doubleSize = (int) platform.GetBitSizeFromCBasicType(CBasicType.Double);
 
             dtInt = Integer(wordSize);
             dtUInt = UInteger(wordSize);

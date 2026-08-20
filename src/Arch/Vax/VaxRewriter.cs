@@ -565,7 +565,7 @@ namespace Reko.Arch.Vax
                     if (memOp.AutoIncrement)
                     {
                         reg = binder.EnsureRegister(rbaseOp);
-                        int inc = (memOp.Deferred) ? 4 : width.Size;
+                        int inc = (memOp.Deferred) ? 4 : (int)width.Size;
                         m.Assign(reg, m.IAdd(reg, inc));
                     }
                     return load;
@@ -613,7 +613,7 @@ namespace Reko.Arch.Vax
                     ea = imem.EffectiveAddress;
                 Expression idx = binder.EnsureRegister(indexOperand.Index);
                 if (width.Size != 1)
-                    idx = m.IMul(idx, m.Int32(width.Size));
+                    idx = m.IMul(idx, m.Int32((int)width.Size));
                 ea = m.IAdd(ea, idx);
                 return m.Mem(width, ea);
             }
@@ -700,14 +700,14 @@ namespace Reko.Arch.Vax
 
                 if (regEa is not null && memOp.AutoIncrement)
                 {
-                    int inc = (memOp.Deferred) ? 4 : width.Size;
+                    long inc = (memOp.Deferred) ? 4 : width.Size;
                     m.Assign(regEa, m.IAdd(regEa, inc));
                 }
                 return tmp;
             case IndexOperand indexOperand:
                 Expression idx = binder.EnsureRegister(indexOperand.Index);
                 if (width.Size != 1)
-                    idx = m.IMul(idx, m.Int32(width.Size));
+                    idx = m.IMul(idx, m.Int32((int)width.Size));
                 return RewriteDstOp(indexOperand.Base, PrimitiveType.Word32, fn, idx);
             case Constant _:
             case Address _:

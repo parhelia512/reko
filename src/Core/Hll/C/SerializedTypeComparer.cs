@@ -53,7 +53,7 @@ namespace Reko.Core.Hll.C
                 return 0;
             int hash = obj.GetType().GetHashCode() * 11;
             if (obj is PrimitiveType_v1 prim)
-                return hash ^ ((int) prim.Domain << 8) ^ prim.ByteSize;
+                return hash ^ ((int) prim.Domain << 8) ^ (int)prim.ByteSize;
             if (obj is PointerType_v1 ptr)
                 return hash ^ GetHashCode(ptr.DataType);
             if (obj is ArrayType_v1 arr)

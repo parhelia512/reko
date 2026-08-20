@@ -179,10 +179,10 @@ l03E6:
 			}
 			Eq_n r0_n = fn0486(r0_n, r4_n, out r4_n);
 			struct Eq_n * sp_n = (struct Eq_n *) <invalid>;
-			sp_n->bFFFFFFFF = 0x01;
+			sp_n->bFFFF = 0x01;
 			sp_n->b0000 = 0x18;
 			Eq_n r0_n = fn0AB6(r0_n, r4_n, out r4_n, out r5_n);
-			sp_n->wFFFFFFFD = r5_n;
+			sp_n->wFFFD = r5_n;
 			word16 r0_n;
 			word16 r4_n;
 			word16 r5_n;
@@ -337,7 +337,7 @@ l0524:
 											sp_n->t0001.u0 = (byte) r2_n[0x06DC];
 											Eq_n r0_n = fn0A74(fn0AB6(r0_n, r4, out r4_n, out r5_n), r4_n, out r4_n, out r5_n);
 											r0_n.u1->t0000.u1 = 0x00;
-											sp_n->bFFFFFFFF = r5_n->b0EF0 + 0x01;
+											sp_n->bFFFF = r5_n->b0EF0 + 0x01;
 											sp_n->b0000 = r5_n->b0EF3;
 											sp_n = sp_n - 0x01;
 											r0_n = fn0AB6(r0_n, r4_n, out r4, out r5_n);
@@ -354,7 +354,7 @@ l0524:
 								goto l0524;
 							++r2_n;
 						} while (r2_n <= &t0000.w000A);
-						sp_n->wFFFFFFFE = r5_n;
+						sp_n->wFFFE = r5_n;
 						word16 r0_n;
 						byte * r4_n;
 						word16 r5_n;
@@ -576,7 +576,7 @@ byte * fn06D6(byte * r4)
 					return r4_n;
 				}
 l078A:
-				sp_n->wFFFFFFFE = r5_n;
+				sp_n->wFFFE = r5_n;
 				word16 r0_n;
 				byte * r4_n;
 				word16 r5_n;
@@ -656,7 +656,7 @@ Eq_n fn07A6(byte * r4, byte & r4Out)
 						sp_n->b0001 = (byte) r0;
 						Eq_n r0_n = fn0AB6(r0, r4, out r4_n, out r5_n);
 						fn096A(r3_n);
-						sp_n->wFFFFFFFE = r5_n;
+						sp_n->wFFFE = r5_n;
 						Eq_n r0_n;
 						byte * r4_n;
 						word16 r5_n;

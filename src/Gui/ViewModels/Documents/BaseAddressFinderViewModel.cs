@@ -218,8 +218,8 @@ namespace Reko.Gui.ViewModels.Documents
             var bitSize = arch.PointerType.BitSize;
             int digits = arch.DefaultBase switch
             {
-                16 => (bitSize + 3) / 4,
-                8 => (bitSize + 2) / 3,
+                16 => (int)(bitSize + 3) / 4,
+                8 => (int)(bitSize + 2) / 3,
                 _ => throw new NotImplementedException($"Unimplemented bit size {arch.DefaultBase}.")
             };
             var sAddr = Convert.ToString(

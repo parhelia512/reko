@@ -6,7 +6,7 @@
 // Equivalence classes ////////////
 Eq_1: (struct "Globals" (13E byte b013E) (FBFE word16 wFBFE) (FEB0 ptr16 ptrFEB0) (FF12 word16 wFF12))
 	globals_t (in globals : (ptr16 (struct "Globals")))
-Eq_2: (struct "Eq_2" (FFFFFFFA word16 wFFFFFFFA) (FFFFFFFC word16 wFFFFFFFC) (FFFFFFFE word16 wFFFFFFFE))
+Eq_2: (struct "Eq_2" (-6 word16 wFFFA) (-4 word16 wFFFC) (-2 word16 wFFFE))
 	T_2 (in SP : (ptr16 Eq_2))
 Eq_20: (fn void ())
 	T_20 (in __disable_watchdog_timer @ 0062 : ptr32)
@@ -56,7 +56,7 @@ globals_t: (in globals : (ptr16 (struct "Globals")))
 T_2: (in SP : (ptr16 Eq_2))
   Class: Eq_2
   DataType: (ptr16 Eq_2)
-  OrigDataType: (ptr16 (struct (FFFFFFFA T_19 tFFFFFFFA) (FFFFFFFC T_15 tFFFFFFFC) (FFFFFFFE T_11 tFFFFFFFE)))
+  OrigDataType: (ptr16 (struct (-6 T_19 tFFFA) (-4 T_15 tFFFC) (-2 T_11 tFFFE)))
 T_3: (in 0x8004<16> @ 0000 : word16)
   Class: Eq_3
   DataType: word16
@@ -658,9 +658,9 @@ typedef struct Globals {
 } Eq_1;
 
 typedef struct Eq_2 {
-	word16 wFFFFFFFA;	// FFFFFFFA
-	word16 wFFFFFFFC;	// FFFFFFFC
-	word16 wFFFFFFFE;	// FFFFFFFE
+	word16 wFFFA;	// FFFFFFFFFFFFFFFA
+	word16 wFFFC;	// FFFFFFFFFFFFFFFC
+	word16 wFFFE;	// FFFFFFFFFFFFFFFE
 } Eq_2;
 
 typedef void (Eq_20)();

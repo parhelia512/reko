@@ -595,32 +595,32 @@ T_4 (in SEQ(SLICE(a, word24, 8), b) : word32)
             return null;
         }
 
-        public DataType FunctionTrait(Expression function, int funcPtrSize, TypeVariable ret, params TypeVariable[] actuals)
+        public DataType FunctionTrait(Expression function, long funcPtrSize, TypeVariable ret, params TypeVariable[] actuals)
         {
             return Traits.AddTrait(TypeVar(function), new TraitFunc(TypeVar(function), funcPtrSize, ret, actuals));
         }
 
-        public DataType MemAccessArrayTrait(Expression tBase, Expression tStruct, int structPtrSize, int offset, int elementSize, int length, Expression tAccess)
+        public DataType MemAccessArrayTrait(Expression tBase, Expression tStruct, long structPtrSize, long offset, int elementSize, int length, Expression tAccess)
         {
             return Traits.AddTrait(TypeVar(tStruct), new TraitMemArray(tBase is not null ? TypeVar(tBase) : null, structPtrSize, offset, elementSize, length, TypeVar(tAccess)));
         }
 
-        public DataType MemAccessTrait(Expression tBase, Expression tStruct, int structPtrSize, Expression tField, int offset)
+        public DataType MemAccessTrait(Expression tBase, Expression tStruct, long structPtrSize, Expression tField, long offset)
         {
             return Traits.AddTrait(TypeVar(tStruct), new TraitMem(tBase is not null ? TypeVar(tBase) : null, structPtrSize, TypeVar(tField), offset));
         }
 
-        public DataType MemFieldTrait(Expression tBase, Expression tStruct, Expression tField, int offset)
+        public DataType MemFieldTrait(Expression tBase, Expression tStruct, Expression tField, long offset)
         {
             return Traits.AddTrait(TypeVar(tStruct), new TraitMem(tBase is not null ? TypeVar(tBase) : null, 0, TypeVar(tField), offset));
         }
 
-        public DataType MemSizeTrait(Expression tBase, Expression tStruct, int size)
+        public DataType MemSizeTrait(Expression tBase, Expression tStruct, long size)
         {
             return Traits.AddTrait(TypeVar(tStruct), new TraitMemSize(size));
         }
 
-        public DataType PointerTrait(Expression tPtr, int ptrSize, Expression tPointee)
+        public DataType PointerTrait(Expression tPtr, long ptrSize, Expression tPointee)
         {
             return Traits.AddTrait(TypeVar(tPtr), new TraitPointer(TypeVar(tPointee)));
         }

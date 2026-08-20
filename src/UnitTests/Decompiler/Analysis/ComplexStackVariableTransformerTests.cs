@@ -68,7 +68,7 @@ namespace Reko.UnitTests.Decompiler.Analysis
         {
             foreach(var (offset, dt) in intervals)
             {
-                this.intervals.Add(offset, offset + dt.Size, dt);
+                this.intervals.Add(offset, offset + (int)dt.Size, dt);
             }
         }
 

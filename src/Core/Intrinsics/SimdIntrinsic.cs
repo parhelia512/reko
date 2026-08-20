@@ -97,10 +97,10 @@ namespace Reko.Core.Intrinsics
             params Constant[] cs)
         {
             var dtInput = cs[0].DataType;
-            var bitsInput = dtInput.BitSize;
+            var bitsInput = (int)dtInput.BitSize;
             var dtInputLane = this.InputLaneType(0);    //$REVIEW: do these vary by input #?
             var dtOutputLane = this.OutputLaneType();
-            var bitsInputLane = dtInputLane .BitSize;
+            var bitsInputLane = (int) dtInputLane.BitSize;
             var maskInputLane = (BigInteger.One << bitsInputLane) - 1;
             var laneInputs = new Constant[cs.Length];
             int cLanes = bitsInput / bitsInputLane;
@@ -117,7 +117,7 @@ namespace Reko.Core.Intrinsics
                 var laneResult = operation.ApplyConstants(dtOutputLane, laneInputs);
                 if (laneResult is null)
                     return null;
-                output <<= dtOutputLane.BitSize;
+                output <<= (int)dtOutputLane.BitSize;
                 output |= laneResult.ToUInt64() & laneMask;
             }
             return Constant.Create(dt, output);
@@ -165,7 +165,7 @@ namespace Reko.Core.Intrinsics
             var slices = new Expression[arguments.Length];
             for (int i = 0; i < arguments.Length; ++i)
             {
-                slices[i] = new Slice(laneType, arguments[i], lane * laneType.BitSize);
+                slices[i] = new Slice(laneType, arguments[i], lane * (int)laneType.BitSize);
             }
             return Operator.Create(laneType, slices);
         }

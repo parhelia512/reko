@@ -67,9 +67,9 @@ public partial class ExpressionSimplifier
                 {
                     t = PrimitiveType.Create(tHead.Domain, tHead.BitSize + tTail.BitSize);
                     if (tHead.BitSize + tTail.BitSize <= 64)
-                        return (m.Const(t, (c1.ToUInt64() << tTail.BitSize) | c2.ToUInt64()), true);
+                        return (m.Const(t, (c1.ToUInt64() << (int)tTail.BitSize) | c2.ToUInt64()), true);
                     else
-                        return (Constant.Create(t, (c1.ToBigInteger() << tTail.BitSize) | c2.ToBigInteger()), true);
+                        return (Constant.Create(t, (c1.ToBigInteger() << (int)tTail.BitSize) | c2.ToBigInteger()), true);
                 }
             }
         }
@@ -79,7 +79,7 @@ public partial class ExpressionSimplifier
             for (int i = 0; i < newSeq.Length; ++i)
             {
                 var c = (Constant) newSeq[i];
-                value = (value << c.DataType.BitSize) | c.ToBigInteger();
+                value = (value << (int)c.DataType.BitSize) | c.ToBigInteger();
             }
             return (Constant.Create(seq.DataType, value), true);
         }
@@ -273,7 +273,7 @@ public partial class ExpressionSimplifier
                 {
                     if (!AccumulateMul(bin))
                         return null;
-                    bits += slice.DataType.BitSize;
+                    bits += (int)slice.DataType.BitSize;
                     break;
                 }
             case BinaryExpression bin when
@@ -281,7 +281,7 @@ public partial class ExpressionSimplifier
                 {
                     if (!AccumulateMul(bin))
                         return null;
-                    bits += bin.DataType.BitSize;
+                    bits += (int)bin.DataType.BitSize;
                     break;
                 }
             default:

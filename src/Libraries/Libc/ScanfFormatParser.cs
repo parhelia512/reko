@@ -37,11 +37,11 @@ namespace Reko.Libraries.Libc
         protected Address addr;
         protected int i;
         protected string format;
-        protected readonly int wordSize;
+        protected readonly long wordSize;
         protected readonly int longSize;
         protected readonly int floatSize;
         protected readonly int doubleSize;
-        protected readonly int pointerSize;
+        protected readonly long pointerSize;
         private readonly IServiceProvider services;
 
         public ScanfFormatParser(
@@ -118,7 +118,7 @@ namespace Reko.Libraries.Libc
         protected virtual DataType MakeDataType(PrintfSize size, char cDomain)
         {
             Domain domain = Domain.None;
-            int bitSize = this.wordSize;
+            long bitSize = this.wordSize;
             switch (cDomain)
             {
             case 'c':

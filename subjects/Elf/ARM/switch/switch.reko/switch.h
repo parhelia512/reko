@@ -5,7 +5,6 @@
 /*
 // Equivalence classes ////////////
 Eq_1: (struct "Globals"
-		(FFFFFFFF code tFFFFFFFF)
 		(8364 (ptr32 Eq_22) ptr8364)
 		(8368 (ptr32 Eq_25) ptr8368)
 		(8380 <unknown> t8380)
@@ -29,7 +28,8 @@ Eq_1: (struct "Globals"
 		(10844 word32 dw10844)
 		(10854 (ptr32 code) abort_GOT)
 		(10858 (ptr32 code) __libc_start_main_GOT)
-		(10870 byte b10870))
+		(10870 byte b10870)
+		(FFFFFFFF code tFFFFFFFF))
 	globals_t (in globals : (ptr32 (struct "Globals")))
 Eq_3: (fn word32 ())
 	T_3 (in call_gmon_start @ 000082F4 : ptr32)
@@ -79,8 +79,8 @@ Eq_99: (union "Eq_99" (int32 u0) (uint32 u1))
 	T_127 (in Mem20[fp_25 + -24<i32>:word32] @ 000084C4 : word32)
 	T_130 (in Mem20[sp_32 + 0<32>:word32] @ 000084C4 : word32)
 	T_132 (in out fp_52 @ 000084C4 : word32)
-	T_133 (in frobulate(fp_25->tFFFFFFE8.u0, sp_32->u0, out fp_52) @ 000084C4 : word32)
-	T_134 (in __divsi3(__divsi3(r0 + r1, frobulate(r0, r1, out fp_25)), frobulate(fp_25->tFFFFFFE8.u0, sp_32->u0, out fp_52)) @ 000084C4 : word32)
+	T_133 (in frobulate(fp_25->tFFE8.u0, sp_32->u0, out fp_52) @ 000084C4 : word32)
+	T_134 (in __divsi3(__divsi3(r0 + r1, frobulate(r0, r1, out fp_25)), frobulate(fp_25->tFFE8.u0, sp_32->u0, out fp_52)) @ 000084C4 : word32)
 	T_139 (in r0 @ 000084D0 : Eq_99)
 	T_140 (in 6<32> @ 000084F0 : word32)
 	T_144 (in out fp_39 @ 00008518 : word32)
@@ -131,7 +131,7 @@ Eq_118: (fn Eq_99 (Eq_99, Eq_99, Eq_99))
 	T_124 (in frobulate @ 000084C4 : ptr32)
 	T_142 (in frobulate @ 00008518 : ptr32)
 	T_151 (in frobulate @ 0000852C : ptr32)
-Eq_120: (struct "Eq_120" (FFFFFFE8 Eq_99 tFFFFFFE8))
+Eq_120: (struct "Eq_120" (-18 Eq_99 tFFE8))
 	T_120 (in fp_25 @ 000084C4 : (ptr32 Eq_120))
 Eq_143: (struct "Eq_143" (4 word32 dw0004))
 	T_143 (in fp_39 @ 00008518 : (ptr32 Eq_143))
@@ -175,7 +175,7 @@ Eq_274: (union "Eq_274" (int32 u0) (uint32 u1))
 Eq_320: (fn void ())
 	T_320 (in _fini @ 000086FC : ptr32)
 	T_321 (in signature of _fini @ 0000874C : void)
-Eq_325: (struct "Eq_325" (FFFFFFFC (ptr32 code) ptrFFFFFFFC))
+Eq_325: (struct "Eq_325" (-4 (ptr32 code) ptrFFFC))
 	T_325 (in Mem7[0x00008740<p32>:word32] @ 00008710 : word32)
 	T_326 (in r3_9 @ 00008710 : (ptr32 Eq_325))
 Eq_334: (fn void ())
@@ -661,7 +661,7 @@ T_119: (in signature of frobulate @ 00008434 : void)
 T_120: (in fp_25 @ 000084C4 : (ptr32 Eq_120))
   Class: Eq_120
   DataType: (ptr32 Eq_120)
-  OrigDataType: (ptr32 (struct (FFFFFFE8 T_127 tFFFFFFE8)))
+  OrigDataType: (ptr32 (struct (-18 T_127 tFFE8)))
 T_121: (in out fp_25 @ 000084C4 : word32)
   Class: Eq_99
   DataType: Eq_99
@@ -710,11 +710,11 @@ T_132: (in out fp_52 @ 000084C4 : word32)
   Class: Eq_99
   DataType: Eq_99
   OrigDataType: word32
-T_133: (in frobulate(fp_25->tFFFFFFE8.u0, sp_32->u0, out fp_52) @ 000084C4 : word32)
+T_133: (in frobulate(fp_25->tFFE8.u0, sp_32->u0, out fp_52) @ 000084C4 : word32)
   Class: Eq_99
   DataType: Eq_99
   OrigDataType: word32
-T_134: (in __divsi3(__divsi3(r0 + r1, frobulate(r0, r1, out fp_25)), frobulate(fp_25->tFFFFFFE8.u0, sp_32->u0, out fp_52)) @ 000084C4 : word32)
+T_134: (in __divsi3(__divsi3(r0 + r1, frobulate(r0, r1, out fp_25)), frobulate(fp_25->tFFE8.u0, sp_32->u0, out fp_52)) @ 000084C4 : word32)
   Class: Eq_99
   DataType: Eq_99
   OrigDataType: word32
@@ -1485,7 +1485,7 @@ T_325: (in Mem7[0x00008740<p32>:word32] @ 00008710 : word32)
 T_326: (in r3_9 @ 00008710 : (ptr32 Eq_325))
   Class: Eq_325
   DataType: (ptr32 Eq_325)
-  OrigDataType: (ptr32 (struct (FFFFFFFC T_329 tFFFFFFFC)))
+  OrigDataType: (ptr32 (struct (-4 T_329 tFFFC)))
 T_327: (in -4<i32> @ 00008714 : int32)
   Class: Eq_327
   DataType: int32
@@ -1548,7 +1548,6 @@ T_341:
   OrigDataType: (arr T_340)
 */
 typedef struct Globals {
-	<anonymous> tFFFFFFFF;	// FFFFFFFF
 	int32 (* ptr8364)(int32 r0, char ** r1, char ** r2);	// 8364
 	void (* ptr8368)();	// 8368
 	<unknown> t8380;	// 8380
@@ -1573,6 +1572,7 @@ typedef struct Globals {
 	<anonymous> * abort_GOT;	// 10854
 	<anonymous> * __libc_start_main_GOT;	// 10858
 	byte b10870;	// 10870
+	<anonymous> tFFFFFFFF;	// FFFFFFFF
 } Eq_1;
 
 typedef word32 (Eq_3)();
@@ -1605,7 +1605,7 @@ typedef Eq_99 (Eq_101)(Eq_99, Eq_99);
 typedef Eq_99 (Eq_118)(Eq_99, Eq_99, Eq_99);
 
 typedef struct Eq_120 {
-	Eq_99 tFFFFFFE8;	// FFFFFFE8
+	Eq_99 tFFE8;	// FFFFFFFFFFFFFFE8
 } Eq_120;
 
 typedef struct Eq_143 {
@@ -1650,7 +1650,7 @@ typedef union Eq_274 {
 typedef void (Eq_320)();
 
 typedef struct Eq_325 {
-	<anonymous> * ptrFFFFFFFC;	// FFFFFFFC
+	<anonymous> * ptrFFFC;	// FFFFFFFFFFFFFFFC
 } Eq_325;
 
 typedef void (Eq_334)();

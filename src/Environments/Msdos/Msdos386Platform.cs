@@ -198,7 +198,7 @@ namespace Reko.Environments.Msdos
                             Type = arg.Type is PointerType_v1 ptr
                                 ? ptr
                                 : arg.Type is PrimitiveType_v1 prim
-                                    ? new PrimitiveType_v1(prim.Domain, prim.ByteSize)
+                                    ? new PrimitiveType_v1(prim.Domain, (int) prim.ByteSize)
                                     : arg.Type
                         };
                         args.Add(argNew);

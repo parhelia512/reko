@@ -272,7 +272,10 @@ namespace Reko.Arch.X86.Rewriter
                 return;
             }
             m.Return(
-                this.arch.WordWidth.Size + (instrCur.Mnemonic == Mnemonic.retf ? arch.RegisterAliases.cs.DataType.Size : 0),
+                (int) (this.arch.WordWidth.Size +
+                       (instrCur.Mnemonic == Mnemonic.retf
+                            ? arch.RegisterAliases.cs.DataType.Size 
+                            : 0)),
                 extraBytesPopped);
         }
 
@@ -281,8 +284,8 @@ namespace Reko.Arch.X86.Rewriter
             RewritePop(
                 binder.EnsureFlagGroup(arch.RegisterAliases.SCZO), instrCur.DataWidth);
             m.Return(
-                arch.RegisterAliases.cs.DataType.Size +
-                arch.WordWidth.Size, 
+                (int)arch.RegisterAliases.cs.DataType.Size +
+                (int)arch.WordWidth.Size, 
                 0);
         }
 

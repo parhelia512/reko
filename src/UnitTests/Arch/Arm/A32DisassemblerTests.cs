@@ -2632,6 +2632,9 @@ namespace Reko.UnitTests.Arch.Arm
         {
             AssertCode("ldcmi\tp8,cr7,[pc],#&80", "2078DF4C");
         }
+
+        //             // 10 81 30 EE	mrcp1, #1, r8, c0, c0, #0
+
     }
 }
  

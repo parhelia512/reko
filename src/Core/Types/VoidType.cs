@@ -38,7 +38,7 @@ namespace Reko.Core.Types
         public static VoidType Instance { get; } = new VoidType();
 
         /// <inheritdoc/>
-        public override int Size
+        public override long Size
         {
             get { return 0; }
             set { throw new NotSupportedException(); }

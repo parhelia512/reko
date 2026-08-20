@@ -39,9 +39,9 @@ namespace Reko.Core.Hll.C
         private readonly SerializedType? dt;
         private readonly CConstantEvaluator eval;
         private readonly IPlatform platform;
-        private readonly int pointerSize;
+        private readonly long pointerSize;
         private Domain domain;
-        private int byteSize;
+        private long byteSize;
         private CTokenType callingConvention;
         private bool isNear;
         private CBasicType basicType;
@@ -54,7 +54,7 @@ namespace Reko.Core.Hll.C
         /// <param name="symbolTable">Information about types that may be needed to calculate sizes of objects.</param>
         /// <param name="pointerSize">The size of a pointer on this platform.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public NamedDataTypeExtractor(IPlatform platform, IEnumerable<DeclSpec> specs, SymbolTable symbolTable, int pointerSize)
+        public NamedDataTypeExtractor(IPlatform platform, IEnumerable<DeclSpec> specs, SymbolTable symbolTable, long pointerSize)
         {
             this.platform = platform ?? throw new ArgumentNullException(nameof(platform));
             this.specs = specs;
@@ -187,7 +187,7 @@ namespace Reko.Core.Hll.C
             };
         }
 
-        private int PointerSize(List<TypeQualifier> typeQualifiers)
+        private long PointerSize(List<TypeQualifier> typeQualifiers)
         {
             if (typeQualifiers is not null && 
                 typeQualifiers.Any(t => t.Qualifier == CTokenType._Near))
@@ -616,7 +616,7 @@ namespace Reko.Core.Hll.C
 
         private IEnumerable<StructField_v1> ExpandStructFields(IEnumerable<StructDecl> decls)
         {
-            int offset = 0;
+            long offset = 0;
             foreach (var decl in decls)
             {
                 var ntde = new NamedDataTypeExtractor(platform, decl.SpecQualifierList, symbolTable, pointerSize);
@@ -655,7 +655,7 @@ namespace Reko.Core.Hll.C
             }
         }
 
-        private int Align(int offset, int rawAlign, int maxAlign)
+        private long Align(long offset, int rawAlign, int maxAlign)
         {
             rawAlign = Math.Min(maxAlign, rawAlign);
             if (rawAlign == 0)

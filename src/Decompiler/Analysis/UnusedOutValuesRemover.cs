@@ -351,7 +351,7 @@ namespace Reko.Analysis
                 {
                     liveOutStorages.Add(
                         sig.Outputs[0].Storage,
-                        new(new BitRange(0, sig.Outputs[0].DataType.BitSize),
+                        new(new BitRange(0, (int)sig.Outputs[0].DataType.BitSize),
                          procCallee));
                 }
             }

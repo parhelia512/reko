@@ -395,7 +395,7 @@ namespace Reko.Core
         /// <returns>Identifier of a stack argument.</returns>
 		public Identifier EnsureStackArgument(int cbOffset, DataType type, string? argName)
 		{
-			Identifier? id = FindStackArgument(cbOffset, type.Size);
+			Identifier? id = FindStackArgument(cbOffset, (int)type.Size);
 			if (id is null)
 			{
 				id = new Identifier(

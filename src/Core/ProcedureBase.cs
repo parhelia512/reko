@@ -186,7 +186,7 @@ namespace Reko.Core
         /// <param name="concreteTypes">Concrete types to instantiate with.</param>
         /// <returns>A concrete version of the original generic version.
         /// </returns>
-        protected FunctionType MakeConcreteSignature(int ptrSize, DataType[] concreteTypes)
+        protected FunctionType MakeConcreteSignature(long ptrSize, DataType[] concreteTypes)
         {
             var sig = this.Signature;
             if (sig is null)
@@ -236,7 +236,7 @@ namespace Reko.Core
         /// Resolves any 0-sized pointers, which are used to indicate pointers
         /// of unknown size.
         /// </summary>
-        protected static DataType ResolvePointer(DataType dtGeneric, DataType dtConcrete, int ptrSize)
+        protected static DataType ResolvePointer(DataType dtGeneric, DataType dtConcrete, long ptrSize)
         {
             if (dtGeneric is PointerType ptr && ptr.BitSize == 0)
             {

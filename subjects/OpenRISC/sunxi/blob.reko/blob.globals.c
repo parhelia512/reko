@@ -1702,4 +1702,4 @@ word32 g_dw40000000; // 40000000
 <anonymous> g_t48100F2C; // 48100F2C
 <anonymous> g_t48100F7C; // 48100F7C
 <anonymous> g_t48100FCC; // 48100FCC
-Eq_n g_tFFFFFFFF;
+Eq_n g_tFFFF;

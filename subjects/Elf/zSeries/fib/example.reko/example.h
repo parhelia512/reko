@@ -32,7 +32,7 @@ Eq_42: (union "Eq_42" (int64 u0) (ptr64 u1))
 	T_42 (in 160<i64> @ 000000000000060E : int64)
 Eq_43: (union "Eq_43" (ui64 u0) (ptr64 u1))
 	T_43 (in fp - 160<i64> @ 000000000000060E : ptr64)
-Eq_45: (struct "Eq_45" (FFFFFF50 byte bFFFFFF50) (FFFFFFF0 ptr64 ptrFFFFFFF0) (FFFFFFF8 ptr64 ptrFFFFFFF8))
+Eq_45: (struct "Eq_45" (-B0 byte bFF50) (-10 ptr64 ptrFFF0) (-8 ptr64 ptrFFF8))
 	T_45 (in fp - 160<i64> & 0xFFFFFFFFFFFFFFF0<64> @ 000000000000060E : word64)
 	T_46 (in r15_9 @ 000000000000060E : (ptr64 Eq_45))
 Eq_60: (fn void ())
@@ -291,7 +291,7 @@ T_45: (in fp - 160<i64> & 0xFFFFFFFFFFFFFFF0<64> @ 000000000000060E : word64)
 T_46: (in r15_9 @ 000000000000060E : (ptr64 Eq_45))
   Class: Eq_45
   DataType: (ptr64 Eq_45)
-  OrigDataType: (ptr64 (struct (FFFFFF50 T_50 tFFFFFF50) (FFFFFFF0 T_54 tFFFFFFF0) (FFFFFFF8 T_59 tFFFFFFF8)))
+  OrigDataType: (ptr64 (struct (-B0 T_50 tFF50) (-10 T_54 tFFF0) (-8 T_59 tFFF8)))
 T_47: (in 0<8> @ 0000000000000616 : byte)
   Class: Eq_47
   DataType: byte
@@ -1153,9 +1153,9 @@ typedef union Eq_43 {
 } Eq_43;
 
 typedef struct Eq_45 {
-	byte bFFFFFF50;	// FFFFFF50
-	ptr64 ptrFFFFFFF0;	// FFFFFFF0
-	ptr64 ptrFFFFFFF8;	// FFFFFFF8
+	byte bFF50;	// FFFFFFFFFFFFFF50
+	ptr64 ptrFFF0;	// FFFFFFFFFFFFFFF0
+	ptr64 ptrFFF8;	// FFFFFFFFFFFFFFF8
 } Eq_45;
 
 typedef void (Eq_60)();

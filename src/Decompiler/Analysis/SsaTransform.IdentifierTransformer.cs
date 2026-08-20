@@ -384,7 +384,7 @@ namespace Reko.Analysis
                 }
             }
 
-            internal int MeasureBitSize(DataType dt)
+            internal long MeasureBitSize(DataType dt)
             {
                 return dt.MeasureBitSize(outer.arch.MemoryGranularity);
             }
@@ -431,7 +431,7 @@ namespace Reko.Analysis
                 var idParam = sidParam.Identifier;
                 if (idParam.Storage.BitSize == stg.BitSize)
                     return idParam;
-                var dt = PrimitiveType.CreateWord((int) stg.BitSize);
+                var dt = PrimitiveType.CreateWord((int)stg.BitSize);
                 if (param.Storage.Covers(stg))
                 {
                     var arch = this.outer.arch;
@@ -525,7 +525,7 @@ namespace Reko.Analysis
                 var bitOffset = unitStackOffset * bitsPerUnit;
                 return Interval.Create(
                     bitOffset,
-                    bitOffset + MeasureBitSize(dt));
+                    bitOffset + (int)MeasureBitSize(dt));
             }
         }
 

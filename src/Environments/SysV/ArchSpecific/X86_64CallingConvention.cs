@@ -115,7 +115,7 @@ namespace Reko.Environments.SysV.ArchSpecific
                 }
                 else
                 {
-                    int regsNeeded = (dtParam.Size + 7) / 8;
+                    int regsNeeded = (int)(dtParam.Size + 7) / 8;
                     if (regsNeeded > 4 || ir + regsNeeded >= iregs.Length)
                     {
                         ccr.StackParam(dtParam);
@@ -124,13 +124,13 @@ namespace Reko.Environments.SysV.ArchSpecific
                         throw new NotImplementedException();
                 }
             }
-            ccr.CallerCleanup(arch.PointerType.Size);
+            ccr.CallerCleanup((int)arch.PointerType.Size);
         }
 
         public void SetReturnRegister(ICallingConventionBuilder ccr, DataType dtArg)
         {
             var pt = dtArg as PrimitiveType;
-            int bitSize = dtArg.BitSize;
+            int bitSize = (int)dtArg.BitSize;
             if (pt is not null && pt.Domain == Domain.Real)
             {
                 var xmm0 = fregs[0];

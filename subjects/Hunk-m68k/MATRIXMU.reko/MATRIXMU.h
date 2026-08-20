@@ -30,7 +30,7 @@ Eq_5: (struct "Eq_5" (14 cup16 w0014))
 	T_6 (in a6_9 @ 00001014 : (ptr32 Eq_5))
 	T_18 (in Mem32[0x00001498<p32>:word32] @ 0000103A : word32)
 	T_210 (in Mem440[0x00001498<p32>:word32] @ 00001170 : word32)
-Eq_14: (struct "Eq_14" (FFFFFFF8 (ptr32 Eq_123) ptrFFFFFFF8) (FFFFFFFC (ptr32 Eq_438) ptrFFFFFFFC))
+Eq_14: (struct "Eq_14" (-8 (ptr32 Eq_123) ptrFFF8) (-4 (ptr32 Eq_438) ptrFFFC))
 	T_14 (in fp @ 00001036 : (ptr32 Eq_14))
 	T_16 (in Mem29[0x00001494<p32>:word32] @ 00001036 : word32)
 	T_434 (in Mem0[0x00001494<p32>:word32] @ 00001286 : word32)
@@ -1989,7 +1989,7 @@ T_434: (in Mem0[0x00001494<p32>:word32] @ 00001286 : word32)
 T_435: (in a7_6 @ 00001286 : (ptr32 Eq_14))
   Class: Eq_14
   DataType: (ptr32 Eq_14)
-  OrigDataType: (ptr32 (struct (FFFFFFF8 T_442 tFFFFFFF8) (FFFFFFFC T_438 tFFFFFFFC)))
+  OrigDataType: (ptr32 (struct (-8 T_442 tFFF8) (-4 T_438 tFFFC)))
 T_436: (in -4<i32> @ 0000128E : int32)
   Class: Eq_436
   DataType: int32
@@ -3214,8 +3214,8 @@ typedef struct Eq_5 {
 } Eq_5;
 
 typedef struct Eq_14 {
-	struct Eq_123 * ptrFFFFFFF8;	// FFFFFFF8
-	struct Eq_438 * ptrFFFFFFFC;	// FFFFFFFC
+	struct Eq_123 * ptrFFF8;	// FFFFFFFFFFFFFFF8
+	struct Eq_438 * ptrFFFC;	// FFFFFFFFFFFFFFFC
 } Eq_14;
 
 typedef Eq_23 * (Eq_19)(word32);

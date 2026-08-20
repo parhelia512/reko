@@ -33,7 +33,6 @@ public class BlackfinDisassemblerTests : DisassemblerTestBase<BlackfinInstructio
     public BlackfinDisassemblerTests()
     {
         this.arch = new BlackfinArchitecture(new ServiceContainer(), "blackfin", []);
-        Reko.Core.Machine.Decoder.trace.Level = System.Diagnostics.TraceLevel.Verbose;
     }
 
     public override IProcessorArchitecture Architecture => arch;

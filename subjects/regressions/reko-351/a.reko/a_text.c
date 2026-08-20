@@ -159,7 +159,7 @@ void __do_global_ctors_aux()
 	{
 		a0_n();
 		struct Eq_n * a2_n;
-		a0_n = a2_n->ptrFFFFFFFC;
+		a0_n = a2_n->ptrFFFC;
 		a2_n = a2_n - 4;
 	}
 }

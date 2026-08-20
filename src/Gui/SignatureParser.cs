@@ -233,8 +233,8 @@ namespace Reko.Gui
 
 		private Argument_v1 ParseStackArgument(string typeName, string argName)
 		{
-			int sizeInWords;
-			int wordSize = arch.WordWidth.Size;
+			long sizeInWords;
+			long wordSize = arch.WordWidth.Size;
 			if (PrimitiveType.TryParse(typeName, out PrimitiveType? p))
 			{
 				sizeInWords = (p.Size + (wordSize - 1))/wordSize;

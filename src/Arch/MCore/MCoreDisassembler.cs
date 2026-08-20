@@ -130,7 +130,7 @@ namespace Reko.Arch.MCore
             {
                 var iBaseReg = bf0_4.Read(u);
                 var reg = Registers.GpRegisters[iBaseReg];
-                var disp = (int) bf4_4.Read(u) * dt.Size;
+                var disp = (int) bf4_4.Read(u) * (int)dt.Size;
                 var op = new MemoryOperand(dt, reg, disp);
                 d.ops.Add(op);
                 return true;

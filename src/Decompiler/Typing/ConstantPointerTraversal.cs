@@ -40,7 +40,7 @@ namespace Reko.Typing
         private readonly HashSet<long> visited;
         private readonly Stack<IEnumerator<WorkItem>> stack;
         private IEnumerator<WorkItem>? eCurrent;
-        private int gOffset;
+        private long gOffset;
 
         /// <summary>
         /// Work item for the constant pointer traversal.
@@ -50,7 +50,7 @@ namespace Reko.Typing
             /// <summary>
             /// Offset from the start of the global structure.
             /// </summary>
-            public int GlobalOffset;
+            public long GlobalOffset;
             /// <summary>
             /// Data type of the item at the offset.
             /// </summary>
@@ -122,7 +122,7 @@ namespace Reko.Typing
         /// <inheritdoc/>
         public IEnumerable<WorkItem> VisitArray(ArrayType at)
         {
-            int offset = gOffset;
+            long offset = gOffset;
             Debug.Print("Iterating array at {0:X}", gOffset);
             for (int i = 0; i < at.Length; ++i)
             {
@@ -213,11 +213,11 @@ namespace Reko.Typing
         /// <inheritdoc/>
         public IEnumerable<WorkItem> VisitStructure(StructureType str)
         {
-            int offset = gOffset;
+            long offset = gOffset;
             Debug.Print("Iterating structure at {0:X}", gOffset);
             foreach (var field in str.Fields)
             {
-                int off = offset + field.Offset;
+                long off = offset + field.Offset;
                 Debug.Print("   Field {0} at {1:X}", field.Name, off);
                 yield return new WorkItem { DataType = field.DataType, GlobalOffset = off };
             }

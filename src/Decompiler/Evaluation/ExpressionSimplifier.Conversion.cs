@@ -79,7 +79,7 @@ namespace Reko.Evaluation
                     // If we are converting a SEQ, and the corresponding element is >= 
                     // the size of the cast, then use deposited part directly.
                     var lsbElem = seq.Expressions[^1];
-                    int sizeDiff = lsbElem.DataType.Size - conversion.DataType.Size;
+                    int sizeDiff = (int)(lsbElem.DataType.Size - conversion.DataType.Size);
                     if (sizeDiff >= 0)
                     {
                         if (sizeDiff > 0)

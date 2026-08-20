@@ -93,7 +93,7 @@ namespace Reko.Core.Output
                 return bc.Value.ToString("X");
             }
             ulong m;
-            var b = u.DataType.BitSize;
+            var b = (int)u.DataType.BitSize;
             if (b == 0x40)
             {
                 m = ~0ul;

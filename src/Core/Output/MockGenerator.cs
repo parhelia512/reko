@@ -491,7 +491,7 @@ namespace Reko.Core.Output
 
         void IExpressionVisitor.VisitAddress(Address addr)
         {
-            int bitsize = addr.DataType.BitSize;
+            int bitsize = (int)addr.DataType.BitSize;
             if (bitsize == 16)
             {
                 writer.Write("Address.Ptr16(0x{0:X})", addr.ToUInt16());

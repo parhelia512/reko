@@ -61,12 +61,12 @@ namespace Reko.Environments.SysV.ArchSpecific
             }
 
             var args = new List<Storage>();
-            int stOffset = arch.PointerType.Size;
+            int stOffset = (int)arch.PointerType.Size;
             foreach (var dtParam in dtParams)
             {
                 ccr.StackParam(dtParam);
             }
-            ccr.CallerCleanup(arch.PointerType.Size);
+            ccr.CallerCleanup((int)arch.PointerType.Size);
         }
 
         public override bool IsArgument(Storage stg)

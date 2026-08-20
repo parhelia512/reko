@@ -473,7 +473,7 @@ namespace Reko.Arch.X86.Emulator
             if ((Flags & Cmask) != 0)
                 l |= 1;
             byte sh = (byte) Read(src);
-            TWord r = l << sh | l >> dst.DataType.BitSize + 1 - sh;
+            TWord r = l << sh | l >> (int)dst.DataType.BitSize + 1 - sh;
             var mask = masks[dst.DataType.Size];
             Write(dst, r >> 1 & mask.value);
             Flags &= ~(Cmask | Zmask);
@@ -502,7 +502,7 @@ namespace Reko.Arch.X86.Emulator
         private void Sar(MachineOperand dst, MachineOperand src)
         {
             ulong n = Read(dst);
-            long l = (long) Bits.SignExtend(n, dst.DataType.BitSize);
+            long l = (long) Bits.SignExtend(n, (int)dst.DataType.BitSize);
             byte sh = (byte) Read(src);
             var mask = masks[dst.DataType.Size];
             TWord r = (TWord) (l >> sh & mask.value);

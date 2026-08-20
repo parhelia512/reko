@@ -250,7 +250,7 @@ namespace Reko.Arch.Sparc
             // This doesn't actually happen immediately on Sparc,
             // but we have to simulate the restoration of the i0-i7
             // and l0-l7 registers
-            int stackOffset = 0;
+            long stackOffset = 0;
             for (int i = 0; i < arch.Registers.InRegisters.Length; ++i)
             {
                 var reg = binder.EnsureRegister(arch.Registers.InRegisters[i]);
@@ -288,7 +288,7 @@ namespace Reko.Arch.Sparc
             // Save registers on stack. This doesn't actually happen
             // immediately on Sparc, but we have to simulate the 
             // preservation of the i0-i7 and l0-l7 registers
-            int stackOffset = 0;
+            long stackOffset = 0;
             var sp = instrCur.Operands[2] == arch.StackRegister
                 ? tmp!
                 : binder.EnsureRegister(arch.StackRegister);

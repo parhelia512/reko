@@ -114,7 +114,7 @@ namespace Reko.Core.Machine
         /// stack) and the initial stack offset of the first parameter
         /// passed on the stack.
         /// </summary>
-        void LowLevelDetails(int stackAlignment, int parameterStackSaveOffset);
+        void LowLevelDetails(long stackAlignment, int parameterStackSaveOffset);
 
         /// <summary>
         /// Add a parameter.
@@ -268,13 +268,13 @@ namespace Reko.Core.Machine
         void ICallingConventionBuilder.ImplicitThisStack(DataType dt)
         {
             ImplicitThis = new StackStorage(stackOffset, dt);
-            stackOffset += Align(dt.Size, stackAlignment);
+            stackOffset += Align((int)dt.Size, stackAlignment);
         }
 
         /// <inheritdoc />
-        public void LowLevelDetails(int stackAlignment, int initialStackOffset)
+        public void LowLevelDetails(long stackAlignment, int initialStackOffset)
         {
-            this.stackAlignment = stackAlignment;
+            this.stackAlignment = (int)stackAlignment;
             stackOffset = initialStackOffset;
         }
 
@@ -330,7 +330,7 @@ namespace Reko.Core.Machine
         public Storage AllocateStackSlot(DataType dt)
         {
             var stg = new StackStorage(stackOffset, dt);
-            stackOffset += Align(dt.Size, stackAlignment);
+            stackOffset += Align((int)dt.Size, stackAlignment);
             return stg;
         }
 
@@ -345,7 +345,7 @@ namespace Reko.Core.Machine
         public void StackReturn(DataType dt)
         {
             var stg = new StackStorage(stackOffset, dt);
-            stackOffset += Align(dt.Size, stackAlignment);
+            stackOffset += Align((int)dt.Size, stackAlignment);
             Return = stg;
         }
 

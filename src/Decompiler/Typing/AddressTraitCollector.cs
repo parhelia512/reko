@@ -41,7 +41,7 @@ namespace Reko.Typing
         private Expression? basePointer;
         private Expression? eField;
 		private bool arrayContext;
-		private int basePointerBitSize;
+		private long basePointerBitSize;
 		private int arrayElementSize;
 		private int arrayLength;
 
@@ -71,7 +71,7 @@ namespace Reko.Typing
         /// <param name="basePointerBitSize">Bitsize of the base pointer.</param>
         /// <param name="eField">Expression accesssing a field.</param>
         /// <param name="effectiveAddress">Effective address of the access.</param>
-		public void Collect(Expression? tvBasePointer, int basePointerBitSize, Expression eField, Expression effectiveAddress)
+		public void Collect(Expression? tvBasePointer, long basePointerBitSize, Expression eField, Expression effectiveAddress)
 		{
 			this.basePointer = tvBasePointer;
 			this.basePointerBitSize = basePointerBitSize;
@@ -99,7 +99,7 @@ namespace Reko.Typing
 			arrayContext = c;
 		}
 
-		private void EmitAccessTrait(Expression? baseExpr, Expression memPtr, int ptrBitSize, int offset)
+		private void EmitAccessTrait(Expression? baseExpr, Expression memPtr, long ptrBitSize, long offset)
 		{
 			if (arrayContext)
 				handler.MemAccessArrayTrait(baseExpr, memPtr, ptrBitSize, offset, arrayElementSize, arrayLength, eField!);
@@ -127,13 +127,13 @@ namespace Reko.Typing
         /// <inheritdoc/>
 		public void VisitApplication(Application appl)
 		{
-			handler.MemAccessTrait(basePointer, appl, appl.DataType.BitSize, eField!, 0);
+			handler.MemAccessTrait(basePointer, appl, (int)appl.DataType.BitSize, eField!, 0);
 		}
 
         /// <inheritdoc/>
 		public void VisitArrayAccess(ArrayAccess access)
 		{
-			handler.MemAccessTrait(basePointer, access, access.DataType.BitSize, eField!, 0);
+			handler.MemAccessTrait(basePointer, access, (int)access.DataType.BitSize, eField!, 0);
 		}
 
         /// <inheritdoc/>
@@ -164,18 +164,18 @@ namespace Reko.Typing
                         if (bl.Operator is IMulOperator)
                         {
                             arrayContext = true;
-                            EmitAccessTrait(basePointer, left, dataType.BitSize, offset.ToInt32());
+                            EmitAccessTrait(basePointer, left, (int)dataType.BitSize, offset.ToInt32());
                             return;
                         }
                     }
-                    EmitAccessTrait(basePointer, left, dataType.BitSize, offset.ToInt32());
+                    EmitAccessTrait(basePointer, left, (int)dataType.BitSize, offset.ToInt32());
                     return;
                 }
 
                 // Handle odd mem[x + y] case; perhaps a later stage can detect that x (or y)
                 // is a pointer and therefore y isn't.
 
-                EmitAccessTrait(basePointer, left, dataType.BitSize, 0);
+                EmitAccessTrait(basePointer, left, (int)dataType.BitSize, 0);
 				return;
 			}
             throw new TypeInferenceException($"Couldn't generate address traits for binary operator {op}.");
@@ -203,18 +203,18 @@ namespace Reko.Typing
         public void VisitConstant(Constant c)
         {
             // Globals has a field at offset C that is a tvField: [[g->c]] = ptr(tvField)
-            int v = StructureField.ToOffset(c) ?? 0;
+            long v = StructureField.ToOffset(c) ?? 0;
             HandleConstantOffset(c, v);
         }
 
-        private void HandleConstantOffset(Expression c, int v)
+        private void HandleConstantOffset(Expression c, long v)
         {
             if (basePointer is not null)
                 handler.MemAccessTrait(null, basePointer, basePointerBitSize, eField!, v);
             else
-                handler.MemAccessTrait(null, program.Globals, program.Platform.PointerType.BitSize, eField!, v);
+                handler.MemAccessTrait(null, program.Globals, (int)program.Platform.PointerType.BitSize, eField!, v);
             // C is a pointer to tvField: [[c]] = ptr(tvField)
-            handler.MemAccessTrait(basePointer, c, c.DataType.BitSize, eField!, 0);
+            handler.MemAccessTrait(basePointer, c, (int)c.DataType.BitSize, eField!, 0);
         }
 
         /// <inheritdoc/>
@@ -262,7 +262,7 @@ namespace Reko.Typing
 		public void VisitInductionVariable(Identifier id, LinearInductionVariable iv, Constant? cOffset)
 		{
             int delta = iv.Delta!.ToInt32();
-            int offset = StructureField.ToOffset(cOffset) ?? 0;
+            long offset = StructureField.ToOffset(cOffset) ?? 0;
             var tvBase = basePointer ?? program.Globals;
             var stride = Math.Abs(delta);
             int init;

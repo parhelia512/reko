@@ -164,7 +164,7 @@ namespace Reko.UnitTests.Core.Code
 			f.ReturnAddressSize = 4;						// far call.
 			int stack = 2;
 			Identifier loc02 = f.EnsureStackLocal(-stack, PrimitiveType.Word16, "wLoc02");
-			stack += loc02.DataType.Size;
+			stack += (int)loc02.DataType.Size;
 			f.EnsureStackLocal(-stack, PrimitiveType.Word16, "wLoc04");
 
 			FunctionType sig = FunctionType.Action(
@@ -188,7 +188,7 @@ namespace Reko.UnitTests.Core.Code
 			var f = new Frame(arch, PrimitiveType.Word16);
 			Identifier ax = f.EnsureRegister(Registers.ax);
 			Identifier cx = f.EnsureRegister(Registers.cx);
-			int stack = PrimitiveType.Word16.Size;
+			int stack = (int)PrimitiveType.Word16.Size;
 			f.EnsureStackLocal(-stack, PrimitiveType.Word16);
 
             FunctionType sig = FunctionType.Create(

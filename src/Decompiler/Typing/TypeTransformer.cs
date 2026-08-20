@@ -115,10 +115,10 @@ namespace Reko.Typing
 		{
 			if (s.Fields.Count < 2)
 				return false;
-			int offset = s.Fields[0].Offset;
+			long offset = s.Fields[0].Offset;
 			for (int i = 1; i < s.Fields.Count; ++i)
 			{
-				int o = s.Fields[i].Offset;
+				long o = s.Fields[i].Offset;
 				if (offset == o)
 					return true;
 				offset = o;
@@ -136,9 +136,9 @@ namespace Reko.Typing
         /// <param name="bOffset">Second structure's offset in parent structure.</param>
         /// <returns>A merged structure.
         /// </returns>
-		public StructureType MergeOffsetStructures(StructureType a, int aOffset, StructureType b, int bOffset)
+		public StructureType MergeOffsetStructures(StructureType a, long aOffset, StructureType b, long bOffset)
 		{
-			int delta = bOffset - aOffset;
+			long delta = bOffset - aOffset;
 			foreach (StructureField f in b.Fields)
 			{
 				f.Offset += delta;
@@ -155,7 +155,7 @@ namespace Reko.Typing
 			ArrayType? arrMerged = null;
 			StructureType? strMerged = null;
             EquivalenceClass? eqMerged = null;
-			int offset = 0;
+			long offset = 0;
 			for (int i = 0; i < s.Fields.Count; ++i)
 			{
                 if (s.Fields[i].DataType is not ArrayType a)
@@ -203,7 +203,7 @@ namespace Reko.Typing
 			StructureType strNew = new StructureType(str.Name, str.Size);
             strNew.IsSegment = str.IsSegment;
 			UnionType ut = new UnionType(null, null);
-			int offset = 0;
+			long offset = 0;
             string? name = null;
 			foreach (StructureField f in str.Fields)
 			{
@@ -247,7 +247,7 @@ namespace Reko.Typing
 			return strNew;
 		}
 
-		private static bool StructuresOverlap(StructureType? a, int aOffset, StructureType? b, int bOffset)
+		private static bool StructuresOverlap(StructureType? a, long aOffset, StructureType? b, long bOffset)
 		{
 			if (a is null || b is null)
 				return false;

@@ -38,7 +38,7 @@ namespace Reko.Environments.MacOS.OSX
         public MacOSXPlatform(IServiceProvider services, IProcessorArchitecture arch) : base(services, arch, "macOsX")
         {
             archHandler = ArchSpecificHandler.Create(arch);
-            this.StructureMemberAlignment = arch.WordWidth.Size;    //$REVIEW: correct?
+            this.StructureMemberAlignment = (int)arch.WordWidth.Size;    //$REVIEW: correct?
             this.TrashedRegisters = GenerateTrashedRegisters(arch);
         }
 

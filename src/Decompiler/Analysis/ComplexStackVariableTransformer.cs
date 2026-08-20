@@ -155,7 +155,7 @@ public class ComplexStackVariableTransformer : IAnalysis<SsaState>
         {
             if (IsFrameAccess(bin, out var offset))
             {
-                var bitSize = bin.DataType.BitSize;
+                var bitSize = (int)bin.DataType.BitSize;
                 if (TryRewriteFrameOffset(offset, bitSize, out var e))
                     return e;
                 return bin;

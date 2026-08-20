@@ -45,7 +45,7 @@ Eq_144: (fn int32 ((ptr32 char)))
 Eq_150: (fn void ((ptr32 Eq_3), word32, word32, word32, word32, word32, word32, word32, word32, ui32, ptr32, ptr32, word32, word32, word32, ui32, word32))
 	T_150 (in fn00010C90 @ 00010C84 : ptr32)
 	T_151 (in signature of fn00010C90 @ 00010C90 : void)
-Eq_173: (struct "Eq_173" (FFFFFFF8 (ptr32 code) ptrFFFFFFF8))
+Eq_173: (struct "Eq_173" (-8 (ptr32 code) ptrFFF8))
 	T_173 (in o7 + Mem0[o7 + 8<i32>:word32] @ 00010C98 : word32)
 Eq_180: (struct "Eq_180" (8 int32 dw0008))
 	T_180 (in o7 @ 00010CA8 : (ptr32 Eq_180))
@@ -53,7 +53,7 @@ Eq_180: (struct "Eq_180" (8 int32 dw0008))
 Eq_197: (fn void ((ptr32 Eq_180), word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32))
 	T_197 (in fn00010CC8 @ 00010CBC : ptr32)
 	T_198 (in signature of fn00010CC8 @ 00010CC8 : void)
-Eq_220: (struct "Eq_220" (FFFFFFFC (ptr32 code) ptrFFFFFFFC))
+Eq_220: (struct "Eq_220" (-4 (ptr32 code) ptrFFFC))
 	T_220 (in o7 + Mem0[o7 + 8<i32>:word32] @ 00010CD0 : word32)
 // Type Variables ////////////
 globals_t: (in globals : (ptr32 (struct "Globals")))
@@ -747,7 +747,7 @@ T_172: (in Mem0[o7 + 8<i32>:word32] @ 00010C98 : word32)
 T_173: (in o7 + Mem0[o7 + 8<i32>:word32] @ 00010C98 : word32)
   Class: Eq_173
   DataType: (ptr32 Eq_173)
-  OrigDataType: (ptr32 (struct (FFFFFFF8 T_176 tFFFFFFF8)))
+  OrigDataType: (ptr32 (struct (-8 T_176 tFFF8)))
 T_174: (in -8<i32> @ 00010C98 : int32)
   Class: Eq_174
   DataType: int32
@@ -935,7 +935,7 @@ T_219: (in Mem0[o7 + 8<i32>:word32] @ 00010CD0 : word32)
 T_220: (in o7 + Mem0[o7 + 8<i32>:word32] @ 00010CD0 : word32)
   Class: Eq_220
   DataType: (ptr32 Eq_220)
-  OrigDataType: (ptr32 (struct (FFFFFFFC T_223 tFFFFFFFC)))
+  OrigDataType: (ptr32 (struct (-4 T_223 tFFFC)))
 T_221: (in -4<i32> @ 00010CD0 : int32)
   Class: Eq_221
   DataType: int32
@@ -1011,7 +1011,7 @@ typedef int32 (Eq_144)(char *);
 typedef void (Eq_150)(Eq_3 *, word32, word32, word32, word32, word32, word32, word32, word32, ui32, ptr32, ptr32, word32, word32, word32, ui32, word32);
 
 typedef struct Eq_173 {
-	<anonymous> * ptrFFFFFFF8;	// FFFFFFF8
+	<anonymous> * ptrFFF8;	// FFFFFFFFFFFFFFF8
 } Eq_173;
 
 typedef struct Eq_180 {
@@ -1021,6 +1021,6 @@ typedef struct Eq_180 {
 typedef void (Eq_197)(Eq_180 *, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32, word32);
 
 typedef struct Eq_220 {
-	<anonymous> * ptrFFFFFFFC;	// FFFFFFFC
+	<anonymous> * ptrFFFC;	// FFFFFFFFFFFFFFFC
 } Eq_220;
 

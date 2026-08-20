@@ -254,7 +254,7 @@ namespace Reko.Arch.Avr.Avr32
             {
                 var iReg = regField.Read(u);
                 var reg = Registers.GpRegisters[iReg];
-                var disp = bitfield.ReadSigned(u) * dt.Size;
+                var disp = bitfield.ReadSigned(u) * (int)dt.Size;
                 d.ops.Add(MemoryOperand.Displaced(dt, reg, disp));
                 return true;
             };
@@ -275,7 +275,7 @@ namespace Reko.Arch.Avr.Avr32
             {
                 var iReg = regField.Read(u);
                 var reg = Registers.GpRegisters[iReg];
-                var disp = Bitfield.ReadSignedFields(displacementFields, u) * dt.Size;
+                var disp = Bitfield.ReadSignedFields(displacementFields, u) * (int)dt.Size;
                 d.ops.Add(MemoryOperand.Displaced(dt, reg, disp));
                 return true;
             };

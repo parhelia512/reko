@@ -66,4 +66,4 @@ Eq_n g_tFBEE0054;
 Eq_n g_tFFFFF470;
 Eq_n g_tFFFFF839;
 Eq_n g_tFFFFFC02;
-byte g_bFFFFFFFF; // FFFFFFFF
+byte g_bFFFF; // FFFFFFFF

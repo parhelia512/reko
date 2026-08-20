@@ -9,7 +9,7 @@
 //      fn0000000000002DA0
 void fn0000000000002800(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = r2->ptrFFFF8190;
+	<anonymous> * r12_n = r2->ptr8190;
 	r12_n();
 }
 
@@ -18,7 +18,7 @@ void fn0000000000002800(struct Eq_n * r2)
 //      fn0000000000002DA0
 void fn0000000000002820(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = r2->ptrFFFF8220;
+	<anonymous> * r12_n = r2->ptr8220;
 	r12_n();
 }
 
@@ -27,7 +27,7 @@ void fn0000000000002820(struct Eq_n * r2)
 //      fn0000000000002F64
 void fn0000000000002840(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = r2->ptrFFFF8148;
+	<anonymous> * r12_n = r2->ptr8148;
 	r12_n();
 }
 
@@ -37,7 +37,7 @@ void fn0000000000002840(struct Eq_n * r2)
 //      fn0000000000003EAC
 void fn0000000000002880(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = r2->ptrFFFF8160;
+	<anonymous> * r12_n = r2->ptr8160;
 	r12_n();
 }
 
@@ -46,7 +46,7 @@ void fn0000000000002880(struct Eq_n * r2)
 //      fn0000000000002AD0
 void fn00000000000028A0(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = (<anonymous> *) r2->ptrFFFF8118;
+	<anonymous> * r12_n = (<anonymous> *) r2->ptr8118;
 	r12_n();
 }
 
@@ -55,7 +55,7 @@ void fn00000000000028A0(struct Eq_n * r2)
 //      fn0000000000003548
 void fn00000000000028C0(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = r2->ptrFFFF81F0;
+	<anonymous> * r12_n = r2->ptr81F0;
 	r12_n();
 }
 
@@ -67,7 +67,7 @@ void fn00000000000028C0(struct Eq_n * r2)
 //      fn0000000000003F0C
 void fn00000000000028E0(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = r2->ptrFFFF81D8;
+	<anonymous> * r12_n = r2->ptr81D8;
 	r12_n();
 }
 
@@ -76,7 +76,7 @@ void fn00000000000028E0(struct Eq_n * r2)
 //      fn0000000000003548
 void fn0000000000002900(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = r2->ptrFFFF8208;
+	<anonymous> * r12_n = r2->ptr8208;
 	r12_n();
 }
 
@@ -85,7 +85,7 @@ void fn0000000000002900(struct Eq_n * r2)
 //      fn0000000000003548
 void fn0000000000002920(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = r2->ptrFFFF8268;
+	<anonymous> * r12_n = r2->ptr8268;
 	r12_n();
 }
 
@@ -96,7 +96,7 @@ void fn0000000000002920(struct Eq_n * r2)
 //      fn0000000000003548
 void fn0000000000002940(struct Eq_n * r2)
 {
-	<anonymous> * r12_n = r2->ptrFFFF81C0;
+	<anonymous> * r12_n = r2->ptr81C0;
 	r12_n();
 }
 
@@ -105,9 +105,9 @@ void fn0000000000002940(struct Eq_n * r2)
 //      fn0000000000002AD0
 void fn0000000000002A00(struct Eq_n * r2, word64 lr)
 {
-	if (&r2->bFFFF82B0 != &r2->bFFFF82B0)
+	if (&r2->b82B0 != &r2->b82B0)
 	{
-		<anonymous> ** r9_n = (<anonymous> **) r2->ptrFFFF8010;
+		<anonymous> ** r9_n = (<anonymous> **) r2->ptr8010;
 		if (r9_n != null)
 		{
 			<anonymous> * r10_n = (<anonymous> *) *r9_n;
@@ -119,15 +119,15 @@ void fn0000000000002A00(struct Eq_n * r2, word64 lr)
 // 0000000000002AD0: void fn0000000000002AD0(Register (ptr64 Eq_n) r2, Register word64 lr)
 void fn0000000000002AD0(struct Eq_n * r2, word64 lr)
 {
-	if (r2->bFFFF82B0 == 0x00)
+	if (r2->b82B0 == 0x00)
 	{
-		if (r2->qwFFFF8020 != 0x00)
+		if (r2->qw8020 != 0x00)
 		{
 			fn00000000000028A0(r2);
 			struct Eq_n * qwLoc68;
 			r2 = qwLoc68;
 		}
-		int64 r9_n = r2->qwFFFF82B8;
+		int64 r9_n = r2->qw82B8;
 		struct Eq_n * r29_n = (struct Eq_n *) ((char *) r2 - 0x00010000);
 		int64 r31_n = (r2 + (struct Eq_n *) ~0x8FCF - (r2 + (struct Eq_n *) ~0x8FD7) >> 0x03) + ~0x00;
 		if (r9_n < r31_n)
@@ -144,7 +144,7 @@ void fn0000000000002AD0(struct Eq_n * r2, word64 lr)
 			} while (r9_n < r31_n);
 		}
 		fn0000000000002A00(r2, lr);
-		r2->bFFFF82B0 = 0x01;
+		r2->b82B0 = 0x01;
 	}
 }
 
@@ -153,9 +153,9 @@ void fn0000000000002AD0(struct Eq_n * r2, word64 lr)
 //      fn0000000000002780
 void fn0000000000002BD0(struct Eq_n * r2, word64 lr, word64 xer)
 {
-	if (((char *) &r2->ptrFFFF8280 + 48 - ((char *) (&r2->ptrFFFF8280) + 48) >> 0x04) + xer != 0x00)
+	if (((char *) &r2->ptr8280 + 48 - ((char *) (&r2->ptr8280) + 48) >> 0x04) + xer != 0x00)
 	{
-		<anonymous> ** r9_n = r2->ptrFFFF8018;
+		<anonymous> ** r9_n = r2->ptr8018;
 		if (r9_n != null)
 		{
 			<anonymous> * r10_n = (<anonymous> *) *r9_n;

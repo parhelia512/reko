@@ -239,7 +239,7 @@ namespace Reko.Core.Expressions
         /// <param name="dtLeft">Possible pointer to a structure</param>
         /// <param name="offset"></param>
         /// <returns>A (ptr field-type) if it was a ptr-to-struct, else null.</returns>
-        private PointerType? GetPossibleFieldType(DataType dtLeft, int offset)
+        private PointerType? GetPossibleFieldType(DataType dtLeft, long offset)
         {
             var ptrLeft = dtLeft.ResolveAs<PointerType>();
             if (ptrLeft is null)

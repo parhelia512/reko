@@ -856,7 +856,7 @@ public class RxRewriter : IEnumerable<RtlInstructionCluster>
                 m.Mem(instr.DataType, r2)),
             PrimitiveType.Int64,
             RxArchitecture.Int96));
-        int inc = instr.DataType.BitSize / 8;
+        int inc = (int) instr.DataType.BitSize / 8;
         m.Assign(r1, m.IAdd(r1, inc));
         m.Assign(r2, m.IAdd(r2, inc));
         m.Assign(r3, m.ISub(r3, 1));

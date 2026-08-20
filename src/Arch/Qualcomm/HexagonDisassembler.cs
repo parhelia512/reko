@@ -638,7 +638,7 @@ namespace Reko.Arch.Qualcomm
             return (u, d) =>
             {
                 var offset = Bitfield.ReadSignedFields(offsetFields, u);
-                offset = offset * width.Size;
+                offset = offset * (int) width.Size;
                 offset = d.ExtendConstant(offset);
                 var baseReg = Registers.GpRegs[baseRegField.Read(u)];
                 var mem = new MemoryOperand(width)
@@ -782,7 +782,7 @@ namespace Reko.Arch.Qualcomm
             var offField = new Bitfield(offsetPos, offsetLen);
             return (u, d) =>
             {
-                var offset = offField.ReadSigned(u) * width.Size;
+                var offset = offField.ReadSigned(u) * (int) width.Size;
                 var mem = new MemoryOperand(width)
                 {
                     Base = baseReg,

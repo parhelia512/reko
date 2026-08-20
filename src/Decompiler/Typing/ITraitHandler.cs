@@ -57,7 +57,7 @@ namespace Reko.Typing
 		/// <paramref>function</paramref> is a function pointer whose return type is <paramref>ret</paramref> and whose
 		/// actual parameters in this call are <paramref>actuals</paramref>
 		/// </summary>
-		DataType FunctionTrait(Expression function, int funcPtrSize, TypeVariable ret, params TypeVariable [] actuals);
+		DataType FunctionTrait(Expression function, long funcPtrSize, TypeVariable ret, params TypeVariable [] actuals);
 
 		/// <summary>
 		/// <paramref>tStruct</paramref> has a field of type <paramref>tField</paramref> at offset <paramref>offset</paramref>. Optionally,
@@ -68,7 +68,7 @@ namespace Reko.Typing
 		/// <param name="structPtrBitSize">Bit size of the pointer associated with the structure field reference.</param>
 		/// <param name="eField">Type variable for the field.</param>
 		/// <param name="offset">Field offset within the structure (in bytes).</param>
-        DataType MemAccessTrait(Expression? eBase, Expression eStruct, int structPtrBitSize, Expression eField, int offset);
+        DataType MemAccessTrait(Expression? eBase, Expression eStruct, long structPtrBitSize, Expression eField, long offset);
 
         /// <summary>
         /// <paramref name="eStruct"/> has a field of type <paramref name="eField"/> at offset <paramref name="offset"/>,
@@ -78,13 +78,13 @@ namespace Reko.Typing
         /// <param name="eStruct">Type variable of the structure whose field is being accessed.</param>
         /// <param name="eField">Type variable for the field.</param>
         /// <param name="offset">Field offset within the structure (in bytes).</param>
-        DataType MemFieldTrait(Expression? eBase, Expression eStruct, Expression eField, int offset);
+        DataType MemFieldTrait(Expression? eBase, Expression eStruct, Expression eField, long offset);
 
 		/// <summary>
 		/// <paramref>tStruct</paramref> has an array at offset <paramref>offset</paramref> whose elementsize is <paramref>elementSize</paramref>
 		/// and consists of <paramref>length items</paramref>.
 		/// </summary>
-		DataType MemAccessArrayTrait(Expression? tBase, Expression tStruct, int structPtrSize, int offset, int elementSize, int length, Expression tField);
+		DataType MemAccessArrayTrait(Expression? tBase, Expression tStruct, long structPtrSize, long offset, int elementSize, int length, Expression tField);
 
         /// <summary>
         /// <paramref name="tStruct"/> has the size <paramref name="size"/>.
@@ -93,7 +93,7 @@ namespace Reko.Typing
         /// <param name="tStruct">Structure pointer.</param>
         /// <param name="size">Size of the structire pointed to by <paramref name="tStruct"/>.
         /// </param>
-		DataType MemSizeTrait(Expression? tBase, Expression tStruct, int size);
+		DataType MemSizeTrait(Expression? tBase, Expression tStruct, long size);
 
         /// <summary>
         /// Assert that the expression <paramref name="tPointer"/> is a pointer.
@@ -102,6 +102,6 @@ namespace Reko.Typing
         /// <param name="ptrSize">Bit size of a pointer.</param>
         /// <param name="tPointee">Expression of the pointee.</param>
         /// <returns></returns>
-		DataType PointerTrait(Expression tPointer, int ptrSize, Expression tPointee);
+		DataType PointerTrait(Expression tPointer, long ptrSize, Expression tPointee);
 	}
 }

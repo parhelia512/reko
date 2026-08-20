@@ -122,7 +122,7 @@ namespace Reko.Typing
             if (!c.IsValid || c is BigConstant)
                 return;
 			DataType dt = store.GetTypeVariable(c).DataType;
-            int? offset = StructureField.ToOffset(c);
+            long? offset = StructureField.ToOffset(c);
             if (offset is null)
                 return;
             switch (dt)
@@ -171,7 +171,7 @@ namespace Reko.Typing
         /// <param name="dt">Data type of the element to test.</param>
         /// <returns>True if the given offset is inside a global array;
         /// otherwise false.</returns>
-        public bool IsInsideArray(StructureType strGlobals, int offset, DataType dt)
+        public bool IsInsideArray(StructureType strGlobals, long offset, DataType dt)
         {
             var field = strGlobals.Fields.LowerBound(offset - 1);
             if (field is null)
@@ -190,7 +190,7 @@ namespace Reko.Typing
         /// <param name="offset">The offset to test.</param>
         /// <returns>True if the given offset is inside a global structure;
         /// otherwise false.</returns>
-        public bool IsInsideStruct(StructureType strGlobals, int offset)
+        public bool IsInsideStruct(StructureType strGlobals, long offset)
         {
             //$PERF: LowerBound have a complexity of O(n^2)
             var field = strGlobals.Fields.LowerBound(offset);

@@ -576,7 +576,7 @@ namespace Reko.Arch.Infineon.TriCore
                 var value = m.Mem(dt, ea);
                 var dst = Operand(0);
                 AssignMaybeExtend(dst, value, dtConvert);
-                int delta = mop.Offset;
+                long delta = mop.Offset;
                 if (delta == 0)
                     delta = dt.Size;
                 m.Assign(ea, m.AddSubSignedInt(ea, delta));
@@ -809,7 +809,7 @@ namespace Reko.Arch.Infineon.TriCore
                 var ea = binder.EnsureRegister(mop.Base!);
                 var lvalue = m.Mem(dt, ea);
                 m.Assign(lvalue, src);
-                int delta = mop.Offset;
+                long delta = mop.Offset;
                 if (delta == 0)
                     delta = dt.Size;
                 m.Assign(ea, m.AddSubSignedInt(ea, delta));

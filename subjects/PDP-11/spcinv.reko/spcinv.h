@@ -386,7 +386,7 @@ Eq_253: (union "Eq_253" (bool u0) (word16 u1))
 Eq_254: (fn (ptr16 byte) ((ptr16 byte)))
 	T_254 (in fn0AF6 @ 038E : ptr16)
 	T_255 (in signature of fn0AF6 @ 0AF6 : void)
-Eq_263: (struct "Eq_263" 0001 (FFFFFFFD word16 wFFFFFFFD) (FFFFFFFE word16 wFFFFFFFE) (FFFFFFFF byte bFFFFFFFF) (0 byte b0000))
+Eq_263: (struct "Eq_263" 0001 (-3 word16 wFFFD) (-2 word16 wFFFE) (-1 byte bFFFF) (0 byte b0000))
 	T_263 (in <invalid> @ 040A : word16)
 	T_264 (in sp_292 @ 040A : (ptr16 Eq_263))
 	T_453 (in fp - 1<16> @ 04BC : word16)
@@ -634,7 +634,7 @@ Eq_585: (union "Eq_585" (ci16 u0) (cu8 u1) (Eq_660 u2) (Eq_662 u3))
 	T_586 (in 0<16> @ 0530 : word16)
 	T_737 (in Mem130[r0_100 + 0<16>:word16] @ 052C : word16)
 	T_738 (in 0<16> @ 052E : word16)
-Eq_589: (struct "Eq_589" (FFFFFFFF byte bFFFFFFFF) (0 byte b0000) (1 Eq_66 t0001))
+Eq_589: (struct "Eq_589" (-1 byte bFFFF) (0 byte b0000) (1 Eq_66 t0001))
 	T_589 (in sp_138 - 1<16> @ 058A : word16)
 	T_590 (in sp_139 @ 058A : (ptr16 Eq_589))
 Eq_612: (struct "Eq_612" (EF0 byte b0EF0) (EF3 byte b0EF3))
@@ -728,7 +728,7 @@ Eq_1281: (union "Eq_1281" (wchar_t u0) (byte u1) (Eq_1164 u2) (Eq_1167 u3))
 Eq_1355: (union "Eq_1355" (wchar_t u0) (byte u1))
 	T_1355 (in Mem98[r1_148 + 0<16>:byte] @ 084A : byte)
 	T_1358 (in Mem121[sp_119 + 0<16>:byte] @ 084A : byte)
-Eq_1381: (struct "Eq_1381" (FFFFFFFE word16 wFFFFFFFE) (0 Eq_1385 t0000) (1 byte b0001))
+Eq_1381: (struct "Eq_1381" (-2 word16 wFFFE) (0 Eq_1385 t0000) (1 byte b0001))
 	T_1381 (in sp_119 - 1<16> @ 082A : word16)
 	T_1382 (in sp_275 @ 082A : (ptr16 Eq_1381))
 Eq_1385: (union "Eq_1385" (wchar_t u0) (byte u1))
@@ -1889,7 +1889,7 @@ T_263: (in <invalid> @ 040A : word16)
 T_264: (in sp_292 @ 040A : (ptr16 Eq_263))
   Class: Eq_263
   DataType: (ptr16 Eq_263)
-  OrigDataType: (ptr16 (struct (FFFFFFFD T_287 tFFFFFFFD) (FFFFFFFF T_268 tFFFFFFFF) (0 T_272 t0000)))
+  OrigDataType: (ptr16 (struct (-3 T_287 tFFFD) (-1 T_268 tFFFF) (0 T_272 t0000)))
 T_265: (in 1<8> @ 040E : byte)
   Class: Eq_265
   DataType: byte
@@ -2649,7 +2649,7 @@ T_453: (in fp - 1<16> @ 04BC : word16)
 T_454: (in sp_138 @ 04BC : (ptr16 Eq_263))
   Class: Eq_263
   DataType: (ptr16 Eq_263)
-  OrigDataType: (ptr16 (struct 0001 (FFFFFFFE word16 wFFFFFFFE)))
+  OrigDataType: (ptr16 (struct 0001 (-2 word16 wFFFE)))
 T_455: (in 1<16> @ 04C6 : word16)
   Class: Eq_455
   DataType: int16
@@ -3193,7 +3193,7 @@ T_589: (in sp_138 - 1<16> @ 058A : word16)
 T_590: (in sp_139 @ 058A : (ptr16 Eq_589))
   Class: Eq_589
   DataType: (ptr16 Eq_589)
-  OrigDataType: (ptr16 (struct (FFFFFFFF T_627 tFFFFFFFF) (0 T_593 t0000) (1 T_602 t0001)))
+  OrigDataType: (ptr16 (struct (-1 T_627 tFFFF) (0 T_593 t0000) (1 T_602 t0001)))
 T_591: (in 0<16> @ 058A : word16)
   Class: Eq_591
   DataType: word16
@@ -4897,7 +4897,7 @@ T_1015: (in fp - 1<16> @ 0724 : word16)
 T_1016: (in sp_104 @ 0724 : (ptr16 Eq_263))
   Class: Eq_263
   DataType: (ptr16 Eq_263)
-  OrigDataType: (ptr16 (struct (FFFFFFFE T_1042 tFFFFFFFE)))
+  OrigDataType: (ptr16 (struct (-2 T_1042 tFFFE)))
 T_1017: (in 1<16> @ 0728 : word16)
   Class: Eq_1017
   DataType: word16
@@ -6361,7 +6361,7 @@ T_1381: (in sp_119 - 1<16> @ 082A : word16)
 T_1382: (in sp_275 @ 082A : (ptr16 Eq_1381))
   Class: Eq_1381
   DataType: (ptr16 Eq_1381)
-  OrigDataType: (ptr16 (struct (FFFFFFFE T_1406 tFFFFFFFE) (0 T_1388 t0000) (1 T_1392 t0001)))
+  OrigDataType: (ptr16 (struct (-2 T_1406 tFFFE) (0 T_1388 t0000) (1 T_1392 t0001)))
 T_1383: (in 0<16> @ 082A : word16)
   Class: Eq_1383
   DataType: word16
@@ -9420,9 +9420,9 @@ typedef union Eq_253 {
 typedef byte * (Eq_254)(byte *);
 
 typedef struct Eq_263 {	// size: 1 1
-	word16 wFFFFFFFD;	// FFFFFFFD
-	word16 wFFFFFFFE;	// FFFFFFFE
-	byte bFFFFFFFF;	// FFFFFFFF
+	word16 wFFFD;	// FFFFFFFFFFFFFFFD
+	word16 wFFFE;	// FFFFFFFFFFFFFFFE
+	byte bFFFF;	// FFFFFFFFFFFFFFFF
 	byte b0000;	// 0
 } Eq_263;
 
@@ -9516,7 +9516,7 @@ typedef union Eq_585 {
 } Eq_585;
 
 typedef struct Eq_589 {
-	byte bFFFFFFFF;	// FFFFFFFF
+	byte bFFFF;	// FFFFFFFFFFFFFFFF
 	byte b0000;	// 0
 	Eq_66 t0001;	// 1
 } Eq_589;
@@ -9646,7 +9646,7 @@ typedef union Eq_1355 {
 } Eq_1355;
 
 typedef struct Eq_1381 {
-	word16 wFFFFFFFE;	// FFFFFFFE
+	word16 wFFFE;	// FFFFFFFFFFFFFFFE
 	Eq_1385 t0000;	// 0
 	byte b0001;	// 1
 } Eq_1381;

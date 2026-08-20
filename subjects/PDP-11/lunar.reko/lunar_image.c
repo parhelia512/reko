@@ -551,7 +551,7 @@ l097C:
 			struct Eq_n * r1_n = (char *) g_ptr0092 + 2 & 0x02;
 			g_ptr0092 = r1_n;
 			word16 * r1_n = r1_n->ptr34AC;
-			sp_n->ptrFFFFFFFE = r1_n;
+			sp_n->ptrFFFE = r1_n;
 			fn0444();
 			fn0242(9944, r1_n);
 		}
@@ -865,7 +865,7 @@ cui16 fn0E98(struct Eq_n * r5, struct Eq_n & r5Out)
 				r5_n->w0000 = r2_n;
 				goto l0EF0;
 			}
-			r5_n->wFFFFFFFE = 0x00;
+			r5_n->wFFFE = 0x00;
 		}
 l0EFE:
 		r5->w0000 = 0x00;
@@ -902,10 +902,10 @@ void fn0F04(int16 r0)
 	cui16 * r5_n = (cui16 *) (&r5_n->w0002 + 1);
 	while (true)
 	{
-		sp_n->ptrFFFFFFFE = r4_n;
+		sp_n->ptrFFFE = r4_n;
 		word16 * r4_n = fn100C(*r0_n);
-		word16 * v23_n = sp_n->ptrFFFFFFFE;
-		sp_n->ptrFFFFFFFE = r0_n + 1;
+		word16 * v23_n = sp_n->ptrFFFE;
+		sp_n->ptrFFFE = r0_n + 1;
 		r4_n = v23_n;
 		Eq_n r1_n = r4_n - v23_n;
 		wchar_t r3_n;
@@ -918,7 +918,7 @@ void fn0F04(int16 r0)
 		else
 			fn126C((uint32) ((word16) r1_n + 6), 0x0C, out r3_n);
 		ci16 r2_n;
-		r0_n = sp_n->ptrFFFFFFFE;
+		r0_n = sp_n->ptrFFFE;
 		for (r2_n = 0x0C; r2_n > 0x00; --r2_n)
 		{
 			++g_w00AA;
@@ -927,9 +927,9 @@ void fn0F04(int16 r0)
 			else if (g_w00AA <= ~0x02)
 				g_w0F70 = 0x0A9F;
 			word16 * r4_n = (word16 *) ((char *) r4_n + g_w00AA + r3_n);
-			sp_n->ptrFFFFFFFE = r4_n;
+			sp_n->ptrFFFE = r4_n;
 			r5_n = fn0D78(r4_n, r5_n);
-			r4_n = sp_n->ptrFFFFFFFE;
+			r4_n = sp_n->ptrFFFE;
 		}
 	}
 }

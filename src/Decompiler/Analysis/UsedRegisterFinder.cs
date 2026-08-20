@@ -285,11 +285,11 @@ namespace Reko.Analysis
                     if (n.IsEmpty)
                         return n;
                     // Now check the elements of the sequence.
-                    int offset = seq.DataType.BitSize;
+                    int offset = (int)seq.DataType.BitSize;
                     var total = new BitRange();
                     foreach (var elem in seq.Expressions)
                     {
-                        var bitsElem = elem.DataType.BitSize;
+                        var bitsElem = (int)elem.DataType.BitSize;
                         offset -= bitsElem;
                         var rangeElem = new BitRange(offset, offset+bitsElem);
                         var intersect = n.Intersect(rangeElem);
@@ -441,7 +441,7 @@ namespace Reko.Analysis
         public BitRange VisitCast(Cast cast)
         {
             var n = cast.Expression.Accept(this);
-            return new BitRange(n.Lsb, Math.Min(n.Msb, cast.DataType.BitSize));
+            return new BitRange(n.Lsb, (int)Math.Min(n.Msb, cast.DataType.BitSize));
         }
 
         /// <inheritdoc/>
@@ -490,7 +490,7 @@ namespace Reko.Analysis
         public BitRange VisitIdentifier(Identifier id)
         {
             if (id == idCur)
-                return new BitRange(0, id.DataType.BitSize);
+                return new BitRange(0, (int)id.DataType.BitSize);
             else
                 return BitRange.Empty;
         }
@@ -565,7 +565,7 @@ namespace Reko.Analysis
             var use = slice.Expression.Accept(this);
             var useSlice = new BitRange(
                 Math.Max(use.Lsb, slice.Offset),
-                Math.Min(use.Msb, slice.Offset + slice.DataType.BitSize));
+                Math.Min(use.Msb, slice.Offset + (int)slice.DataType.BitSize));
             return useSlice;
         }
 

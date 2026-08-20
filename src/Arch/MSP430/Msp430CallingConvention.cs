@@ -253,7 +253,7 @@ Alignment "holes" can occur between arguments passed on the stack, but "back-fil
                 }
                 else if (dtParam.BitSize == 32)
                 {
-                    int bitsRemaining = dtParam.BitSize;
+                    int bitsRemaining = (int)dtParam.BitSize;
                     Storage stgLo;
                     if (!usedStack && iReg < regs.Length)
                     {

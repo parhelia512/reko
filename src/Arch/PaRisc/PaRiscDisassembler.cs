@@ -985,7 +985,7 @@ namespace Reko.Arch.PaRisc
             var spaceRegField = BeField(spacePos, 2);
             return (u, d) =>
             {
-                var disp = Bitfield.ReadSignedFields(fields, u) * dt.Size;
+                var disp = Bitfield.ReadSignedFields(fields, u) * (int) dt.Size;
                 var iBaseReg = baseRegField.Read(u);
                 var iSpaceReg = spaceRegField.Read(u);
                 d.ops.Add(MemoryOperand.Indirect(dt, disp, d.regs.GpRegs[iBaseReg], Registers.SpaceRegs[iSpaceReg]));
@@ -1009,7 +1009,7 @@ namespace Reko.Arch.PaRisc
             return (u, d) =>
             {
                 var disp = permutator(u, fields);
-                var sDisp = (int)Bits.SignExtend(disp, fieldTotalWidth) * dt.Size;
+                var sDisp = (int)(Bits.SignExtend(disp, fieldTotalWidth) * dt.Size);
                 var iBaseReg = baseRegField.Read(u);
                 var iSpaceReg = assemble_3(u, spaceRegField);
                 d.ops.Add(MemoryOperand.Indirect(dt, sDisp, d.regs.GpRegs[iBaseReg], Registers.SpaceRegs[iSpaceReg]));

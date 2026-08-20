@@ -160,7 +160,7 @@ namespace Reko.Analysis
                 // Do not transform user-defined structures
                 if (str.UserDefined)
                     return str;
-                int size = str.MeasureSize();
+                int size = (int)str.MeasureSize();
                 if (size > 0)
                 {
                     return new StructureType(size)

@@ -132,7 +132,7 @@ namespace Reko.Core.Serialization
             return new PointerType_v1
             {
                 DataType = ptr.Pointee.Accept(this),
-                PointerSize = ptr.Size
+                PointerSize = (int)ptr.Size
             };
         }
 
