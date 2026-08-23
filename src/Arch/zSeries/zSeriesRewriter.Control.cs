@@ -21,14 +21,9 @@
 using Reko.Core;
 using Reko.Core.Expressions;
 using Reko.Core.Intrinsics;
-using Reko.Core.Machine;
-using Reko.Core.Rtl;
+using Reko.Core.Operators;
 using Reko.Core.Types;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Reko.Arch.zSeries
 {
@@ -141,7 +136,7 @@ namespace Reko.Arch.zSeries
             }
         }
 
-        private void Bx(Func<Expression, Expression, Expression> cmp)
+        private void Bx(BinaryOperator cmp)
         {
             var index = Reg(0);
             var addr = EffectiveAddress(2);
@@ -162,7 +157,7 @@ namespace Reko.Arch.zSeries
                 val = inc;
             }
             m.Assign(index, m.IAdd(index, inc));
-            var condition = cmp(index, val);
+            var condition = m.Bin(cmp, PrimitiveType.Bool, index, val);
             if (addr is Address a)
             {
                 m.Branch(condition, a);
@@ -211,6 +206,13 @@ namespace Reko.Arch.zSeries
             var right = Imm(1, dt);
             var cond = SignedCondition(2, left, right);
             m.Branch(cond, Addr(3));
+        }
+
+        private void RewriteClgfr()
+        {
+            var left = Reg(0);
+            var right = m.MaybeExtendZ(Op(1, PrimitiveType.Word32), left.DataType);
+            SetCcCond(m.USub(left, right));
         }
 
         private void RewriteClij(PrimitiveType dt)

@@ -28,19 +28,10 @@ namespace Reko.Arch.zSeries
     public partial class zSeriesRewriter
     {
 
-        
-        private void RewriteFAdd(PrimitiveType dt)
+        private void RewriteFAdd2(PrimitiveType dt)
         {
-            var src1 = Reg(0, dt);
-            var src2 = m.Mem(dt, EffectiveAddress(1));
-            var dst = Assign(Reg(0), m.FAdd(src1, src2));
-            SetCcCond(dst);
-        }
-
-        private void RewriteFAddReg(PrimitiveType dt)
-        {
-            var src1 = Reg(0, dt);
-            var src2 = Reg(1, dt);
+            var src1 = Op(0, dt);
+            var src2 = Op(1, dt);
             var dst = Assign(Reg(0), m.FAdd(src1, src2));
             SetCcCond(dst);
         }
@@ -72,10 +63,10 @@ namespace Reko.Arch.zSeries
             Assign(Reg(0), exp);
         }
 
-        private void RewriteFDivR(PrimitiveType dt)
+        private void RewriteFDiv(PrimitiveType dt)
         {
             var left = Reg(0, dt);
-            var right = Reg(1, dt);
+            var right = Op(1, dt);
             var dst = Assign(Reg(0), m.FDiv(left, right));
             SetCcCond(dst);
         }
@@ -181,6 +172,16 @@ namespace Reko.Arch.zSeries
             SetCcCond(dst);
         }
 
+        private void RewriteTestUnderMask(PrimitiveType dt, int shift)
+        {
+            var src = Op(0, dt);
+            var mask = Op(1, dt);
+            if (shift > 0)
+            {
+                src = m.Shr(src, shift);
+            }
+            SetCcCond(m.And(src, mask));
+        }
         private void RewriteTs()
         {
             var ea = EffectiveAddress(0);

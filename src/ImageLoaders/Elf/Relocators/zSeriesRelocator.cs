@@ -39,6 +39,7 @@ namespace Reko.ImageLoaders.Elf.Relocators
             case zSeriesRt.R_390_RELATIVE:  // B + A
                 ctx.WriteUInt64(addr, ctx.B + ctx.A);
                 return (addr, null);
+            case zSeriesRt.R_390_64:        // S + A
             case zSeriesRt.R_390_GLOB_DAT:  // S + A
                 ctx.WriteUInt64(addr, ctx.S + ctx.A);
                 return (addr, null);

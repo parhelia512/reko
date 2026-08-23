@@ -126,6 +126,17 @@ namespace Reko.Core.Intrinsics
         }
 
         /// <summary>
+        /// Creates an out parameter of type "pointer to <paramref name="dt" />.
+        /// </summary>
+        public IntrinsicBuilder OutPtrParam(DataType dt)
+        {
+            // The '0' size below indicates that we don't know the size of the pointer.
+            // When IntrinsicProcedure.MakeInstance is called, the pointer
+            // size of the architecture is resolved.
+            return OutParam(new PointerType(dt, 0));
+        }
+
+        /// <summary>
         /// Creates a generic out parameter.
         /// </summary>
         /// <param name="genericType">Generic type.</param>

@@ -1038,6 +1038,21 @@ namespace Reko.Core.Expressions
         }
 
         /// <summary>
+        /// Sign extend the expression <paramref name="exp"/> to the same size as 
+        /// <paramref name="newSize"/>, but only if the new size is larger than
+        /// the current size.
+        /// </summary>
+        /// <param name="exp">Expression to sign extend</param>
+        /// <param name="newSize">Size to which to extend it.</param>
+        /// <returns>Possible extended value.</returns>
+        public Expression MaybeExtendS(Expression exp, DataType newSize)
+        {
+            if (exp.DataType.BitSize >= newSize.BitSize)
+                return exp;
+            return ExtendS(exp, newSize);
+        }
+
+        /// <summary>
         /// Zero extend the expression <paramref name="exp"/> to the same size as 
         /// <paramref name="newSize"/>, but only if the new size is larger than
         /// the current size.

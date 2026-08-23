@@ -19,6 +19,7 @@
 #endregion
 
 using Reko.Core;
+using Reko.Core.Expressions;
 using Reko.Core.Machine;
 using Reko.Core.Types;
 using System;
@@ -51,16 +52,7 @@ namespace Reko.Arch.zSeries
         protected override void DoRender(MachineInstructionRenderer renderer, MachineInstructionRendererOptions options)
         {
             WriteMnemonic(renderer);
-            if (Operands.Length == 0)
-                return;
-            renderer.Tab();
-            var sep = "";
-            foreach (var op in Operands)
-            {
-                renderer.WriteString(sep);
-                sep = ",";
-                op.Render(renderer, options);
-            }
+            RenderOperands(renderer, options);
         }
 
         private void WriteMnemonic(MachineInstructionRenderer renderer)
@@ -93,6 +85,24 @@ namespace Reko.Arch.zSeries
                 sb.Append('s');
             }
             renderer.WriteMnemonic(sb.ToString());
+        }
+
+        protected override void RenderOperand(MachineOperand operand, MachineInstructionRenderer renderer, MachineInstructionRendererOptions options)
+        {
+            /*
+            if (operand is Constant c)
+            {
+                if (c.DataType.Domain == Domain.SignedInt)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+            */
+            base.RenderOperand(operand, renderer, options);
         }
     }
 }

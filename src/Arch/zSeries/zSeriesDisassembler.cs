@@ -28,7 +28,6 @@ using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Reko.Arch.zSeries
 {
@@ -53,7 +52,7 @@ namespace Reko.Arch.zSeries
         {
             this.arch = arch;
             this.rdr = rdr;
-            this.ops = new List<MachineOperand>();
+            this.ops = [];
         }
 
         public override zSeriesInstruction? DisassembleInstruction()
@@ -92,7 +91,7 @@ namespace Reko.Arch.zSeries
             {
                 InstructionClass = InstrClass.Invalid,
                 Mnemonic = Mnemonic.invalid,
-                Operands = Array.Empty<MachineOperand>()
+                Operands = []
             };
         }
 
@@ -254,7 +253,7 @@ namespace Reko.Arch.zSeries
         public static bool RIa(ulong uInstr, zSeriesDisassembler dasm)
         {
             dasm.ops.Add(Registers.GpRegisters[(uInstr >> 20) & 0xF]);
-            dasm.ops.Add(Constant.Int32((int)Bits.SignExtend(uInstr, 16)));
+            dasm.ops.Add(Constant.Word32((int)Bits.SignExtend(uInstr, 16)));
             return true;
         }
 
@@ -877,7 +876,7 @@ namespace Reko.Arch.zSeries
             dasm.ops.Add(dasm.CreateAccess(b2, d2));
             return true;
         }
-       
+
         private static bool VRV(ulong uInstr, zSeriesDisassembler dasm)
         {
             var v1 = Registers.VecRegisters[Bitfield.ReadFields(bf_v36, uInstr)];
@@ -889,6 +888,7 @@ namespace Reko.Arch.zSeries
             dasm.ops.Add(dasm.CreateAccess(b2, d2));
             return true;
         }
+
         private static bool VRX(ulong uInstr, zSeriesDisassembler dasm)
         {
             var v1 = Registers.VecRegisters[Bitfield.ReadFields(bf_v36, uInstr)];
@@ -901,6 +901,7 @@ namespace Reko.Arch.zSeries
         }
 
         private static readonly Bitfield vecelemField = new Bitfield(12, 4);
+
         /// <summary>
         /// Extract the vector element size.
         /// </summary>
@@ -1037,6 +1038,7 @@ namespace Reko.Arch.zSeries
 
             public override zSeriesInstruction Decode(ulong uInstr, zSeriesDisassembler dasm)
             {
+                DumpMaskedInstruction(64, uInstr, this.bitfield.Mask, "");
                 var op = this.bitfield.Read(uInstr);
                 return this.decoders[op].Decode(uInstr, dasm);
             }
@@ -1184,7 +1186,7 @@ namespace Reko.Arch.zSeries
             invalid = Instr(Mnemonic.invalid, InstrClass.Invalid);
 
             var n01_decoders = Mask(0, 8,
-                (0x01, Instr(Mnemonic.pr)));
+                (0x01, Instr(Mnemonic.pr, InstrClass.Return)));
 
             var b2_decoders = ExtendMask32(16, 8,
                 (0x02, Instr(Mnemonic.stidp, S)),
@@ -1615,6 +1617,7 @@ namespace Reko.Arch.zSeries
                 //(0x9F, Instr(Mnemonic.lat, RXYa)));
 
             var e5_decoders = ExtendMask48(32, 8,
+                (0x48, Instr(Mnemonic.mvghi, SIL)),
                 (0x4C, Instr(Mnemonic.mvhi, SIL)));
 
             var e7_decoders = ExtendMask48(0, 8,
@@ -1732,7 +1735,7 @@ namespace Reko.Arch.zSeries
                 (0xD4, Instr(Mnemonic.vupll, VRRa)),
                 (0xD5, Instr(Mnemonic.vuplh, VRRa)),
                 (0xD6, Instr(Mnemonic.vupl, VRRa)),
-                (0xD7, Instr(Mnemonic.vuph, VRRa)),
+                (0xD7, Instr(Mnemonic.vuph, VRRa, Ubhf)),
                 (0xD8, Instr(Mnemonic.vtm, VRRa)),
                 (0xD9, Instr(Mnemonic.vecl, VRRa)),
                 (0xDB, Instr(Mnemonic.vec, VRRa)),
@@ -1818,7 +1821,24 @@ namespace Reko.Arch.zSeries
                 (0xE7, Instr(Mnemonic.laxg, RSYa)),
                 (0xE8, Instr(Mnemonic.laag, RSYa)),
                 (0xEA, Instr(Mnemonic.laalg, RSYa)),
-                (0xF2, Instr(Mnemonic.loc, InstrClass.Linear | InstrClass.Conditional, RSYb)),
+                (0xF2, Mask(32, 4,
+                    Instr(Mnemonic.loc, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.loco, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.loch, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.locnle, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.locl, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.locnhe, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.loclh, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.locne, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.loce, InstrClass.Linear | InstrClass.Conditional,  RSYb),
+                    Instr(Mnemonic.locnlh, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.loche, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.locnl, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.locle, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.locnh, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.locno, InstrClass.Linear | InstrClass.Conditional, RSYb),
+                    Instr(Mnemonic.loc, InstrClass.Linear | InstrClass.Conditional, RSYb))),
+
                 (0xF3, Instr(Mnemonic.stoc, InstrClass.Linear | InstrClass.Conditional, RSYb)),
                 (0xF4, Instr(Mnemonic.lan, RSYa)),
                 (0xF6, Instr(Mnemonic.lao, RSYa)),
@@ -2255,7 +2275,7 @@ namespace Reko.Arch.zSeries
                 invalid,
                 invalid,
                 Instr32(Mnemonic.stctl, InstrClass.Linear | InstrClass.Privileged,  RSa),
-                Instr32(Mnemonic.lctl, InstrClass.Linear | InstrClass.Privileged, RSa),
+                Instr32(Mnemonic.lctl, InstrClass.Linear | InstrClass.Privileged, RSa3),
 
                 invalid,
                 b9_decoders,

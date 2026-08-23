@@ -18,6 +18,7 @@
  */
 #endregion
 
+using Reko.Core;
 using Reko.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,16 @@ namespace Reko.Arch.zSeries
 {
     public partial class zSeriesRewriter
     {
+        private void RewriteBpp()
+        {
+            m.SideEffect(m.Fn(
+                intrinsics.bpp.MakeInstance(arch.WordWidth),
+                Op(0, arch.WordWidth),
+                Op(1, arch.WordWidth),
+                Op(2, arch.WordWidth)));
+        }
+
+
         private void RewriteBprp()
         {
             m.SideEffect(m.Fn(
@@ -36,10 +47,34 @@ namespace Reko.Arch.zSeries
                 Op(2, arch.WordWidth)));
         }
 
+        private void RewriteEar()
+        {
+            var r2 = (RegisterStorage) instr.Operands[1];
+            var tmp = binder.CreateTemporary(PrimitiveType.Word32);
+            m.Assign(tmp, m.Fn(intrinsics.ear, m.Word32(r2.Number)));
+            var dst = Reg(0, PrimitiveType.Word64);
+            m.Assign(dst, m.Dpb(dst, tmp, 0));
+        }
+
         private void RewriteEx()
         {
             var op0 = Reg(0);
             SetCc(m.Fn(intrinsics.execute.MakeInstance(op0.DataType), op0, Op(1, arch.WordWidth)));
+        }
+
+        private void RewriteIpm()
+        {
+            var op = Reg(0);
+            Assign(op, m.Fn(intrinsics.ipm, op));
+        }
+
+
+        private void RewriteLctl()
+        {
+            var op1 = Op(0, PrimitiveType.Word64);
+            var op2 = Op(1, PrimitiveType.Word64);
+            var ea = EffectiveAddress(2);
+            m.SideEffect(m.Fn(intrinsics.lctl, op1, op2, ea));
         }
 
         private void RewriteLra()
@@ -49,6 +84,13 @@ namespace Reko.Arch.zSeries
                 intrinsics.lra.MakeInstance(ptrSize, r.DataType),
                 EffectiveAddress(1),
                 m.Out(r.DataType, r)));
+        }
+
+        private void RewritePr()
+        {
+            //$REVIEW: is this correct?
+            m.SideEffect(m.Fn(intrinsics.pr));
+            m.Return(0, 0);
         }
 
         private void RewriteStctl(PrimitiveType dt) {

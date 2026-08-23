@@ -19,9 +19,6 @@
 #endregion
 
 using Reko.Core.Types;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Reko.Arch.zSeries
 {
@@ -29,7 +26,7 @@ namespace Reko.Arch.zSeries
     {
         private void RewriteCvb(PrimitiveType dt) {
             Assign(Reg(0), m.Fn(
-                intrinsics.cvb.MakeInstance(dt), 
+                intrinsics.cvb.MakeInstance(dt),
                 m.AddrOf(arch.PointerType,
                     m.Mem8(EffectiveAddress(1)))));
         }
@@ -45,7 +42,14 @@ namespace Reko.Arch.zSeries
 
         private void RewriteSrp()
         {
+            m.Invalid();
+        }
 
+        private void RewriteTrtr()
+        {
+            var op1 = Op(0, VoidType.Instance);
+            var op2 = Op(1, VoidType.Instance);
+            SetCcCond(m.Fn(intrinsics.trtr, op1, op2));
         }
     }
 }
