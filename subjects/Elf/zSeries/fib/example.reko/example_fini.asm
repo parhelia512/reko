@@ -4,7 +4,7 @@
 _fini proc
 	stmg	r6,r15,48(r15)
 	lgr	r1,r15
-	aghi	r15,FFFFFF60
+	aghi	r15,X'FFFFFF60'
 	stg	r1,(r15)
 	larl	r12,0000000000002000
 	nopr	r7

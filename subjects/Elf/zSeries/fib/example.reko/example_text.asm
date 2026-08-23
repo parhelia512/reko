@@ -4,9 +4,9 @@
 _start proc
 	la	r4,8(r15)
 	lg	r3,(r15)
-	lghi	r0,FFFFFFF0
+	lghi	r0,X'FFFFFFF0'
 	ngr	r15,r0
-	aghi	r15,FFFFFF50
+	aghi	r15,X'FFFFFF50'
 	xc	(8,r15),(r15)
 	stmg	r14,r15,160(r15)
 	la	r7,160(r15)
@@ -68,9 +68,9 @@ l00000000000006BA:
 __do_global_dtors_aux proc
 	stmg	r11,r15,88(r15)
 	larl	r13,00000000000008D0
-	aghi	r15,FFFFFF60
+	aghi	r15,X'FFFFFF60'
 	larl	r11,__TMC_END__
-	cli	(r11),00
+	cli	(r11),X'0'
 	jne	0000000000000712
 
 l00000000000006E6:
@@ -85,7 +85,7 @@ l00000000000006F6:
 
 l0000000000000708:
 	brasl	r14,deregister_tm_clones
-	mvi	(r11),01
+	mvi	(r11),X'1'
 
 l0000000000000712:
 	lg	r4,272(r15)
@@ -96,7 +96,7 @@ l0000000000000712:
 frame_dummy proc
 	stmg	r13,r15,104(r15)
 	larl	r13,00000000000008D8
-	aghi	r15,FFFFFF60
+	aghi	r15,X'FFFFFF60'
 	larl	r2,__JCR_END__
 	clc	(8,r13),(r2)
 	jne	000000000000074C
@@ -123,12 +123,12 @@ l0000000000000760:
 ;;     0000000000000800 (in main)
 fib proc
 	stmg	r10,r15,80(r15)
-	aghi	r15,FFFFFF58
+	aghi	r15,X'FFFFFF58'
 	lgr	r11,r15
 	lgr	r1,r2
 	st	r1,164(r11)
 	l	r1,164(r11)
-	chi	r1,00000001
+	chi	r1,X'1'
 	jh	0000000000000792
 
 l000000000000078A:
@@ -137,14 +137,14 @@ l000000000000078A:
 
 l0000000000000792:
 	l	r1,164(r11)
-	ahi	r1,FFFFFFFF
+	ahi	r1,X'FFFFFFFF'
 	lgfr	r1,r1
 	lgr	r2,r1
 	brasl	r14,fib
 	lgr	r1,r2
 	lr	r10,r1
 	l	r1,164(r11)
-	ahi	r1,FFFFFFFE
+	ahi	r1,X'FFFFFFFE'
 	lgfr	r1,r1
 	lgr	r2,r1
 	brasl	r14,fib
@@ -161,12 +161,12 @@ l00000000000007CA:
 ;; main: 00000000000007E0
 main proc
 	stmg	r11,r15,88(r15)
-	aghi	r15,FFFFFF50
+	aghi	r15,X'FFFFFF50'
 	lgr	r11,r15
 	lgr	r1,r2
 	stg	r3,160(r11)
 	st	r1,172(r11)
-	lghi	r2,0000000A
+	lghi	r2,X'A'
 	brasl	r14,fib
 	lgr	r1,r2
 	lgfr	r1,r1
@@ -178,7 +178,7 @@ main proc
 ;; __libc_csu_init: 0000000000000820
 __libc_csu_init proc
 	stmg	r7,r15,56(r15)
-	aghi	r15,FFFFFF60
+	aghi	r15,X'FFFFFF60'
 	lgr	r10,r2
 	lgr	r9,r3
 	lgr	r8,r4
@@ -197,7 +197,7 @@ l000000000000085A:
 	lgr	r4,r8
 	lgr	r3,r9
 	lgr	r2,r10
-	aghi	r7,00000008
+	aghi	r7,X'8'
 	basr	r14,r1
 	brctg	r11,000000000000085A
 

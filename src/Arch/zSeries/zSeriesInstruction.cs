@@ -89,19 +89,27 @@ namespace Reko.Arch.zSeries
 
         protected override void RenderOperand(MachineOperand operand, MachineInstructionRenderer renderer, MachineInstructionRendererOptions options)
         {
-            /*
             if (operand is Constant c)
             {
+                var sb = new StringBuilder();
                 if (c.DataType.Domain == Domain.SignedInt)
                 {
-
+                    long value = c.ToInt64();
+                    if (value < 0)
+                    {
+                        sb.Append('-');
+                        value = -value;
+                    }
+                    sb.Append($"X'{value:X}'");
                 }
                 else
                 {
-
+                    ulong value = c.ToUInt64();
+                    sb.Append($"X'{value:X}'");
                 }
+                renderer.WriteString(sb.ToString());
+                return;
             }
-            */
             base.RenderOperand(operand, renderer, options);
         }
     }

@@ -63,19 +63,19 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_agfi()
         {
-            AssertCode("agfi\tr3,00015180", "C23800015180");
+            AssertCode("agfi\tr3,X'15180'", "C23800015180");
         }
 
         [Test]
         public void zSerDasm_aghi()
         {
-            AssertCode("aghi\tr15,FFFFFF50", "A7FB FF50");
+            AssertCode("aghi\tr15,X'FFFFFF50'", "A7FB FF50");
         }
 
         [Test]
         public void zSerDasm_aghik()
         {
-            AssertCode("aghik\tr0,+0001,r1", "EC01000100D9");
+            AssertCode("aghik\tr0,X'1',r1", "EC01000100D9");
         }
 
         [Test]
@@ -93,13 +93,13 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_ahi()
         {
-            AssertCode("ahi\tr1,FFFFFFFE", "a71afffe");
+            AssertCode("ahi\tr1,X'FFFFFFFE'", "a71afffe");
         }
 
         [Test]
         public void zSerDasm_ahik()
         {
-            AssertCode("ahik\tr0,-0001,r1", "EC01FFFF00D8");
+            AssertCode("ahik\tr0,-X'1',r1", "EC01FFFF00D8");
         }
 
         [Test]
@@ -111,13 +111,13 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_alfi()
         {
-            AssertCode("alfi\tr1,7FFFFFFF", "C21B7FFFFFFF");
+            AssertCode("alfi\tr1,X'7FFFFFFF'", "C21B7FFFFFFF");
         }
 
         [Test]
         public void zSerDasm_algfi()
         {
-            AssertCode("algfi\tr1,00015180", "C21A00015180");
+            AssertCode("algfi\tr1,X'15180'", "C21A00015180");
         }
 
         [Test]
@@ -201,13 +201,13 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_bpp()
         {
-            AssertCode("bpp\t04,00108484,270914(r4)", "C74B42424242");
+            AssertCode("bpp\tX'4',00108484,270914(r4)", "C74B42424242");
         }
 
         [Test]
         public void zSerDasm_bprp()
         {
-            AssertCode("bprp\t0F,+00000712,+00345678", "C5F712345678");
+            AssertCode("bprp\tX'F',X'712',X'345678'", "C5F712345678");
         }
 
         [Test]
@@ -262,19 +262,19 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_cfi()
         {
-            AssertCode("cfi\tr4,6474E551", "C24D6474E551");
+            AssertCode("cfi\tr4,X'6474E551'", "C24D6474E551");
         }
 
         [Test]
         public void zSerDasm_cgfi()
         {
-            AssertCode("cgfi\tr1,7FFFFFFD", "C21C7FFFFFFD");
+            AssertCode("cgfi\tr1,X'7FFFFFFD'", "C21C7FFFFFFD");
         }
 
         [Test]
         public void zSerDasm_cgij()
         {
-            AssertCode("cgij\tr3,-01,08,00100014", "EC38000AFF7C");
+            AssertCode("cgij\tr3,-X'1',X'8',00100014", "EC38000AFF7C");
         }
 
         [Test]
@@ -286,7 +286,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_cgrj()
         {
-            AssertCode("cgrj\tr2,r1,08,00100014", "EC21000A8064");
+            AssertCode("cgrj\tr2,r1,X'8',00100014", "EC21000A8064");
         }
 
         [Test]
@@ -298,13 +298,13 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_chi()
         {
-            AssertCode("chi\tr1,00000001", "a71e0001");
+            AssertCode("chi\tr1,X'1'", "a71e0001");
         }
 
         [Test]
         public void zSerDasm_cij()
         {
-            AssertCode("cij\tr2,+00,0C,00100016", "EC2C000B007E");
+            AssertCode("cij\tr2,X'0',X'C',00100016", "EC2C000B007E");
         }
 
         [Test]
@@ -328,13 +328,13 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_clfgfi()
         {
-            AssertCode("clgfi\tr2,00000004", "C22E00000004");
+            AssertCode("clgfi\tr2,X'4'", "C22E00000004");
         }
 
         [Test]
         public void zSerDasm_clfi()
         {
-            AssertCode("clfi\tr2,FFFFFFFF", "C22F FFFF FFFF");
+            AssertCode("clfi\tr2,X'FFFFFFFF'", "C22F FFFF FFFF");
         }
 
         [Test]
@@ -346,25 +346,25 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_clgfi()
         {
-            AssertCode("clgfi\tr4,00000002", "C24E00000002");
+            AssertCode("clgfi\tr4,X'2'", "C24E00000002");
         }
 
         [Test]
         public void zSerDasm_cliy()
         {
-            AssertCode("cliy\t-8(r4),00", "EB004FF8FF55");
+            AssertCode("cliy\t-8(r4),X'0'", "EB004FF8FF55");
         }
 
         [Test]
         public void zSerDasm_clgij()
         {
-            AssertCode("clgij\tr0,+02,02,00100022", "EC020011027D");
+            AssertCode("clgij\tr0,X'2',X'2',00100022", "EC020011027D");
         }
 
         [Test]
         public void zSerDasm_cli()
         {
-            AssertCode("cli\t(r11),00", "9500b000");
+            AssertCode("cli\t(r11),X'0'", "9500b000");
         }
 
         [Test]
@@ -376,19 +376,19 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_clgrj()
         {
-            AssertCode("clgrj\tr0,r1,0C,0010003A", "EC01001DC065");
+            AssertCode("clgrj\tr0,r1,X'C',0010003A", "EC01001DC065");
         }
 
         [Test]
         public void zSerDasm_clm()
         {
-            AssertCode("clm\tr9,16(r1),01", "BD911010");
+            AssertCode("clm\tr9,16(r1),X'1'", "BD911010");
         }
 
         [Test]
         public void zSerDasm_clmh()
         {
-            AssertCode("clmh\tr11,0A,-326880(r14)", "EBBAE320B020");
+            AssertCode("clmh\tr11,X'A',-326880(r14)", "EBBAE320B020");
         }
 
         [Test]
@@ -520,7 +520,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_lghi()
         {
-            AssertCode("lghi\tr0,FFFFFFF0", "A709 FFF0");
+            AssertCode("lghi\tr0,X'FFFFFFF0'", "A709 FFF0");
         }
 
         [Test]
@@ -539,7 +539,7 @@ namespace Reko.UnitTests.Arch.zSeries
         public void zSerDasm_locg()
         {
             //$TODO: locgh
-            AssertCode("locg\tr1,02,(r3)", "EB12300000E2");
+            AssertCode("locg\tr1,X'2',(r3)", "EB12300000E2");
         }
 
         [Test]
@@ -623,7 +623,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_loc()
         {
-            AssertCode("loce\tr10,08,160(r15)", "EBA8F0A000F2");
+            AssertCode("loce\tr10,X'8',160(r15)", "EBA8F0A000F2");
         }
 
         [Test]
@@ -647,13 +647,13 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_mc()
         {
-            AssertCode("mc\t578(r4),FF", "AFFF4242");
+            AssertCode("mc\t578(r4),X'FF'", "AFFF4242");
         }
 
         [Test]
         public void zSerDasm_mc_1()
         {
-            AssertCode("mc\t00000001,FF", "AFFF0001");
+            AssertCode("mc\t00000001,X'FF'", "AFFF0001");
         }
 
         [Test]
@@ -695,7 +695,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_msfi()
         {
-            AssertCode("msfi\tr4,B6DB6DB7", "C241B6DB6DB7");
+            AssertCode("msfi\tr4,X'B6DB6DB7'", "C241B6DB6DB7");
         }
 
         [Test]
@@ -725,19 +725,19 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_mvghi()
         {
-            AssertCode("mvghi\t(r10),5FFF", "E548AC0E5FFFF");
+            AssertCode("mvghi\t(r10),X'5FFF'", "E548AC0E5FFFF");
         }
 
         [Test]
         public void zSerDasm_mvhi()
         {
-            AssertCode("mvhi\t(r1),0000", "E54C 1000 0000");
+            AssertCode("mvhi\t(r1),X'0'", "E54C 1000 0000");
         }
 
         [Test]
         public void zSerDasm_mvi()
         {
-            AssertCode("mvi\t(r11),01", "9201b000");
+            AssertCode("mvi\t(r11),X'1'", "9201b000");
         }
 
         [Test]
@@ -791,7 +791,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_oi()
         {
-            AssertCode("oi\t000000FF,04", "960400FF");
+            AssertCode("oi\t000000FF,X'4'", "960400FF");
         }
 
         [Test]
@@ -803,20 +803,20 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_pfd()
         {
-            AssertCode("pfd\t02,1024(r4)", "E32044000036");
+            AssertCode("pfd\tX'2',1024(r4)", "E32044000036");
         }
 
 
         [Test]
         public void zSerDasm_risbg()
         {
-            AssertCode("risbg\tr0,r0,1C,BB,04", "EC001CBB0455");
+            AssertCode("risbg\tr0,r0,X'1C',X'BB',X'4'", "EC001CBB0455");
         }
 
         [Test]
         public void zSerDasm_rosbg()
         {
-            AssertCode("rosbg\tr1,r2,20,2A,00", "EC12202A0056");
+            AssertCode("rosbg\tr1,r2,X'20',X'2A',X'0'", "EC12202A0056");
         }
 
         [Test]
@@ -828,13 +828,13 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_stnsm()
         {
-            AssertCode("stnsm\t578(r4),D7", "ACD74242");
+            AssertCode("stnsm\t578(r4),X'D7'", "ACD74242");
         }
 
         [Test]
         public void zSerDasm_stosm()
         {
-            AssertCode("stosm\t578(r4),F5", "ADF54242");
+            AssertCode("stosm\t578(r4),X'F5'", "ADF54242");
         }
 
         [Test]
@@ -888,13 +888,13 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_icm()
         {
-            AssertCode("icm\tr1,578(r4),0F", "BF1F4242");
+            AssertCode("icm\tr1,578(r4),X'F'", "BF1F4242");
         }
 
         [Test]
         public void zSerDasm_iilh()
         {
-            AssertCode("iilh\tr1,00004242", "A5124242");
+            AssertCode("iilh\tr1,X'4242'", "A5124242");
         }
 
         [Test]
@@ -931,7 +931,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_llill()
         {
-            AssertCode("llill\tr1,00004242", "A51F4242");
+            AssertCode("llill\tr1,X'4242'", "A51F4242");
         }
 
         [Test]
@@ -943,7 +943,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_clrj()
         {
-            AssertCode("clrj\tr1,r6,04,0010114C", "EC1608A64077");
+            AssertCode("clrj\tr1,r6,X'4',0010114C", "EC1608A64077");
         }
 
         [Test]
@@ -1027,7 +1027,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_srp()
         {
-            AssertCode("srp\t564(11,r1),1656(r5),08", "F0A812345678");
+            AssertCode("srp\t564(11,r1),1656(r5),X'8'", "F0A812345678");
         }
 
         [Test]
@@ -1069,13 +1069,13 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_slfi()
         {
-            AssertCode("slfi\tr2,0000D800", "C2250000D800");
+            AssertCode("slfi\tr2,X'D800'", "C2250000D800");
         }
 
         [Test]
         public void zSerDasm_slgfi()
         {
-            AssertCode("slgfi\tr3,00015180", "C23400015180");
+            AssertCode("slgfi\tr3,X'15180'", "C23400015180");
         }
 
         [Test]
@@ -1153,7 +1153,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_svc()
         {
-            AssertCode("svc\t00", "0A00");
+            AssertCode("svc\tX'0'", "0A00");
         }
 
         [Test]
@@ -1171,7 +1171,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSerDasm_tmy()
         {
-            AssertCode("tmy\t-29(r12),01", "EB01CFE3FF51");
+            AssertCode("tmy\t-29(r12),X'1'", "EB01CFE3FF51");
         }
 
         [Test]
@@ -1213,7 +1213,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSeriesDis_verim()
         {
-            AssertCode("verimg\tv13,v1,v11,B8", "E7D1B7B83472");
+            AssertCode("verimg\tv13,v1,v11,X'B8'", "E7D1B7B83472");
         }
 
         [Test]
@@ -1231,13 +1231,13 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSeriesDis_vgbm()
         {
-            AssertCode("vgbm\tv5,FD8B", "E755 FD8B F844");
+            AssertCode("vgbm\tv5,X'FD8B'", "E755 FD8B F844");
         }
 
         [Test]
         public void zSeriesDis_vftci()
         {
-            AssertCode("vftci\tv23,v28,0FDA", "E77CFDA0DE4A");
+            AssertCode("vftci\tv23,v28,X'FDA'", "E77CFDA0DE4A");
         }
 
         [Test]
@@ -1273,7 +1273,7 @@ namespace Reko.UnitTests.Arch.zSeries
         [Test]
         public void zSeriesDasm_vrep()
         {
-            AssertCode("vrep\tv31,v10,B654", "E7FAB654564D");
+            AssertCode("vrep\tv31,v10,X'B654'", "E7FAB654564D");
         }
 
         [Test]
