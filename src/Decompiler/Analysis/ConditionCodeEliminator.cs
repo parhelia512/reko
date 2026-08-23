@@ -838,7 +838,9 @@ public class ConditionCodeEliminator : IAnalysis<SsaState>
 			}
 
 			Expression e;
-            if (bin.Operator.Type == OperatorType.ISub || bin.Operator.Type == OperatorType.FSub)
+            if (bin.Operator.Type == OperatorType.ISub ||
+                bin.Operator.Type == OperatorType.USub ||
+                bin.Operator.Type == OperatorType.FSub)
             {
                 e = m.Bin(cmpOp, PrimitiveType.Bool, bin.Left, bin.Right);
             }

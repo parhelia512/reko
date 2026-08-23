@@ -248,7 +248,7 @@ l00000454:
 	Mem142[r1_120 + 0xFFFFFBD8<32>:word32] = r15_124
 	Mem143[r1_120 + 0xFFFFFFF8<32>:word32] = r21_128
 	fn00018CC4()
-	branch 0x3FF<32> -u (r3_132 + 3<32>) < 0<32> l00000498_ds_t
+	branch r3_132 > 0x3FC<32> l00000498_ds_t
 l00000498_ds_f:
 	goto l0000049C
 l00000498_ds_t:
@@ -291,7 +291,7 @@ l00000578:
 	Mem173[r1_120 + 0xFFFFFBD0<32>:word32] = r6_135
 	Mem174[r1_120 + 0xFFFFFBD4<32>:word32] = r23_130
 	fn00018CC4()
-	branch 0x3FF<32> -u (r3_132 + 6<32>) < 0<32> l000005C8_ds_t
+	branch r3_132 > 0x3F9<32> l000005C8_ds_t
 l000005C8_ds_f:
 	goto l000005CC
 l000005C8_ds_t:
@@ -299,7 +299,7 @@ l000005C8_ds_t:
 l000005CC:
 	fn000181D0()
 	r3_193 = 3<32>
-	branch 3<32> -u (r3_132 + 3<32>) >= 0<32> l000005F0_ds_t
+	branch r3_132 <= 0<32> l000005F0_ds_t
 l000005F0_ds_f:
 	goto l000005F4
 l000005F0_ds_t:
@@ -461,14 +461,14 @@ l00000810:
 	branch r3_54 == 0<32> l0000085C
 l00000820:
 	r4_66 = r3_54 + 0xFFFFFFD0<32>
-	branch 9<32> -u (r4_66 & 0xFF<32>) >= 0<32> l00000830_ds_t
+	branch (r4_66 & 0xFF<32>) <= 9<32> l00000830_ds_t
 l00000830_ds_f:
 	r3_73 = r3_54 + 0xFFFFFFD5<32>
 	goto l00000834
 l00000830_ds_t:
 	goto l0000080C
 l00000834:
-	branch 0x4D<32> -u (r3_73 & 0xFF<32>) < 0<32> l00000810
+	branch (r3_73 & 0xFF<32>) > 0x4D<32> l00000810
 l00000840:
 	r4_221 = (r3_73 & 0xFF<32>) * 2<32>
 	r3_224 = Mem81[r4_221 * 2<32> + 0x19ABC<32>:word32]
@@ -1014,7 +1014,7 @@ l00001EB8_ds_t:
 	goto l00001F20
 l00001EBC:
 	r22_127 = Mem126[r5 + 88<i32>:word32]
-	branch 1<32> -u r22_127 >= 0<32> l00002054
+	branch r22_127 <= 1<32> l00002054
 l00001ECC:
 	r6_253 = Mem126[r5 + 84<i32>:word32]
 l00001ED0:
@@ -1100,7 +1100,7 @@ l0000211C:
 l00002134:
 	branch r21_190 -u r24_192 >= 0<32> l00002178
 l0000213C:
-	branch 0x40000000<32> -u (r24_192 - r21_190) >= 0<32> l0000214C_ds_t
+	branch r24_192 - r21_190 <= 0x40000000<32> l0000214C_ds_t
 l0000214C_ds_f:
 	goto l00002150
 l0000214C_ds_t:
@@ -1274,7 +1274,7 @@ l0000236C_ds_t:
 	Mem47[r5:word32] = r7_23
 	goto l000023A0
 l00002370:
-	branch 0x40000000<32> -u (r21_21 * 2<32> - r7_23) >= 0<32> l00002384
+	branch r21_21 * 2<32> - r7_23 <= 0x40000000<32> l00002384
 l00002380:
 l00002384:
 	fn000190F0()
@@ -1448,7 +1448,7 @@ l00002688:
 l00002690:
 	r27_278 = r22_170 - r21_102
 	r28_280 = r24_173 + r21_102
-	branch 0x40000000<32> -u r27_278 >= 0<32> l000026A4_ds_t
+	branch r27_278 <= 0x40000000<32> l000026A4_ds_t
 l000026A4_ds_f:
 	goto l000026A8
 l000026A4_ds_t:
@@ -1752,7 +1752,7 @@ l00003B0C_ds_t:
 	Mem200[r5 + 84<i32>:word32] = r6_198
 	goto l00003B98
 l00003B10:
-	branch 0x40000000<32> -u r7_177 >= 0<32> l00003B1C
+	branch r7_177 <= 0x40000000<32> l00003B1C
 l00003B18:
 l00003B1C:
 	fn0001908C()
@@ -1927,7 +1927,7 @@ l00003D3C_ds_t:
 	Mem288[r5 + 84<i32>:word32] = r6_286
 	goto l00003DC8
 l00003D40:
-	branch 0x40000000<32> -u r7_269 >= 0<32> l00003D4C
+	branch r7_269 <= 0x40000000<32> l00003D4C
 l00003D48:
 l00003D4C:
 	fn0001908C()
@@ -2187,7 +2187,7 @@ l00004060_ds_t:
 	Mem324[r5 + 84<i32>:word32] = r6_322
 	goto l00003FC4
 l00004064:
-	branch 0x40000000<32> -u r7_301 >= 0<32> l00004070
+	branch r7_301 <= 0x40000000<32> l00004070
 l0000406C:
 l00004070:
 	fn0001908C()
@@ -2494,7 +2494,7 @@ l00005728_ds_t:
 	Mem111[r5 + 84<i32>:word32] = r6_109
 	goto l00005658
 l0000572C:
-	branch 0x40000000<32> -u r7_108 >= 0<32> l00005738
+	branch r7_108 <= 0x40000000<32> l00005738
 l00005734:
 l00005738:
 	fn0001908C()
@@ -2757,7 +2757,7 @@ l00005B64_ds_t:
 l00005B68:
 	r4_133 = Mem124[r5 + 5812<i32>:word32]
 	r6_134 = r26_112 + r6_129
-	branch 2<32> -u (r6_134 + r4_133) < 0<32> l00005B7C_ds_t
+	branch r6_134 + r4_133 > 2<32> l00005B7C_ds_t
 l00005B7C_ds_f:
 	Mem143[r5 + 116<i32>:word32] = r6_134
 	goto l00005B80
@@ -2765,7 +2765,7 @@ l00005B7C_ds_t:
 	Mem142[r5 + 116<i32>:word32] = r6_134
 	goto l00005C4C
 l00005B80:
-	branch 0x105<32> -u r6_134 < 0<32> l00005D1C
+	branch r6_134 > 0x105<32> l00005D1C
 l00005B88:
 	branch Mem343[Mem343[r5:word32] + 4<i32>:word32] == 0<32> l00005D1C
 l00005B94:
@@ -2816,7 +2816,7 @@ l00005C14:
 	r4_133 = Mem217[r5 + 5812<i32>:word32]
 	Mem221[r27_125 + 8<i32>:word32] = r3_211 + r28_126
 	r6_134 = r28_126 + r6_213
-	branch 2<32> -u (r6_134 + r4_133) >= 0<32> l00005C48_ds_t
+	branch r6_134 + r4_133 <= 2<32> l00005C48_ds_t
 l00005C48_ds_f:
 	Mem227[r5 + 116<i32>:word32] = r6_134
 	goto l00005C4C
@@ -2865,7 +2865,7 @@ l00005CA4:
 	r4_133 = r4_133 + 0xFFFFFFFF<32>
 	Mem315[r5 + 5812<i32>:word32] = r4_133
 	r7_234 = r7_234 + 1<32>
-	branch 2<32> -u (r6_134 + r4_133) >= 0<32> l00005CF0_ds_t
+	branch r6_134 + r4_133 <= 2<32> l00005CF0_ds_t
 l00005CF0_ds_f:
 	r9_266 = r9_266 + 1<32>
 	goto l00005CF4
@@ -2892,7 +2892,7 @@ l00005D0C_ds_t:
 l00005D10:
 	branch r4_133 != 0<32> l00005CA4
 l00005D14:
-	branch 0x105<32> -u r6_134 >= 0<32> l00005B88
+	branch r6_134 <= 0x105<32> l00005B88
 l00005D1C:
 	r5_350 = Mem349[r5 + 5824<i32>:word32]
 	r4_351 = Mem349[r5 + 60<i32>:word32]
@@ -2910,7 +2910,7 @@ l00005D44_ds_t:
 	goto l00005EAC
 l00005D48:
 	r22_396 = r4_351 - r21_373
-	branch 0x102<32> -u r22_396 < 0<32> l00005D58_ds_t
+	branch r22_396 > 0x102<32> l00005D58_ds_t
 l00005D58_ds_f:
 	goto l00005D5C
 l00005D58_ds_t:
@@ -3067,7 +3067,7 @@ l00006124:
 l00006148:
 	r23_163 = Mem150[r5 + 108<i32>:word32] - Mem150[r5 + 92<i32>:word32]
 	r21_165 = r23_163 + r4_164
-	branch 0xFFFE<32> -u r21_165 >= 0<32> l00006168_ds_t
+	branch r21_165 <= 0xFFFE<32> l00006168_ds_t
 l00006168_ds_f:
 	r3_167 = r3_153 - (r7_155 >> 2<i32>)
 	goto l0000616C
@@ -3386,7 +3386,7 @@ l00006708:
 	r6_739 = Mem737[r5 + 92<i32>:word32]
 l0000670C:
 	r4_857 = Mem848[r5 + 12<i32>:word32] - (Mem848[r5 + 5820<i32>:word32] + 0x2A<32> >> 3<i32>)
-	branch 0xFFFF<32> -u r4_857 >= 0<32> l00006740
+	branch r4_857 <= 0xFFFF<32> l00006740
 l0000673C:
 	r4_857 = 0xFFFF<32>
 l00006740:
@@ -3514,7 +3514,7 @@ l000068F0:
 	Mem695[r5 + 108<i32>:word32] = r3_306 - r8_687
 	fn00018C34()
 	r3_698 = Mem695[r5 + 5808<i32>:word32]
-	branch 1<32> -u r3_698 < 0<32> l00006930
+	branch r3_698 > 1<32> l00006930
 l00006928:
 	Mem702[r5 + 5808<i32>:word32] = r3_698 + 1<32>
 l00006930:
@@ -3534,7 +3534,7 @@ l00006950:
 	Mem602[r5 + 108<i32>:word32] = r4_599
 	fn00018C34()
 	r3_605 = Mem602[r5 + 5808<i32>:word32]
-	branch 1<32> -u r3_605 < 0<32> l00006980_ds_t
+	branch r3_605 > 1<32> l00006980_ds_t
 l00006980_ds_f:
 	goto l00006984
 l00006980_ds_t:
@@ -3855,7 +3855,7 @@ l00009014_ds_f:
 l00009014_ds_t:
 	goto l00008EE8
 l00009018:
-	branch 5<32> -u r6 < 0<32> l00009024_ds_t
+	branch r6 > 5<32> l00009024_ds_t
 l00009024_ds_f:
 	goto l00009028
 l00009024_ds_t:
@@ -4071,7 +4071,7 @@ l000093D0:
 		defs: r0:r0_3190,r10:r10_3184,r11:r11_3183,r12:r12_3185,r18:r18_3188,r19:r19_3169,r21:r21_3171,r23:r23_3173,r24:r24_3174,r3:r3_3167,r7:r7_3187,r8:r8_3182,r9:r9_3186
 	r4_1681 = r3_1673 + 0xFFFFFFFE<32>
 l000093F8:
-	branch 1<32> -u r4_1681 >= 0<32> l00009404_ds_t
+	branch r4_1681 <= 1<32> l00009404_ds_t
 l00009404_ds_f:
 	r4_2276 = r3_1673 & 0xFFFFFFFD<32>
 	goto l00009408
@@ -5260,7 +5260,7 @@ l0000A77C:
 l0000A790:
 	r6_2058 = Mem2057[r19_3169 + 116<i32>:word32]
 l0000A7A0:
-	branch 0x102<32> -u r6_2058 >= 0<32> l0000A990
+	branch r6_2058 <= 0x102<32> l0000A990
 l0000A7A8:
 	r5_2278 = Mem2076[r19_3169 + 108<i32>:word32]
 	r7_2281 = Mem2076[r19_3169 + 56<i32>:word32]
@@ -5351,7 +5351,7 @@ l0000A988:
 l0000A990:
 	fn00005B0C(r0, r19_3169)
 	r6_2058 = Mem2076[r19_3169 + 116<i32>:word32]
-	branch 0x102<32> -u r6_2058 < 0<32> l0000A7A8
+	branch r6_2058 > 0x102<32> l0000A7A8
 l0000A9A4:
 	branch r6 == 0<32> l0000A0B0
 l0000A9A8:
@@ -5359,7 +5359,7 @@ l0000A9A8:
 l0000A9AC:
 	Mem2277[r19_3169 + 96<i32>:word32] = r0
 	r5_2278 = Mem2277[r19_3169 + 108<i32>:word32]
-	branch 2<32> -u r6_2058 >= 0<32> l0000A9BC_ds_t
+	branch r6_2058 <= 2<32> l0000A9BC_ds_t
 l0000A9BC_ds_f:
 	r7_2281 = Mem2277[r19_3169 + 56<i32>:word32]
 	goto l0000A9C0
@@ -5638,7 +5638,7 @@ l0000AF60:
 	Mem3299[r19_3169 + 5812<i32>:word32] = r3_3296
 	goto l00009448
 l0000AF78:
-	branch 2<32> -u r3_2394 < 0<32> l0000AF80_ds_t
+	branch r3_2394 > 2<32> l0000AF80_ds_t
 l0000AF80_ds_f:
 	goto l0000AF84
 l0000AF80_ds_t:
@@ -5724,7 +5724,7 @@ l0000B134_ds_f:
 l0000B134_ds_t:
 	goto l0000B290
 l0000B138:
-	branch 9<32> -u r6 < 0<32> l0000B140_ds_t
+	branch r6 > 9<32> l0000B140_ds_t
 l0000B140_ds_f:
 	goto l0000B144
 l0000B140_ds_t:
@@ -5735,7 +5735,7 @@ l0000B144:
 l0000B148:
 	r4_103 = r3_101 & 0xFF<32>
 l0000B14C:
-	branch 4<32> -u r7 < 0<32> l0000B158_ds_t
+	branch r7 > 4<32> l0000B158_ds_t
 l0000B158_ds_f:
 	goto l0000B15C
 l0000B158_ds_t:
@@ -6058,13 +6058,13 @@ l0000B62C_ds_f:
 l0000B62C_ds_t:
 	goto l0000B9A8
 l0000B630:
-	branch 8<32> -u (r9 + 0xFFFFFFFF<32>) < 0<32> l0000B640_ds_t
+	branch r9 > 9<32> l0000B640_ds_t
 l0000B640_ds_f:
 	goto l0000B644
 l0000B640_ds_t:
 	goto l0000B6F4
 l0000B644:
-	branch 7<32> -u (r8 + 0xFFFFFFF8<32>) < 0<32> l0000B650_ds_t
+	branch r8 > 0xF<32> l0000B650_ds_t
 l0000B650_ds_f:
 	r24_124 = r8
 	goto l0000B654
@@ -6077,7 +6077,7 @@ l0000B6E4_ds_f:
 l0000B6E4_ds_t:
 	goto l0000B6F4
 l0000B6E8:
-	branch 9<32> -u r23_168 >= 0<32> l0000B6F0_ds_t
+	branch r23_168 <= 9<32> l0000B6F0_ds_t
 l0000B6F0_ds_f:
 	goto l0000B6F4
 l0000B6F0_ds_t:
@@ -6086,7 +6086,7 @@ l0000B6F4:
 	r22_290 = 0xFFFFFFFE<32>
 	goto l0000B95C
 l0000B6FC:
-	branch 4<32> -u r10 < 0<32> l0000B704_ds_t
+	branch r10 > 4<32> l0000B704_ds_t
 l0000B704_ds_f:
 	r5_180 = r8 ^ 8<32>
 	goto l0000B708
@@ -6347,7 +6347,7 @@ l0000C350:
 	return 0xFFFFFFFE<32>
 l0000C358:
 	r8 = 0x1F<32>
-	branch 0x1F<32> -u (Mem0[r4_7 + 4<i32>:word32] + 0xFFFFC0CC<32>) < 0<32> l0000C350
+	branch Mem0[r4_7 + 4<i32>:word32] > 0x3F53<32> l0000C350
 l0000C36C:
 	r3_16 = Mem0[r4_7 + 12<i32>:word32]
 	Mem17[r4_7 + 44<i32>:word32] = r6_10
@@ -6465,7 +6465,7 @@ l0000C814:
 	r22_132 = r22_132 & 0xF<32>
 l0000C818:
 	r4_157 = (r22_132 >> 4<i32>) + 5<32>
-	branch 7<32> -u (r22_132 + 0xFFFFFFF8<32>) >= 0<32> l0000C828_ds_t
+	branch r22_132 <= 0xF<32> l0000C828_ds_t
 l0000C828_ds_f:
 	goto l0000C82C
 l0000C828_ds_t:
@@ -6505,7 +6505,7 @@ l0000C8F4:
 	return r0
 l0000C908:
 	r22_132 = -r22_132
-	branch 7<32> -u (r22_132 + 0xFFFFFFF8<32>) >= 0<32> l0000C91C_ds_t
+	branch r22_132 <= 0xF<32> l0000C91C_ds_t
 l0000C91C_ds_f:
 	r4_157 = 0<32>
 	goto l0000C920
@@ -6581,7 +6581,7 @@ l0000CCEC:
 l0000CD28:
 	r3_40 = Mem33[r22_36 + 4<i32>:word32]
 	r4_42 = r3_40 + 0xFFFFC0CC<32>
-	branch 0x1F<32> -u (r3_40 + 0xFFFFC0CC<32>) < 0<32> l0000CCE8
+	branch r3_40 > 0x3F53<32> l0000CCE8
 l0000CD3C:
 	r28_44 = Mem33[r5 + 12<i32>:word32]
 	branch r28_44 == 0<32> l0000CCE8
@@ -6607,7 +6607,7 @@ l0000CD64:
 	r26_60 = Mem58[r5 + 16<i32>:word32]
 	r25_62 = Mem58[r22_36 + 60<i32>:word32]
 	r19_63 = Mem58[r22_36 + 64<i32>:word32]
-	branch 0x1E<32> -u r4_42 < 0<32> l0000CDBC
+	branch r4_42 > 0x1E<32> l0000CDBC
 l0000CDA0:
 	r3_88 = Mem79[r4_42 * 4<32> + 0x1A05C<32>:word32]
 	call r3_88 (retsize: 0;)
@@ -6659,7 +6659,7 @@ l0000FB24_ds_t:
 l0000FB28:
 	return
 l0000FB30:
-	branch 0x1F<32> -u (Mem0[r6_7 + 4<i32>:word32] + 0xFFFFC0CC<32>) < 0<32> l0000FB28
+	branch Mem0[r6_7 + 4<i32>:word32] > 0x3F53<32> l0000FB28
 l0000FB44:
 	r3_21 = Mem20[r6_7 + 56<i32>:word32]
 	r19_22 = r5
@@ -7194,7 +7194,7 @@ l00010F30_ds_t:
 l00010F34:
 	branch r5 != 1<32> l00010F7C
 l00010F38:
-	branch 0x354<32> -u r11_702 >= 0<32> l00011834
+	branch r11_702 <= 0x354<32> l00011834
 l00010F44:
 	goto l00010AFC
 l00010F4C:
@@ -7218,7 +7218,7 @@ l00010F74:
 	goto l00010AFC
 l00010F7C:
 	r5_749 = ~(-(r5 ^ 2<32>) | r5 ^ 2<32>)
-	branch 0x250<32> -u r11_702 >= 0<32> l00011018_ds_t
+	branch r11_702 <= 0x250<32> l00011018_ds_t
 l00011018_ds_f:
 	goto l0001101C
 l00011018_ds_t:
@@ -7685,7 +7685,7 @@ l0001156C_ds_t:
 l00011570:
 	r30_1145 = r30_1145 + r5_1303
 	r24_1225 = r23_1285
-	branch 0x354<32> -u r30_1145 >= 0<32> l00011580_ds_t
+	branch r30_1145 <= 0x354<32> l00011580_ds_t
 l00011580_ds_f:
 	goto l00011584
 l00011580_ds_t:
@@ -7693,7 +7693,7 @@ l00011580_ds_t:
 l00011584:
 	branch dwLoc3C_2087 != 0<32> l00010F44
 l0001158C:
-	branch 0x250<32> -u r30_1145 >= 0<32> l00011594_ds_t
+	branch r30_1145 <= 0x250<32> l00011594_ds_t
 l00011594_ds_f:
 	goto l00011598
 l00011594_ds_t:
@@ -9090,7 +9090,7 @@ l000126AC:
 	Mem333[r5 + 5816<i32>:word16] = SLICE(r4_317, word16, 0)
 	r4_236 = CONVERT(SLICE(r4_317, int16, 0), int16, int32)
 l000126B8:
-	branch 0xFF<32> -u (r21_36 + 0xFFFFFFFF<32>) < 0<32> l000128CC
+	branch r21_36 > 0x100<32> l000128CC
 l000126C4:
 	r8_370 = CONVERT(Mem368[r21_36 + 0x1ACD7<32>:byte], byte, word32)
 l000126C8:
@@ -11695,14 +11695,14 @@ l00014D1C_ds_t:
 	r3_181 = 1<32>
 	goto l00014EC8
 l00014D20:
-	branch 0xF<32> -u r7 >= 0<32> l00014D2C_ds_t
+	branch r7 <= 0xF<32> l00014D2C_ds_t
 l00014D2C_ds_f:
 	r24_182 = r7 + 0xFFFFEA4F<32>
 	goto l00014D30
 l00014D2C_ds_t:
 	goto l00014EF0
 l00014D30:
-	branch 0x15AF<32> -u r7 >= 0<32> l00014D3C_ds_t
+	branch r7 <= 0x15AF<32> l00014D3C_ds_t
 l00014D3C_ds_f:
 	goto l00014D40
 l00014D3C_ds_t:
@@ -11741,7 +11741,7 @@ l00014E18_ds_t:
 l00014E1C:
 	r26_101 = fn00018030(r26_101, 0xFFF1<32>)
 	r3_278 = fn00018030(r23_263, 0xFFF1<32>)
-	branch 0x15AF<32> -u r25_185 >= 0<32> l00014E40_ds_t
+	branch r25_185 <= 0x15AF<32> l00014E40_ds_t
 l00014E40_ds_f:
 	r23_102 = r3_278
 	goto l00014E44
@@ -11753,10 +11753,10 @@ l00014E44:
 	goto l00014D48
 l00014E4C:
 	r26_101 = CONVERT(Mem19[r6:byte], byte, word32) + (r5 & 0xFFFF<32>)
-	branch 0xFFF0<32> -u r26_101 < 0<32> l00015304
+	branch r26_101 > 0xFFF0<32> l00015304
 l00014E64:
 	r23_52 = r26_101 + (r5 >>u 16<i32>)
-	branch 0xFFF0<32> -u r23_52 >= 0<32> l00014E78_ds_t
+	branch r23_52 <= 0xFFF0<32> l00014E78_ds_t
 l00014E78_ds_f:
 	goto l00014E7C
 l00014E78_ds_t:
@@ -11900,7 +11900,7 @@ l00015004:
 	r26_101 = r26_101 + CONVERT(Mem19[r6 + 14<i32>:byte], byte, word32)
 	r23_102 = r23_145 + r26_101
 l00015010:
-	branch 0xFFF0<32> -u r26_101 >= 0<32> l00015028
+	branch r26_101 <= 0xFFF0<32> l00015028
 l00015020:
 	r26_101 = r26_101 + 0xFFFF000F<32>
 l00015028:
@@ -11914,7 +11914,7 @@ l00015088_ds_t:
 	r3_288 = r3_278 * 2<32>
 	goto l00014E88
 l0001508C:
-	branch 0xF<32> -u r25_185 >= 0<32> l00015310
+	branch r25_185 <= 0xF<32> l00015310
 l00015098:
 	r3_295 = r25_185 + 0xFFFFFFF0<32>
 	r5_307 = r22_190 + ((r3_295 >>u 4<i32>) + 1<32>) * 0x10<32>
@@ -12181,7 +12181,7 @@ l00015884:
 	r7_1352 = __rcr<word32,int32>(r7_1350, 1<i32>, (r7_1350 & 1<32>) != 0<32> ? 1<32> : 0<32>)
 	return (r3_1297 >>u 24<i32>) + (__rcr<word32,int32>(r7_1352, 1<i32>, (r7_1352 & 1<32>) != 0<32> ? 1<32> : 0<32>) & 0xFF000000<32>) + (r3_1297 >>u 8<i32> & 0xFF00<32>) + (r3_1297 * 0x100<32> & 0xFF0000<32>)
 l0001597C:
-	branch 0x1F<32> -u r7 >= 0<32> l00015984_ds_t
+	branch r7 <= 0x1F<32> l00015984_ds_t
 l00015984_ds_f:
 	goto l00015988
 l00015984_ds_t:
@@ -12210,7 +12210,7 @@ l000162E8_ds_t:
 l000162EC:
 	r7 = r7 & 0x1F<32>
 l000162F4:
-	branch 3<32> -u r7 >= 0<32> l000162FC_ds_t
+	branch r7 <= 3<32> l000162FC_ds_t
 l000162FC_ds_f:
 	r5_676 = r7 + 0xFFFFFFFC<32>
 	goto l00016300
@@ -12220,7 +12220,7 @@ l00016300:
 	r3_684 = r4_1020 ^ Mem0[r6_1159:word32]
 	r4_744 = Mem0[(r3_684 >>u 14<i32> & 0x3FC<32>) + 0x1CDD0<32>:word32]
 	r3_746 = Mem0[(r3_684 >>u 24<i32>) * 4<32> + 0x1D1D0<32>:word32] ^ Mem0[(r3_684 & 0xFF<32>) * 4<32> + 0x1C5D0<32>:word32] ^ Mem0[(r3_684 >>u 6<i32> & 0x3FC<32>) + 0x1C9D0<32>:word32]
-	branch 3<32> -u r5_676 >= 0<32> l00016428_ds_t
+	branch r5_676 <= 3<32> l00016428_ds_t
 l00016428_ds_f:
 	r4_749 = r3_746 ^ r4_744
 	goto l0001642C
@@ -12231,7 +12231,7 @@ l0001642C:
 	r3_752 = r4_749 ^ Mem0[r6_1159 + 4<i32>:word32]
 	r4_812 = Mem0[(r3_752 >>u 14<i32> & 0x3FC<32>) + 0x1CDD0<32>:word32]
 	r3_814 = Mem0[(r3_752 >>u 24<i32>) * 4<32> + 0x1D1D0<32>:word32] ^ Mem0[(r3_752 & 0xFF<32>) * 4<32> + 0x1C5D0<32>:word32] ^ Mem0[(r3_752 >>u 6<i32> & 0x3FC<32>) + 0x1C9D0<32>:word32]
-	branch 3<32> -u (r7 + 0xFFFFFFF8<32>) >= 0<32> l00016558_ds_t
+	branch r7 <= 0xB<32> l00016558_ds_t
 l00016558_ds_f:
 	r4_817 = r3_814 ^ r4_812
 	goto l0001655C
@@ -12242,7 +12242,7 @@ l0001655C:
 	r3_820 = r4_817 ^ Mem0[r6_1159 + 8<i32>:word32]
 	r4_880 = Mem0[(r3_820 >>u 14<i32> & 0x3FC<32>) + 0x1CDD0<32>:word32]
 	r3_882 = Mem0[(r3_820 >>u 24<i32>) * 4<32> + 0x1D1D0<32>:word32] ^ Mem0[(r3_820 & 0xFF<32>) * 4<32> + 0x1C5D0<32>:word32] ^ Mem0[(r3_820 >>u 6<i32> & 0x3FC<32>) + 0x1C9D0<32>:word32]
-	branch 3<32> -u (r7 + 0xFFFFFFF4<32>) >= 0<32> l00016688_ds_t
+	branch r7 <= 0xF<32> l00016688_ds_t
 l00016688_ds_f:
 	r4_885 = r3_882 ^ r4_880
 	goto l0001668C
@@ -12253,7 +12253,7 @@ l0001668C:
 	r3_888 = r4_885 ^ Mem0[r6_1159 + 12<i32>:word32]
 	r4_948 = Mem0[(r3_888 >>u 14<i32> & 0x3FC<32>) + 0x1CDD0<32>:word32]
 	r3_950 = Mem0[(r3_888 >>u 24<i32>) * 4<32> + 0x1D1D0<32>:word32] ^ Mem0[(r3_888 & 0xFF<32>) * 4<32> + 0x1C5D0<32>:word32] ^ Mem0[(r3_888 >>u 6<i32> & 0x3FC<32>) + 0x1C9D0<32>:word32]
-	branch 3<32> -u (r7 + 0xFFFFFFF0<32>) >= 0<32> l000167B8_ds_t
+	branch r7 <= 0x13<32> l000167B8_ds_t
 l000167B8_ds_f:
 	r4_953 = r3_950 ^ r4_948
 	goto l000167BC
@@ -12264,7 +12264,7 @@ l000167BC:
 	r3_956 = r4_953 ^ Mem0[r6_1159 + 16<i32>:word32]
 	r4_1016 = Mem0[(r3_956 >>u 14<i32> & 0x3FC<32>) + 0x1CDD0<32>:word32]
 	r3_1018 = Mem0[(r3_956 >>u 24<i32>) * 4<32> + 0x1D1D0<32>:word32] ^ Mem0[(r3_956 & 0xFF<32>) * 4<32> + 0x1C5D0<32>:word32] ^ Mem0[(r3_956 >>u 6<i32> & 0x3FC<32>) + 0x1C9D0<32>:word32]
-	branch 3<32> -u (r7 + 0xFFFFFFEC<32>) >= 0<32> l000168E8_ds_t
+	branch r7 <= 0x17<32> l000168E8_ds_t
 l000168E8_ds_f:
 	r4_1021 = r3_1018 ^ r4_1016
 	goto l000168EC
@@ -12275,7 +12275,7 @@ l000168EC:
 	r3_1024 = r4_1021 ^ Mem0[r6_1159 + 20<i32>:word32]
 	r4_1084 = Mem0[(r3_1024 >>u 14<i32> & 0x3FC<32>) + 0x1CDD0<32>:word32]
 	r3_1086 = Mem0[(r3_1024 >>u 24<i32>) * 4<32> + 0x1D1D0<32>:word32] ^ Mem0[(r3_1024 & 0xFF<32>) * 4<32> + 0x1C5D0<32>:word32] ^ Mem0[(r3_1024 >>u 6<i32> & 0x3FC<32>) + 0x1C9D0<32>:word32]
-	branch 3<32> -u (r7 + 0xFFFFFFE8<32>) >= 0<32> l00016A18_ds_t
+	branch r7 <= 0x1B<32> l00016A18_ds_t
 l00016A18_ds_f:
 	r4_1089 = r3_1086 ^ r4_1084
 	goto l00016A1C
@@ -12720,7 +12720,7 @@ l00017154:
 	r24_144 = 4<32> - r22_32
 	r4_146 = r22_32 ^ r22_32 & 0xFFFFFFFC<32>
 l000171FC:
-	branch 0xE<32> -u r8_104 < 0<32> l00017204_ds_t
+	branch r8_104 > 0xE<32> l00017204_ds_t
 l00017204_ds_f:
 	goto l00017208
 l00017204_ds_t:
@@ -12999,7 +12999,7 @@ l00017484:
 	r7_103 = r6_421
 	r8_104 = r8_104 - r3_269
 l0001748C:
-	branch 0xE<32> -u r8_104 >= 0<32> l00017494_ds_t
+	branch r8_104 <= 0xE<32> l00017494_ds_t
 l00017494_ds_f:
 	goto l00017498
 l00017494_ds_t:
@@ -13204,7 +13204,7 @@ l00017648_ds_f:
 l00017648_ds_t:
 	goto l00017BC8
 l0001764C:
-	branch 2<32> -u r4_1203 >= 0<32> l00017654_ds_t
+	branch r4_1203 <= 2<32> l00017654_ds_t
 l00017654_ds_f:
 	r6_2144 = dwLoc40_3183
 	goto l00017658
@@ -13217,7 +13217,7 @@ l00017658:
 	Mem2159[r10_1020 - 2<i32>:byte] = Mem2153[r6_2144 - 2<i32>:byte]
 	r4_1203 = r4_1203 + 0xFFFFFFFD<32>
 	v51_2160 = Mem2159[r6_2144 - 1<i32>:byte]
-	branch 2<32> -u r4_1203 < 0<32> l00017680_ds_t
+	branch r4_1203 > 2<32> l00017680_ds_t
 l00017680_ds_f:
 	Mem2167[r10_1020 - 1<i32>:byte] = v51_2160
 	goto l00017684
@@ -13358,7 +13358,7 @@ l00017810:
 	r6_1457 = CONVERT(SLICE(r0, byte, 0), byte, word32)
 l00017818:
 	r19_1470 = CONVERT(bLoc4D_3363, byte, word32) | r6_1457
-	branch 9<32> -u r19_1418 < 0<32> l0001783C_ds_t
+	branch r19_1418 > 9<32> l0001783C_ds_t
 l0001783C_ds_f:
 	goto l00017840
 l0001783C_ds_t:
@@ -13443,7 +13443,7 @@ l00017994:
 	r6_1005 = r3_1012 + 3<32>
 	r4_1203 = r4_1203 + 0xFFFFFFFD<32>
 	v121_1006 = Mem1004[r6_1005 - 1<i32>:byte]
-	branch 2<32> -u r4_1203 < 0<32> l000179BC_ds_t
+	branch r4_1203 > 2<32> l000179BC_ds_t
 l000179BC_ds_f:
 	Mem1015[r10_1020 - 1<i32>:byte] = v121_1006
 	goto l000179C0
@@ -13517,7 +13517,7 @@ l00017A80:
 	bLoc49_3238 = SLICE(r0, byte, 0)
 l00017A84:
 	r19_1299 = CONVERT(bLoc4D_3235, byte, word32) | CONVERT(bLoc49_3238, byte, word32)
-	branch 9<32> -u r23_1031 < 0<32> l00017AA0_ds_t
+	branch r23_1031 > 9<32> l00017AA0_ds_t
 l00017AA0_ds_f:
 	goto l00017AA4
 l00017AA0_ds_t:
@@ -13598,7 +13598,7 @@ l00017C20:
 	bLoc49_3840 = SLICE(r0, byte, 0)
 l00017C24:
 	r6_1949 = CONVERT(bLoc45_3837, byte, word32) | CONVERT(bLoc49_3840, byte, word32)
-	branch 9<32> -u r23_1031 < 0<32> l00017C40_ds_t
+	branch r23_1031 > 9<32> l00017C40_ds_t
 l00017C40_ds_f:
 	goto l00017C44
 l00017C40_ds_t:
@@ -13679,7 +13679,7 @@ l00017D94:
 	bLoc49_3478 = SLICE(r0, byte, 0)
 l00017D98:
 	r6_1674 = CONVERT(bLoc45_3475, byte, word32) | CONVERT(bLoc49_3478, byte, word32)
-	branch 9<32> -u r22_32 < 0<32> l00017DB4_ds_t
+	branch r22_32 > 9<32> l00017DB4_ds_t
 l00017DB4_ds_f:
 	goto l00017DB8
 l00017DB4_ds_t:
@@ -13702,7 +13702,7 @@ l00017DF0_ds_f:
 l00017DF0_ds_t:
 	goto l00017F00
 l00017DF4:
-	branch 2<32> -u (r22_32 + 0xFFFFFFFF<32>) >= 0<32> l00017DFC_ds_t
+	branch r22_32 <= 3<32> l00017DFC_ds_t
 l00017DFC_ds_f:
 	goto l00017E00
 l00017DFC_ds_t:
@@ -14699,7 +14699,7 @@ l0001A110_ds_f:
 l0001A110_ds_t:
 	goto l0001A1C8
 l0001A114:
-	branch 1<32> -u Mem69[0x18E88<32>:word32] < 0<32> l0001A3C4
+	branch Mem69[0x18E88<32>:word32] > 1<32> l0001A3C4
 l0001A120:
 	Mem646[0x18E88<32>:word32] = 1<32>
 	goto l0001A064
@@ -14861,7 +14861,7 @@ l0001A3F8:
 	branch r3_276 <= 0<32> l0001A1B8
 l0001A41C:
 	r5_470 = Mem463[r1_267 + 28<i32>:word32]
-	branch 0xFFFF<32> -u r5_470 < 0<32> l0001A430_ds_t
+	branch r5_470 > 0xFFFF<32> l0001A430_ds_t
 l0001A430_ds_f:
 	v28_475 = Mem463[r1_267 + 36<i32>:byte]
 	goto l0001A434
@@ -15068,12 +15068,12 @@ l0001A764:
 l0001A768:
 	return r3
 l0001A788:
-	branch 9<32> -u (r3 + 0xFFFFFFD0<32>) >= 0<32> l0001A7A8
+	branch r3 <= 0x39<32> l0001A7A8
 l0001A794:
 	Mem72[r7:word32] = r3
 	goto l0001A7DC
 l0001A79C:
-	branch 9<32> -u (r3 + 0xFFFFFFD0<32>) < 0<32> l0001A7CC
+	branch r3 > 0x39<32> l0001A7CC
 l0001A7A4:
 	r22_38 = r3 + 0xFFFFFFD0<32> + r4_53 * 2<32>
 l0001A7A8:
@@ -15130,7 +15130,7 @@ l0001A844_ds_t:
 	goto l0001A820
 l0001A848:
 	r3_45 = r19_28 + 0xFFFFFFD0<32>
-	branch 9<32> -u r3_45 < 0<32> l0001A858_ds_t
+	branch r3_45 > 9<32> l0001A858_ds_t
 l0001A858_ds_f:
 	goto l0001A85C
 l0001A858_ds_t:
@@ -16146,7 +16146,7 @@ l0001D3F4:
 l0001D410:
 	return
 l0001D42C:
-	branch 2<32> -u (r4_21 + 0xFFFFFF9B<32>) >= 0<32> l0001D3D0
+	branch r4_21 <= 0x67<32> l0001D3D0
 l0001D43C:
 	r3_25 = Mem13[r5:word32]
 	goto l0001D3B0
@@ -16214,7 +16214,7 @@ l0001DEE8_ds_t:
 	r19_39 = r19_39 + r4_50
 	goto l0001DED4
 l0001DEEC:
-	branch 0xFF<32> -u (r19_53 + 0xFFFFFFFF<32>) >= 0<32> l0001DEFC_ds_t
+	branch r19_53 <= 0x100<32> l0001DEFC_ds_t
 l0001DEFC_ds_f:
 	goto l0001DF00
 l0001DEFC_ds_t:
@@ -16324,7 +16324,7 @@ l0001E050:
 		uses: Mem:Mem191,r0:r0_211,r15:0x0001E060<p32>,r19:r6,r21:r5,r22:r22,r23:r9,r24:r7,r25:r8,r26:r26,r27:r27,r28:r28,r3:r3_186,r5:r5,r6:r6_189,r7:r7,r8:r8,r9:r9
 		defs: r0:r0_211
 l0001E068:
-	branch 3<32> -u r6 >= 0<32> l0001E074_ds_t
+	branch r6 <= 3<32> l0001E074_ds_t
 l0001E074_ds_f:
 	goto l0001E078
 l0001E074_ds_t:
@@ -16426,7 +16426,7 @@ l0001E3A8:
 l0001E3C0:
 	Mem16[r5 + 60<i32>:word32] = r6
 	Mem18[r5 + 252<i32>:word32] = r0
-	branch 5<32> -u r6 < 0<32> l0001E3D4_ds_t
+	branch r6 > 5<32> l0001E3D4_ds_t
 l0001E3D4_ds_f:
 	Mem43[r5 + 272<i32>:word32] = r0
 	goto l0001E3D8
@@ -16459,7 +16459,7 @@ void fn0001E704(word32 r5, word32 r15)
 fn0001E704_entry:
 l0001E704:
 	r6_5 = Mem0[r5 + 40<i32>:word32]
-	branch 5<32> -u r6_5 < 0<32> l0001E718_ds_t
+	branch r6_5 > 5<32> l0001E718_ds_t
 l0001E718_ds_f:
 	goto l0001E71C
 l0001E718_ds_t:
@@ -16900,7 +16900,7 @@ l0001EF94:
 	r25 = 0x11<32>
 l0001EF98:
 	r23 = Mem134[r27_1175:word32]
-	branch 3<32> -u (r23 + 0xFFFFFFFF<32>) >= 0<32> l0001EFAC_ds_t
+	branch r23 <= 4<32> l0001EFAC_ds_t
 l0001EFAC_ds_f:
 	goto l0001EFB0
 l0001EFAC_ds_t:
@@ -16977,7 +16977,7 @@ l0001F060_ds_t:
 	r24 = Mem224[r27_1175 + 32<i32>:word32]
 	goto l0001F290
 l0001F064:
-	branch 0x3F<32> -u r28 < 0<32> l0001F08C
+	branch r28 > 0x3F<32> l0001F08C
 l0001F070:
 	branch r4_215 < r28 l0001F08C
 l0001F078:
@@ -16987,7 +16987,7 @@ l0001F080_ds_f:
 l0001F080_ds_t:
 	goto l0001F08C
 l0001F084:
-	branch 0xA<32> -u r22 >= 0<32> l0001F468
+	branch r22 <= 0xA<32> l0001F468
 l0001F08C:
 	r3_483 = Mem224[r31_1147:word32]
 	r4_485 = Mem224[r3_483:word32]
@@ -17258,7 +17258,7 @@ l0001F460:
 	r5_534 = r22 + 0xFFFFFFFF<32>
 	goto l0001F0D8
 l0001F468:
-	branch 0xA<32> -u r24 >= 0<32> l0001F470_ds_t
+	branch r24 <= 0xA<32> l0001F470_ds_t
 l0001F470_ds_f:
 	goto l0001F474
 l0001F470_ds_t:
@@ -17360,7 +17360,7 @@ l0001F664_ds_f:
 l0001F664_ds_t:
 	goto l0001F800
 l0001F668:
-	branch 3<32> -u (r3_27 + 0xFFFFFFFF<32>) >= 0<32> l0001F698
+	branch r3_27 <= 4<32> l0001F698
 l0001F678:
 	r4_273 = Mem25[r5:word32]
 	Mem275[r4_273 + 20<i32>:word32] = 0x1A<32>
@@ -17958,7 +17958,7 @@ l000201D8:
 	r23_53 = 0<32>
 l000201E8:
 	r3_193 = r3_193 + 4<32>
-	branch 0xFF<32> -u Mem195[r3_193:word32] >= 0<32> l000201F8_ds_t
+	branch Mem195[r3_193:word32] <= 0xFF<32> l000201F8_ds_t
 l000201F8_ds_f:
 	r4_63 = r3_193 ^ r7_52
 	goto l000201FC
@@ -18209,7 +18209,7 @@ fn0002225C_entry:
 l0002225C:
 	r1_3 = fp + 0xFFFFFAA8<32>
 	r28_122 = r5
-	branch 3<32> -u r7 >= 0<32> l000222A8_ds_t
+	branch r7 <= 3<32> l000222A8_ds_t
 l000222A8_ds_f:
 	goto l000222AC
 l000222A8_ds_t:
@@ -19507,7 +19507,7 @@ void fn00025768(word32 r5, word32 r15)
 fn00025768_entry:
 l00025768:
 	r6_9 = Mem7[r5 + 20<i32>:word32]
-	branch 0xA<32> -u (r6_9 + 0xFFFFFF38<32>) < 0<32> l00025788_ds_t
+	branch r6_9 > 0xD2<32> l00025788_ds_t
 l00025788_ds_f:
 	goto l0002578C
 l00025788_ds_t:
@@ -19600,7 +19600,7 @@ void fn00025BC4(word32 r5)
 fn00025BC4_entry:
 l00025BC4:
 	r3_6 = Mem0[r5 + 20<i32>:word32]
-	branch 8<32> -u (r3_6 + 0xFFFFFF36<32>) >= 0<32> l00025BE8_ds_t
+	branch r3_6 <= 0xD2<32> l00025BE8_ds_t
 l00025BE8_ds_f:
 	goto l00025BEC
 l00025BE8_ds_t:
@@ -19765,7 +19765,7 @@ l000261E8_ds_f:
 l000261E8_ds_t:
 	goto l000264AC
 l000261EC:
-	branch 3<32> -u (r19_189 + 0xFFFFFFFF<32>) >= 0<32> l000261FC_ds_t
+	branch r19_189 <= 4<32> l000261FC_ds_t
 l000261FC_ds_f:
 	goto l00026200
 l000261FC_ds_t:
@@ -20414,7 +20414,7 @@ l00026E10:
 	r19_13 = r5
 	r21_15 = r6
 	r8_18 = r7 + r8
-	branch 0xD<32> -u r7 >= 0<32> l00026E3C_ds_t
+	branch r7 <= 0xD<32> l00026E3C_ds_t
 l00026E3C_ds_f:
 	r4_20 = Mem9[r3_11 + 4<i32>:word32]
 	goto l00026E40
@@ -20434,7 +20434,7 @@ l00026E64:
 l00026E68:
 	return
 l00026E78:
-	branch 5<32> -u r7 >= 0<32> l00026E4C
+	branch r7 <= 5<32> l00026E4C
 l00026E84:
 	branch Mem9[r6:byte] != 0x4A<8> l00026E4C
 l00026E90:
@@ -21072,7 +21072,7 @@ l0002774C_ds_t:
 l00027750:
 	r24 = r23_105 + (r28 + 0x2D<32>) * 4<32>
 l00027760:
-	branch 3<32> -u r28 >= 0<32> l0002776C_ds_t
+	branch r28 <= 3<32> l0002776C_ds_t
 l0002776C_ds_f:
 	goto l00027770
 l0002776C_ds_t:
@@ -21145,7 +21145,7 @@ void fn00028594(word32 r5, word32 r6, word32 r7, word32 r8, word32 r21)
 fn00028594_entry:
 l00028594:
 	r3_11 = Mem9[r5:word32]
-	branch 0xB<32> -u r7 < 0<32> l000285B8_ds_t
+	branch r7 > 0xB<32> l000285B8_ds_t
 l000285B8_ds_f:
 	r9_110 = Mem9[r3_11 + 4<i32>:word32]
 	goto l000285BC
@@ -21261,7 +21261,7 @@ l0002906C_ds_f:
 l0002906C_ds_t:
 	goto l000290CC
 l00029070:
-	branch 0xD<32> -u r8_100 < 0<32> l000290FC
+	branch r8_100 > 0xD<32> l000290FC
 l0002907C:
 	branch r3_18 >>u 31<i32> == 0<32> l00029080_ds_t
 l00029080_ds_f:
@@ -21272,7 +21272,7 @@ l00029084:
 	r7_112 = 0xEF88<32>
 	r8_100 = 0xE<32>
 l00029094:
-	branch 0xF<32> -u (r6 + 0xFFFFFF20<32>) >= 0<32> l00029138
+	branch r6 <= 0xEF<32> l00029138
 l000290A0:
 	r3_132 = Mem0[r5:word32]
 	Mem151[r3_132 + 20<i32>:word32] = 0x44<32>
@@ -21307,13 +21307,13 @@ l00029114_ds_f:
 l00029114_ds_t:
 	goto l000290E4
 l00029118:
-	branch 0xB<32> -u r8_100 < 0<32> l00029120_ds_t
+	branch r8_100 > 0xB<32> l00029120_ds_t
 l00029120_ds_f:
 	goto l00029124
 l00029120_ds_t:
 	goto l000290E8
 l00029124:
-	branch 0xF<32> -u (r6 + 0xFFFFFF20<32>) < 0<32> l00029134_ds_t
+	branch r6 > 0xEF<32> l00029134_ds_t
 l00029134_ds_f:
 	r8_100 = 0xC<32>
 	goto l00029138
@@ -21340,7 +21340,7 @@ fn000291C4_entry:
 l000291C4:
 	r1_3 = fp + 0xFFFFFAA4<32>
 	r24_130 = r5
-	branch 3<32> -u r7 >= 0<32> l00029214_ds_t
+	branch r7 <= 3<32> l00029214_ds_t
 l00029214_ds_f:
 	goto l00029218
 l00029214_ds_t:
@@ -21632,7 +21632,7 @@ l00029520:
 	r19_578 = r23_108 + 0x22<32>
 	r22_579 = r23_108 + r22_571 * 2<32>
 l00029534:
-	branch 0xF<32> -u CONVERT(Mem548[r19_578:word16], int16, int32) >= 0<32> l00029548_ds_t
+	branch Mem548[r19_578:word16] <= 15<i16> l00029548_ds_t
 l00029548_ds_f:
 	r19_612 = r19_578 + 2<32>
 	goto l0002954C
@@ -22522,7 +22522,7 @@ fn0002D260_entry:
 l0002D260:
 	r23_103 = r5
 	r22_112 = r7
-	branch 0x3B9AC9F4<32> -u r7 >= 0<32> l0002D2B0_ds_t
+	branch r7 <= 0x3B9AC9F4<32> l0002D2B0_ds_t
 l0002D2B0_ds_f:
 	r25_265 = Mem28[r5 + 4<i32>:word32]
 	goto l0002D2B4
@@ -22545,7 +22545,7 @@ l0002D2DC_ds_t:
 l0002D2E0:
 	r22_112 = r7 + 8<32> - (r7 & 7<32>)
 l0002D2E4:
-	branch 1<32> -u r6 >= 0<32> l0002D2F0_ds_t
+	branch r6 <= 1<32> l0002D2F0_ds_t
 l0002D2F0_ds_f:
 	goto l0002D2F4
 l0002D2F0_ds_t:
@@ -22685,7 +22685,7 @@ void fn0002D5F8(word32 r0, word32 r5, word32 r6, word32 r19, word32 r21)
 fn0002D5F8_entry:
 l0002D5F8:
 	r24_107 = r6
-	branch 1<32> -u r6 >= 0<32> l0002D628_ds_t
+	branch r6 <= 1<32> l0002D628_ds_t
 l0002D628_ds_f:
 	r22_98 = Mem15[r5 + 4<i32>:word32]
 	goto l0002D62C
@@ -22810,7 +22810,7 @@ fn0002DA08_entry:
 l0002DA08:
 	r21_18 = r7
 	r19_20 = r6
-	branch 0x3B9AC9F4<32> -u r7 >= 0<32> l0002DA3C_ds_t
+	branch r7 <= 0x3B9AC9F4<32> l0002DA3C_ds_t
 l0002DA3C_ds_f:
 	r22_113 = Mem14[r5 + 4<i32>:word32]
 	goto l0002DA40
@@ -22830,7 +22830,7 @@ l0002DA68:
 	r21_18 = r7 + 8<32> - (r7 & 7<32>)
 l0002DA70:
 	r3_26 = 1<32>
-	branch 1<32> -u r6 >= 0<32> l0002DA7C_ds_t
+	branch r6 <= 1<32> l0002DA7C_ds_t
 l0002DA7C_ds_f:
 	goto l0002DA80
 l0002DA7C_ds_t:

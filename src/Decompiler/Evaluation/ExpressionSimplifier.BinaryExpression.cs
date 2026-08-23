@@ -119,6 +119,7 @@ namespace Reko.Evaluation
                 {
                 case OperatorType.IAdd:
                 case OperatorType.ISub:
+                case OperatorType.USub:
                     // (- X 0) ==> X
                     // (+ X 0) ==> X
                     if (cRight.IsIntegerZero)
@@ -335,17 +336,14 @@ namespace Reko.Evaluation
                 binExp.Operator.Type.IsIntComparison() &&
                 binLeft.Left is Constant cBinLeft)
             {
-                if (binLeft.Operator.Type == OperatorType.ISub)
+                if (binLeft.Operator.Type == OperatorType.ISub ||
+                    binLeft.Operator.Type == OperatorType.USub)
                 {
                     return (m.Bin(
-                        (BinaryOperator) ((ConditionalOperator) binExp.Operator).Mirror(),
+                        ((ConditionalOperator) binExp.Operator).Mirror(),
                         binExp.DataType,
                         binLeft.Right,
                         cBinLeft), true);
-                }
-                else if (binLeft.Operator.Type == OperatorType.USub)
-                {
-                    _ = this;
                 }
             }
 
