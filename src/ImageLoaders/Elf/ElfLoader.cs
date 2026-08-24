@@ -422,12 +422,13 @@ namespace Reko.ImageLoaders.Elf
             return addrEnd;
         }
 
-        public IPlatform LoadPlatform(byte osAbi, string? sPlatformOverride, IProcessorArchitecture arch)
+        public IPlatform LoadPlatform(ElfHeader elfHeader, string? sPlatformOverride, IProcessorArchitecture arch)
         {
             string envName = string.Empty;
             var cfgSvc = Services.RequireService<IConfigurationService>();
             var options = new Dictionary<string, object>();
-            switch (osAbi)
+            string? osabi = null;
+            switch (elfHeader.OsAbi)
             {
             case ELFOSABI_NONE: // Unspecified ABI
             case ELFOSABI_ARM:
@@ -446,12 +447,22 @@ namespace Reko.ImageLoaders.Elf
                 break;
             default:
                 var eventListener = Services.GetService<IEventListener>();
-                eventListener?.Warn("Unsupported ELF ABI 0x{0:X2}.", osAbi);
+                eventListener?.Warn("Unsupported ELF ABI 0x{0:X2}.", elfHeader.OsAbi);
                 break;
             }
+            string? abi = DetermineAbi(elfHeader);
+            if (abi is not null)
+                options["abi"] = abi;
             this.platform = Platform.Load(Services, envName, sPlatformOverride, arch);
             this.platform.LoadUserOptions(options);
             return platform;
+        }
+
+        private string? DetermineAbi(ElfHeader elfHeader)
+        {
+            if (elfHeader.Machine != ElfMachine.EM_MIPS)
+                return null;
+            throw new NotImplementedException();
         }
 
         public virtual ElfRelocator CreateRelocator(

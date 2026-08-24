@@ -48,7 +48,7 @@ namespace Reko.ImageLoaders.Elf
             byte[] rawImage)
             : base(services, elfImage, rawImage)
         {
-            this.osAbi = elfImage.Header.osAbi;
+            this.osAbi = elfImage.Header.OsAbi;
             base.rawImage = rawImage;
         }
 

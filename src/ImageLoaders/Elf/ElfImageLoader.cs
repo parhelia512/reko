@@ -73,7 +73,7 @@ namespace Reko.ImageLoaders.Elf
             innerLoader.LoadFileHeader();
 
             var arch = innerLoader.CreateArchitecture(binaryImage.Header.Machine, innerLoader.Endianness);
-            var platform = innerLoader.LoadPlatform(elfHeader.osAbi, sPlatformOverride, arch);
+            var platform = innerLoader.LoadPlatform(elfHeader, sPlatformOverride, arch);
             var headers = innerLoader.LoadSegments();
             binaryImage.AddSections(innerLoader.LoadSectionHeaders());
             innerLoader.LoadSymbolsFromSections();
@@ -98,7 +98,7 @@ namespace Reko.ImageLoaders.Elf
             if (headers.Count > 0)
             {
                 program = innerLoader.LoadImage(platform, RawImage);
-                plt = new Dictionary<ElfSymbol, Address>();
+                plt = [];
             }
             else
             {
@@ -138,7 +138,7 @@ namespace Reko.ImageLoaders.Elf
             elfHeader.fileClass = rdr.ReadByte();
             elfHeader.endianness = rdr.ReadByte();
             elfHeader.fileVersion = rdr.ReadByte();
-            elfHeader.osAbi = rdr.ReadByte();
+            elfHeader.OsAbi = rdr.ReadByte();
             elfHeader.abiVersion = rdr.ReadByte();
             return elfHeader;
         }

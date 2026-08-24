@@ -472,7 +472,8 @@ namespace Reko.UnitTests.ImageLoaders.Elf
             var binaryImage = new ElfBinaryImage(eil.ImageLocation, eh, EndianServices.Little);
             var el = eil.CreateLoader(binaryImage);
             el.LoadFileHeader();
-            el.LoadPlatform(0x66, null, arch.Object);        // ELFOSABI_CELL_LV2;
+            var hdr = new ElfHeader { OsAbi = 0x66 };
+            el.LoadPlatform(hdr, null, arch.Object);        // ELFOSABI_CELL_LV2;
 
             opEl.VerifyAll();
         }
