@@ -69,7 +69,7 @@ namespace Reko.UnitTests.Environments.Ps2
             var svc = platform.FindService(0x0030, null, null);
             Assert.IsNotNull(svc);
             Assert.AreEqual("ReferThreadStatus", svc!.Name);
-            Assert.AreEqual(0, svc.Signature!.Parameters!.Length);
+            Assert.AreEqual(2, svc.Signature!.Parameters!.Length);
         }
 
         [Test]
