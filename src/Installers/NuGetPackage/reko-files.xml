@@ -108,7 +108,7 @@
       <var id="var.PalmOS.ProjectDir">$SolutionDir$/Environments/PalmOS/</var>
       <var id="var.PalmOS.TargetPath">$SolutionDir$/Environments/PalmOS/$TargetDir$/Reko.Environments.PalmOS.dll</var>
       <var id="var.Pdp10Env.TargetPath">$SolutionDir$/Environments/Pdp10Env/$TargetDir$/Reko.Environments.Pdp10Env.dll</var>
-      <var id="var.Ps3.TargetPath">$SolutionDir$/Environments/Ps3/$TargetDir$/Reko.Environments.Ps3.dll</var>
+      <var id="var.PlayStation.TargetPath">$SolutionDir$/Environments/PlayStation/$TargetDir$/Reko.Environments.PlayStation.dll</var>
       <var id="var.RT11.ProjectDir">$SolutionDir$/Environments/RT11/</var>
       <var id="var.RT11.TargetPath">$SolutionDir$/Environments/RT11/$TargetDir$/Reko.Environments.RT11.dll</var>
       <var id="var.RiscOS.TargetPath">$SolutionDir$/Environments/RiscOS/$TargetDir$/Reko.Environments.RiscOS.dll</var>
@@ -245,7 +245,7 @@
       <File Source="$(var.OS2.TargetPath)" nuget_target="f:" />
       <File Source="$(var.PalmOS.TargetPath)" nuget_target="f:" />
       <File Source="$(var.Pdp10Env.TargetPath)" nuget_target="f:" />
-      <File Source="$(var.Ps3.TargetPath)" nuget_target="f:" />
+      <File Source="$(var.PlayStation.TargetPath)" nuget_target="f:" />
       <File Source="$(var.RiscOS.TargetPath)" nuget_target="f:" />
       <File Source="$(var.RiscOS.ProjectDir)riscos_swi_calls.inc" nuget_target="c:" />
       <File Source="$(var.RT11.TargetPath)" nuget_target="f:" />

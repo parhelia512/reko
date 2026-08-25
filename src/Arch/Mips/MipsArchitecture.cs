@@ -92,12 +92,51 @@ namespace Reko.Arch.Mips
             {
                 regs = regs.Concat([hi1, lo1]);
             }
-            this.RegisterBank = new RegisterBank(regs.ToArray());
+            var aliases = GenerateRegisterAliases(GeneralRegs);
+            this.RegisterBank = new RegisterBank(regs, aliases);
             uCodeAddressMask = ~3ul;
 
             LoadUserOptions(options);
             if (this.Intrinsics is null)
                 Intrinsics = new MipsIntrinsics(this);
+        }
+
+        private Dictionary<string, RegisterStorage> GenerateRegisterAliases(RegisterStorage[] generalRegs)
+        {
+            return new()
+            {
+                { "zero", generalRegs[0] },
+                { "at", generalRegs[1] },
+
+                { "v0", generalRegs[2] },
+                { "v1", generalRegs[3] },
+
+                { "a0", generalRegs[4] },
+                { "a1", generalRegs[5] },
+                { "a2", generalRegs[6] },
+                { "a3", generalRegs[7] },
+
+                { "t0", generalRegs[8] },
+                { "t1", generalRegs[9] },
+                { "t2", generalRegs[10] },
+                { "t3", generalRegs[11] },
+                { "t4", generalRegs[12] },
+                { "t5", generalRegs[13] },
+                { "t6", generalRegs[14] },
+                { "t7", generalRegs[15] },
+                { "s0", generalRegs[16] },
+                { "s1", generalRegs[17] },
+                { "s2", generalRegs[18] },
+                { "s3", generalRegs[19] },
+                { "s4", generalRegs[20] },
+                { "s5", generalRegs[21] },
+                { "s6", generalRegs[22] },
+                { "s7", generalRegs[23] },
+                { "t8", generalRegs[24] },
+                { "t9", generalRegs[25] },
+                { "k0", generalRegs[26] },
+                { "k1", generalRegs[27] }
+            };
         }
 
         public RegisterStorage FCSR { get; private set; }
@@ -365,6 +404,8 @@ namespace Reko.Arch.Mips
 
         public override Address MakeAddressFromConstant(Constant c, bool codeAlign)
         {
+            if (c.DataType.BitSize > 64)
+                c = c.Slice(PrimitiveType.Word32, 0);
             var uAddr = c.ToUInt32();
             if (codeAlign)
                 uAddr &= (uint)base.uCodeAddressMask;

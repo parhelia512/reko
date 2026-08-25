@@ -22,6 +22,7 @@ using Reko.Core;
 using Reko.Core.Code;
 using Reko.Core.Collections;
 using Reko.Core.Expressions;
+using Reko.Core.Intrinsics;
 using Reko.Core.Operators;
 using Reko.Core.Rtl;
 using Reko.Core.Services;
@@ -1349,7 +1350,12 @@ namespace Reko.Scanning
                 return null;
             if (pc.Procedure is not IntrinsicProcedure intrinsic)
                 return null;
-            if (intrinsic.Name != IntrinsicProcedure.Syscall || fn.Arguments.Length == 0)
+            if (!intrinsic.IsInstanceOf(CommonOps.Syscall) &&
+                !intrinsic.IsInstanceOf(CommonOps.Syscall_0) &&
+                !intrinsic.IsInstanceOf(CommonOps.Syscall_1) &&
+                !intrinsic.IsInstanceOf(CommonOps.Syscall_2))
+                return null;
+            if (fn.Arguments.Length == 0)
                 return null;
 
             if (fn.Arguments[0] is not Constant vector)

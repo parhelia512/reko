@@ -4,14 +4,15 @@
   <PropertyGroup>
     <ProjectGuid>{1A60F017-4E4C-48F8-BB97-47D52186C7FD}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Reko.Environments.Ps3</RootNamespace>
-    <AssemblyName>Reko.Environments.Ps3</AssemblyName>
+    <RootNamespace>Reko.Environments.PlayStation</RootNamespace>
+    <AssemblyName>Reko.Environments.PlayStation</AssemblyName>
     <TargetFramework>net8.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Arch\PowerPC\PowerPC.csproj" />
+    <ProjectReference Include="..\..\Arch\Mips\Mips.csproj" />
     <ProjectReference Include="..\..\Core\Core.csproj" />
   </ItemGroup>
 </Project>

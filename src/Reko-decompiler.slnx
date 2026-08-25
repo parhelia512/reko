@@ -342,7 +342,7 @@
       <BuildDependency Project="Environments/Msdos.Design/Msdos.Design.csproj" />
       <BuildDependency Project="Environments/Msdos/Msdos.csproj" />
       <BuildDependency Project="Environments/NeoGeo/NeoGeo.csproj" />
-      <BuildDependency Project="Environments/Ps3/Ps3.csproj" />
+      <BuildDependency Project="Environments/PlayStation/PlayStation.csproj" />
       <BuildDependency Project="Environments/RiscOS/RiscOS.csproj" />
       <BuildDependency Project="Environments/RT11/RT11.csproj" />
       <BuildDependency Project="Environments/SegaGenesis/SegaGenesis.csproj" />
@@ -419,7 +419,7 @@
       <BuildDependency Project="Environments/Msdos.Design/Msdos.Design.csproj" />
       <BuildDependency Project="Environments/Msdos/Msdos.csproj" />
       <BuildDependency Project="Environments/NeoGeo/NeoGeo.csproj" />
-      <BuildDependency Project="Environments/Ps3/Ps3.csproj" />
+      <BuildDependency Project="Environments/PlayStation/PlayStation.csproj" />
       <BuildDependency Project="Environments/RiscOS/RiscOS.csproj" />
       <BuildDependency Project="Environments/RT11/RT11.csproj" />
       <BuildDependency Project="Environments/SegaGenesis/SegaGenesis.csproj" />
@@ -485,7 +485,7 @@
       <BuildDependency Project="Environments/Msdos.Design/Msdos.Design.csproj" />
       <BuildDependency Project="Environments/Msdos/Msdos.csproj" />
       <BuildDependency Project="Environments/NeoGeo/NeoGeo.csproj" />
-      <BuildDependency Project="Environments/Ps3/Ps3.csproj" />
+      <BuildDependency Project="Environments/PlayStation/PlayStation.csproj" />
       <BuildDependency Project="Environments/RiscOS/RiscOS.csproj" />
       <BuildDependency Project="Environments/RT11/RT11.csproj" />
       <BuildDependency Project="Environments/SegaGenesis/SegaGenesis.csproj" />
@@ -619,7 +619,7 @@
       <BuildType Solution="UnixDebug|*" Project="Debug" />
       <BuildType Solution="UnixRelease|*" Project="Release" />
     </Project>
-    <Project Path="Environments/Ps3/Ps3.csproj">
+    <Project Path="Environments/PlayStation/PlayStation.csproj">
       <BuildType Solution="UnixDebug|*" Project="Debug" />
       <BuildType Solution="UnixRelease|*" Project="Release" />
     </Project>

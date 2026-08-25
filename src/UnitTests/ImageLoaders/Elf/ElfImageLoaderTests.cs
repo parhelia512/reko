@@ -20,8 +20,10 @@
 
 using Moq;
 using NUnit.Framework;
+using Reko.Arch.Mips;
 using Reko.Core;
 using Reko.Core.Configuration;
+using Reko.Core.Machine;
 using Reko.Core.Memory;
 using Reko.Core.Services;
 using Reko.Core.Types;
@@ -29,6 +31,8 @@ using Reko.Environments.SysV;
 using Reko.ImageLoaders.Elf;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.IO;
 
 namespace Reko.UnitTests.ImageLoaders.Elf
 {
@@ -478,9 +482,69 @@ namespace Reko.UnitTests.ImageLoaders.Elf
             opEl.VerifyAll();
         }
 
-        private void Given_Image(bool big_endian)
+        [Test]
+        public void ElfDetector_recognizes_EE_machine_type()
         {
-            BuildObjectFile32(big_endian);
+            var sc = new ServiceContainer();
+            var cfgSvc = new Mock<IConfigurationService>();
+            var requestedArchName = "";
+            MipsLe32Architecture arch = null;
+            cfgSvc.Setup(c => c.GetArchitecture(
+                It.IsAny<string>(),
+                It.IsAny<Dictionary<string, object>>()))
+                .Returns((string name, Dictionary<string, object> opts) =>
+                {
+                    requestedArchName = name;
+                    arch = new MipsLe32Architecture(sc, "mips-le-32", opts);
+                    return arch;
+                });
+            sc.AddService<IConfigurationService>(cfgSvc.Object);
+
+            var bin = MakeElfMipsBinaryImage(sc, e_flags: 0x20924001);  // ARCH_3 | MACH_5900
+            var el32 = new ElfLoader32(sc, bin, new byte[16]);
+            el32.CreateArchitecture(ElfMachine.EM_MIPS, EndianServices.Little);
+
+            Assert.AreEqual("mips-le-32", requestedArchName);
+        }
+
+        [Test]
+        public void ElfDetector_plainMips_is_not_EE()
+        {
+            var sc = new ServiceContainer();
+            var cfgSvc = new Mock<IConfigurationService>();
+            var requestedArchName = "";
+            var arch = new MipsLe32Architecture(sc, "mips-le-32", []);
+            
+            cfgSvc.Setup(c => c.GetArchitecture(
+                It.IsAny<string>(),
+                It.IsAny<Dictionary<string, object>>()))
+                .Callback((string name, Dictionary<string, object> options) =>
+                {
+                    requestedArchName = name;
+                    Assert.IsFalse(options.TryGetValue(ProcessorOption.InstructionSet, out var oIsa) &&
+                        oIsa is string isa &&
+                        isa == "ps2ee");
+                })
+                .Returns(arch);
+            sc.AddService<IConfigurationService>(cfgSvc.Object);
+
+            var bin = MakeElfMipsBinaryImage(sc, e_flags: 0x20000001);  // plain MIPS III
+            var el32 = new ElfLoader32(sc, bin, new byte[16]);
+            el32.CreateArchitecture(ElfMachine.EM_MIPS, EndianServices.Little);
+
+            Assert.AreEqual("mips-le-32", requestedArchName);
+        }
+
+        private static ElfBinaryImage MakeElfMipsBinaryImage(ServiceContainer sc, uint e_flags)
+        {
+            var loc = ImageLocation.FromUri("file:///tmp/elf");
+            var bytes = new MemoryStream();
+            var eh = new ElfHeader
+            {
+                Machine = ElfMachine.EM_MIPS,
+                Flags = e_flags,
+            };
+            return new ElfBinaryImage(loc, eh, EndianServices.Little);
         }
     }
 }

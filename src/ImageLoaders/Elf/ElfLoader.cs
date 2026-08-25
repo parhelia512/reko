@@ -427,12 +427,18 @@ namespace Reko.ImageLoaders.Elf
             string envName = string.Empty;
             var cfgSvc = Services.RequireService<IConfigurationService>();
             var options = new Dictionary<string, object>();
-            string? osabi = null;
             switch (elfHeader.OsAbi)
             {
             case ELFOSABI_NONE: // Unspecified ABI
             case ELFOSABI_ARM:
             case ELFOSABI_STANDALONE:
+                if (elfHeader.Machine == ElfMachine.EM_MIPS &&
+                    ((ElfMipsFlags)elfHeader.Flags & ElfMipsFlags.EF_MIPS_MACH) == ElfMipsFlags
+                    .EF_MIPS_MACH_5900)
+                {
+                    envName = "ps2";
+                    break;
+                }
                 envName = "elf-neutral";
                 break;
             case ELFOSABI_CELL_LV2: // PS/3

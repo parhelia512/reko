@@ -271,8 +271,6 @@ namespace Reko.Environments.SysV
 
         private ICallingConvention? CreateCallingConvention(string abiName)
         {
-            if (abiName == "ps2ee")
-                return new Ps2EmotionEngineCallingConvention(Architecture);
             return Architecture.GetCallingConvention(abiName);
         }
 

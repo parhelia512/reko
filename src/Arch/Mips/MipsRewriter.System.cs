@@ -179,12 +179,12 @@ namespace Reko.Arch.Mips
         
         private void RewriteSyscall(MipsInstruction instr)
         {
-            m.SideEffect(m.Fn(CommonOps.Syscall_1, this.RewriteOperand0(instr.Operands[0])));
+            m.SideEffect(m.Fn(CommonOps.Syscall_1, this.RewriteOperand0(instr, 0)));
         }
 
         private void RewriteSync(MipsInstruction instr)
         {
-            m.SideEffect(m.Fn(intrinsics.sync, this.RewriteOperand0(instr.Operands[0])));
+            m.SideEffect(m.Fn(intrinsics.sync, this.RewriteOperand0(instr, 0)));
         }
     }
 }

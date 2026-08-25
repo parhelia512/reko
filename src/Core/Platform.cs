@@ -1149,7 +1149,6 @@ namespace Reko.Core
                 .Load(services, arch);
             return platform;
         }
-
     }
 
     /// <summary>

@@ -29,7 +29,7 @@ using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Reko.Core.Memory;
 
-namespace Reko.Environments.Ps3
+namespace Reko.Environments.PlayStation
 {
     /// <summary>
     /// Platform support for Sony Playstation 3 (PS3).

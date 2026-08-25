@@ -30,7 +30,7 @@ using System.Text;
 using Reko.Core.Types;
 using System.ComponentModel.Design;
 
-namespace Reko.UnitTests.Environments.Ps3
+namespace Reko.UnitTests.Environments.PlayStation
 {
     [TestFixture]
     public class Ps3PlatformTests

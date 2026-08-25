@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Ps3")]
-[assembly: AssemblyDescription("Support for the Sony PS3 ABI.")]
+[assembly: AssemblyTitle("PlayStation")]
+[assembly: AssemblyDescription("Support for the Sony PlayStations consoles.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(Reko.AssemblyMetadata.Company)]
 [assembly: AssemblyProduct(Reko.AssemblyMetadata.Product)]

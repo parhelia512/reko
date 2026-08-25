@@ -94,7 +94,7 @@ by the PreBuild.targets file.
     <ProjectReference Include="$(SolutionDir)Environments\OS2\OS2.csproj" />
     <ProjectReference Include="$(SolutionDir)Environments\PalmOS\PalmOS.csproj" />
     <ProjectReference Include="$(SolutionDir)Environments\Pdp10Env\Pdp10Env.csproj" />
-    <ProjectReference Include="$(SolutionDir)Environments\Ps3\Ps3.csproj" />
+    <ProjectReference Include="$(SolutionDir)Environments\PlayStation\PlayStation.csproj" />
     <ProjectReference Include="$(SolutionDir)Environments\RiscOS\RiscOS.csproj" />
     <ProjectReference Include="$(SolutionDir)Environments\RT11\RT11.csproj" />
     <ProjectReference Include="$(SolutionDir)Environments\SegaGenesis\SegaGenesis.csproj" />
@@ -372,7 +372,7 @@ by the PreBuild.targets file.
     <Environments Include="$(SolutionDir)Environments\OpenVMS\bin\$(StandardOutputDir)\Reko.Environments.OpenVMS.*" />
     <Environments Include="$(SolutionDir)Environments\OS2\16\bin\$(StandardOutputDir)\Reko.Environments.OS2.*" />
     <Environments Include="$(SolutionDir)Environments\Pdp10Env\bin\$(StandardOutputDir)\Reko.Environments.Pdp10Env.*" />
-    <Environments Include="$(SolutionDir)Environments\Ps3\bin\$(StandardOutputDir)\Reko.Environments.Ps3.*" />
+    <Environments Include="$(SolutionDir)Environments\PlayStation\bin\$(StandardOutputDir)\Reko.Environments.PlayStation.*" />
     <Environments Include="$(SolutionDir)Environments\RiscOS\bin\$(StandardOutputDir)\Reko.Environments.RiscOS.*" />
     <Environments Include="$(SolutionDir)Environments\RT11\bin\$(StandardOutputDir)\Reko.Environments.RT11.*" />
     <Environments Include="$(SolutionDir)Environments\SegaGenesis\bin\$(StandardOutputDir)\Reko.Environments.SegaGenesis.*" />

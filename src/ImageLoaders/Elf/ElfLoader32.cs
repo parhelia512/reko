@@ -120,8 +120,10 @@ namespace Reko.ImageLoaders.Elf
                 {
                 case ElfMipsFlags.EF_MIPS_MACH_5900:
                     options[ProcessorOption.InstructionSet] = "ps2ee";
+                    options[ProcessorOption.ABI] = "ps2ee";
                     break;
                 }
+                options[ProcessorOption.WordSize] = is64 ? 64 : 32;
                 options[ProcessorOption.FloatABI] = is64 ? 64 : 32;
                 if (endianness == EndianServices.Little)
                 {

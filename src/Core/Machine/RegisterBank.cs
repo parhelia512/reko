@@ -38,7 +38,7 @@ public class RegisterBank
     /// <summary>
     /// Constructs a <see cref="RegisterBank"/> from the given collection of registers.
     /// </summary>
-    /// <param name="registers"></param>
+    /// <param name="registers">Registers to add to the register bank.</param>
     public RegisterBank(IEnumerable<RegisterStorage?> registers)
     {
         var dups = registers
@@ -52,6 +52,26 @@ public class RegisterBank
 
         this.byName = registers.Where(r => r is not null).ToDictionary(r => r!.Name, r => r!, StringComparer.OrdinalIgnoreCase);
         this.byDomain = GroupByDomain(registers);
+    }
+
+    /// <summary>
+    /// Constructs a <see cref="RegisterBank"/> from the given collection of registers,
+    /// along with aliases for the registers (like e.g. MIPS, Risc-V).
+    /// </summary>
+    /// <param name="registers">Registers to add to the register bank.</param>
+    /// <param name="aliases">Aliases for the registers.</param>
+    public RegisterBank(
+        IEnumerable<RegisterStorage?> registers, 
+        Dictionary<string, RegisterStorage> aliases)
+        : this(registers)
+    {
+        foreach (var (name, reg) in aliases)
+        {
+            if (name is null)
+                continue;
+            if (!byName.ContainsKey(name))
+                byName.Add(name, reg);
+        }
     }
 
     private static Dictionary<StorageDomain, List<RegisterStorage>> GroupByDomain(IEnumerable<RegisterStorage?> registers)
