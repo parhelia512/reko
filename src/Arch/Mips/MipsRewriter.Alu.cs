@@ -31,7 +31,7 @@ namespace Reko.Arch.Mips
 {
     public partial class MipsRewriter
     {
-        private void RewriteAdd(MipsInstruction instr, PrimitiveType size)
+        private void RewriteAdd(MipsInstruction instr, DataType size)
         {
             Expression opLeft;
             Expression opRight;
@@ -134,7 +134,9 @@ namespace Reko.Arch.Mips
         private void RewriteDiv(
             MipsInstruction instr, 
             BinaryOperator div,
-            BinaryOperator mod)
+            BinaryOperator mod,
+            RegisterStorage? hi,
+            RegisterStorage? lo)
         {
             var op1 = RewriteOperand(instr.Operands[0]);
             var op2 = RewriteOperand(instr.Operands[1]);
@@ -145,10 +147,15 @@ namespace Reko.Arch.Mips
             }
             else
             {
-                var hi = binder.EnsureRegister(arch.hi);
-                var lo = binder.EnsureRegister(arch.lo);
-                m.Assign(lo, m.Bin(div, op1, op2));
-                m.Assign(hi, m.Bin(mod, op1, op2));
+                if (hi is null || lo is null)
+                {
+                    m.Invalid();
+                    return;
+                }
+                var id_hi = binder.EnsureRegister(hi);
+                var id_lo = binder.EnsureRegister(lo);
+                m.Assign(id_lo, m.Bin(div, op1, op2));
+                m.Assign(id_hi, m.Bin(mod, op1, op2));
             }
         }
 
@@ -430,15 +437,25 @@ namespace Reko.Arch.Mips
             m.Assign(hi_lo, m.Bin(acc, hi_lo, product));
         }
 
-        private void RewriteMf(MipsInstruction instr, RegisterStorage reg)
+        private void RewriteMf(MipsInstruction instr, RegisterStorage? reg)
         {
-            var opDst = RewriteOperand0(instr.Operands[0]);
+            if (reg is null)
+            {
+                m.Invalid();
+                return;
+            }
+            var opDst = RewriteOperand0(instr, 0);
             m.Assign(opDst, binder.EnsureRegister(reg));
         }
 
-        private void RewriteMt(MipsInstruction instr, RegisterStorage reg)
+        private void RewriteMt(MipsInstruction instr, RegisterStorage? reg)
         {
-            var opSrc = RewriteOperand0(instr.Operands[0]);
+            if (reg is null)
+            {
+                m.Invalid();
+                return;
+            }
+            var opSrc = RewriteOperand0(instr, 0);
             m.Assign(binder.EnsureRegister(reg), opSrc);
         }
 
@@ -479,8 +496,15 @@ namespace Reko.Arch.Mips
             m.Assign(dstLo, srcLo);
         }
 
-        private void RewriteMul(MipsInstruction instr, BinaryOperator mul, PrimitiveType dt)
+        private void RewriteMul(MipsInstruction instr, BinaryOperator mul, PrimitiveType dt, 
+            RegisterStorage? hi,
+            RegisterStorage? lo)
         {
+            if (hi is null || lo is null)
+            {
+                m.Invalid();
+                return;
+            }
             var op1 = RewriteOperand(instr.Operands[0]);
             var op2 = RewriteOperand(instr.Operands[1]);
             if (instr.Operands.Length == 3)
@@ -490,7 +514,7 @@ namespace Reko.Arch.Mips
             }
             else
             {
-                var hilo = binder.EnsureSequence(dt, arch.hi, arch.lo);
+                var hilo = binder.EnsureSequence(dt, hi, lo);
                 m.Assign(hilo, m.Bin(mul, dt, op1, op2));
             }
         }
@@ -684,9 +708,7 @@ namespace Reko.Arch.Mips
         {
             var opSrc = RewriteOperand0(instr.Operands[0]);
             var opDst = RewriteOperand0(instr.Operands[1]);
-            if (opDst.DataType.Size < opSrc.DataType.Size)
-                opSrc = m.Slice(opSrc, opDst.DataType);
-            m.Assign(opDst, opSrc);
+            m.Assign(opDst, m.MaybeSlice(opSrc, opDst.DataType));
         }
 
         private void RewriteSte(MipsInstruction instr, PrimitiveType dt)

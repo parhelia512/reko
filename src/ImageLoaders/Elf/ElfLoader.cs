@@ -258,16 +258,16 @@ namespace Reko.ImageLoaders.Elf
             case ElfMachine.EM_NANOMIPS:
                 arch = endianness == EndianServices.Little ? "mips-le-32" : "mips-be-32";
                 options[ProcessorOption.InstructionSet] = "nano";
-                var mipsFlags = (MIPSflags) BinaryImage.Header.Flags;
-                switch (mipsFlags & MIPSflags.EF_MIPS_ABI)
+                var mipsFlags = (ElfMipsFlags) BinaryImage.Header.Flags;
+                switch (mipsFlags & ElfMipsFlags.EF_MIPS_ABI)
                 {
-                case MIPSflags.EF_MIPS_ABI_O32:
+                case ElfMipsFlags.EF_MIPS_ABI_O32:
                     options[ProcessorOption.ABI] = "nanoo32";
                     break;
                 }
                 // Making an iffy assumption that *UCODE implies
                 // no FP registers.
-                if (mipsFlags.HasFlag(MIPSflags.EF_MIPS_UCODE))
+                if (mipsFlags.HasFlag(ElfMipsFlags.EF_MIPS_UCODE))
                 {
                     options[ProcessorOption.FloatABI] = 0;
                 }
@@ -462,7 +462,44 @@ namespace Reko.ImageLoaders.Elf
         {
             if (elfHeader.Machine != ElfMachine.EM_MIPS)
                 return null;
-            throw new NotImplementedException();
+            var eFlags = elfHeader.Flags;
+            ulong architecture = eFlags & (uint)ElfMipsFlags.EF_MIPS_ARCH;
+
+            // EF_MIPS_ARCH is ISA information, not ABI information.
+            // It can therefore be checked for consistency, but should
+            // not be used to choose between O32/N32/N64.
+            bool isMips64Isa =
+                architecture == (uint)ElfMipsFlags.EF_MIPS_ARCH_64 ||
+                architecture == (uint)ElfMipsFlags.EF_MIPS_ARCH_64R2 ||
+                architecture == (uint)ElfMipsFlags.EF_MIPS_ARCH_64R6;
+
+            if ((eFlags & (uint)ElfMipsFlags.EF_MIPS_MACH) == (uint) ElfMipsFlags.EF_MIPS_MACH_5900)
+            {
+                // Emotion engine.
+                return "ps2ee";
+            }
+            switch (eFlags & (uint)ElfMipsFlags.EF_MIPS_ABI)
+            {
+            case (uint) ElfMipsFlags.EF_MIPS_ABI_O32:
+                return "O32";
+
+            case (uint) ElfMipsFlags.EF_MIPS_ABI_O64:
+                return "O64";
+
+            case (uint)ElfMipsFlags.EF_MIPS_ABI_EABI32:
+                return "EABI32";
+
+            case (uint)ElfMipsFlags.EF_MIPS_ABI_EABI64:
+                return "EABI64";
+            }
+
+            if ((eFlags & (uint)ElfMipsFlags.EF_MIPS_ABI2) != 0)
+                return "N32";
+
+            if (elfHeader.FileClass == ElfImageLoader.ELFCLASS64)
+                return "N64";
+
+            return null;
         }
 
         public virtual ElfRelocator CreateRelocator(

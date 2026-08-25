@@ -52,6 +52,8 @@ namespace Reko.Arch.Mips
         public RegisterStorage LinkRegister;
         public RegisterStorage hi;
         public RegisterStorage lo;
+        public RegisterStorage? hi1;
+        public RegisterStorage? lo1;
         public RegisterStorage pc;
         protected ulong uCodeAddressMask;
         private string? instructionSetEncoding;
@@ -65,13 +67,13 @@ namespace Reko.Arch.Mips
             this.PointerType = ptrSize;
             this.FramePointerType = ptrSize;
             this.InstructionBitSize = 32;
-            this.GeneralRegs = CreateGeneralRegisters().ToArray();
+            this.GeneralRegs = CreateGeneralRegisters(options).ToArray();
             this.StackRegister = GeneralRegs[29];
             this.LinkRegister = GeneralRegs[31];
 
-            this.hi = new RegisterStorage("hi", 32, 0, wordSize);
-            this.lo = new RegisterStorage("lo", 33, 0, wordSize);
-            this.pc = new RegisterStorage("pc", 34, 0, wordSize);
+            this.hi = new RegisterStorage("hi", 32, 0, WordWidth);
+            this.lo = new RegisterStorage("lo", 33, 0, WordWidth);
+            this.pc = new RegisterStorage("pc", 34, 0, WordWidth);
             this.fpuRegs = CreateFpuRegisters();
             this.FCSR = RegisterStorage.Reg32("FCSR", 0x201F);
             this.ccRegs = CreateCcRegs();
@@ -81,11 +83,16 @@ namespace Reko.Arch.Mips
                 { 0x1F, FCSR }
             };
 
-            this.RegisterBank = new RegisterBank(GeneralRegs
+            var regs = GeneralRegs
                 .Concat(fpuRegs)
                 .Concat(fpuCtrlRegs.Values)
                 .Concat(ccRegs)
-                .Concat(new[] { hi, lo }));
+                .Concat([ hi, lo ]);
+            if (hi1 is not null && lo1 is not null)
+            {
+                regs = regs.Concat([hi1, lo1]);
+            }
+            this.RegisterBank = new RegisterBank(regs.ToArray());
             uCodeAddressMask = ~3ul;
 
             LoadUserOptions(options);
@@ -114,7 +121,7 @@ namespace Reko.Arch.Mips
             default:
                 if (rootDecoder is null)
                 {
-                    var factory = new MipsDisassembler.DecoderFactory(this.instructionSetEncoding);
+                    var factory = MipsDisassembler.DecoderFactory.Create(this.instructionSetEncoding);
                     rootDecoder = factory.CreateRootDecoder();
                 }
                 return new MipsDisassembler(this, rootDecoder, imageReader);
@@ -267,8 +274,23 @@ namespace Reko.Arch.Mips
             return Address.TryParse32(txtAddress, out addr);
         }
 
-        private IEnumerable<RegisterStorage> CreateGeneralRegisters()
+        private IEnumerable<RegisterStorage> CreateGeneralRegisters(Dictionary<string, object> options)
         {
+            if (options.TryGetValue(ProcessorOption.InstructionSet, out var oIsa) &&
+                oIsa is string isa &&
+                isa == "ps2ee")
+            {
+                WordWidth = PrimitiveType.Word128;
+                hi1 = new RegisterStorage("hi1", 48, 0, WordWidth);
+                lo1 = new RegisterStorage("lo1", 49, 0, WordWidth);
+            }
+            else
+            {
+                hi1 = null;
+                lo1 = null;
+            }
+            var dt = WordWidth;
+
             return from i in Enumerable.Range(0, 32)
                 join name in new[] {
                     new { id = 29, n = "sp" },
@@ -278,17 +300,17 @@ namespace Reko.Arch.Mips
                 select new RegisterStorage(
                     name is not null 
                         ? name.n 
-                        : string.Format("r{0}", i),
+                        : $"r{i}",
                     i,
                     0,
-                    WordWidth);
+                    dt);
         }
 
         private RegisterStorage[] CreateFpuRegisters()
         {
             return Enumerable.Range(0, 32)
                 .Select(i => new RegisterStorage(
-                    string.Format("f{0}", i),
+                    $"f{i}",
                     i + 64,
                     0,
                     PrimitiveType.Word32))

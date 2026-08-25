@@ -40,9 +40,18 @@ namespace Reko.Core.Operators
             if (dom == 0)
                 dom = Domain.Integer;
             var pt = PrimitiveType.Create(dom, c1.DataType.BitSize);
-            return Constant.Create(
-                pt, 
+            if (c1.DataType.BitSize <= 64)
+            {
+                return Constant.Create(
+                pt,
                 c1.ToInt64() << c2.ToInt32());
+            }
+            else
+            {
+                return Constant.Create(
+                    pt,
+                    c1.ToBigInteger() << c2.ToInt32());
+            }
 		}
 
         /// <inheritdoc/>

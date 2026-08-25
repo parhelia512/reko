@@ -397,7 +397,7 @@ namespace Reko.ImageLoaders.Elf.Relocators
     }
 
     [Flags]
-    public enum MIPSflags
+    public enum ElfMipsFlags : uint
     {
         EF_MIPS_NOREORDER = 0x00000001,
         EF_MIPS_PIC = 0x00000002,
@@ -439,7 +439,7 @@ namespace Reko.ImageLoaders.Elf.Relocators
         EF_MIPS_ARCH_ASE_MDMX = 0x08000000,
         EF_MIPS_ARCH_ASE = 0x0f000000,
 
-        EF_MIPS_ARCH = unchecked((int)(0xF0000000)), /* MIPS architecture level mask  */
+        EF_MIPS_ARCH = 0xF0000000, /* MIPS architecture level mask  */
 
         EF_MIPS_ARCH_1 = 0x00000000, /* -mips1 code.  */
         EF_MIPS_ARCH_2 = 0x10000000, /* -mips2 code.  */
@@ -450,9 +450,9 @@ namespace Reko.ImageLoaders.Elf.Relocators
         //EF_MIPS_ARCH_6 = 0x50000000,
         EF_MIPS_ARCH_64 = 0x60000000, /* MIPS64 code.  */
         EF_MIPS_ARCH_32R2 = 0x70000000, /* MIPS32r2 code.  */
-        EF_MIPS_ARCH_64R2 = unchecked((int)0x80000000), /* MIPS64r2 code.  */
-        EF_MIPS_ARCH_32R6 = unchecked((int) 0x90000000),
-        EF_MIPS_ARCH_64R6 = unchecked((int) 0xa0000000),
+        EF_MIPS_ARCH_64R2 = 0x80000000, /* MIPS64r2 code.  */
+        EF_MIPS_ARCH_32R6 = 0x90000000,
+        EF_MIPS_ARCH_64R6 = 0xa0000000,
     }
 
     public enum MIPSrt

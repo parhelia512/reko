@@ -20,6 +20,7 @@
 
 using Reko.Core;
 using Reko.Core.Expressions;
+using Reko.Core.Intrinsics;
 using Reko.Core.Machine;
 using Reko.Core.Memory;
 using Reko.Core.Operators;
@@ -89,7 +90,7 @@ namespace Reko.Arch.Mips
                 case Mnemonic.addi:
                 case Mnemonic.addiu:
                 case Mnemonic.addu:
-                    RewriteAdd(instr, PrimitiveType.Word32); break;
+                    RewriteAdd(instr, instr.Operands[0].DataType); break;
                 case Mnemonic.add_s: RewriteFpuBinopS(instr, Operator.FAdd); break;
                 case Mnemonic.add_d: RewriteFpuBinopD(instr, Operator.FAdd); break;
                 case Mnemonic.and:
@@ -142,24 +143,28 @@ namespace Reko.Arch.Mips
                 case Mnemonic.clz: RewriteClz(instr); break;
                 case Mnemonic.cvt_d_l: RewriteCvtToD(instr, PrimitiveType.Int32); break;
                 case Mnemonic.cvt_s_d: RewriteCvtFromD(instr, PrimitiveType.Real32); break;
+                case Mnemonic.cvt_s_w: RewriteCvtSW(instr); break;
                 case Mnemonic.cvt_w_d: RewriteCvtFromD(instr, PrimitiveType.Int32); break;
+                case Mnemonic.cvt_w_s: RewriteCvtWS(instr); break;
                 case Mnemonic.dadd:
                 case Mnemonic.daddi:
                     RewriteAdd(instr, PrimitiveType.Word64); break;
                 case Mnemonic.daddiu:
                 case Mnemonic.daddu: RewriteAdd(instr, PrimitiveType.Word64); break;
-                case Mnemonic.ddiv: RewriteDiv(instr, Operator.SDiv, Operator.SMod); break;
-                case Mnemonic.ddivu: RewriteDiv(instr, Operator.UDiv, Operator.UMod); break;
-                case Mnemonic.div: RewriteDiv(instr, Operator.SDiv, Operator.SMod); break;
-                case Mnemonic.divu: RewriteDiv(instr, Operator.UDiv, Operator.UMod); break;
+                case Mnemonic.ddiv: RewriteDiv(instr, Operator.SDiv, Operator.SMod, arch.hi, arch.lo); break;
+                case Mnemonic.ddivu: RewriteDiv(instr, Operator.UDiv, Operator.UMod, arch.hi, arch.lo); break;
+                case Mnemonic.di: RewriteDi(instr); break;
+                case Mnemonic.div: RewriteDiv(instr, Operator.SDiv, Operator.SMod, arch.hi, arch.lo); break;
+                case Mnemonic.div1: RewriteDiv(instr, Operator.SDiv, Operator.SMod, arch.hi1, arch.lo1); break;
+                case Mnemonic.divu: RewriteDiv(instr, Operator.UDiv, Operator.UMod, arch.hi, arch.lo); break;
                 case Mnemonic.div_d: RewriteFpuBinopD(instr, Operator.FDiv); break;
                 case Mnemonic.div_s: RewriteFpuBinopS(instr, Operator.FDiv); break;
                 case Mnemonic.dmfc0: RewriteMfc0(instr); break;
                 case Mnemonic.dmfc1: RewriteMfc1(instr); break;
                 case Mnemonic.dmtc0: RewriteMtc0(instr); break;
                 case Mnemonic.dmtc1: RewriteMtc1(instr); break;
-                case Mnemonic.dmult: RewriteMul(instr, Operator.SMul, PrimitiveType.Int128); break;
-                case Mnemonic.dmultu: RewriteMul(instr, Operator.UMul, PrimitiveType.UInt128); break;
+                case Mnemonic.dmult: RewriteMul(instr, Operator.SMul, PrimitiveType.Int128, arch.hi, arch.lo); break;
+                case Mnemonic.dmultu: RewriteMul(instr, Operator.UMul, PrimitiveType.UInt128, arch.hi, arch.lo); break;
                 case Mnemonic.dsll: RewriteSll(instr); break;
                 case Mnemonic.dsll32: RewriteDshift32(instr, Operator.Shl); break;
                 case Mnemonic.dsllv: RewriteSrl(instr); break;
@@ -172,6 +177,7 @@ namespace Reko.Arch.Mips
                 case Mnemonic.dsub:
                 case Mnemonic.dsubu:
                     RewriteSub(instr); break;
+                case Mnemonic.ei: RewriteEi(instr); break;
                 case Mnemonic.eret: RewriteEret(instr); break;
                 case Mnemonic.j: RewriteJump(instr); break;
                 case Mnemonic.jal: RewriteJal(instr); break;
@@ -195,6 +201,7 @@ namespace Reko.Arch.Mips
                 case Mnemonic.lhuxs: RewriteLoadIndexed(instr, PrimitiveType.Word16, PrimitiveType.Word32, 2); break;
                 case Mnemonic.ll: RewriteLoadLinked(instr, PrimitiveType.Word32); break;
                 case Mnemonic.lld: RewriteLoadLinked(instr, PrimitiveType.Word64); break;
+                case Mnemonic.lq: RewriteLoadZ(instr, PrimitiveType.Word128); break;
                 case Mnemonic.lui: RewriteLui(instr); break;
                 case Mnemonic.lw: RewriteLoadS(instr, PrimitiveType.Word32); break;
                 case Mnemonic.lwc1: RewriteLcpr1(instr); break;
@@ -206,13 +213,18 @@ namespace Reko.Arch.Mips
                 case Mnemonic.maddu: RewriteMac_int(instr, PrimitiveType.UInt64, Operator.UMul, Operator.IAdd); break;
                 case Mnemonic.madd_s: RewriteMac_real(instr, PrimitiveType.Real32, Operator.FAdd); break;
                 case Mnemonic.madd_ps: RewriteMac_vec(instr, PrimitiveType.Real32, Operator.FAdd); break;
+                case Mnemonic.mf0: RewriteMf0(instr); break;
                 case Mnemonic.mfc0: RewriteMfc0(instr); break;
                 case Mnemonic.mfc1: RewriteMfc1(instr); break;
                 case Mnemonic.mfhi: RewriteMf(instr, arch.hi); break;
+                case Mnemonic.mfhi1: RewriteMf(instr, arch.hi1); break;
                 case Mnemonic.mflo: RewriteMf(instr, arch.lo); break;
+                case Mnemonic.mflo1: RewriteMf(instr, arch.lo1); break;
                 case Mnemonic.mtc0: RewriteMtc0(instr); break;
                 case Mnemonic.mthi: RewriteMt(instr, arch.hi); break;
+                case Mnemonic.mthi1: RewriteMt(instr, arch.hi1); break;
                 case Mnemonic.mtlo: RewriteMt(instr, arch.lo); break;
+                case Mnemonic.mtlo1: RewriteMt(instr, arch.lo1); break;
                 case Mnemonic.movf: RewriteMovft(instr, false); break;
                 case Mnemonic.movn: RewriteMovCc(instr, m.Ne0); break;
                 case Mnemonic.movt: RewriteMovft(instr, true); break;
@@ -224,10 +236,12 @@ namespace Reko.Arch.Mips
                 case Mnemonic.msub_s: RewriteMac_real(instr, PrimitiveType.Real32, Operator.FSub); break;
                 case Mnemonic.msub_d: RewriteMac_real(instr, PrimitiveType.Real64, Operator.FSub); break;
                 case Mnemonic.mtc1: RewriteMtc1(instr); break;
-                case Mnemonic.mul: RewriteMul(instr, Operator.SMul, PrimitiveType.Int32); break;
-                case Mnemonic.mult: RewriteMul(instr, Operator.SMul, PrimitiveType.Int64); break;
-                case Mnemonic.multu: RewriteMul(instr, Operator.UMul, PrimitiveType.UInt64); break;
-                case Mnemonic.mul_s: RewriteMul(instr, Operator.FMul, PrimitiveType.Real32); break;
+                case Mnemonic.mul: RewriteMul(instr, Operator.SMul, PrimitiveType.Int32, arch.hi, arch.lo); break;
+                case Mnemonic.mult: RewriteMul(instr, Operator.SMul, PrimitiveType.Int64, arch.hi, arch.lo); break;
+                case Mnemonic.mult1: RewriteMul(instr, Operator.SMul, PrimitiveType.Int64, arch.hi1, arch.lo1); break;
+                case Mnemonic.multu: RewriteMul(instr, Operator.UMul, PrimitiveType.UInt64, arch.hi, arch.lo); break;
+                case Mnemonic.multu1: RewriteMul(instr, Operator.UMul, PrimitiveType.UInt64, arch.hi1, arch.lo1); break;
+                case Mnemonic.mul_s: RewriteMul(instr, Operator.FMul, PrimitiveType.Real32, arch.hi, arch.lo); break;
                 case Mnemonic.mul_d: RewriteMulD(instr); break;
                 case Mnemonic.nmadd_d: RewriteNmac_real(instr, PrimitiveType.Real64, Operator.FAdd); break;
                 case Mnemonic.nmadd_s: RewriteNmac_real(instr, PrimitiveType.Real32, Operator.FAdd); break;
@@ -240,6 +254,15 @@ namespace Reko.Arch.Mips
                 case Mnemonic.ori: RewriteOr(instr); break;
                 case Mnemonic.pref:
                 case Mnemonic.prefx: RewritePrefx(instr); break;
+                case Mnemonic.pand: RewriteParallelBinary(instr, intrinsics.pand); break;
+                case Mnemonic.pcpyh: RewritePcpyh(instr); break;
+                case Mnemonic.pcpyld: RewritePcpyld(instr); break;
+                case Mnemonic.pcpyud: RewritePcpyud(instr); break;
+                case Mnemonic.pnor: RewriteParallelBinary(instr, intrinsics.pnor); break;
+                case Mnemonic.psubb: RewriteSimd(instr, Simd.Sub, PrimitiveType.Byte); break;
+                case Mnemonic.psubh: RewriteSimd(instr, Simd.Sub, PrimitiveType.Word16); break;
+                case Mnemonic.psubw: RewriteSimd(instr, Simd.Sub, PrimitiveType.Word32); break;
+                case Mnemonic.pxor: RewriteParallelBinary(instr, intrinsics.pxor); break;
                 case Mnemonic.sb: RewriteStore(instr); break;
                 case Mnemonic.sc: RewriteStoreConditional(instr, PrimitiveType.Word32); break;
                 case Mnemonic.scd: RewriteStoreConditional(instr, PrimitiveType.Word64); break;
@@ -261,6 +284,7 @@ namespace Reko.Arch.Mips
                 case Mnemonic.slti: RewriteScc(instr, m.Lt); break;
                 case Mnemonic.sltiu: RewriteScc(instr, m.Ult); break;
                 case Mnemonic.sltu: RewriteScc(instr, m.Ult); break;
+                case Mnemonic.sq: RewriteStore(instr); break;
                 case Mnemonic.sra:
                 case Mnemonic.srav:
                     RewriteSra(instr); break;
@@ -437,6 +461,9 @@ namespace Reko.Arch.Mips
             return m.Mem(memOp.DataType, ea);
         }
 
+        private Expression RewriteOperand(MipsInstruction instr, int iop) =>
+            RewriteOperand(instr.Operands[iop]);
+
         private Expression RewriteOperand0(MachineOperand op)
         {
             switch (op)
@@ -486,5 +513,7 @@ namespace Reko.Arch.Mips
             throw new NotImplementedException(string.Format("Rewriting of operand type {0} not implemented yet.", op.GetType().Name));
         }
 
+        private Expression RewriteOperand0(MipsInstruction instr, int iop) =>
+            RewriteOperand0(instr.Operands[iop]);
     }
 }

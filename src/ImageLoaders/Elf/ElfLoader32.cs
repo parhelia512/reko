@@ -93,26 +93,33 @@ namespace Reko.ImageLoaders.Elf
                 //$TODO: detect release 6 of the MIPS architecture. 
                 // would be great to get our sweaty little hands on
                 // such a binary.
-                var mipsFlags = (MIPSflags) BinaryImage.Header.Flags;
+                var mipsFlags = (ElfMipsFlags) BinaryImage.Header.Flags;
                 bool is64 = false;
-                switch (mipsFlags & MIPSflags.EF_MIPS_ARCH)
+                switch (mipsFlags & ElfMipsFlags.EF_MIPS_ARCH)
                 {
-                case MIPSflags.EF_MIPS_ARCH_64:
+                case ElfMipsFlags.EF_MIPS_ARCH_64:
                     is64 = true;
                     break;
-                case MIPSflags.EF_MIPS_ARCH_64R2:
+                case ElfMipsFlags.EF_MIPS_ARCH_64R2:
                     is64 = true;
                     options[ProcessorOption.InstructionSet] = "v6";
                     break;
-                case MIPSflags.EF_MIPS_ARCH_32R2:
+                case ElfMipsFlags.EF_MIPS_ARCH_32R2:
                     options[ProcessorOption.InstructionSet] = "v6";
                     break;
                 }
 
-                switch (mipsFlags & MIPSflags.EF_MIPS_ABI)
+                switch (mipsFlags & ElfMipsFlags.EF_MIPS_ABI)
                 {
-                case MIPSflags.EF_MIPS_ABI_O32:
+                case ElfMipsFlags.EF_MIPS_ABI_O32:
                     options[ProcessorOption.ABI] = "o32";
+                    break;
+                }
+
+                switch (mipsFlags & ElfMipsFlags.EF_MIPS_MACH)
+                {
+                case ElfMipsFlags.EF_MIPS_MACH_5900:
+                    options[ProcessorOption.InstructionSet] = "ps2ee";
                     break;
                 }
                 options[ProcessorOption.FloatABI] = is64 ? 64 : 32;

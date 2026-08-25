@@ -50,7 +50,7 @@ namespace Reko.Arch.Mips
 
             public override MipsInstruction Decode(uint wInstr, MipsDisassembler dasm)
             {
-                if (dasm.arch.PointerType.Size == 8)
+                if (dasm.arch.PointerType.BitSize == 64)
                     return base.Decode(wInstr, dasm);
                 else
                     return dasm.CreateInvalidInstruction();

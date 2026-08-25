@@ -26,10 +26,8 @@ namespace Reko.ImageLoaders.Elf
 {
     public class ElfHeader : IBinaryHeader
     {
-        internal byte fileClass;
         internal byte endianness;
         internal byte fileVersion;
-        internal byte osAbi;
         internal byte abiVersion;
         internal ulong e_phoff;
         internal int e_phnum;
@@ -45,6 +43,8 @@ namespace Reko.ImageLoaders.Elf
             this.PointerType = PrimitiveType.Ptr32;
         }
 
+        public byte FileClass { get; set; }
+
         public string Architecture { get; set; }
 
         public ElfMachine Machine { get; set; }
@@ -58,5 +58,8 @@ namespace Reko.ImageLoaders.Elf
         public Address StartAddress { get; set; }
 
         public PrimitiveType PointerType { get; set; }
+
+        public byte OsAbi { get; set; }
+
     }
 }

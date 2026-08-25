@@ -42,7 +42,7 @@ namespace Reko.Environments.SysV
         private static readonly Dictionary<string, SerializedSignature> gccIntrinsicSignatures;
 
         private readonly ArchSpecificFactory archSpecificFactory;
-        private readonly ICallingConvention? defaultCc;
+        private ICallingConvention? defaultCc;
 
         public SysVPlatform(IServiceProvider services, IProcessorArchitecture arch)
             : base(services, arch, "elf-neutral")
@@ -79,6 +79,8 @@ namespace Reko.Environments.SysV
 
         public override ICallingConvention GetCallingConvention(string? ccName)
         {
+            if (defaultCc is not null)
+                return defaultCc;
             var cc = archSpecificFactory.CreateCallingConvention(this.Architecture, ccName);
             if (cc is null)
                 throw new NotImplementedException($"ELF calling convention for {Architecture.Description} not implemented yet.");
@@ -259,7 +261,19 @@ namespace Reko.Environments.SysV
                 string.Compare(osAbi, "linux", StringComparison.OrdinalIgnoreCase) == 0)
             {
             }
+            if (options.TryGetValue("abi", out var oAbi) &&
+                oAbi is string abiName)
+            {
+                this.defaultCc = CreateCallingConvention(abiName);
+            }
             base.LoadUserOptions(options);
+        }
+
+        private ICallingConvention? CreateCallingConvention(string abiName)
+        {
+            if (abiName == "ps2ee")
+                return new Ps2EmotionEngineCallingConvention(Architecture);
+            return Architecture.GetCallingConvention(abiName);
         }
 
         public override ExternalProcedure? LookupProcedureByName(string? moduleName, string procName)

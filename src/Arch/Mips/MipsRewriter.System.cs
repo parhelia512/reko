@@ -21,15 +21,8 @@
 using Reko.Core;
 using Reko.Core.Expressions;
 using Reko.Core.Intrinsics;
-using Reko.Core.Machine;
-using Reko.Core.Operators;
-using Reko.Core.Rtl;
 using Reko.Core.Types;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Reko.Arch.Mips
 {
@@ -41,6 +34,20 @@ namespace Reko.Arch.Mips
                 m.Fn(
                     intrinsics.break_intrinsic,
                     this.RewriteOperand0(instr.Operands[0])));
+        }
+
+        private void RewriteDi(MipsInstruction instr)
+        {
+            m.SideEffect(
+                m.Fn(
+                    intrinsics.di));
+        }
+
+        private void RewriteEi(MipsInstruction instr)
+        {
+            m.SideEffect(
+                m.Fn(
+                    intrinsics.ei));
         }
 
         private void RewriteMfc0(MipsInstruction instr)

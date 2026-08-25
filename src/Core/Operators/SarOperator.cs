@@ -35,9 +35,19 @@ namespace Reko.Core.Operators
 		{
             if (!ValidArgs(c1, c2))
                 return InvalidConstant.Create(dt);
-            return Constant.Create(
-                PrimitiveType.Create(Domain.SignedInt, c1.DataType.BitSize),
-                c1.ToInt64() >> c2.ToInt32());
+            var dtResult = PrimitiveType.Create(Domain.SignedInt, c1.DataType.BitSize);
+            if (c1.DataType.BitSize <= 64 && c2.DataType.BitSize <= 64)
+            {
+                return Constant.Create(
+                    dtResult,
+                    c1.ToInt64() >> c2.ToInt32());
+            }
+            else
+            {
+                return Constant.Create(
+                    dtResult,
+                    c1.ToBigInteger() >> c2.ToInt32());
+            }
         }
 
         /// <inheritdoc/>

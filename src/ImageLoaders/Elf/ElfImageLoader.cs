@@ -40,7 +40,7 @@ namespace Reko.ImageLoaders.Elf
         private const byte ELFDATA2LSB = 1;
         private const byte ELFDATA2MSB = 2;
         private const byte ELFCLASS32 = 1;              // 32-bit object file
-        private const byte ELFCLASS64 = 2;              // 64-bit object file
+        public const byte ELFCLASS64 = 2;              // 64-bit object file
         #endregion
 
         internal static readonly TraceSwitch trace = new TraceSwitch(nameof(ElfImageLoader), "Traces the progress of the ELF image loader") { Level = TraceLevel.Warning };
@@ -135,7 +135,7 @@ namespace Reko.ImageLoaders.Elf
             if (elfMagic != ELF_MAGIC)
                 throw new BadImageFormatException("File is not in ELF format.");
             var elfHeader = new ElfHeader();
-            elfHeader.fileClass = rdr.ReadByte();
+            elfHeader.FileClass = rdr.ReadByte();
             elfHeader.endianness = rdr.ReadByte();
             elfHeader.fileVersion = rdr.ReadByte();
             elfHeader.OsAbi = rdr.ReadByte();
@@ -175,7 +175,7 @@ namespace Reko.ImageLoaders.Elf
 
         public ElfLoader CreateLoader(ElfBinaryImage elf)
         {
-            if (elf.Header.fileClass == ELFCLASS64)
+            if (elf.Header.FileClass == ELFCLASS64)
             {
                 return new ElfLoader64(this.Services, elf, RawImage);
             }

@@ -48,9 +48,19 @@ namespace Reko.Core.Operators
 		{
             if (!ValidArgs(c1, c2))
                 return InvalidConstant.Create(c1.DataType);
-            ulong v1 = c1.ToUInt64();
-			ulong v2 = c2.ToUInt64();
-			return Constant.Bool(v1 < v2);
+            if (c1.DataType.BitSize <= 64 && c2.DataType.BitSize <= 64)
+            {
+                ulong v1 = c1.ToUInt64();
+                ulong v2 = c2.ToUInt64();
+                return Constant.Bool(v1 < v2);
+            }
+            else
+            {
+                //$BUG: what about unsigned?
+                var v1 = c1.ToBigInteger();
+                var v2 = c2.ToBigInteger();
+                return Constant.Bool(v1 < v2);
+            }
 		}
 
         /// <inheritdoc/>

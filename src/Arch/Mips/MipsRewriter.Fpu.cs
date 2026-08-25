@@ -20,6 +20,7 @@
 
 using Reko.Core;
 using Reko.Core.Expressions;
+using Reko.Core.Intrinsics;
 using Reko.Core.Machine;
 using Reko.Core.Operators;
 using Reko.Core.Types;
@@ -159,6 +160,22 @@ namespace Reko.Arch.Mips
             m.Assign(
                 RewriteOperand0(instr.Operands[0]),
                 m.Convert(regPair, regPair.DataType, dt));
+        }
+
+        private void RewriteCvtSW(MipsInstruction instr)
+        {
+            var src = RewriteOperand0(instr, 1);
+            m.Assign(
+                RewriteOperand(instr, 0),
+                m.Convert(src, PrimitiveType.Int32, PrimitiveType.Real32));
+        }
+
+        private void RewriteCvtWS(MipsInstruction instr)
+        {
+            var src = m.Fn(FpOps.roundf, RewriteOperand0(instr, 1));
+            m.Assign(
+                RewriteOperand(instr, 0),
+                m.Convert(src, PrimitiveType.Real32, PrimitiveType.Int32));
         }
 
         private void RewriteCvtToD(MipsInstruction instr, DataType dtSrc)

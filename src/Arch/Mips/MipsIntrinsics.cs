@@ -22,9 +22,6 @@ using Reko.Core;
 using Reko.Core.Intrinsics;
 using Reko.Core.Serialization;
 using Reko.Core.Types;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Reko.Arch.Mips
 {
@@ -32,6 +29,9 @@ namespace Reko.Arch.Mips
     {
         public MipsIntrinsics(MipsArchitecture arch)
         {
+            var a2_of_w64 = new ArrayType(PrimitiveType.Word64, 2);
+            var a8_of_w16 = new ArrayType(PrimitiveType.Word16, 8);
+
             bit = new IntrinsicBuilder("__bit", false)
                 .GenericTypes("TValue", "TPos")
                 .Param("TValue")
@@ -49,6 +49,12 @@ namespace Reko.Arch.Mips
                 .Param(arch.PointerType)
                 .Void();
             clear_hazard_barrier = new IntrinsicBuilder("__clear_hazard_barrier", true)
+                .Void();
+
+            di = IntrinsicBuilder.SideEffect("__disable_interrupts")
+                .Void();
+
+            ei = IntrinsicBuilder.SideEffect("__enable_interrupts")
                 .Void();
             ext = new IntrinsicBuilder("__ext", true)
                 .GenericTypes("TValue", "TPos")
@@ -87,6 +93,25 @@ namespace Reko.Arch.Mips
                 .Param(arch.PointerType)
                 .Param(PrimitiveType.Int32)
                 .Returns(PrimitiveType.Word64);
+
+            mf0 = new IntrinsicBuilder("__move_from_breakpoint_control_register", true)
+                .Returns(PrimitiveType.Word32);
+
+
+            pand = IntrinsicBuilder.Binary("__pand", PrimitiveType.Word128);
+            pcpyh = new IntrinsicBuilder("__p_copy_halfword", false)
+                .Param(a2_of_w64)
+                .Returns(a8_of_w16);
+            pcpyld = new IntrinsicBuilder("__p_copy_lower_dword", false)
+                .Param(a2_of_w64)
+                .Param(a2_of_w64)
+                .Returns(a2_of_w64);
+            pcpyud = new IntrinsicBuilder("__p_copy_upper_dword", false)
+                .Param(a2_of_w64)
+                .Param(a2_of_w64)
+                .Returns(a2_of_w64);
+            pnor = IntrinsicBuilder.Binary("__pnor", PrimitiveType.Word128);
+            pxor = IntrinsicBuilder.Binary("__pxor", PrimitiveType.Word128);
 
             read_cpr2 = new IntrinsicBuilder("__read_cpr2", true)
                 .GenericTypes("T")
@@ -163,6 +188,9 @@ namespace Reko.Arch.Mips
         public readonly IntrinsicProcedure cache_EVA_intrinsic;
         public readonly IntrinsicProcedure clear_hazard_barrier;
 
+        public readonly IntrinsicProcedure di;
+
+        public readonly IntrinsicProcedure ei;
         public readonly IntrinsicProcedure ext;
         public readonly IntrinsicProcedure ins;
         
@@ -172,6 +200,15 @@ namespace Reko.Arch.Mips
         public readonly IntrinsicProcedure ldr;
         public readonly IntrinsicProcedure lwl;
         public readonly IntrinsicProcedure lwr;
+
+        public readonly IntrinsicProcedure mf0;
+
+        public readonly IntrinsicProcedure pand;
+        public readonly IntrinsicProcedure pcpyh;
+        public readonly IntrinsicProcedure pcpyld;
+        public readonly IntrinsicProcedure pcpyud;
+        public readonly IntrinsicProcedure pnor;
+        public readonly IntrinsicProcedure pxor;
 
         public readonly IntrinsicProcedure read_cpr2;
         public readonly IntrinsicProcedure read_cpu_number;
